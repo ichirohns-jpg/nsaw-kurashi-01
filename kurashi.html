@@ -7,7 +7,275 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#eef7fb;color:#17324d;font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif}
-.wrap{max-width:720px;margin:0 auto;padding:14px}
-.back{display:block;text-align:center;text-decoration:none;background:#0d8b46;color:#fff;padding:18px;border-radius:20px;margin-bottom:18px;font-size:24px;font-weight:900}
-.hero{background:linear-gradient(180deg,#fff 0%,#e8f7ef 100%);border:4px solid #0d8b46;border-radius:24
+
+body{
+  margin:0;
+  background:#eef7fb;
+  color:#17324d;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+}
+
+.wrap{
+  max-width:720px;
+  margin:0 auto;
+  padding:14px;
+}
+
+.back{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  background:#0d8b46;
+  color:#fff;
+  padding:18px;
+  border-radius:20px;
+  margin-bottom:18px;
+  font-size:24px;
+  font-weight:900;
+}
+
+.hero{
+  background:#fff;
+  border:4px solid #0d8b46;
+  border-radius:24px;
+  padding:18px 14px;
+  margin-bottom:20px;
+  text-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+}
+
+.hero-title{
+  font-size:34px;
+  line-height:1.3;
+  font-weight:900;
+  color:#00843d;
+}
+
+.hero-sub{
+  margin-top:10px;
+  font-size:18px;
+  line-height:1.6;
+  font-weight:900;
+}
+
+.status{
+  text-align:center;
+  font-size:22px;
+  font-weight:900;
+  padding:30px 10px;
+}
+
+.card{
+  background:#fff;
+  border-radius:26px;
+  padding:22px;
+  margin-bottom:24px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+}
+
+.date{
+  font-size:18px;
+  color:#607080;
+  font-weight:900;
+}
+
+.title{
+  font-size:34px;
+  line-height:1.45;
+  font-weight:900;
+  margin:18px 0;
+}
+
+.desc{
+  font-size:22px;
+  line-height:1.9;
+  font-weight:800;
+  white-space:pre-wrap;
+}
+
+.mainimg{
+  width:100%;
+  display:block;
+  border-radius:20px;
+  margin:18px 0;
+}
+
+.btn{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  color:#fff;
+  padding:20px 12px;
+  border-radius:20px;
+  margin:14px 0;
+  font-size:24px;
+  font-weight:900;
+}
+
+.shiki{background:#1f8f3a}
+.niiza{background:#1976d2}
+.asaka{background:#ff4f87}
+.wako{background:#ff9800}
+.other{background:#0d8b46}
+
+.footer{
+  text-align:center;
+  color:#6c7f8d;
+  font-size:15px;
+  line-height:1.8;
+  padding:28px 0 12px;
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<a href="index.html" class="back">トップへ戻る</a>
+
+<div class="hero">
+  <div class="hero-title" id="heroTitle">暮らし情報</div>
+  <div class="hero-sub">四市の暮らし情報を見やすくまとめています</div>
+</div>
+
+<div id="content" class="status">読み込み中です…</div>
+
+<div class="footer">NSAW 暮らし情報局</div>
+
+</div>
+
+<script>
+const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+
+const GVIZ_URL =
+  "https://docs.google.com/spreadsheets/d/" +
+  SHEET_ID +
+  "/gviz/tq?tqx=out:json;responseHandler:handleSheet";
+
+function cell(row,index){
+  if(!row.c[index]) return "";
+  if(row.c[index].f) return String(row.c[index].f);
+  if(row.c[index].v == null) return "";
+  return String(row.c[index].v);
+}
+
+function formatDate(value){
+  if(!value) return "";
+  if(value.startsWith("Date(")){
+    const nums=value.match(/\d+/g);
+    if(nums && nums.length>=3){
+      return nums[0]+"年"+(Number(nums[1])+1)+"月"+nums[2]+"日";
+    }
+  }
+  return value;
+}
+
+function esc(text){
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+}
+
+function btnClass(title){
+  if(title.includes("志木")) return "shiki";
+  if(title.includes("新座")) return "niiza";
+  if(title.includes("朝霞")) return "asaka";
+  if(title.includes("和光")) return "wako";
+  return "other";
+}
+
+function makeButton(title,url){
+  if(!title || !url) return "";
+  return `<a class="btn ${btnClass(title)}" href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a>`;
+}
+
+function handleSheet(json){
+  const rows = json.table.rows || [];
+  const items = [];
+
+  rows.forEach(row=>{
+    const display = cell(row,18).trim();
+    if(display !== "はい") return;
+
+    const type = cell(row,21).trim();
+    if(type !== "情報") return;
+
+    items.push({
+      date: formatDate(cell(row,0)),
+      title: cell(row,2),
+      image: cell(row,3),
+      desc: cell(row,4),
+
+      info1Title: cell(row,5),
+      info1Url: cell(row,6),
+      info2Title: cell(row,7),
+      info2Url: cell(row,8),
+      info3Title: cell(row,9),
+      info3Url: cell(row,10),
+      info4Title: cell(row,11),
+      info4Url: cell(row,12),
+      info5Title: cell(row,13),
+      info5Url: cell(row,14),
+
+      sortDate: Number(cell(row,19)) || 0,
+      order: Number(cell(row,20)) || 0
+    });
+  });
+
+  items.sort((a,b)=>{
+    if(b.sortDate !== a.sortDate) return b.sortDate - a.sortDate;
+    return b.order - a.order;
+  });
+
+  const content = document.getElementById("content");
+
+  if(items.length === 0){
+    content.innerHTML = "表示できる暮らし情報がありません。";
+    return;
+  }
+
+  document.getElementById("heroTitle").innerHTML =
+    items[0].date + "<br>の暮らし情報";
+
+  let html = "";
+
+  items.slice(0,5).forEach(item=>{
+    html += `
+      <div class="card">
+        <div class="date">${esc(item.date)}</div>
+        <div class="title">${esc(item.title)}</div>
+
+        ${
+          item.image && item.image.startsWith("http")
+          ? `<img class="mainimg" src="${esc(item.image)}">`
+          : ""
+        }
+
+        ${item.desc ? `<div class="desc">${esc(item.desc)}</div>` : ""}
+
+        ${makeButton(item.info1Title,item.info1Url)}
+        ${makeButton(item.info2Title,item.info2Url)}
+        ${makeButton(item.info3Title,item.info3Url)}
+        ${makeButton(item.info4Title,item.info4Url)}
+        ${makeButton(item.info5Title,item.info5Url)}
+      </div>
+    `;
+  });
+
+  content.className = "";
+  content.innerHTML = html;
+}
+
+function handleError(){
+  document.getElementById("content").innerHTML = "読み込みに失敗しました。";
+}
+
+const script=document.createElement("script");
+script.src=GVIZ_URL;
+script.onerror=handleError;
+document.body.appendChild(script);
+</script>
+
+</body>
+</html>
