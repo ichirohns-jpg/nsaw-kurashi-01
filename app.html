@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>NSAW 暮らし情報局</title>
 
 <style>
@@ -74,12 +75,11 @@ body{
   padding:30px 10px;
 }
 
-.month{
-  font-size:30px;
+.section-title{
+  font-size:34px;
   font-weight:900;
   color:#007a3d;
-  margin:28px 0 14px;
-  padding-left:4px;
+  margin:36px 0 18px;
 }
 
 .card{
@@ -252,6 +252,7 @@ function formatDate(value){
       const day = Number(nums[2]);
 
       return year + "年" + month + "月" + day + "日";
+
     }
   }
 
@@ -330,12 +331,100 @@ function button(title,url,blue){
 
 }
 
+function createCard(item){
+
+  const embedUrl =
+    youtubeEmbed(item.mediaUrl);
+
+  return `
+
+    <div class="card">
+
+      <div class="date">
+        ${esc(item.date)}
+      </div>
+
+      <div class="type">
+        ${esc(item.type || "情報")}
+      </div>
+
+      <div class="title">
+        ${esc(item.title)}
+      </div>
+
+      ${
+        item.image &&
+        item.image.startsWith("http")
+        ? `
+          <img
+            class="mainimg"
+            src="${esc(item.image)}"
+          >
+        `
+        : ""
+      }
+
+      ${
+        item.desc
+        ? `
+          <div class="desc">
+            ${esc(item.desc)}
+          </div>
+        `
+        : ""
+      }
+
+      ${button(item.info1Title,item.info1Url,false)}
+      ${button(item.info2Title,item.info2Url,false)}
+      ${button(item.info3Title,item.info3Url,false)}
+      ${button(item.info4Title,item.info4Url,false)}
+      ${button(item.info5Title,item.info5Url,false)}
+
+      ${
+        item.videoTitle
+        ? `
+          <div class="title">
+            ${esc(item.videoTitle)}
+          </div>
+        `
+        : ""
+      }
+
+      ${
+        item.videoDesc
+        ? `
+          <div class="desc">
+            ${esc(item.videoDesc)}
+          </div>
+        `
+        : ""
+      }
+
+      ${
+        embedUrl
+        ? `
+          <iframe
+            class="video"
+            src="${embedUrl}"
+            allowfullscreen>
+          </iframe>
+        `
+        : ""
+      }
+
+    </div>
+
+  `;
+
+}
+
 function handleSheet(json){
 
   const rows =
     json.table.rows || [];
 
-  const items = [];
+  const infoItems = [];
+  const mediaItems = [];
 
   rows.forEach(row=>{
 
@@ -344,7 +433,7 @@ function handleSheet(json){
 
     if(display !== "はい") return;
 
-    items.push({
+    const item = {
 
       date:
         formatDate(cell(row,0)),
@@ -409,11 +498,21 @@ function handleSheet(json){
       month:
         cell(row,22)
 
-    });
+    };
+
+    if(item.type === "メディア"){
+
+      mediaItems.push(item);
+
+    }else{
+
+      infoItems.push(item);
+
+    }
 
   });
 
-  items.sort((a,b)=>{
+  infoItems.sort((a,b)=>{
 
     if(b.sortDate !== a.sortDate){
 
@@ -425,139 +524,88 @@ function handleSheet(json){
 
   });
 
-  if(items.length > 0){
+  mediaItems.sort((a,b)=>{
+
+    if(b.sortDate !== a.sortDate){
+
+      return b.sortDate - a.sortDate;
+
+    }
+
+    return b.order - a.order;
+
+  });
+
+  const topDate =
+    infoItems.length > 0
+    ? infoItems[0].date
+    : "";
+
+  if(topDate){
 
     document.getElementById("heroTitle").innerHTML =
-      items[0].date + "<br>の暮らし瓦版";
-
-  }
-
-  const content =
-    document.getElementById("content");
-
-  if(items.length === 0){
-
-    content.innerHTML =
-      "表示できる情報がありません。";
-
-    return;
+      topDate + "<br>の暮らし瓦版";
 
   }
 
   let html = "";
 
-  let currentMonth = "";
+  html += `
+    <div
+      class="section-title"
+      id="kurashi"
+    >
+      暮らし情報
+    </div>
+  `;
 
-  items.forEach(item=>{
+  infoItems
+    .slice(0,5)
+    .forEach(item=>{
 
-    if(
-      item.month &&
-      item.month !== currentMonth
-    ){
+      html += createCard(item);
 
-      currentMonth =
-        item.month;
+    });
 
-      html += `
-        <div class="month">
-          ${esc(currentMonth)}
-        </div>
-      `;
+  html += `
+    <div
+      class="section-title"
+      id="media"
+    >
+      地域メディア
+    </div>
+  `;
 
-    }
-
-    const embedUrl =
-      youtubeEmbed(item.mediaUrl);
+  if(mediaItems.length === 0){
 
     html += `
-
-      <div
-        class="card"
-        id="${
-          item.type &&
-          item.type.includes("メディア")
-          ? "media"
-          : "kurashi"
-        }"
-      >
-
-        <div class="date">
-          ${esc(item.date)}
-        </div>
-
-        <div class="type">
-          ${esc(item.type || "暮らし情報")}
-        </div>
+      <div class="card">
 
         <div class="title">
-          ${esc(item.title)}
+          過去の地域メディアを見る
         </div>
 
-        ${
-          item.image &&
-          item.image.startsWith("http")
-          ? `
-            <img
-              class="mainimg"
-              src="${esc(item.image)}"
-            >
-          `
-          : ""
-        }
-
-        ${
-          item.desc
-          ? `
-            <div class="desc">
-              ${esc(item.desc)}
-            </div>
-          `
-          : ""
-        }
-
-        ${button(item.info1Title,item.info1Url,false)}
-        ${button(item.info2Title,item.info2Url,false)}
-        ${button(item.info3Title,item.info3Url,false)}
-        ${button(item.info4Title,item.info4Url,false)}
-        ${button(item.info5Title,item.info5Url,false)}
-
-        ${
-          item.videoTitle
-          ? `
-            <div class="title">
-              ${esc(item.videoTitle)}
-            </div>
-          `
-          : ""
-        }
-
-        ${
-          item.videoDesc
-          ? `
-            <div class="desc">
-              ${esc(item.videoDesc)}
-            </div>
-          `
-          : ""
-        }
-
-        ${
-          embedUrl
-          ? `
-            <iframe
-              class="video"
-              src="${embedUrl}"
-              allowfullscreen>
-            </iframe>
-          `
-          : ""
-        }
+        <div class="desc">
+          本日は新しい地域メディア投稿がありません。
+        </div>
 
       </div>
-
     `;
 
-  });
+  }else{
+
+    mediaItems
+      .slice(0,5)
+      .forEach(item=>{
+
+        html += createCard(item);
+
+      });
+
+  }
+
+  const content =
+    document.getElementById("content");
 
   content.className = "";
 
@@ -567,8 +615,7 @@ function handleSheet(json){
 
 function handleError(){
 
-  document.getElementById("content")
-    .innerHTML =
+  document.getElementById("content").innerHTML =
     "読み込みに失敗しました。";
 
 }
