@@ -408,7 +408,10 @@ function handleSheet(json){
         </div>
 
         ${
-          item.image
+          (
+            item.image &&
+            item.image.startsWith("http")
+          )
           ? `
             <img
               class="mainimg"
