@@ -81,11 +81,16 @@ body{
 }
 
 .desc{
+  background:#fff9d9;
+  border:3px solid #f0df8a;
+  border-radius:24px;
+  padding:24px;
+  margin:20px 0 30px;
   font-size:22px;
   line-height:1.9;
   font-weight:800;
+  color:#17324d;
   white-space:pre-wrap;
-  margin-bottom:16px;
 }
 
 .video{
@@ -146,7 +151,7 @@ function cell(row,index){
   if(!row.c[index]) return "";
   if(row.c[index].f) return String(row.c[index].f);
   if(row.c[index].v == null) return "";
-  return String(row.c[index].v);
+  return String(row.c[index].v).trim();
 }
 
 function formatDate(value){
@@ -193,19 +198,19 @@ function handleSheet(json){
 
   rows.forEach(row=>{
 
-    const display = cell(row,18); // S列：表示
+    const display = cell(row,18);
     if(display !== "はい") return;
 
-    const type = cell(row,21); // V列：情報 / メディア
+    const type = cell(row,21);
     if(type !== "メディア") return;
 
     items.push({
-      date: formatDate(cell(row,0)),      // A列：日付
-      title: cell(row,2),                 // C列：タイトル
-      desc: cell(row,16) || cell(row,4),  // Q列：動画詳細。空ならE列
-      mediaUrl: cell(row,17),             // R列：メディアURL
-      sortDate: Number(cell(row,19)) || 0,// T列：並び替え日付
-      order: Number(cell(row,20)) || 0    // U列：表示順
+      date: formatDate(cell(row,0)),
+      title: cell(row,2),
+      desc: cell(row,16) || cell(row,4),
+      mediaUrl: cell(row,17),
+      sortDate: Number(cell(row,19)) || 0,
+      order: Number(cell(row,20)) || 0
     });
 
   });
@@ -270,8 +275,14 @@ function handleSheet(json){
   document.getElementById("content").innerHTML = html;
 }
 
+function handleError(){
+  document.getElementById("content").innerHTML =
+    "読み込みに失敗しました。";
+}
+
 const script = document.createElement("script");
 script.src = GVIZ_URL;
+script.onerror = handleError;
 document.body.appendChild(script);
 </script>
 
