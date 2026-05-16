@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -150,6 +151,7 @@ h1{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -159,7 +161,7 @@ h1{
   <div class="header">
 
     <img
-      src="https://raw.githubusercontent.com/ichirohns-jpg/nsaw-kurashi-01/main/top.jpg"
+      src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg"
       class="logo"
       alt="NSAW 暮らし情報局"
     >
@@ -222,7 +224,8 @@ function youtubeEmbed(url){
 
   if(url.includes("youtu.be/")){
 
-    id = url
+    id =
+      url
       .split("youtu.be/")[1]
       .split(/[?&]/)[0];
 
@@ -230,7 +233,8 @@ function youtubeEmbed(url){
 
   else if(url.includes("watch?v=")){
 
-    id = url
+    id =
+      url
       .split("watch?v=")[1]
       .split(/[?&]/)[0];
 
@@ -238,7 +242,8 @@ function youtubeEmbed(url){
 
   else if(url.includes("/shorts/")){
 
-    id = url
+    id =
+      url
       .split("/shorts/")[1]
       .split(/[?&]/)[0];
 
@@ -269,41 +274,70 @@ function button(title,url,blue){
 
 function handleSheet(json){
 
-  const rows = json.table.rows || [];
+  const rows =
+    json.table.rows || [];
 
   const items = [];
 
   rows.forEach(row=>{
 
-    const display = cell(row,18);
+    const display =
+      cell(row,18);
 
     if(display !== "はい") return;
 
     items.push({
 
-      date: cell(row,0),
-      title: cell(row,2),
-      image: cell(row,3),
-      desc: cell(row,4),
+      date:
+        cell(row,0),
 
-      info1Title: cell(row,5),
-      info1Url: cell(row,6),
+      title:
+        cell(row,2),
 
-      info2Title: cell(row,7),
-      info2Url: cell(row,8),
+      image:
+        cell(row,3),
 
-      info3Title: cell(row,9),
-      info3Url: cell(row,10),
+      desc:
+        cell(row,4),
 
-      info4Title: cell(row,11),
-      info4Url: cell(row,12),
+      info1Title:
+        cell(row,5),
 
-      info5Title: cell(row,13),
-      info5Url: cell(row,14),
+      info1Url:
+        cell(row,6),
 
-      videoTitle: cell(row,15),
-      videoDesc: cell(row,16),
-      mediaUrl: cell(row,17),
+      info2Title:
+        cell(row,7),
+
+      info2Url:
+        cell(row,8),
+
+      info3Title:
+        cell(row,9),
+
+      info3Url:
+        cell(row,10),
+
+      info4Title:
+        cell(row,11),
+
+      info4Url:
+        cell(row,12),
+
+      info5Title:
+        cell(row,13),
+
+      info5Url:
+        cell(row,14),
+
+      videoTitle:
+        cell(row,15),
+
+      videoDesc:
+        cell(row,16),
+
+      mediaUrl:
+        cell(row,17),
 
       sortDate:
         Number(cell(row,19)) || 0,
@@ -351,10 +385,13 @@ function handleSheet(json){
 
   items.forEach(item=>{
 
-    if(item.month &&
-       item.month !== currentMonth){
+    if(
+      item.month &&
+      item.month !== currentMonth
+    ){
 
-      currentMonth = item.month;
+      currentMonth =
+        item.month;
 
       html += `
         <div class="month">
