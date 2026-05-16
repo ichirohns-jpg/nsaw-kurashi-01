@@ -7,40 +7,66 @@
 <title>NSAW 暮らし情報局</title>
 
 <style>
+*{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
   background:#eef7fb;
   color:#17324d;
 }
+
 .wrap{
   max-width:720px;
   margin:0 auto;
   padding:14px;
 }
+
 .header{
-  text-align:center;
   background:#fff;
   border-radius:24px;
-  padding:18px;
-  margin-bottom:16px;
+  padding:16px;
+  margin-bottom:18px;
+  text-align:center;
   box-shadow:0 6px 18px rgba(0,0,0,.10);
 }
+
 .logo{
   width:100%;
-  border-radius:22px;
-  margin-bottom:12px;
+  display:block;
+  border-radius:20px;
+  margin-bottom:14px;
 }
+
 h1{
-  font-size:30px;
+  font-size:32px;
+  line-height:1.35;
   margin:8px 0;
   color:#007a3d;
+  font-weight:900;
 }
+
 .sub{
-  font-size:17px;
-  font-weight:700;
-  line-height:1.6;
+  font-size:18px;
+  line-height:1.7;
+  font-weight:800;
 }
+
+.status{
+  text-align:center;
+  font-size:22px;
+  font-weight:900;
+  padding:30px 10px;
+}
+
+.month{
+  font-size:24px;
+  font-weight:900;
+  color:#006837;
+  margin:26px 0 12px;
+  padding-left:6px;
+}
+
 .card{
   background:#fff;
   border-radius:24px;
@@ -48,37 +74,45 @@ h1{
   margin-bottom:18px;
   box-shadow:0 6px 18px rgba(0,0,0,.10);
 }
+
 .date{
   font-size:15px;
   color:#607080;
-  font-weight:700;
+  font-weight:800;
 }
+
 .type{
   display:inline-block;
+  margin-top:8px;
   padding:6px 12px;
   border-radius:999px;
   background:#dff3e8;
   color:#007a3d;
   font-size:14px;
   font-weight:900;
-  margin-top:8px;
 }
+
 .title{
   font-size:25px;
-  line-height:1.4;
+  line-height:1.45;
   font-weight:900;
   margin:12px 0;
 }
+
 .desc{
   font-size:18px;
-  line-height:1.75;
+  line-height:1.8;
   font-weight:700;
+  white-space:pre-wrap;
 }
+
 .mainimg{
   width:100%;
+  display:block;
   border-radius:20px;
   margin:12px 0;
 }
+
 .btn{
   display:block;
   text-align:center;
@@ -91,9 +125,11 @@ h1{
   font-size:20px;
   font-weight:900;
 }
+
 .btn.blue{
   background:#1976d2;
 }
+
 .video{
   width:100%;
   aspect-ratio:16/9;
@@ -101,17 +137,13 @@ h1{
   border-radius:18px;
   margin-top:12px;
 }
-.status{
+
+.footer{
   text-align:center;
-  font-size:18px;
-  font-weight:900;
-  padding:24px;
-}
-.month{
-  font-size:22px;
-  font-weight:900;
-  margin:24px 0 12px;
-  color:#006837;
+  color:#6c7f8d;
+  font-size:14px;
+  line-height:1.8;
+  padding:20px 0 10px;
 }
 </style>
 </head>
@@ -128,23 +160,41 @@ h1{
     </div>
   </div>
 
-  <div id="content" class="status">読み込み中です...</div>
+  <div id="content" class="status">読み込み中です…</div>
+
+  <div class="footer">
+    NSAW 暮らし情報局<br>
+    地域生活テレビ
+  </div>
 
 </div>
 
 <script>
 const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+
 const GVIZ_URL =
   "https://docs.google.com/spreadsheets/d/" +
   SHEET_ID +
-  "/gviz/tq?tqx=out:json;responseHandler=handleSheet";
+  "/gviz/tq?tqx=out:json;responseHandler:handleSheet";
 
-function val(row, index){
-  return row.c[index] && row.c[index].v != null ? String(row.c[index].v) : "";
+function cell(row, index){
+  if(!row.c[index]) return "";
+  if(row.c[index].f) return String(row.c[index].f);
+  if(row.c[index].v == null) return "";
+  return String(row.c[index].v);
+}
+
+function esc(text){
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
 }
 
 function youtubeEmbed(url){
   if(!url) return "";
+
   let id = "";
 
   if(url.includes("youtu.be/")){
@@ -160,42 +210,45 @@ function youtubeEmbed(url){
   return id ? "https://www.youtube.com/embed/" + id : "";
 }
 
-function makeButton(title,url,blue=false){
+function button(title,url,blue){
   if(!title || !url) return "";
-  return `<a class="btn ${blue ? "blue" : ""}" href="${url}" target="_blank" rel="noopener">${title}</a>`;
+  return `<a class="btn ${blue ? "blue" : ""}" href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a>`;
 }
 
 function handleSheet(json){
   const rows = json.table.rows || [];
   const items = [];
 
-  rows.forEach((row)=>{
-    const display = val(row,18); // S 表示
+  rows.forEach(row => {
+    const display = cell(row,18); // S 表示
     if(display !== "はい") return;
 
     items.push({
-      date: val(row,0),
-      id: val(row,1),
-      title: val(row,2),
-      image: val(row,3),
-      desc: val(row,4),
-      info1Title: val(row,5),
-      info1Url: val(row,6),
-      info2Title: val(row,7),
-      info2Url: val(row,8),
-      info3Title: val(row,9),
-      info3Url: val(row,10),
-      info4Title: val(row,11),
-      info4Url: val(row,12),
-      info5Title: val(row,13),
-      info5Url: val(row,14),
-      videoTitle: val(row,15),
-      videoDesc: val(row,16),
-      mediaUrl: val(row,17),
-      sortDate: Number(val(row,19)) || 0, // T 並び替え日付
-      order: Number(val(row,20)) || 0,    // U 表示順
-      type: val(row,21),                  // V 記事タイプ
-      month: val(row,22)                  // W 月別
+      date: cell(row,0),
+      id: cell(row,1),
+      title: cell(row,2),
+      image: cell(row,3),
+      desc: cell(row,4),
+
+      info1Title: cell(row,5),
+      info1Url: cell(row,6),
+      info2Title: cell(row,7),
+      info2Url: cell(row,8),
+      info3Title: cell(row,9),
+      info3Url: cell(row,10),
+      info4Title: cell(row,11),
+      info4Url: cell(row,12),
+      info5Title: cell(row,13),
+      info5Url: cell(row,14),
+
+      videoTitle: cell(row,15),
+      videoDesc: cell(row,16),
+      mediaUrl: cell(row,17),
+
+      sortDate: Number(cell(row,19).replace(/[^0-9]/g,"")) || 0, // T
+      order: Number(cell(row,20)) || 0, // U
+      type: cell(row,21), // V
+      month: cell(row,22) // W
     });
   });
 
@@ -204,51 +257,60 @@ function handleSheet(json){
     return b.order - a.order;
   });
 
+  const content = document.getElementById("content");
+
   if(items.length === 0){
-    document.getElementById("content").innerHTML = "表示できる情報がありません。";
+    content.innerHTML = "表示できる情報がありません。";
     return;
   }
 
   let html = "";
   let currentMonth = "";
 
-  items.forEach(item=>{
+  items.forEach(item => {
     if(item.month && item.month !== currentMonth){
       currentMonth = item.month;
-      html += `<div class="month">${currentMonth}</div>`;
+      html += `<div class="month">${esc(currentMonth)}</div>`;
     }
 
-    const embed = youtubeEmbed(item.mediaUrl);
+    const embedUrl = youtubeEmbed(item.mediaUrl);
 
     html += `
       <div class="card">
-        <div class="date">${item.date}</div>
-        <div class="type">${item.type || "暮らし情報"}</div>
-        <div class="title">${item.title}</div>
+        <div class="date">${esc(item.date)}</div>
+        <div class="type">${esc(item.type || "暮らし情報")}</div>
+        <div class="title">${esc(item.title)}</div>
 
-        ${item.image ? `<img src="${item.image}" class="mainimg" alt="${item.title}">` : ""}
+        ${item.image ? `<img class="mainimg" src="${esc(item.image)}" alt="${esc(item.title)}">` : ""}
 
-        <div class="desc">${item.desc}</div>
+        ${item.desc ? `<div class="desc">${esc(item.desc)}</div>` : ""}
 
-        ${makeButton(item.info1Title,item.info1Url)}
-        ${makeButton(item.info2Title,item.info2Url)}
-        ${makeButton(item.info3Title,item.info3Url)}
-        ${makeButton(item.info4Title,item.info4Url)}
-        ${makeButton(item.info5Title,item.info5Url)}
+        ${button(item.info1Title,item.info1Url,false)}
+        ${button(item.info2Title,item.info2Url,false)}
+        ${button(item.info3Title,item.info3Url,false)}
+        ${button(item.info4Title,item.info4Url,false)}
+        ${button(item.info5Title,item.info5Url,false)}
 
-        ${item.videoTitle ? `<div class="title">${item.videoTitle}</div>` : ""}
-        ${item.videoDesc ? `<div class="desc">${item.videoDesc}</div>` : ""}
-        ${embed ? `<iframe class="video" src="${embed}" allowfullscreen></iframe>` : ""}
-        ${!embed && item.mediaUrl ? makeButton("動画を見る", item.mediaUrl, true) : ""}
+        ${item.videoTitle ? `<div class="title">${esc(item.videoTitle)}</div>` : ""}
+        ${item.videoDesc ? `<div class="desc">${esc(item.videoDesc)}</div>` : ""}
+        ${embedUrl ? `<iframe class="video" src="${esc(embedUrl)}" allowfullscreen></iframe>` : ""}
+        ${!embedUrl && item.mediaUrl ? button("動画を見る",item.mediaUrl,true) : ""}
       </div>
     `;
   });
 
-  document.getElementById("content").innerHTML = html;
+  content.className = "";
+  content.innerHTML = html;
+}
+
+function handleError(){
+  document.getElementById("content").innerHTML =
+    "読み込みに失敗しました。スプレッドシートの共有設定、またはシート名を確認してください。";
 }
 
 const script = document.createElement("script");
 script.src = GVIZ_URL;
+script.onerror = handleError;
 document.body.appendChild(script);
 </script>
 
