@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NSAW 暮らし情報局</title>
+
+<style>
+body{
+  margin:0;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+  background:#eef7fb;
+  color:#17324d;
+}
+.wrap{
+  max-width:720px;
+  margin:0 auto;
+  padding:14px;
+}
+.header{
+  text-align:center;
+  background:#fff;
+  border-radius:24px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+}
+.logo{
+  width:100%;
+  border-radius:22px;
+  margin-bottom:12px;
+}
+h1{
+  font-size:30px;
+  margin:8px 0;
+  color:#007a3d;
+}
+.sub{
+  font-size:17px;
+  font-weight:700;
+  line-height:1.6;
+}
+.card{
+  background:#fff;
+  border-radius:24px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+}
+.date{
+  font-size:15px;
+  color:#607080;
+  font-weight:700;
+}
+.type{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:999px;
+  background:#dff3e8;
+  color:#007a3d;
+  font-size:14px;
+  font-weight:900;
+  margin-top:8px;
+}
+.title{
+  font-size:25px;
+  line-height:1.4;
+  font-weight:900;
+  margin:12px 0;
+}
+.desc{
+  font-size:18px;
+  line-height:1.75;
+  font-weight:700;
+}
+.mainimg{
+  width:100%;
+  border-radius:20px;
+  margin:12px 0;
+}
+.btn{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  background:#0d8b46;
+  color:#fff;
+  padding:16px 12px;
+  margin:10px 0;
+  border-radius:16px;
+  font-size:20px;
+  font-weight:900;
+}
+.btn.blue{
+  background:#1976d2;
+}
+.video{
+  width:100%;
+  aspect-ratio:16/9;
+  border:0;
+  border-radius:18px;
+  margin-top:12px;
+}
+.status{
+  text-align:center;
+  font-size:18px;
+  font-weight:900;
+  padding:24px;
+}
+.month{
+  font-size:22px;
+  font-weight:900;
+  margin:24px 0 12px;
+  color:#006837;
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <img src="top.jpg" class="logo" alt="NSAW 暮らし情報局">
+    <h1>NSAW 暮らし情報局</h1>
+    <div class="sub">
+      志木・新座・朝霞・和光の<br>
+      暮らし情報を見やすくお届けします
+    </div>
+  </div>
+
+  <div id="content" class="status">読み込み中です...</div>
+
+</div>
+
+<script>
+const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+const GVIZ_URL =
+  "https://docs.google.com/spreadsheets/d/" +
+  SHEET_ID +
+  "/gviz/tq?tqx=out:json;responseHandler=handleSheet";
+
+function val(row, index){
+  return row.c[index] && row.c[index].v != null ? String(row.c[index].v) : "";
+}
+
+function youtubeEmbed(url){
+  if(!url) return "";
+  let id = "";
+
+  if(url.includes("youtu.be/")){
+    id = url.split("youtu.be/")[1].split(/[?&]/)[0];
+  }else if(url.includes("watch?v=")){
+    id = url.split("watch?v=")[1].split(/[?&]/)[0];
+  }else if(url.includes("/shorts/")){
+    id = url.split("/shorts/")[1].split(/[?&]/)[0];
+  }else if(url.includes("/embed/")){
+    return url;
+  }
+
+  return id ? "https://www.youtube.com/embed/" + id : "";
+}
+
+function makeButton(title,url,blue=false){
+  if(!title || !url) return "";
+  return `<a class="btn ${blue ? "blue" : ""}" href="${url}" target="_blank" rel="noopener">${title}</a>`;
+}
+
+function handleSheet(json){
+  const rows = json.table.rows || [];
+  const items = [];
+
+  rows.forEach((row)=>{
+    const display = val(row,18); // S 表示
+    if(display !== "はい") return;
+
+    items.push({
+      date: val(row,0),
+      id: val(row,1),
+      title: val(row,2),
+      image: val(row,3),
+      desc: val(row,4),
+      info1Title: val(row,5),
+      info1Url: val(row,6),
+      info2Title: val(row,7),
+      info2Url: val(row,8),
+      info3Title: val(row,9),
+      info3Url: val(row,10),
+      info4Title: val(row,11),
+      info4Url: val(row,12),
+      info5Title: val(row,13),
+      info5Url: val(row,14),
+      videoTitle: val(row,15),
+      videoDesc: val(row,16),
+      mediaUrl: val(row,17),
+      sortDate: Number(val(row,19)) || 0, // T 並び替え日付
+      order: Number(val(row,20)) || 0,    // U 表示順
+      type: val(row,21),                  // V 記事タイプ
+      month: val(row,22)                  // W 月別
+    });
+  });
+
+  items.sort((a,b)=>{
+    if(b.sortDate !== a.sortDate) return b.sortDate - a.sortDate;
+    return b.order - a.order;
+  });
+
+  if(items.length === 0){
+    document.getElementById("content").innerHTML = "表示できる情報がありません。";
+    return;
+  }
+
+  let html = "";
+  let currentMonth = "";
+
+  items.forEach(item=>{
+    if(item.month && item.month !== currentMonth){
+      currentMonth = item.month;
+      html += `<div class="month">${currentMonth}</div>`;
+    }
+
+    const embed = youtubeEmbed(item.mediaUrl);
+
+    html += `
+      <div class="card">
+        <div class="date">${item.date}</div>
+        <div class="type">${item.type || "暮らし情報"}</div>
+        <div class="title">${item.title}</div>
+
+        ${item.image ? `<img src="${item.image}" class="mainimg" alt="${item.title}">` : ""}
+
+        <div class="desc">${item.desc}</div>
+
+        ${makeButton(item.info1Title,item.info1Url)}
+        ${makeButton(item.info2Title,item.info2Url)}
+        ${makeButton(item.info3Title,item.info3Url)}
+        ${makeButton(item.info4Title,item.info4Url)}
+        ${makeButton(item.info5Title,item.info5Url)}
+
+        ${item.videoTitle ? `<div class="title">${item.videoTitle}</div>` : ""}
+        ${item.videoDesc ? `<div class="desc">${item.videoDesc}</div>` : ""}
+        ${embed ? `<iframe class="video" src="${embed}" allowfullscreen></iframe>` : ""}
+        ${!embed && item.mediaUrl ? makeButton("動画を見る", item.mediaUrl, true) : ""}
+      </div>
+    `;
+  });
+
+  document.getElementById("content").innerHTML = html;
+}
+
+const script = document.createElement("script");
+script.src = GVIZ_URL;
+document.body.appendChild(script);
+</script>
+
+</body>
+</html>
