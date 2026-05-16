@@ -6,7 +6,10 @@
 <title>NSAW 暮らし情報局</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -33,7 +36,7 @@ body{
 
 .hero-main{
   font-size:42px;
-  line-height:1.18;
+  line-height:1.2;
   font-weight:900;
   color:#00843d;
 }
@@ -149,6 +152,7 @@ body{
   line-height:1.8;
   padding:24px 0 10px;
 }
+
 </style>
 </head>
 
@@ -157,9 +161,9 @@ body{
 <div class="wrap">
 
   <div class="hero">
-    <div class="hero-main">
-      NSAW<br>
-      暮らし情報局
+
+    <div class="hero-main" id="heroTitle">
+      暮らし瓦版
     </div>
 
     <div class="hero-area">
@@ -167,9 +171,10 @@ body{
     </div>
 
     <div class="hero-sub">
-      暮らし情報を見やすく届ける<br>
-      地域生活テレビです
+      地域のイベント・特売・動画などを<br>
+      見やすくまとめています
     </div>
+
   </div>
 
   <div id="content" class="status">
@@ -194,10 +199,15 @@ SHEET_ID +
 "/gviz/tq?tqx=out:json;responseHandler:handleSheet";
 
 function cell(row,index){
+
   if(!row.c[index]) return "";
+
   if(row.c[index].f) return String(row.c[index].f);
+
   if(row.c[index].v == null) return "";
+
   return String(row.c[index].v);
+
 }
 
 function formatDate(value){
@@ -219,13 +229,16 @@ function formatDate(value){
   }
 
   return value;
+
 }
 
 function esc(text){
+
   return String(text || "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;");
+
 }
 
 function youtubeEmbed(url){
@@ -235,18 +248,42 @@ function youtubeEmbed(url){
   let id = "";
 
   if(url.includes("youtu.be/")){
-    id = url.split("youtu.be/")[1].split(/[?&]/)[0];
+
+    id =
+      url
+      .split("youtu.be/")[1]
+      .split(/[?&]/)[0];
+
   }
+
   else if(url.includes("watch?v=")){
-    id = url.split("watch?v=")[1].split(/[?&]/)[0];
+
+    id =
+      url
+      .split("watch?v=")[1]
+      .split(/[?&]/)[0];
+
   }
+
   else if(url.includes("/shorts/")){
-    id = url.split("/shorts/")[1].split(/[?&]/)[0];
+
+    id =
+      url
+      .split("/shorts/")[1]
+      .split(/[?&]/)[0];
+
+  }
+
+  else if(url.includes("/embed/")){
+
+    return url;
+
   }
 
   return id
     ? "https://www.youtube.com/embed/" + id
     : "";
+
 }
 
 function button(title,url,blue){
@@ -263,51 +300,87 @@ function button(title,url,blue){
       ${esc(title)}
     </a>
   `;
+
 }
 
 function handleSheet(json){
 
-  const rows = json.table.rows || [];
+  const rows =
+    json.table.rows || [];
 
   const items = [];
 
   rows.forEach(row=>{
 
-    const display = cell(row,18);
+    const display =
+      cell(row,18);
 
     if(display !== "はい") return;
 
     items.push({
 
-      date: formatDate(cell(row,0)),
-      title: cell(row,2),
-      image: cell(row,3),
-      desc: cell(row,4),
+      date:
+        formatDate(cell(row,0)),
 
-      info1Title: cell(row,5),
-      info1Url: cell(row,6),
+      title:
+        cell(row,2),
 
-      info2Title: cell(row,7),
-      info2Url: cell(row,8),
+      image:
+        cell(row,3),
 
-      info3Title: cell(row,9),
-      info3Url: cell(row,10),
+      desc:
+        cell(row,4),
 
-      info4Title: cell(row,11),
-      info4Url: cell(row,12),
+      info1Title:
+        cell(row,5),
 
-      info5Title: cell(row,13),
-      info5Url: cell(row,14),
+      info1Url:
+        cell(row,6),
 
-      videoTitle: cell(row,15),
-      videoDesc: cell(row,16),
-      mediaUrl: cell(row,17),
+      info2Title:
+        cell(row,7),
 
-      sortDate: Number(cell(row,19)) || 0,
-      order: Number(cell(row,20)) || 0,
+      info2Url:
+        cell(row,8),
 
-      type: cell(row,21),
-      month: cell(row,22)
+      info3Title:
+        cell(row,9),
+
+      info3Url:
+        cell(row,10),
+
+      info4Title:
+        cell(row,11),
+
+      info4Url:
+        cell(row,12),
+
+      info5Title:
+        cell(row,13),
+
+      info5Url:
+        cell(row,14),
+
+      videoTitle:
+        cell(row,15),
+
+      videoDesc:
+        cell(row,16),
+
+      mediaUrl:
+        cell(row,17),
+
+      sortDate:
+        Number(cell(row,19)) || 0,
+
+      order:
+        Number(cell(row,20)) || 0,
+
+      type:
+        cell(row,21),
+
+      month:
+        cell(row,22)
 
     });
 
@@ -316,12 +389,21 @@ function handleSheet(json){
   items.sort((a,b)=>{
 
     if(b.sortDate !== a.sortDate){
+
       return b.sortDate - a.sortDate;
+
     }
 
     return b.order - a.order;
 
   });
+
+  if(items.length > 0){
+
+    document.getElementById("heroTitle").innerHTML =
+      items[0].date + "<br>の暮らし瓦版";
+
+  }
 
   const content =
     document.getElementById("content");
@@ -336,20 +418,25 @@ function handleSheet(json){
   }
 
   let html = "";
+
   let currentMonth = "";
 
   items.forEach(item=>{
 
-    if(item.month &&
-       item.month !== currentMonth){
+    if(
+      item.month &&
+      item.month !== currentMonth
+    ){
 
-      currentMonth = item.month;
+      currentMonth =
+        item.month;
 
       html += `
         <div class="month">
           ${esc(currentMonth)}
         </div>
       `;
+
     }
 
     const embedUrl =
@@ -432,16 +519,23 @@ function handleSheet(json){
         }
 
       </div>
+
     `;
+
   });
 
   content.className = "";
+
   content.innerHTML = html;
+
 }
 
 function handleError(){
-  document.getElementById("content").innerHTML =
+
+  document.getElementById("content")
+    .innerHTML =
     "読み込みに失敗しました。";
+
 }
 
 const script =
