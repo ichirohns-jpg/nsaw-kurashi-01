@@ -1,0 +1,15 @@
+{
+  "name": "NSAW 暮らし情報局",
+  "short_name": "NSAW",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#eef7fb",
+  "theme_color": "#0d8b46",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
