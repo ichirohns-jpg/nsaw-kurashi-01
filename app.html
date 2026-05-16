@@ -7,13 +7,16 @@
 <title>NSAW 暮らし情報局</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
-  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
   background:#eef7fb;
   color:#17324d;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 }
 
 .wrap{
@@ -23,7 +26,7 @@ body{
 }
 
 .header{
-  background:#fff;
+  background:#ffffff;
   border-radius:24px;
   padding:16px;
   margin-bottom:18px;
@@ -39,7 +42,7 @@ body{
 }
 
 h1{
-  font-size:32px;
+  font-size:34px;
   line-height:1.35;
   margin:8px 0;
   color:#007a3d;
@@ -47,28 +50,28 @@ h1{
 }
 
 .sub{
-  font-size:18px;
-  line-height:1.7;
+  font-size:20px;
+  line-height:1.8;
   font-weight:800;
 }
 
 .status{
   text-align:center;
-  font-size:22px;
+  font-size:24px;
   font-weight:900;
   padding:30px 10px;
 }
 
 .month{
-  font-size:24px;
+  font-size:28px;
   font-weight:900;
-  color:#006837;
-  margin:26px 0 12px;
-  padding-left:6px;
+  color:#007a3d;
+  margin:28px 0 14px;
+  padding-left:4px;
 }
 
 .card{
-  background:#fff;
+  background:#ffffff;
   border-radius:24px;
   padding:18px;
   margin-bottom:18px;
@@ -76,7 +79,7 @@ h1{
 }
 
 .date{
-  font-size:15px;
+  font-size:16px;
   color:#607080;
   font-weight:800;
 }
@@ -93,15 +96,15 @@ h1{
 }
 
 .title{
-  font-size:25px;
+  font-size:28px;
   line-height:1.45;
   font-weight:900;
-  margin:12px 0;
+  margin:14px 0;
 }
 
 .desc{
-  font-size:18px;
-  line-height:1.8;
+  font-size:20px;
+  line-height:1.9;
   font-weight:700;
   white-space:pre-wrap;
 }
@@ -110,7 +113,7 @@ h1{
   width:100%;
   display:block;
   border-radius:20px;
-  margin:12px 0;
+  margin:14px 0;
 }
 
 .btn{
@@ -118,11 +121,11 @@ h1{
   text-align:center;
   text-decoration:none;
   background:#0d8b46;
-  color:#fff;
-  padding:16px 12px;
-  margin:10px 0;
-  border-radius:16px;
-  font-size:20px;
+  color:#ffffff;
+  padding:18px 14px;
+  margin:12px 0;
+  border-radius:18px;
+  font-size:22px;
   font-weight:900;
 }
 
@@ -135,7 +138,7 @@ h1{
   aspect-ratio:16/9;
   border:0;
   border-radius:18px;
-  margin-top:12px;
+  margin-top:14px;
 }
 
 .footer{
@@ -143,8 +146,9 @@ h1{
   color:#6c7f8d;
   font-size:14px;
   line-height:1.8;
-  padding:20px 0 10px;
+  padding:24px 0 10px;
 }
+
 </style>
 </head>
 
@@ -155,17 +159,17 @@ h1{
   <div class="header">
 
     <img
-      src="./top.jpg"
+      src="https://raw.githubusercontent.com/ichirohns-jpg/nsaw-kurashi-01/main/top.jpg"
       class="logo"
       alt="NSAW 暮らし情報局"
-      onerror="this.style.display='none'"
     >
 
     <h1>NSAW 暮らし情報局</h1>
 
     <div class="sub">
       志木・新座・朝霞・和光の<br>
-      暮らし情報を見やすくお届けします
+      暮らし情報を見やすく届ける<br>
+      地域生活テレビです。
     </div>
 
   </div>
@@ -183,24 +187,31 @@ h1{
 
 <script>
 
-const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+const SHEET_ID =
+"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
 
 const GVIZ_URL =
-  "https://docs.google.com/spreadsheets/d/" +
-  SHEET_ID +
-  "/gviz/tq?tqx=out:json;responseHandler:handleSheet";
+"https://docs.google.com/spreadsheets/d/" +
+SHEET_ID +
+"/gviz/tq?tqx=out:json;responseHandler:handleSheet";
 
-function cell(row, index){
+function cell(row,index){
+
   if(!row.c[index]) return "";
+
   if(row.c[index].v == null) return "";
+
   return String(row.c[index].v);
+
 }
 
 function esc(text){
+
   return String(text || "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;");
+
 }
 
 function youtubeEmbed(url){
@@ -210,18 +221,33 @@ function youtubeEmbed(url){
   let id = "";
 
   if(url.includes("youtu.be/")){
-    id = url.split("youtu.be/")[1].split(/[?&]/)[0];
+
+    id = url
+      .split("youtu.be/")[1]
+      .split(/[?&]/)[0];
+
   }
+
   else if(url.includes("watch?v=")){
-    id = url.split("watch?v=")[1].split(/[?&]/)[0];
+
+    id = url
+      .split("watch?v=")[1]
+      .split(/[?&]/)[0];
+
   }
+
   else if(url.includes("/shorts/")){
-    id = url.split("/shorts/")[1].split(/[?&]/)[0];
+
+    id = url
+      .split("/shorts/")[1]
+      .split(/[?&]/)[0];
+
   }
 
   return id
     ? "https://www.youtube.com/embed/" + id
     : "";
+
 }
 
 function button(title,url,blue){
@@ -238,14 +264,16 @@ function button(title,url,blue){
       ${esc(title)}
     </a>
   `;
+
 }
 
 function handleSheet(json){
 
   const rows = json.table.rows || [];
+
   const items = [];
 
-  rows.forEach(row => {
+  rows.forEach(row=>{
 
     const display = cell(row,18);
 
@@ -277,11 +305,17 @@ function handleSheet(json){
       videoDesc: cell(row,16),
       mediaUrl: cell(row,17),
 
-      sortDate: Number(cell(row,19)) || 0,
-      order: Number(cell(row,20)) || 0,
+      sortDate:
+        Number(cell(row,19)) || 0,
 
-      type: cell(row,21),
-      month: cell(row,22)
+      order:
+        Number(cell(row,20)) || 0,
+
+      type:
+        cell(row,21),
+
+      month:
+        cell(row,22)
 
     });
 
@@ -290,28 +324,35 @@ function handleSheet(json){
   items.sort((a,b)=>{
 
     if(b.sortDate !== a.sortDate){
+
       return b.sortDate - a.sortDate;
+
     }
 
     return b.order - a.order;
 
   });
 
-  const content = document.getElementById("content");
+  const content =
+    document.getElementById("content");
 
   if(items.length === 0){
 
-    content.innerHTML = "表示できる情報がありません。";
+    content.innerHTML =
+      "表示できる情報がありません。";
+
     return;
 
   }
 
   let html = "";
+
   let currentMonth = "";
 
-  items.forEach(item => {
+  items.forEach(item=>{
 
-    if(item.month && item.month !== currentMonth){
+    if(item.month &&
+       item.month !== currentMonth){
 
       currentMonth = item.month;
 
@@ -320,11 +361,14 @@ function handleSheet(json){
           ${esc(currentMonth)}
         </div>
       `;
+
     }
 
-    const embedUrl = youtubeEmbed(item.mediaUrl);
+    const embedUrl =
+      youtubeEmbed(item.mediaUrl);
 
     html += `
+
       <div class="card">
 
         <div class="date">
@@ -341,13 +385,22 @@ function handleSheet(json){
 
         ${
           item.image
-          ? `<img class="mainimg" src="${esc(item.image)}">`
+          ? `
+            <img
+              class="mainimg"
+              src="${esc(item.image)}"
+            >
+          `
           : ""
         }
 
         ${
           item.desc
-          ? `<div class="desc">${esc(item.desc)}</div>`
+          ? `
+            <div class="desc">
+              ${esc(item.desc)}
+            </div>
+          `
           : ""
         }
 
@@ -359,40 +412,61 @@ function handleSheet(json){
 
         ${
           item.videoTitle
-          ? `<div class="title">${esc(item.videoTitle)}</div>`
+          ? `
+            <div class="title">
+              ${esc(item.videoTitle)}
+            </div>
+          `
           : ""
         }
 
         ${
           item.videoDesc
-          ? `<div class="desc">${esc(item.videoDesc)}</div>`
+          ? `
+            <div class="desc">
+              ${esc(item.videoDesc)}
+            </div>
+          `
           : ""
         }
 
         ${
           embedUrl
-          ? `<iframe class="video" src="${embedUrl}" allowfullscreen></iframe>`
+          ? `
+            <iframe
+              class="video"
+              src="${embedUrl}"
+              allowfullscreen>
+            </iframe>
+          `
           : ""
         }
 
       </div>
+
     `;
+
   });
 
   content.className = "";
+
   content.innerHTML = html;
+
 }
 
 function handleError(){
 
-  document.getElementById("content").innerHTML =
+  document.getElementById("content")
+    .innerHTML =
     "読み込みに失敗しました。";
 
 }
 
-const script = document.createElement("script");
+const script =
+  document.createElement("script");
 
 script.src = GVIZ_URL;
+
 script.onerror = handleError;
 
 document.body.appendChild(script);
