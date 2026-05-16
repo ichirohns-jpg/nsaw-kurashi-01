@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>暮らし情報 | NSAW 暮らし情報局</title>
 
 <style>
@@ -58,13 +59,6 @@ body{
   font-weight:900;
 }
 
-.status{
-  text-align:center;
-  font-size:22px;
-  font-weight:900;
-  padding:30px 10px;
-}
-
 .card{
   background:#fff;
   border-radius:26px;
@@ -86,17 +80,18 @@ body{
   margin:18px 0;
 }
 
+.mainimg{
+  width:100%;
+  display:block;
+  border-radius:20px;
+  margin:18px 0;
+}
+
 .desc{
   font-size:22px;
   line-height:1.9;
   font-weight:800;
   white-space:pre-wrap;
-}
-
-.mainimg{
-  width:100%;
-  display:block;
-  border-radius:20px;
   margin:18px 0;
 }
 
@@ -112,11 +107,11 @@ body{
   font-weight:900;
 }
 
-.shiki{background:#1f8f3a}
-.niiza{background:#1976d2}
-.asaka{background:#ff4f87}
-.wako{background:#ff9800}
-.other{background:#0d8b46}
+.btn1{background:#1f8f3a}
+.btn2{background:#1976d2}
+.btn3{background:#ff4f87}
+.btn4{background:#ff9800}
+.btn5{background:#7b4bb7}
 
 .footer{
   text-align:center;
@@ -135,10 +130,12 @@ body{
 
 <div class="hero">
   <div class="hero-title" id="heroTitle">暮らし情報</div>
-  <div class="hero-sub">四市の暮らし情報を見やすくまとめています</div>
+  <div class="hero-sub">
+    四市の暮らし情報を見やすくまとめています
+  </div>
 </div>
 
-<div id="content" class="status">読み込み中です…</div>
+<div id="content">読み込み中です…</div>
 
 <div class="footer">NSAW 暮らし情報局</div>
 
@@ -156,15 +153,15 @@ function cell(row,index){
   if(!row.c[index]) return "";
   if(row.c[index].f) return String(row.c[index].f);
   if(row.c[index].v == null) return "";
-  return String(row.c[index].v);
+  return String(row.c[index].v).trim();
 }
 
 function formatDate(value){
   if(!value) return "";
   if(value.startsWith("Date(")){
-    const nums=value.match(/\d+/g);
-    if(nums && nums.length>=3){
-      return nums[0]+"年"+(Number(nums[1])+1)+"月"+nums[2]+"日";
+    const nums = value.match(/\d+/g);
+    if(nums && nums.length >= 3){
+      return nums[0] + "年" + (Number(nums[1]) + 1) + "月" + nums[2] + "日";
     }
   }
   return value;
@@ -177,17 +174,13 @@ function esc(text){
     .replace(/>/g,"&gt;");
 }
 
-function btnClass(title){
-  if(title.includes("志木")) return "shiki";
-  if(title.includes("新座")) return "niiza";
-  if(title.includes("朝霞")) return "asaka";
-  if(title.includes("和光")) return "wako";
-  return "other";
-}
-
-function makeButton(title,url){
+function makeButton(title,url,num){
   if(!title || !url) return "";
-  return `<a class="btn ${btnClass(title)}" href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a>`;
+  return `
+    <a class="btn btn${num}" href="${esc(url)}" target="_blank" rel="noopener">
+      ${esc(title)}
+    </a>
+  `;
 }
 
 function handleSheet(json){
@@ -195,31 +188,31 @@ function handleSheet(json){
   const items = [];
 
   rows.forEach(row=>{
-    const display = cell(row,18).trim();
-    if(display !== "はい") return;
+    const display = cell(row,18); // S列：表示
+    const type = cell(row,21);    // V列：情報 / メディア
 
-    const type = cell(row,21).trim();
+    if(display !== "はい") return;
     if(type !== "情報") return;
 
     items.push({
-      date: formatDate(cell(row,0)),
-      title: cell(row,2),
-      image: cell(row,3),
-      desc: cell(row,4),
+      date: formatDate(cell(row,0)),  // A 日付
+      title: cell(row,2),             // C 瓦版タイトル
+      image: cell(row,3),             // D 瓦版画像URL
+      desc: cell(row,4),              // E 説明文
 
-      info1Title: cell(row,5),
-      info1Url: cell(row,6),
-      info2Title: cell(row,7),
-      info2Url: cell(row,8),
-      info3Title: cell(row,9),
-      info3Url: cell(row,10),
-      info4Title: cell(row,11),
-      info4Url: cell(row,12),
-      info5Title: cell(row,13),
-      info5Url: cell(row,14),
+      btn1Text: cell(row,5),          // F
+      btn1Url: cell(row,6),           // G
+      btn2Text: cell(row,7),          // H
+      btn2Url: cell(row,8),           // I
+      btn3Text: cell(row,9),          // J
+      btn3Url: cell(row,10),          // K
+      btn4Text: cell(row,11),         // L
+      btn4Url: cell(row,12),          // M
+      btn5Text: cell(row,13),         // N
+      btn5Url: cell(row,14),          // O
 
-      sortDate: Number(cell(row,19)) || 0,
-      order: Number(cell(row,20)) || 0
+      sortDate: Number(cell(row,19)) || 0, // T
+      order: Number(cell(row,20)) || 0     // U
     });
   });
 
@@ -243,7 +236,9 @@ function handleSheet(json){
   items.slice(0,5).forEach(item=>{
     html += `
       <div class="card">
+
         <div class="date">${esc(item.date)}</div>
+
         <div class="title">${esc(item.title)}</div>
 
         ${
@@ -252,28 +247,33 @@ function handleSheet(json){
           : ""
         }
 
-        ${item.desc ? `<div class="desc">${esc(item.desc)}</div>` : ""}
+        ${
+          item.desc
+          ? `<div class="desc">${esc(item.desc)}</div>`
+          : ""
+        }
 
-        ${makeButton(item.info1Title,item.info1Url)}
-        ${makeButton(item.info2Title,item.info2Url)}
-        ${makeButton(item.info3Title,item.info3Url)}
-        ${makeButton(item.info4Title,item.info4Url)}
-        ${makeButton(item.info5Title,item.info5Url)}
+        ${makeButton(item.btn1Text,item.btn1Url,1)}
+        ${makeButton(item.btn2Text,item.btn2Url,2)}
+        ${makeButton(item.btn3Text,item.btn3Url,3)}
+        ${makeButton(item.btn4Text,item.btn4Url,4)}
+        ${makeButton(item.btn5Text,item.btn5Url,5)}
+
       </div>
     `;
   });
 
-  content.className = "";
   content.innerHTML = html;
 }
 
 function handleError(){
-  document.getElementById("content").innerHTML = "読み込みに失敗しました。";
+  document.getElementById("content").innerHTML =
+    "読み込みに失敗しました。";
 }
 
-const script=document.createElement("script");
-script.src=GVIZ_URL;
-script.onerror=handleError;
+const script = document.createElement("script");
+script.src = GVIZ_URL;
+script.onerror = handleError;
 document.body.appendChild(script);
 </script>
 
