@@ -11,6 +11,10 @@
   box-sizing:border-box;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   margin:0;
   background:#eef7fb;
@@ -57,6 +61,10 @@ body{
   font-size:22px;
   line-height:1.6;
   font-weight:900;
+}
+
+.top-buttons{
+  margin-bottom:20px;
 }
 
 .status{
@@ -171,9 +179,28 @@ body{
     </div>
 
     <div class="hero-sub">
-      地域のイベント・特売・動画などを<br>
+      暮らし情報と地域メディアを<br>
       見やすくまとめています
     </div>
+
+  </div>
+
+  <div class="top-buttons">
+
+    <a
+      href="#kurashi"
+      class="btn"
+      style="margin-top:0;"
+    >
+      暮らし情報を見る
+    </a>
+
+    <a
+      href="#media"
+      class="btn blue"
+    >
+      地域メディアを見る
+    </a>
 
   </div>
 
@@ -444,7 +471,15 @@ function handleSheet(json){
 
     html += `
 
-      <div class="card">
+      <div
+        class="card"
+        id="${
+          item.type &&
+          item.type.includes("メディア")
+          ? "media"
+          : "kurashi"
+        }"
+      >
 
         <div class="date">
           ${esc(item.date)}
