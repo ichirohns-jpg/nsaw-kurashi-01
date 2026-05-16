@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>地域メディア | NSAW 暮らし情報局</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#eef7fb;
+  color:#17324d;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+}
+
+.wrap{
+  max-width:720px;
+  margin:0 auto;
+  padding:14px;
+}
+
+.hero{
+  background:linear-gradient(180deg,#ffffff 0%,#edf2ff 100%);
+  border:4px solid #1976d2;
+  border-radius:28px;
+  padding:24px 18px;
+  margin-bottom:24px;
+  text-align:center;
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+}
+
+.hero-title{
+  font-size:44px;
+  line-height:1.2;
+  font-weight:900;
+  color:#1976d2;
+}
+
+.hero-sub{
+  margin-top:16px;
+  font-size:22px;
+  line-height:1.7;
+  font-weight:900;
+}
+
+.back{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  background:#1976d2;
+  color:#fff;
+  padding:18px;
+  border-radius:20px;
+  margin-bottom:22px;
+  font-size:24px;
+  font-weight:900;
+}
+
+.card{
+  background:#fff;
+  border-radius:26px;
+  padding:22px;
+  margin-bottom:24px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+}
+
+.date{
+  font-size:18px;
+  color:#607080;
+  font-weight:900;
+}
+
+.title{
+  font-size:34px;
+  line-height:1.45;
+  font-weight:900;
+  margin:18px 0;
+}
+
+.desc{
+  font-size:22px;
+  line-height:1.9;
+  font-weight:800;
+  white-space:pre-wrap;
+}
+
+.video{
+  width:100%;
+  aspect-ratio:16/9;
+  border:0;
+  border-radius:20px;
+  margin-top:18px;
+}
+
+.footer{
+  text-align:center;
+  color:#6c7f8d;
+  font-size:15px;
+  line-height:1.8;
+  padding:28px 0 12px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <a
+    href="index.html"
+    class="back"
+  >
+    トップへ戻る
+  </a>
+
+  <div class="hero">
+
+    <div
+      class="hero-title"
+      id="heroTitle"
+    >
+      地域メディア
+    </div>
+
+    <div class="hero-sub">
+      地域動画やおすすめメディアを
+      見やすくまとめています
+    </div>
+
+  </div>
+
+  <div id="content">
+    読み込み中です…
+  </div>
+
+  <div class="footer">
+    NSAW 暮らし情報局
+  </div>
+
+</div>
+
+<script>
+
+const SHEET_ID =
+"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+
+const GVIZ_URL =
+"https://docs.google.com/spreadsheets/d/" +
+SHEET_ID +
+"/gviz/tq?tqx=out:json;responseHandler:handleSheet";
+
+function cell(row,index){
+
+  if(!row.c[index]) return "";
+
+  if(row.c[index].f) return String(row.c[index].f);
+
+  if(row.c[index].v == null) return "";
+
+  return String(row.c[index].v);
+
+}
+
+function formatDate(value){
+
+  if(!value) return "";
+
+  if(value.startsWith("Date(")){
+
+    const nums = value.match(/\d+/g);
+
+    if(nums && nums.length >= 3){
+
+      return (
+        nums[0] + "年" +
+        (Number(nums[1])+1) + "月" +
+        nums[2] + "日"
+      );
+
+    }
+  }
+
+  return value;
+
+}
+
+function esc(text){
+
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
+}
+
+function youtubeEmbed(url){
+
+  if(!url) return "";
+
+  let id = "";
+
+  if(url.includes("youtu.be/")){
+
+    id =
+      url
+      .split("youtu.be/")[1]
+      .split(/[?&]/)[0];
+
+  }
+
+  else if(url.includes("watch?v=")){
+
+    id =
+      url
+      .split("watch?v=")[1]
+      .split(/[?&]/)[0];
+
+  }
+
+  else if(url.includes("/shorts/")){
+
+    id =
+      url
+      .split("/shorts/")[1]
+      .split(/[?&]/)[0];
+
+  }
+
+  return id
+    ? "https://www.youtube.com/embed/" + id
+    : "";
+
+}
+
+function handleSheet(json){
+
+  const rows =
+    json.table.rows || [];
+
+  const items = [];
+
+  rows.forEach(row=>{
+
+    const display =
+      cell(row,18);
+
+    if(display !== "はい") return;
+
+    const type =
+      cell(row,21);
+
+    if(type !== "メディア") return;
+
+    items.push({
+
+      date:
+        formatDate(cell(row,0)),
+
+      title:
+        cell(row,2),
+
+      desc:
+        cell(row,4),
+
+      mediaUrl:
+        cell(row,17),
+
+      sortDate:
+        Number(cell(row,19)) || 0,
+
+      order:
+        Number(cell(row,20)) || 0
+
+    });
+
+  });
+
+  items.sort((a,b)=>{
+
+    if(b.sortDate !== a.sortDate){
+
+      return b.sortDate - a.sortDate;
+
+    }
+
+    return b.order - a.order;
+
+  });
+
+  let html = "";
+
+  if(items.length === 0){
+
+    html = `
+
+      <div class="card">
+
+        <div class="title">
+          過去の地域メディアを見る
+        </div>
+
+        <div class="desc">
+          本日は新しい地域メディア投稿がありません。
+        </div>
+
+      </div>
+
+    `;
+
+  }else{
+
+    document.getElementById("heroTitle").innerHTML =
+      items[0].date +
+      "<br>の地域メディア";
+
+    items
+      .slice(0,5)
+      .forEach(item=>{
+
+        const embedUrl =
+          youtubeEmbed(item.mediaUrl);
+
+        html += `
+
+          <div class="card">
+
+            <div class="date">
+              ${esc(item.date)}
+            </div>
+
+            <div class="title">
+              ${esc(item.title)}
+            </div>
+
+            ${
+              item.desc
+              ? `
+                <div class="desc">
+                  ${esc(item.desc)}
+                </div>
+              `
+              : ""
+            }
+
+            ${
+              embedUrl
+              ? `
+                <iframe
+                  class="video"
+                  src="${embedUrl}"
+                  allowfullscreen>
+                </iframe>
+              `
+              : ""
+            }
+
+          </div>
+
+        `;
+
+      });
+
+  }
+
+  document.getElementById("content")
+    .innerHTML = html;
+
+}
+
+const script =
+  document.createElement("script");
+
+script.src = GVIZ_URL;
+
+document.body.appendChild(script);
+
+</script>
+
+</body>
+</html>
