@@ -6,13 +6,16 @@
 <title>NSAW 暮らし情報局</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
-  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
   background:#eef8f5;
   color:#14324a;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 }
 
 .wrap{
@@ -70,6 +73,13 @@ body{
   color:#102e4a;
 }
 
+.image{
+  width:100%;
+  border-radius:22px;
+  margin-bottom:22px;
+  display:block;
+}
+
 .description{
   font-size:23px;
   line-height:1.6;
@@ -94,11 +104,25 @@ body{
   word-break:break-word;
 }
 
-.green{background:#16943a}
-.blue{background:#1976d2}
-.pink{background:#f54285}
-.orange{background:#f39c12}
-.purple{background:#7b4fd6}
+.green{
+  background:#16943a;
+}
+
+.blue{
+  background:#1976d2;
+}
+
+.pink{
+  background:#f54285;
+}
+
+.orange{
+  background:#f39c12;
+}
+
+.purple{
+  background:#7b4fd6;
+}
 
 .movieBox{
   margin-top:24px;
@@ -151,10 +175,12 @@ body{
   font-weight:800;
   line-height:1.5;
 }
+
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
 
   <div class="top">
@@ -162,147 +188,380 @@ body{
     <p>四市の暮らし情報を見やすくまとめています</p>
   </div>
 
-  <div id="app" class="loading">読み込み中です...</div>
+  <div id="app" class="loading">
+    読み込み中です...
+  </div>
 
 </div>
 
 <script>
-const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
-const SHEET_NAME = "NSAW暮らし情報局_データ";
 
-const app = document.getElementById("app");
+const SHEET_ID =
+"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+
+const SHEET_NAME =
+"NSAW暮らし情報局_データ";
+
+const app =
+document.getElementById("app");
 
 function cell(row,index){
-  if(!row.c || !row.c[index]) return "";
-  return row.c[index].f || row.c[index].v || "";
+
+  if(!row.c) return "";
+
+  if(!row.c[index]) return "";
+
+  return row.c[index].f ||
+         row.c[index].v ||
+         "";
+
 }
 
-function dateNumber(value){
-  return Number(String(value || "").replace(/[^\d]/g,"")) || 0;
+function toDateValue(str){
+
+  if(!str) return 0;
+
+  const parts =
+    String(str)
+    .trim()
+    .split("/");
+
+  if(parts.length !== 3){
+    return 0;
+  }
+
+  const y =
+    parts[0];
+
+  const m =
+    parts[1].padStart(2,"0");
+
+  const d =
+    parts[2].padStart(2,"0");
+
+  return Number(
+    y + m + d
+  );
+
 }
 
-function createButton(title,url,colorClass){
+function createButton(
+  title,
+  url,
+  colorClass
+){
+
   if(!title) return "";
 
   if(url){
-    return '<a class="infoBtn '+colorClass+'" href="'+url+'" target="_blank" rel="noopener">'+title+'</a>';
+
+    return `
+      <a
+        class="infoBtn ${colorClass}"
+        href="${url}"
+        target="_blank"
+        rel="noopener"
+      >
+        ${title}
+      </a>
+    `;
+
   }
 
-  return '<div class="infoBtn '+colorClass+'">'+title+'</div>';
+  return `
+    <div class="infoBtn ${colorClass}">
+      ${title}
+    </div>
+  `;
+
 }
 
 function render(rows){
+
   app.className = "";
+
   app.innerHTML = "";
 
   if(!rows.length){
-    app.innerHTML = '<div class="error">表示できる情報がありません。S列の「表示」が「はい」になっているか確認してください。</div>';
+
+    app.innerHTML = `
+      <div class="error">
+        表示できる情報がありません。
+      </div>
+    `;
+
     return;
+
   }
 
   rows.forEach(function(item){
-    const card = document.createElement("div");
+
+    const card =
+      document.createElement("div");
+
     card.className = "card";
 
     let html = "";
 
-    html += '<div class="date">'+item.date+'</div>';
-    html += '<h2 class="title">'+item.title+'</h2>';
+    html += `
+      <div class="date">
+        ${item.date}
+      </div>
+    `;
 
-    if(item.description){
-      html += '<div class="description">'+item.description+'</div>';
+    html += `
+      <h2 class="title">
+        ${item.title}
+      </h2>
+    `;
+
+    if(item.imageUrl){
+
+      html += `
+        <img
+          class="image"
+          src="${item.imageUrl}"
+          loading="lazy"
+        >
+      `;
+
     }
 
-    html += createButton(item.info1Title,item.info1Url,"green");
-    html += createButton(item.info2Title,item.info2Url,"blue");
-    html += createButton(item.info3Title,item.info3Url,"pink");
-    html += createButton(item.info4Title,item.info4Url,"orange");
-    html += createButton(item.info5Title,item.info5Url,"purple");
+    if(item.description){
 
-    if(item.movieTitle || item.movieDetail || item.mediaUrl){
-      html += '<div class="movieBox">';
+      html += `
+        <div class="description">
+          ${item.description}
+        </div>
+      `;
+
+    }
+
+    html += createButton(
+      item.info1Title,
+      item.info1Url,
+      "green"
+    );
+
+    html += createButton(
+      item.info2Title,
+      item.info2Url,
+      "blue"
+    );
+
+    html += createButton(
+      item.info3Title,
+      item.info3Url,
+      "pink"
+    );
+
+    html += createButton(
+      item.info4Title,
+      item.info4Url,
+      "orange"
+    );
+
+    html += createButton(
+      item.info5Title,
+      item.info5Url,
+      "purple"
+    );
+
+    if(
+      item.movieTitle ||
+      item.movieDetail ||
+      item.mediaUrl
+    ){
+
+      html += `
+        <div class="movieBox">
+      `;
 
       if(item.movieTitle){
-        html += '<div class="movieTitle">'+item.movieTitle+'</div>';
+
+        html += `
+          <div class="movieTitle">
+            ${item.movieTitle}
+          </div>
+        `;
+
       }
 
       if(item.movieDetail){
-        html += '<div class="movieText">'+item.movieDetail+'</div>';
+
+        html += `
+          <div class="movieText">
+            ${item.movieDetail}
+          </div>
+        `;
+
       }
 
       if(item.mediaUrl){
-        html += '<a class="movieLink" href="'+item.mediaUrl+'" target="_blank" rel="noopener">動画を見る</a>';
+
+        html += `
+          <a
+            class="movieLink"
+            href="${item.mediaUrl}"
+            target="_blank"
+            rel="noopener"
+          >
+            動画を見る
+          </a>
+        `;
+
       }
 
-      html += '</div>';
+      html += `
+        </div>
+      `;
+
     }
 
     card.innerHTML = html;
+
     app.appendChild(card);
+
   });
+
 }
 
 window.handleSheet = function(json){
+
   try{
-    const rows = json.table.rows.map(function(row){
-      return {
-        date: cell(row,0),
-        articleId: cell(row,1),
-        title: cell(row,2),
-        imageUrl: cell(row,3),
-        description: cell(row,4),
 
-        info1Title: cell(row,5),
-        info1Url: cell(row,6),
+    const rows =
+      json.table.rows
+      .map(function(row,index){
 
-        info2Title: cell(row,7),
-        info2Url: cell(row,8),
+        return {
 
-        info3Title: cell(row,9),
-        info3Url: cell(row,10),
+          rowNo:index,
 
-        info4Title: cell(row,11),
-        info4Url: cell(row,12),
+          date:
+            cell(row,0),
 
-        info5Title: cell(row,13),
-        info5Url: cell(row,14),
+          articleId:
+            cell(row,1),
 
-        movieTitle: cell(row,15),
-        movieDetail: cell(row,16),
-        mediaUrl: cell(row,17),
+          title:
+            cell(row,2),
 
-        show: cell(row,18)
-      };
-    })
-    .filter(function(item){
-      return String(item.show).trim() === "はい";
-    })
-    .sort(function(a,b){
-      return dateNumber(b.date) - dateNumber(a.date);
-    });
+          imageUrl:
+            cell(row,3),
+
+          description:
+            cell(row,4),
+
+          info1Title:
+            cell(row,5),
+
+          info1Url:
+            cell(row,6),
+
+          info2Title:
+            cell(row,7),
+
+          info2Url:
+            cell(row,8),
+
+          info3Title:
+            cell(row,9),
+
+          info3Url:
+            cell(row,10),
+
+          info4Title:
+            cell(row,11),
+
+          info4Url:
+            cell(row,12),
+
+          info5Title:
+            cell(row,13),
+
+          info5Url:
+            cell(row,14),
+
+          movieTitle:
+            cell(row,15),
+
+          movieDetail:
+            cell(row,16),
+
+          mediaUrl:
+            cell(row,17),
+
+          show:
+            cell(row,18)
+
+        };
+
+      })
+
+      .filter(function(item){
+
+        return String(item.show)
+          .trim() === "はい";
+
+      })
+
+      .sort(function(a,b){
+
+        const bDate =
+          toDateValue(b.date);
+
+        const aDate =
+          toDateValue(a.date);
+
+        if(bDate !== aDate){
+
+          return bDate - aDate;
+
+        }
+
+        return b.rowNo - a.rowNo;
+
+      });
 
     render(rows);
 
   }catch(e){
+
+    console.error(e);
+
     app.className = "";
-    app.innerHTML = '<div class="error">読み込みエラーです。シート名、公開設定、列の位置を確認してください。</div>';
+
+    app.innerHTML = `
+      <div class="error">
+        読み込みエラーです。
+      </div>
+    `;
+
   }
+
 };
 
 function loadSheet(){
-  const script = document.createElement("script");
+
+  const script =
+    document.createElement("script");
+
   script.src =
-    "https://docs.google.com/spreadsheets/d/" +
-    SHEET_ID +
-    "/gviz/tq?sheet=" +
-    encodeURIComponent(SHEET_NAME) +
-    "&tqx=out:json;responseHandler:handleSheet&v=" +
-    Date.now();
+    "https://docs.google.com/spreadsheets/d/"
+    + SHEET_ID
+    + "/gviz/tq?sheet="
+    + encodeURIComponent(SHEET_NAME)
+    + "&tqx=out:json;responseHandler:handleSheet&v="
+    + Date.now();
 
   document.body.appendChild(script);
+
 }
 
 loadSheet();
+
 </script>
+
 </body>
 </html>
