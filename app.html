@@ -194,45 +194,6 @@ body{
 .homeRegisterBtn{background:#15803d}
 .homeBtn{background:#ea580c}
 
-/* 検索 */
-
-.searchBox{
-  display:flex;
-  gap:10px;
-  margin:20px 0 24px;
-}
-
-.searchInput{
-  flex:1;
-  border:none;
-  border-radius:18px;
-  padding:16px 14px;
-  font-size:20px;
-  font-weight:800;
-  background:#fff;
-  box-shadow:0 5px 12px rgba(0,0,0,.10);
-}
-
-.searchBtn{
-  border:none;
-  border-radius:18px;
-  background:#16864a;
-  color:#fff;
-  padding:16px 18px;
-  font-size:20px;
-  font-weight:900;
-}
-
-.clearBtn{
-  border:none;
-  border-radius:18px;
-  background:#666;
-  color:#fff;
-  padding:16px 14px;
-  font-size:18px;
-  font-weight:900;
-}
-
 /* 記事 */
 
 .card{
@@ -293,7 +254,7 @@ body{
 .orange{background:#ef9819}
 .purple{background:#7d4dd8}
 
-/* SNS */
+/* 記事SNS */
 
 .articleSnsBox{
   display:grid;
@@ -469,34 +430,6 @@ body{
 
   </div>
 
-  <!-- 検索 -->
-
-  <div class="searchBox">
-
-    <input
-      id="searchInput"
-      class="searchInput"
-      type="text"
-      placeholder="記事を検索">
-
-    <button
-      class="searchBtn"
-      onclick="searchArticles()">
-
-      🔍
-
-    </button>
-
-    <button
-      class="clearBtn"
-      onclick="clearSearch()">
-
-      ✕
-
-    </button>
-
-  </div>
-
   <div id="app"
        class="loading">
 
@@ -522,8 +455,6 @@ const GAS_URL =
 
 const app =
 document.getElementById("app");
-
-let allRows = [];
 
 function toggleSafetyPanel(){
 
@@ -767,58 +698,6 @@ function copyArticle(title,desc){
 
 }
 
-function searchArticles(){
-
-  const word =
-    document.getElementById("searchInput")
-    .value
-    .trim()
-    .toLowerCase();
-
-  if(!word){
-
-    render(allRows);
-
-    return;
-
-  }
-
-  const filtered =
-    allRows.filter(function(item){
-
-      const text =
-        (
-          item.title
-          + " "
-          + item.description
-          + " "
-          + item.info1Title
-          + " "
-          + item.info2Title
-          + " "
-          + item.info3Title
-          + " "
-          + item.movieTitle
-        )
-        .toLowerCase();
-
-      return text.includes(word);
-
-    });
-
-  render(filtered);
-
-}
-
-function clearSearch(){
-
-  document.getElementById("searchInput").value =
-    "";
-
-  render(allRows);
-
-}
-
 function cell(row,index){
 
   if(!row.c || !row.c[index]) return "";
@@ -910,15 +789,6 @@ function render(rows){
 
   app.className = "";
   app.innerHTML = "";
-
-  if(!rows.length){
-
-    app.innerHTML =
-      '<div class="error">見つかりませんでした</div>';
-
-    return;
-
-  }
 
   rows.forEach(function(item){
 
@@ -1026,16 +896,11 @@ window.handleSheet = function(json){
           cell(row,9),
 
         info3Url:
-          cell(row,10),
-
-        movieTitle:
-          cell(row,15)
+          cell(row,10)
 
       };
 
     });
-
-  allRows = rows;
 
   render(rows);
 
