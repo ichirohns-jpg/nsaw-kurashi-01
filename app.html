@@ -453,87 +453,67 @@ window.handleSheet = function(json){
 
           rowNo:index,
 
-          /* A */
           date:
             cell(row,0),
 
-          /* B */
           articleId:
             cell(row,1),
 
-          /* C */
           title:
             cell(row,2),
 
-          /* D */
           imageUrl:
             fixDriveImage(
               cell(row,3)
             ),
 
-          /* E */
           description:
             cell(row,4),
 
-          /* F */
           info1Title:
             cell(row,5),
 
-          /* G */
           info1Url:
             cell(row,6),
 
-          /* H */
           info2Title:
             cell(row,7),
 
-          /* I */
           info2Url:
             cell(row,8),
 
-          /* J */
           info3Title:
             cell(row,9),
 
-          /* K */
           info3Url:
             cell(row,10),
 
-          /* L */
           info4Title:
             cell(row,11),
 
-          /* M */
           info4Url:
             cell(row,12),
 
-          /* N */
           info5Title:
             cell(row,13),
 
-          /* O */
           info5Url:
             cell(row,14),
 
-          /* P */
           movieTitle:
             cell(row,15),
 
-          /* Q */
           movieDetail:
             cell(row,16),
 
-          /* R */
           mediaUrl:
             cell(row,17),
 
-          /* S */
           show:
             cell(row,18),
 
-          /* T */
           sortDate:
-            Number(
+            parseInt(
               cell(row,19)
             ) || 0
 
@@ -552,10 +532,20 @@ window.handleSheet = function(json){
     rows =
       rows.sort(function(a,b){
 
+        if(b.sortDate !== a.sortDate){
+
+          return (
+            b.sortDate
+            -
+            a.sortDate
+          );
+
+        }
+
         return (
-          b.sortDate
+          b.rowNo
           -
-          a.sortDate
+          a.rowNo
         );
 
       });
