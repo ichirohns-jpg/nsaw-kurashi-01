@@ -1,3 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NSAW 暮らし情報局</title>
+
+<meta name="description" content="四市の暮らし情報・電話帳・地図・安心サポート">
+<meta property="og:title" content="NSAW 暮らし情報局">
+<meta property="og:description" content="四市の暮らし情報・電話帳・地図・安心サポート">
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#eef8f5;
+  color:#14324a;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+}
+
+.wrap{
+  max-width:680px;
+  margin:0 auto;
+  padding:0 12px 40px;
+}
+
+/* 安否確認 */
+
+.fixedBar{
+  position:sticky;
+  top:0;
+  z-index:9999;
+  background:#eef8f5;
+  padding:8px 0 10px;
+}
+
+.miniOpenBtn{
+  width:100%;
+  border:none;
+  border-radius:18px;
+  background:#16864a;
+  color:#fff;
+  padding:14px 12px;
+  font-size:19px;
+  font-weight:900;
+  box-shadow:0 4px 10px rgba(0,0,0,.12);
+}
+
+.safetyPanel{
+  display:none;
+  margin-top:10px;
+  background:#fff;
+  border-radius:22px;
+  padding:14px;
+  box-shadow:0 8px 18px rgba(0,0,0,.10);
+}
+
+.nameMiniRow{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.nameMiniText{
+  flex:1;
+  font-size:16px;
+  font-weight:900;
+  color:#145c37;
+}
+
+.nameChangeBtn{
+  border:none;
+  border-radius:12px;
+  background:#3476d6;
+  color:#fff;
+  padding:10px 12px;
+  font-size:15px;
+  font-weight:900;
+}
+
+.nameEditArea{
+  display:none;
+  margin-top:10px;
+  gap:8px;
+}
+
+.nameInput{
+  width:100%;
+  border:2px solid #c7d8cf;
+  border-radius:14px;
+  padding:12px;
+  font-size:18px;
+  font-weight:800;
+}
+
+.nameSave{
+  border:none;
+  border-radius:14px;
+  background:#16864a;
+  color:#fff;
+  padding:12px 16px;
+  font-size:16px;
+  font-weight:900;
+}
+
+.safeBtn{
+  width:100%;
+  border:none;
+  border-radius:18px;
+  padding:16px 12px;
+  margin-top:10px;
+  font-size:22px;
+  font-weight:900;
+  color:#fff;
+}
+
+.greenBtn{background:#16a34a}
+.yellowBtn{background:#f59e0b}
+.redBtn{background:#dc2626}
+
+.statusMsg{
+  display:none;
+  background:#fff;
+  border:3px solid #16a34a;
+  border-radius:18px;
+  padding:14px;
+  margin-top:12px;
+  font-size:18px;
+  font-weight:900;
+  text-align:center;
+}
+
+/* タイトル */
+
+.top{
+  background:#fff;
+  border:5px solid #16864a;
+  border-radius:28px;
+  padding:24px 18px;
+  text-align:center;
+  margin:14px 0 18px;
+  box-shadow:0 8px 22px rgba(0,0,0,.08);
+}
+
+.top h1{
+  margin:0;
+  font-size:38px;
+  line-height:1.25;
+  color:#118047;
+  font-weight:900;
+}
+
+.top p{
+  margin:14px 0 0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:800;
+  color:#31465a;
+}
+
+/* メインボタン */
+
+.contactPanel{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  margin-bottom:24px;
+}
+
+.contactBtn{
+  display:block;
+  text-decoration:none;
+  text-align:center;
+  color:#fff;
+  font-size:24px;
+  font-weight:900;
+  border-radius:22px;
+  padding:22px 12px;
+  box-shadow:0 6px 14px rgba(0,0,0,.15);
+  border:none;
+}
+
+.telBtn{background:#2563eb}
+.mapBtn{background:#0f766e}
+.cityMapBtn{background:#7c3aed}
+.homeRegisterBtn{background:#15803d}
+.homeBtn{background:#ea580c}
+
+/* 記事 */
+
+.card{
+  background:#fff;
+  border-radius:28px;
+  padding:24px 20px;
+  margin-bottom:28px;
+  box-shadow:0 10px 26px rgba(0,0,0,.10);
+}
+
+.date{
+  font-size:26px;
+  font-weight:900;
+  color:#647386;
+  margin-bottom:16px;
+}
+
+.title{
+  font-size:34px;
+  line-height:1.3;
+  font-weight:900;
+  margin:0 0 18px;
+  color:#102e4a;
+}
+
+.image{
+  width:100%;
+  border-radius:22px;
+  margin-bottom:20px;
+  display:block;
+}
+
+.description{
+  font-size:18px;
+  line-height:1.7;
+  font-weight:700;
+  color:#2d4055;
+  margin-bottom:20px;
+}
+
+.infoBtn{
+  display:block;
+  width:100%;
+  text-decoration:none;
+  color:#fff;
+  font-size:24px;
+  line-height:1.4;
+  font-weight:900;
+  text-align:center;
+  padding:22px 14px;
+  border-radius:22px;
+  margin:14px 0;
+}
+
+.green{background:#2f9441}
+.blue{background:#3476d6}
+.pink{background:#ea4f8b}
+.orange{background:#ef9819}
+.purple{background:#7d4dd8}
+
+/* 動画 */
+
+.movieBox{
+  margin-top:22px;
+  background:#f2f7ff;
+  border:3px solid #2b77d0;
+  border-radius:24px;
+  padding:20px;
+}
+
+.movieTitle{
+  font-size:26px;
+  font-weight:900;
+  color:#1454a8;
+  margin-bottom:10px;
+}
+
+.movieText{
+  font-size:18px;
+  line-height:1.7;
+  font-weight:700;
+  margin-bottom:16px;
+}
+
+.videoFrame{
+  width:100%;
+  aspect-ratio:16/9;
+  border:0;
+  border-radius:18px;
+  background:#000;
+}
+
+.videoTag{
+  width:100%;
+  border-radius:18px;
+  background:#000;
+}
+
+/* 記事SNS */
+
+.articleSnsBox{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:20px;
+  padding-top:18px;
+  border-top:2px solid #e0e8e4;
+}
+
+.articleSnsBtn{
+  border:none;
+  border-radius:16px;
+  color:#fff;
+  padding:15px 8px;
+  font-size:17px;
+  font-weight:900;
+}
+
+.fbBtn{background:#1877f2}
+.xBtn{background:#111}
+.lineBtn{background:#06c755}
+.copyBtn{background:#666}
+
+.loading{
+  text-align:center;
+  font-size:24px;
+  font-weight:900;
+  padding:40px 0;
+}
+
+.error{
+  background:#fff0f0;
+  color:#b00020;
+  border:3px solid #f0a0a0;
+  border-radius:20px;
+  padding:20px;
+  font-size:22px;
+  font-weight:800;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <div class="fixedBar">
+
+    <button class="miniOpenBtn" onclick="toggleSafetyPanel()">
+      😊 安否確認・困りごと
+    </button>
+
+    <div id="safetyPanel" class="safetyPanel">
+
+      <div class="nameMiniRow">
+        <div id="nameMiniText" class="nameMiniText">
+          登録名：未設定
+        </div>
+
+        <button class="nameChangeBtn" onclick="toggleNameEdit()">
+          変更
+        </button>
+      </div>
+
+      <div id="nameEditArea" class="nameEditArea">
+        <input id="nameInput" class="nameInput" placeholder="例：山口さん">
+        <button class="nameSave" onclick="saveName()">保存</button>
+      </div>
+
+      <button class="safeBtn greenBtn" onclick="sendSafety('genki')">
+        😊 元気です
+      </button>
+
+      <button class="safeBtn yellowBtn" onclick="sendSafety('komari')">
+        😥 何かに困っています
+      </button>
+
+      <button class="safeBtn redBtn" onclick="sendSafety('kyukyu')">
+        🚨 急いで助けてください
+      </button>
+
+      <div id="statusMsg" class="statusMsg"></div>
+
+    </div>
+
+  </div>
+
+  <div class="top">
+    <h1>NSAW<br>暮らし情報局</h1>
+    <p>四市の暮らし情報を見やすくまとめています</p>
+  </div>
+
+  <div class="contactPanel">
+
+    <a class="contactBtn telBtn" href="./phone.html">
+      📞 電話帳
+    </a>
+
+    <button class="contactBtn mapBtn" onclick="openCurrentLocationMap()">
+      🗺 今いる場所
+    </button>
+
+    <a class="contactBtn cityMapBtn" href="./map.html">
+      🗺 四市マップ
+    </a>
+
+    <button class="contactBtn homeRegisterBtn" onclick="registerHomeLocation()">
+      🏠 今いる場所を家として登録
+    </button>
+
+    <button class="contactBtn homeBtn" onclick="goHome()">
+      🏠 家に帰る
+    </button>
+
+  </div>
+
+  <div id="app" class="loading">
+    読み込み中です...
+  </div>
+
+</div>
+
+<script>
+const SHARE_URL = "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html";
+const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+const SHEET_NAME = "NSAW暮らし情報局_データ";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbz4kvlKDo93xyUfmExcgHj9MqLhyCyxemGM0RWkysNQ_vlAx8AWvPk9McfbJrvM4NIJ/exec";
+const app = document.getElementById("app");
+
+/* 安否パネル開閉：同じボタンをもう一度押すと閉じる */
 function toggleSafetyPanel(){
 
   const panel =
@@ -14,3 +437,564 @@ function toggleSafetyPanel(){
   }
 
 }
+
+function toggleNameEdit(){
+
+  const area =
+    document.getElementById("nameEditArea");
+
+  if(area.style.display === "flex"){
+
+    area.style.display = "none";
+
+  }else{
+
+    area.style.display = "flex";
+
+  }
+
+}
+
+function initName(){
+
+  const saved =
+    localStorage.getItem("nsaw_name") || "";
+
+  document.getElementById("nameInput").value =
+    saved;
+
+  if(saved){
+
+    document.getElementById("nameMiniText").innerText =
+      "登録名：" + saved;
+
+  }
+
+}
+
+function saveName(){
+
+  const name =
+    document.getElementById("nameInput")
+    .value
+    .trim();
+
+  if(name){
+
+    localStorage.setItem("nsaw_name",name);
+
+    document.getElementById("nameMiniText").innerText =
+      "登録名：" + name;
+
+  }
+
+  document.getElementById("nameEditArea").style.display =
+    "none";
+
+}
+
+function showStatus(text,color){
+
+  const box =
+    document.getElementById("statusMsg");
+
+  box.style.display = "block";
+  box.innerText = text;
+  box.style.borderColor = color;
+  box.style.color = color;
+
+}
+
+function sendSafety(status){
+
+  const name =
+    localStorage.getItem("nsaw_name")
+    || "名前未設定";
+
+  showStatus("送信中です...","#2563eb");
+
+  if(status === "kyukyu" && navigator.geolocation){
+
+    navigator.geolocation.getCurrentPosition(
+      function(pos){
+        sendToGas(
+          name,
+          status,
+          pos.coords.latitude,
+          pos.coords.longitude
+        );
+      },
+      function(){
+        sendToGas(name,status,"","");
+      }
+    );
+
+  }else{
+
+    sendToGas(name,status,"","");
+
+  }
+
+}
+
+function sendToGas(name,status,lat,lng){
+
+  const url =
+    GAS_URL
+    + "?name=" + encodeURIComponent(name)
+    + "&status=" + encodeURIComponent(status)
+    + "&lat=" + encodeURIComponent(lat || "")
+    + "&lng=" + encodeURIComponent(lng || "")
+    + "&t=" + Date.now();
+
+  fetch(url,{mode:"no-cors"})
+    .then(function(){
+      showStatus("送信しました","#16a34a");
+    });
+
+}
+
+function openCurrentLocationMap(){
+
+  navigator.geolocation.getCurrentPosition(function(pos){
+
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+
+    window.open(
+      "https://www.google.com/maps?q=" + lat + "," + lng,
+      "_blank"
+    );
+
+  });
+
+}
+
+function registerHomeLocation(){
+
+  const ok = confirm(
+`※ 自宅情報は、このスマートフォンの中だけに保存されます。
+他の人やインターネットには公開されません。
+
+※ 「急いで助けてください」を押した時だけ、
+現在地情報を支援側へ送ります。`
+  );
+
+  if(!ok) return;
+
+  navigator.geolocation.getCurrentPosition(function(pos){
+
+    localStorage.setItem("nsaw_home_lat",pos.coords.latitude);
+    localStorage.setItem("nsaw_home_lng",pos.coords.longitude);
+
+    alert("自宅位置を登録しました");
+
+  });
+
+}
+
+function goHome(){
+
+  const lat =
+    localStorage.getItem("nsaw_home_lat");
+
+  const lng =
+    localStorage.getItem("nsaw_home_lng");
+
+  if(!lat || !lng){
+
+    alert("先に自宅登録してください");
+
+    return;
+
+  }
+
+  window.open(
+    "https://www.google.com/maps/dir/?api=1&destination="
+    + lat
+    + ","
+    + lng,
+    "_blank"
+  );
+
+}
+
+function shareArticleFacebook(title,desc){
+
+  const text =
+    title + "\n\n" + desc + "\n" + SHARE_URL;
+
+  navigator.clipboard.writeText(text);
+
+  window.open(
+    "https://www.facebook.com/sharer/sharer.php?u="
+    + encodeURIComponent(SHARE_URL),
+    "_blank"
+  );
+
+}
+
+function shareArticleX(title){
+
+  window.open(
+    "https://twitter.com/intent/tweet?url="
+    + encodeURIComponent(SHARE_URL)
+    + "&text="
+    + encodeURIComponent(title),
+    "_blank"
+  );
+
+}
+
+function shareArticleLine(){
+
+  window.open(
+    "https://social-plugins.line.me/lineit/share?url="
+    + encodeURIComponent(SHARE_URL),
+    "_blank"
+  );
+
+}
+
+function copyArticle(title,desc){
+
+  navigator.clipboard.writeText(
+    title + "\n\n" + desc + "\n" + SHARE_URL
+  );
+
+  alert("記事をコピーしました");
+
+}
+
+function cell(row,index){
+
+  if(!row.c || !row.c[index]) return "";
+
+  return row.c[index].f
+    || row.c[index].v
+    || "";
+
+}
+
+function fixDriveImage(url){
+
+  if(!url) return "";
+
+  url = String(url);
+
+  let match =
+    url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+
+  if(match){
+
+    return "https://drive.google.com/thumbnail?id="
+      + match[1]
+      + "&sz=w1200";
+
+  }
+
+  match =
+    url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+
+  if(match){
+
+    return "https://drive.google.com/thumbnail?id="
+      + match[1]
+      + "&sz=w1200";
+
+  }
+
+  return url;
+
+}
+
+function getYoutubeId(url){
+
+  if(!url) return "";
+
+  url = String(url);
+
+  let m = url.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/);
+  if(m) return m[1];
+
+  m = url.match(/[?&]v=([a-zA-Z0-9_-]{6,})/);
+  if(m) return m[1];
+
+  m = url.match(/shorts\/([a-zA-Z0-9_-]{6,})/);
+  if(m) return m[1];
+
+  m = url.match(/embed\/([a-zA-Z0-9_-]{6,})/);
+  if(m) return m[1];
+
+  return "";
+
+}
+
+function getDriveId(url){
+
+  if(!url) return "";
+
+  url = String(url);
+
+  let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if(m) return m[1];
+
+  m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if(m) return m[1];
+
+  return "";
+
+}
+
+function videoEmbedHtml(url){
+
+  if(!url) return "";
+
+  const youtubeId = getYoutubeId(url);
+
+  if(youtubeId){
+
+    return '<iframe class="videoFrame" src="https://www.youtube.com/embed/'
+      + youtubeId
+      + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+
+  }
+
+  const driveId = getDriveId(url);
+
+  if(driveId && String(url).includes("drive.google.com")){
+
+    return '<iframe class="videoFrame" src="https://drive.google.com/file/d/'
+      + driveId
+      + '/preview" allow="autoplay" allowfullscreen></iframe>';
+
+  }
+
+  if(/\.(mp4|webm|ogg|mov|m4v)(\?|#|$)/i.test(url)){
+
+    return '<video class="videoTag" controls playsinline preload="metadata" src="'
+      + esc(url)
+      + '"></video>';
+
+  }
+
+  return '<a class="infoBtn orange" href="'
+    + esc(url)
+    + '" target="_blank" rel="noopener">動画を見る</a>';
+
+}
+
+function esc(s){
+
+  return String(s || "").replace(/[&<>"']/g,function(c){
+
+    return {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[c];
+
+  });
+
+}
+
+function createButton(title,url,colorClass){
+
+  if(!title) return "";
+
+  if(url){
+
+    return '<a class="infoBtn '
+      + colorClass
+      + '" href="'
+      + esc(url)
+      + '" target="_blank" rel="noopener">'
+      + esc(title)
+      + '</a>';
+
+  }
+
+  return '<div class="infoBtn '
+    + colorClass
+    + '">'
+    + esc(title)
+    + '</div>';
+
+}
+
+function articleSnsHtml(title,desc){
+
+  const t = JSON.stringify(title || "");
+  const d = JSON.stringify(desc || "");
+
+  return `
+    <div class="articleSnsBox">
+      <button class="articleSnsBtn fbBtn" onclick='shareArticleFacebook(${t},${d})'>Facebook</button>
+      <button class="articleSnsBtn xBtn" onclick='shareArticleX(${t})'>X</button>
+      <button class="articleSnsBtn lineBtn" onclick='shareArticleLine()'>LINE</button>
+      <button class="articleSnsBtn copyBtn" onclick='copyArticle(${t},${d})'>コピー</button>
+    </div>
+  `;
+
+}
+
+function render(rows){
+
+  app.className = "";
+  app.innerHTML = "";
+
+  const items = rows.map(function(row,index){
+
+    return {
+      rowNo:index,
+      date:cell(row,0),
+      title:cell(row,2),
+      imageUrl:fixDriveImage(cell(row,3)),
+      description:cell(row,4),
+      info1Title:cell(row,5),
+      info1Url:cell(row,6),
+      info2Title:cell(row,7),
+      info2Url:cell(row,8),
+      info3Title:cell(row,9),
+      info3Url:cell(row,10),
+      info4Title:cell(row,11),
+      info4Url:cell(row,12),
+      info5Title:cell(row,13),
+      info5Url:cell(row,14),
+      movieTitle:cell(row,15),
+      movieDetail:cell(row,16),
+      mediaUrl:cell(row,17),
+      show:cell(row,18),
+      sortDate:parseInt(cell(row,19)) || 0
+    };
+
+  })
+  .filter(function(item){
+
+    return String(item.show).trim() === "はい";
+
+  })
+  .sort(function(a,b){
+
+    if(b.sortDate !== a.sortDate){
+      return b.sortDate - a.sortDate;
+    }
+
+    return b.rowNo - a.rowNo;
+
+  });
+
+  if(!items.length){
+
+    app.innerHTML =
+      '<div class="error">表示できる情報がありません。</div>';
+
+    return;
+
+  }
+
+  items.forEach(function(item){
+
+    const card =
+      document.createElement("div");
+
+    card.className = "card";
+
+    let html = "";
+
+    html += '<div class="date">' + esc(item.date) + '</div>';
+    html += '<h2 class="title">' + esc(item.title) + '</h2>';
+
+    if(item.imageUrl){
+
+      html += '<img class="image" src="'
+        + esc(item.imageUrl)
+        + '" loading="lazy">';
+
+    }
+
+    if(item.description){
+
+      html += '<div class="description">'
+        + esc(item.description)
+        + '</div>';
+
+    }
+
+    html += createButton(item.info1Title,item.info1Url,"green");
+    html += createButton(item.info2Title,item.info2Url,"blue");
+    html += createButton(item.info3Title,item.info3Url,"pink");
+    html += createButton(item.info4Title,item.info4Url,"orange");
+    html += createButton(item.info5Title,item.info5Url,"purple");
+
+    if(item.movieTitle || item.movieDetail || item.mediaUrl){
+
+      html += '<div class="movieBox">';
+
+      if(item.movieTitle){
+
+        html += '<div class="movieTitle">'
+          + esc(item.movieTitle)
+          + '</div>';
+
+      }
+
+      if(item.movieDetail){
+
+        html += '<div class="movieText">'
+          + esc(item.movieDetail)
+          + '</div>';
+
+      }
+
+      if(item.mediaUrl){
+
+        html += videoEmbedHtml(item.mediaUrl);
+
+      }
+
+      html += '</div>';
+
+    }
+
+    html += articleSnsHtml(item.title,item.description);
+
+    card.innerHTML = html;
+
+    app.appendChild(card);
+
+  });
+
+}
+
+window.handleSheet = function(json){
+
+  render(json.table.rows);
+
+};
+
+function loadSheet(){
+
+  const script =
+    document.createElement("script");
+
+  script.src =
+    "https://docs.google.com/spreadsheets/d/"
+    + SHEET_ID
+    + "/gviz/tq?sheet="
+    + encodeURIComponent(SHEET_NAME)
+    + "&tqx=out:json;responseHandler:handleSheet&v="
+    + Date.now();
+
+  document.body.appendChild(script);
+
+}
+
+initName();
+loadSheet();
+</script>
+
+</body>
+</html>
