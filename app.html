@@ -205,6 +205,10 @@ const SHEET_NAME =
 const app =
 document.getElementById("app");
 
+/* =========================
+   セル取得
+========================= */
+
 function cell(row,index){
 
   if(!row.c) return "";
@@ -217,33 +221,37 @@ function cell(row,index){
 
 }
 
-function toDateValue(str){
+/* =========================
+   日付変換
+========================= */
 
-  if(!str) return 0;
+function getDateValue(value){
 
-  const parts =
-    String(str)
-    .trim()
-    .split("/");
+  if(!value) return 0;
 
-  if(parts.length !== 3){
+  try{
+
+    const d =
+      new Date(value);
+
+    const t =
+      d.getTime();
+
+    if(isNaN(t)) return 0;
+
+    return t;
+
+  }catch(e){
+
     return 0;
+
   }
 
-  const y =
-    parts[0];
-
-  const m =
-    parts[1].padStart(2,"0");
-
-  const d =
-    parts[2].padStart(2,"0");
-
-  return Number(
-    y + m + d
-  );
-
 }
+
+/* =========================
+   ボタン
+========================= */
 
 function createButton(
   title,
@@ -275,6 +283,10 @@ function createButton(
   `;
 
 }
+
+/* =========================
+   表示
+========================= */
 
 function render(rows){
 
@@ -426,13 +438,16 @@ function render(rows){
 
 }
 
+/* =========================
+   シート読み込み
+========================= */
+
 window.handleSheet = function(json){
 
   try{
 
-    const rows =
-      json.table.rows
-      .map(function(row,index){
+    let rows =
+      json.table.rows.map(function(row,index){
 
         return {
 
@@ -497,30 +512,26 @@ window.handleSheet = function(json){
 
         };
 
-      })
+      });
 
-      .filter(function(item){
+    rows =
+      rows.filter(function(item){
 
         return String(item.show)
           .trim() === "はい";
 
-      })
+      });
 
-      .sort(function(a,b){
-
-        const bDate =
-          toDateValue(b.date);
+    rows =
+      rows.sort(function(a,b){
 
         const aDate =
-          toDateValue(a.date);
+          getDateValue(a.date);
 
-        if(bDate !== aDate){
+        const bDate =
+          getDateValue(b.date);
 
-          return bDate - aDate;
-
-        }
-
-        return b.rowNo - a.rowNo;
+        return bDate - aDate;
 
       });
 
@@ -542,6 +553,10 @@ window.handleSheet = function(json){
 
 };
 
+/* =========================
+   JSONP
+========================= */
+
 function loadSheet(){
 
   const script =
@@ -552,7 +567,7 @@ function loadSheet(){
     + SHEET_ID
     + "/gviz/tq?sheet="
     + encodeURIComponent(SHEET_NAME)
-    + "&tqx=out:json;responseHandler:handleSheet&v="
+    + "&tqx=out:json;responseHandler=handleSheet&v="
     + Date.now();
 
   document.body.appendChild(script);
