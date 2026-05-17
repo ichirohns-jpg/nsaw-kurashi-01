@@ -115,9 +115,17 @@ body{
   color:#ffffff;
 }
 
-.greenBtn{background:#16a34a;}
-.yellowBtn{background:#f59e0b;}
-.redBtn{background:#dc2626;}
+.greenBtn{
+  background:#16a34a;
+}
+
+.yellowBtn{
+  background:#f59e0b;
+}
+
+.redBtn{
+  background:#dc2626;
+}
 
 .statusMsg{
   display:none;
@@ -194,6 +202,14 @@ body{
   background:#7c3aed;
 }
 
+.homeRegisterBtn{
+  background:#15803d;
+}
+
+.homeBtn{
+  background:#ea580c;
+}
+
 /* 記事 */
 
 .card{
@@ -254,8 +270,6 @@ body{
 .green{background:#2f9441;}
 .blue{background:#3476d6;}
 .pink{background:#ea4f8b;}
-.orange{background:#ef9819;}
-.purple{background:#7d4dd8;}
 
 .loading{
   text-align:center;
@@ -282,7 +296,7 @@ body{
 
 <div class="wrap">
 
-  <!-- 安否確認 -->
+  <!-- 安否 -->
 
   <div class="fixedBar">
 
@@ -398,6 +412,20 @@ body{
        🗺 四市マップ
 
     </a>
+
+    <button class="contactBtn homeRegisterBtn"
+      onclick="registerHomeLocation()">
+
+      🏠 今いる場所を家として登録
+
+    </button>
+
+    <button class="contactBtn homeBtn"
+      onclick="goHome()">
+
+      🏠 家に帰る
+
+    </button>
 
   </div>
 
@@ -628,6 +656,113 @@ function openCurrentLocationMap(){
       maximumAge:0
     }
 
+  );
+
+}
+
+/* 自宅登録 */
+
+function registerHomeLocation(){
+
+  if(!navigator.geolocation){
+
+    alert(
+      "位置情報が使えません"
+    );
+
+    return;
+
+  }
+
+  const ok = confirm(
+`※ 自宅情報は、このスマートフォンの中だけに保存されます。
+他の人やインターネットには公開されません。
+
+※ 「急いで助けてください」を押した時だけ、
+現在地情報を支援側へ送ります。
+
+今いる場所を自宅として登録しますか？`
+  );
+
+  if(!ok) return;
+
+  navigator.geolocation.getCurrentPosition(
+
+    function(pos){
+
+      const lat =
+        pos.coords.latitude;
+
+      const lng =
+        pos.coords.longitude;
+
+      localStorage.setItem(
+        "nsaw_home_lat",
+        lat
+      );
+
+      localStorage.setItem(
+        "nsaw_home_lng",
+        lng
+      );
+
+      alert(
+        "自宅位置を登録しました"
+      );
+
+    },
+
+    function(){
+
+      alert(
+        "位置情報を許可してください"
+      );
+
+    },
+
+    {
+      enableHighAccuracy:true,
+      timeout:10000,
+      maximumAge:0
+    }
+
+  );
+
+}
+
+/* 家へ */
+
+function goHome(){
+
+  const lat =
+    localStorage.getItem(
+      "nsaw_home_lat"
+    );
+
+  const lng =
+    localStorage.getItem(
+      "nsaw_home_lng"
+    );
+
+  if(!lat || !lng){
+
+    alert(
+      "先に「今いる場所を家として登録」をしてください"
+    );
+
+    return;
+
+  }
+
+  const url =
+    "https://www.google.com/maps/dir/?api=1&destination="
+    + lat
+    + ","
+    + lng;
+
+  window.open(
+    url,
+    "_blank"
   );
 
 }
