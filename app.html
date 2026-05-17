@@ -21,88 +21,276 @@ body{
 .wrap{
   max-width:680px;
   margin:0 auto;
-  padding:18px 14px 40px;
+  padding:0 12px 40px;
 }
 
-.top{
+/* =========================
+   上固定 安否確認
+========================= */
+
+.fixedBar{
+
+  position:sticky;
+  top:0;
+  z-index:9999;
+
+  background:#eef8f5;
+
+  padding:10px 0 12px;
+
+}
+
+.safeBtn{
+
+  width:100%;
+
+  border:none;
+
+  border-radius:22px;
+
+  padding:20px 12px;
+
+  margin-bottom:10px;
+
+  font-size:25px;
+  font-weight:900;
+
+  color:#ffffff;
+
+  box-shadow:0 6px 14px rgba(0,0,0,.18);
+
+}
+
+.greenBtn{
+  background:#16a34a;
+}
+
+.yellowBtn{
+  background:#f59e0b;
+}
+
+.redBtn{
+  background:#dc2626;
+}
+
+.statusMsg{
+
+  display:none;
+
   background:#ffffff;
-  border:5px solid #16864a;
-  border-radius:28px;
-  padding:28px 20px;
+
+  border:3px solid #16a34a;
+
+  border-radius:18px;
+
+  padding:14px;
+
+  margin:8px 0 4px;
+
+  font-size:20px;
+  font-weight:900;
+
   text-align:center;
-  margin-bottom:28px;
+
+  color:#146c36;
+
+}
+
+/* =========================
+   トップ
+========================= */
+
+.top{
+
+  background:#ffffff;
+
+  border:5px solid #16864a;
+
+  border-radius:28px;
+
+  padding:24px 18px;
+
+  text-align:center;
+
+  margin:14px 0 18px;
+
   box-shadow:0 8px 22px rgba(0,0,0,.08);
+
 }
 
 .top h1{
+
   margin:0;
+
   font-size:38px;
+
   line-height:1.25;
+
   color:#118047;
+
   font-weight:900;
+
 }
 
 .top p{
-  margin:18px 0 0;
-  font-size:22px;
+
+  margin:14px 0 0;
+
+  font-size:20px;
+
   line-height:1.5;
+
   font-weight:800;
+
   color:#31465a;
+
 }
 
+/* =========================
+   電話・地図
+========================= */
+
+.contactPanel{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:12px;
+
+  margin-bottom:20px;
+
+}
+
+.contactBtn{
+
+  display:block;
+
+  text-decoration:none;
+
+  text-align:center;
+
+  color:#ffffff;
+
+  font-size:22px;
+  font-weight:900;
+
+  border-radius:22px;
+
+  padding:20px 10px;
+
+  box-shadow:0 6px 14px rgba(0,0,0,.15);
+
+}
+
+.telBtn{
+  background:#2563eb;
+}
+
+.mapBtn{
+  background:#0f766e;
+}
+
+/* =========================
+   記事
+========================= */
+
 .card{
+
   background:#ffffff;
+
   border-radius:28px;
+
   padding:24px 20px;
+
   margin-bottom:28px;
+
   box-shadow:0 10px 26px rgba(0,0,0,.10);
+
 }
 
 .date{
+
   font-size:26px;
+
   font-weight:900;
+
   color:#647386;
+
   margin-bottom:16px;
+
 }
 
 .title{
+
   font-size:34px;
+
   line-height:1.3;
+
   font-weight:900;
+
   margin:0 0 18px;
+
   color:#102e4a;
+
   word-break:break-word;
+
 }
 
 .image{
+
   width:100%;
+
   border-radius:22px;
+
   margin-bottom:20px;
+
   display:block;
+
 }
 
 .description{
+
   font-size:18px;
+
   line-height:1.7;
+
   font-weight:700;
+
   color:#2d4055;
+
   margin-bottom:20px;
+
 }
 
 .infoBtn{
+
   display:block;
+
   width:100%;
+
   text-decoration:none;
+
   color:#ffffff;
+
   font-size:24px;
+
   line-height:1.4;
+
   font-weight:900;
+
   text-align:center;
+
   padding:22px 14px;
+
   border-radius:22px;
+
   margin:14px 0;
+
   box-shadow:0 6px 14px rgba(0,0,0,.15);
+
   word-break:break-word;
+
 }
 
 .green{
@@ -125,56 +313,155 @@ body{
   background:#7d4dd8;
 }
 
+/* =========================
+   動画
+========================= */
+
 .movieBox{
+
   margin-top:22px;
+
   background:#f2f7ff;
+
   border:3px solid #2b77d0;
+
   border-radius:24px;
+
   padding:20px;
+
 }
 
 .movieTitle{
+
   font-size:26px;
+
   font-weight:900;
+
   color:#1454a8;
+
   margin-bottom:10px;
+
 }
 
 .movieText{
+
   font-size:18px;
+
   line-height:1.7;
+
   font-weight:700;
+
   margin-bottom:16px;
+
 }
 
 .movieLink{
+
   display:block;
+
   background:#e60033;
+
   color:#ffffff;
+
   text-decoration:none;
+
   text-align:center;
+
   font-size:24px;
+
   font-weight:900;
+
   border-radius:18px;
+
   padding:20px 12px;
+
 }
 
-.loading{
+/* =========================
+   SNS
+========================= */
+
+.snsBox{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:12px;
+
+  margin-top:30px;
+
+}
+
+.snsBtn{
+
+  display:block;
+
+  text-decoration:none;
+
   text-align:center;
-  font-size:24px;
+
+  color:#ffffff;
+
+  font-size:22px;
   font-weight:900;
+
+  border-radius:20px;
+
+  padding:18px 10px;
+
+}
+
+.fb{
+  background:#1877f2;
+}
+
+.x{
+  background:#111111;
+}
+
+.line{
+  background:#06c755;
+}
+
+.copy{
+  background:#666666;
+}
+
+/* =========================
+   読み込み
+========================= */
+
+.loading{
+
+  text-align:center;
+
+  font-size:24px;
+
+  font-weight:900;
+
   padding:40px 0;
+
 }
 
 .error{
+
   background:#fff0f0;
+
   color:#b00020;
+
   border:3px solid #f0a0a0;
+
   border-radius:20px;
+
   padding:20px;
+
   font-size:22px;
+
   font-weight:800;
+
   line-height:1.5;
+
 }
 
 </style>
@@ -184,13 +471,96 @@ body{
 
 <div class="wrap">
 
-  <div class="top">
-    <h1>NSAW<br>暮らし情報局</h1>
-    <p>四市の暮らし情報を見やすくまとめています</p>
+  <!-- 上固定 -->
+
+  <div class="fixedBar">
+
+    <button class="safeBtn greenBtn"
+      onclick="showStatus('😊 元気確認を受け付けました')">
+      😊 元気です
+    </button>
+
+    <button class="safeBtn yellowBtn"
+      onclick="showStatus('😥 困りごとの連絡を受け付けました')">
+      😥 何かに困っています
+    </button>
+
+    <button class="safeBtn redBtn"
+      onclick="showStatus('🚨 緊急連絡を受け付けました')">
+      🚨 急いで助けてください
+    </button>
+
+    <div id="statusMsg" class="statusMsg"></div>
+
   </div>
+
+  <!-- タイトル -->
+
+  <div class="top">
+
+    <h1>
+      NSAW<br>
+      暮らし情報局
+    </h1>
+
+    <p>
+      四市の暮らし情報を
+      見やすくまとめています
+    </p>
+
+  </div>
+
+  <!-- 電話・地図 -->
+
+  <div class="contactPanel">
+
+    <a class="contactBtn telBtn"
+       href="tel:0484731111">
+       📞 電話帳
+    </a>
+
+    <a class="contactBtn mapBtn"
+       href="https://maps.google.com/"
+       target="_blank">
+       🗺 Google Maps
+    </a>
+
+  </div>
+
+  <!-- 記事 -->
 
   <div id="app" class="loading">
     読み込み中です...
+  </div>
+
+  <!-- SNS -->
+
+  <div class="snsBox">
+
+    <a class="snsBtn fb"
+       href="#"
+       onclick="shareFacebook()">
+       Facebook
+    </a>
+
+    <a class="snsBtn x"
+       href="#"
+       onclick="shareX()">
+       X
+    </a>
+
+    <a class="snsBtn line"
+       href="#"
+       onclick="shareLine()">
+       LINE
+    </a>
+
+    <a class="snsBtn copy"
+       href="#"
+       onclick="copyUrl()">
+       URLコピー
+    </a>
+
   </div>
 
 </div>
@@ -205,6 +575,60 @@ const SHEET_NAME =
 
 const app =
 document.getElementById("app");
+
+/* =========================
+   メッセージ
+========================= */
+
+function showStatus(text){
+
+  const box =
+    document.getElementById("statusMsg");
+
+  box.style.display = "block";
+
+  box.innerText = text;
+
+}
+
+/* =========================
+   SNS
+========================= */
+
+function shareFacebook(){
+
+  window.open(
+    "https://www.facebook.com/sharer/sharer.php?u="
+    + encodeURIComponent(location.href)
+  );
+
+}
+
+function shareX(){
+
+  window.open(
+    "https://twitter.com/intent/tweet?url="
+    + encodeURIComponent(location.href)
+  );
+
+}
+
+function shareLine(){
+
+  window.open(
+    "https://social-plugins.line.me/lineit/share?url="
+    + encodeURIComponent(location.href)
+  );
+
+}
+
+function copyUrl(){
+
+  navigator.clipboard.writeText(location.href);
+
+  alert("URLをコピーしました");
+
+}
 
 /* =========================
    セル取得
@@ -223,7 +647,7 @@ function cell(row,index){
 }
 
 /* =========================
-   Drive画像変換
+   Drive画像
 ========================= */
 
 function fixDriveImage(url){
@@ -232,8 +656,21 @@ function fixDriveImage(url){
 
   url = String(url);
 
-  const match =
+  let match =
     url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+
+  if(match){
+
+    return (
+      "https://drive.google.com/thumbnail?id="
+      + match[1]
+      + "&sz=w1200"
+    );
+
+  }
+
+  match =
+    url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
 
   if(match){
 
@@ -253,11 +690,7 @@ function fixDriveImage(url){
    ボタン
 ========================= */
 
-function createButton(
-  title,
-  url,
-  colorClass
-){
+function createButton(title,url,colorClass){
 
   if(!title) return "";
 
@@ -296,11 +729,8 @@ function render(rows){
 
   if(!rows.length){
 
-    app.innerHTML = `
-      <div class="error">
-        表示できる情報がありません。
-      </div>
-    `;
+    app.innerHTML =
+      '<div class="error">表示できる情報がありません。</div>';
 
     return;
 
@@ -349,45 +779,15 @@ function render(rows){
 
     }
 
-    html += createButton(
-      item.info1Title,
-      item.info1Url,
-      "green"
-    );
+    html += createButton(item.info1Title,item.info1Url,"green");
+    html += createButton(item.info2Title,item.info2Url,"blue");
+    html += createButton(item.info3Title,item.info3Url,"pink");
+    html += createButton(item.info4Title,item.info4Url,"orange");
+    html += createButton(item.info5Title,item.info5Url,"purple");
 
-    html += createButton(
-      item.info2Title,
-      item.info2Url,
-      "blue"
-    );
+    if(item.movieTitle || item.movieDetail || item.mediaUrl){
 
-    html += createButton(
-      item.info3Title,
-      item.info3Url,
-      "pink"
-    );
-
-    html += createButton(
-      item.info4Title,
-      item.info4Url,
-      "orange"
-    );
-
-    html += createButton(
-      item.info5Title,
-      item.info5Url,
-      "purple"
-    );
-
-    if(
-      item.movieTitle ||
-      item.movieDetail ||
-      item.mediaUrl
-    ){
-
-      html += `
-        <div class="movieBox">
-      `;
+      html += '<div class="movieBox">';
 
       if(item.movieTitle){
 
@@ -424,9 +824,7 @@ function render(rows){
 
       }
 
-      html += `
-        </div>
-      `;
+      html += '</div>';
 
     }
 
@@ -439,7 +837,7 @@ function render(rows){
 }
 
 /* =========================
-   シート読み込み
+   シート
 ========================= */
 
 window.handleSheet = function(json){
@@ -463,9 +861,7 @@ window.handleSheet = function(json){
             cell(row,2),
 
           imageUrl:
-            fixDriveImage(
-              cell(row,3)
-            ),
+            fixDriveImage(cell(row,3)),
 
           description:
             cell(row,4),
@@ -513,9 +909,7 @@ window.handleSheet = function(json){
             cell(row,18),
 
           sortDate:
-            parseInt(
-              cell(row,19)
-            ) || 0
+            parseInt(cell(row,19)) || 0
 
         };
 
@@ -524,8 +918,11 @@ window.handleSheet = function(json){
     rows =
       rows.filter(function(item){
 
-        return String(item.show)
-          .trim() === "はい";
+        return (
+          String(item.show).trim()
+          ===
+          "はい"
+        );
 
       });
 
@@ -558,11 +955,8 @@ window.handleSheet = function(json){
 
     app.className = "";
 
-    app.innerHTML = `
-      <div class="error">
-        読み込みエラーです。
-      </div>
-    `;
+    app.innerHTML =
+      '<div class="error">読み込みエラーです。</div>';
 
   }
 
