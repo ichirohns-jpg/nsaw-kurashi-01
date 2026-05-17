@@ -1,629 +1,324 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NSAW 暮らし情報局</title>
 
-<title>NSAW 暮らし情報局</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<style>
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+      background: #eef8f5;
+      color: #14324a;
+    }
 
-*{
-  box-sizing:border-box;
-}
+    .wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 18px 14px 40px;
+    }
 
-html{
-  scroll-behavior:smooth;
-}
+    .top {
+      background: #ffffff;
+      border: 5px solid #16864a;
+      border-radius: 28px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 22px rgba(0,0,0,.08);
+    }
 
-body{
-  margin:0;
-  background:#eef7fb;
-  color:#17324d;
-  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-}
+    .top h1 {
+      margin: 0;
+      font-size: 38px;
+      line-height: 1.25;
+      color: #118047;
+      font-weight: 900;
+    }
 
-.wrap{
-  max-width:720px;
-  margin:0 auto;
-  padding:14px;
-}
+    .top p {
+      margin: 18px 0 0;
+      font-size: 24px;
+      line-height: 1.5;
+      font-weight: 800;
+      color: #31465a;
+    }
 
-.hero{
-  background:linear-gradient(180deg,#ffffff 0%,#e8f7ef 100%);
-  border:4px solid #0d8b46;
-  border-radius:28px;
-  padding:22px 18px;
-  margin-bottom:22px;
-  text-align:center;
-  box-shadow:0 8px 24px rgba(0,0,0,.12);
-}
+    .card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 28px 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.10);
+    }
 
-.hero-main{
-  font-size:42px;
-  line-height:1.2;
-  font-weight:900;
-  color:#00843d;
-}
+    .date {
+      font-size: 28px;
+      font-weight: 900;
+      color: #647386;
+      margin-bottom: 18px;
+    }
 
-.hero-area{
-  display:inline-block;
-  margin-top:14px;
-  padding:10px 20px;
-  border-radius:999px;
-  background:#0d8b46;
-  color:#fff;
-  font-size:22px;
-  font-weight:900;
-}
+    .title {
+      font-size: 42px;
+      line-height: 1.25;
+      font-weight: 900;
+      margin: 0 0 26px;
+      color: #102e4a;
+    }
 
-.hero-sub{
-  margin-top:14px;
-  font-size:22px;
-  line-height:1.7;
-  font-weight:900;
-}
+    .description {
+      font-size: 23px;
+      line-height: 1.6;
+      font-weight: 700;
+      color: #2d4055;
+      margin-bottom: 22px;
+    }
 
-.top-buttons{
-  margin-bottom:22px;
-}
+    .infoBtn {
+      display: block;
+      width: 100%;
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 25px;
+      line-height: 1.35;
+      font-weight: 900;
+      text-align: center;
+      padding: 24px 14px;
+      border-radius: 22px;
+      margin: 16px 0;
+      box-shadow: 0 6px 14px rgba(0,0,0,.15);
+      word-break: break-word;
+    }
 
-.btn{
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  background:#0d8b46;
-  color:#ffffff;
-  padding:22px 14px;
-  margin:14px 0;
-  border-radius:22px;
-  font-size:28px;
-  font-weight:900;
-  box-shadow:0 8px 0 #0a6b35;
-}
+    .green { background: #16943a; }
+    .blue { background: #1976d2; }
+    .pink { background: #f54285; }
+    .orange { background: #f39c12; }
+    .purple { background: #7b4fd6; }
 
-.btn.blue{
-  background:#1976d2;
-  box-shadow:0 8px 0 #114fa5;
-}
+    .movieBox {
+      margin-top: 24px;
+      background: #f2f7ff;
+      border: 3px solid #2b77d0;
+      border-radius: 24px;
+      padding: 20px;
+    }
 
-.status{
-  text-align:center;
-  font-size:24px;
-  font-weight:900;
-  padding:30px 10px;
-}
+    .movieTitle {
+      font-size: 27px;
+      font-weight: 900;
+      color: #1454a8;
+      margin-bottom: 12px;
+    }
 
-.month{
-  font-size:34px;
-  font-weight:900;
-  color:#00843d;
-  margin:34px 0 18px;
-}
+    .movieText {
+      font-size: 21px;
+      line-height: 1.5;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
 
-.section-title{
-  font-size:40px;
-  font-weight:900;
-  margin:40px 0 20px;
-  color:#17324d;
-}
+    .movieLink {
+      display: block;
+      background: #e60033;
+      color: #ffffff;
+      text-decoration: none;
+      text-align: center;
+      font-size: 25px;
+      font-weight: 900;
+      border-radius: 18px;
+      padding: 20px 12px;
+    }
 
-.card{
-  background:#ffffff;
-  border-radius:26px;
-  padding:22px;
-  margin-bottom:24px;
-  box-shadow:0 6px 18px rgba(0,0,0,.10);
-}
+    .loading {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 900;
+      padding: 40px 0;
+    }
 
-.card.shiki{
-  border-left:14px solid #1f8f3a;
-}
-
-.card.niiza{
-  border-left:14px solid #1976d2;
-}
-
-.card.asaka{
-  border-left:14px solid #ff4f87;
-}
-
-.card.wako{
-  border-left:14px solid #ff9800;
-}
-
-.card.media{
-  border-left:14px solid #673ab7;
-}
-
-.date{
-  font-size:20px;
-  color:#6a7a88;
-  font-weight:900;
-}
-
-.type{
-  display:inline-block;
-  margin-top:10px;
-  padding:8px 14px;
-  border-radius:999px;
-  background:#dff3e8;
-  color:#007a3d;
-  font-size:18px;
-  font-weight:900;
-}
-
-.type.media{
-  background:#e8dcff;
-  color:#5b2bc2;
-}
-
-.title{
-  font-size:34px;
-  line-height:1.45;
-  font-weight:900;
-  margin:18px 0;
-}
-
-.desc{
-  font-size:22px;
-  line-height:1.9;
-  font-weight:800;
-  white-space:pre-wrap;
-}
-
-.mainimg{
-  width:100%;
-  display:block;
-  border-radius:20px;
-  margin:18px 0;
-}
-
-.city-btn{
-  display:block;
-  text-decoration:none;
-  text-align:center;
-  color:#fff;
-  padding:20px 12px;
-  border-radius:20px;
-  margin-top:16px;
-  font-size:24px;
-  font-weight:900;
-}
-
-.city-btn.shiki{
-  background:#1f8f3a;
-}
-
-.city-btn.niiza{
-  background:#1976d2;
-}
-
-.city-btn.asaka{
-  background:#ff4f87;
-}
-
-.city-btn.wako{
-  background:#ff9800;
-}
-
-.city-btn.media{
-  background:#673ab7;
-}
-
-.video{
-  width:100%;
-  aspect-ratio:16/9;
-  border:0;
-  border-radius:18px;
-  margin-top:18px;
-}
-
-.footer{
-  text-align:center;
-  color:#6c7f8d;
-  font-size:15px;
-  line-height:1.8;
-  padding:30px 0 12px;
-}
-
-</style>
+    .error {
+      background: #fff0f0;
+      color: #b00020;
+      border: 3px solid #f0a0a0;
+      border-radius: 20px;
+      padding: 20px;
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="wrap">
 
-<div class="wrap">
-
-  <div class="hero">
-
-    <div class="hero-main" id="heroTitle">
-      暮らし瓦版
+    <div class="top">
+      <h1>NSAW<br>暮らし情報局</h1>
+      <p>四市の暮らし情報を見やすくまとめています</p>
     </div>
 
-    <div class="hero-area">
-      志木・新座・朝霞・和光
-    </div>
-
-    <div class="hero-sub">
-      暮らし情報と地域メディアを<br>
-      見やすくまとめています
-    </div>
+    <div id="app" class="loading">読み込み中です...</div>
 
   </div>
 
-  <div class="top-buttons">
+  <script>
+    const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+    const SHEET_NAME = "NSAW暮らし情報局_データ";
 
-    <a
-      href="#kurashi"
-      class="btn"
-    >
-      暮らし情報を見る
-    </a>
+    const app = document.getElementById("app");
 
-    <a
-      href="#media"
-      class="btn blue"
-    >
-      地域メディアを見る
-    </a>
-
-  </div>
-
-  <div id="content" class="status">
-    読み込み中です…
-  </div>
-
-  <div class="footer">
-    NSAW 暮らし情報局<br>
-    地域生活テレビ
-  </div>
-
-</div>
-
-<script>
-
-const SHEET_ID =
-"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
-
-const GVIZ_URL =
-"https://docs.google.com/spreadsheets/d/" +
-SHEET_ID +
-"/gviz/tq?tqx=out:json;responseHandler:handleSheet";
-
-function cell(row,index){
-
-  if(!row.c[index]) return "";
-
-  if(row.c[index].f) return String(row.c[index].f);
-
-  if(row.c[index].v == null) return "";
-
-  return String(row.c[index].v);
-
-}
-
-function formatDate(value){
-
-  if(!value) return "";
-
-  if(value.startsWith("Date(")){
-
-    const nums = value.match(/\d+/g);
-
-    if(nums && nums.length >= 3){
-
-      const year = Number(nums[0]);
-      const month = Number(nums[1]) + 1;
-      const day = Number(nums[2]);
-
-      return year + "年" + month + "月" + day + "日";
-
+    function cell(row, index) {
+      if (!row.c || !row.c[index]) return "";
+      return row.c[index].f || row.c[index].v || "";
     }
-  }
 
-  return value;
+    function onlyNumber(value) {
+      return String(value || "").replace(/[^\d]/g, "");
+    }
 
-}
+    function getSortDate(item) {
+      if (item.sortDate) {
+        return Number(onlyNumber(item.sortDate));
+      }
+      return Number(onlyNumber(item.date));
+    }
 
-function esc(text){
+    function createButton(title, url, colorClass) {
+      if (!title) return "";
 
-  return String(text || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;");
-
-}
-
-function youtubeEmbed(url){
-
-  if(!url) return "";
-
-  let id = "";
-
-  if(url.includes("youtu.be/")){
-
-    id =
-      url
-      .split("youtu.be/")[1]
-      .split(/[?&]/)[0];
-
-  }
-
-  else if(url.includes("watch?v=")){
-
-    id =
-      url
-      .split("watch?v=")[1]
-      .split(/[?&]/)[0];
-
-  }
-
-  else if(url.includes("/shorts/")){
-
-    id =
-      url
-      .split("/shorts/")[1]
-      .split(/[?&]/)[0];
-
-  }
-
-  return id
-    ? "https://www.youtube.com/embed/" + id
-    : "";
-
-}
-
-function cityClass(title,type){
-
-  if(type === "メディア") return "media";
-
-  if(title.includes("志木")) return "shiki";
-
-  if(title.includes("新座")) return "niiza";
-
-  if(title.includes("朝霞")) return "asaka";
-
-  if(title.includes("和光")) return "wako";
-
-  return "shiki";
-
-}
-
-function createCard(item){
-
-  const embedUrl =
-    youtubeEmbed(item.mediaUrl);
-
-  const cls =
-    cityClass(item.title,item.type);
-
-  return `
-
-    <div class="card ${cls}">
-
-      <div class="date">
-        ${esc(item.date)}
-      </div>
-
-      <div class="type ${cls}">
-        ${esc(item.type)}
-      </div>
-
-      <div class="title">
-        ${esc(item.title)}
-      </div>
-
-      ${
-        item.image &&
-        item.image.startsWith("http")
-        ? `
-          <img
-            class="mainimg"
-            src="${esc(item.image)}"
-          >
-        `
-        : ""
+      if (url) {
+        return `<a class="infoBtn ${colorClass}" href="${url}" target="_blank" rel="noopener">${title}</a>`;
       }
 
-      ${
-        item.desc
-        ? `
-          <div class="desc">
-            ${esc(item.desc)}
-          </div>
-        `
-        : ""
+      return `<div class="infoBtn ${colorClass}">${title}</div>`;
+    }
+
+    function render(rows) {
+      app.className = "";
+      app.innerHTML = "";
+
+      if (!rows.length) {
+        app.innerHTML = `<div class="error">表示できる情報がありません。S列の「表示」が「はい」になっているか確認してください。</div>`;
+        return;
       }
 
-      ${
-        embedUrl
-        ? `
-          <iframe
-            class="video"
-            src="${embedUrl}"
-            allowfullscreen>
-          </iframe>
-        `
-        : ""
+      rows.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        let html = `
+          <div class="date">${item.date}</div>
+          <h2 class="title">${item.title}</h2>
+        `;
+
+        if (item.description) {
+          html += `<div class="description">${item.description}</div>`;
+        }
+
+        html += createButton(item.info1Title, item.info1Url, "green");
+        html += createButton(item.info2Title, item.info2Url, "blue");
+        html += createButton(item.info3Title, item.info3Url, "pink");
+        html += createButton(item.info4Title, item.info4Url, "orange");
+        html += createButton(item.info5Title, item.info5Url, "purple");
+
+        if (item.movieTitle || item.movieDetail || item.mediaUrl) {
+          html += `<div class="movieBox">`;
+
+          if (item.movieTitle) {
+            html += `<div class="movieTitle">${item.movieTitle}</div>`;
+          }
+
+          if (item.movieDetail) {
+            html += `<div class="movieText">${item.movieDetail}</div>`;
+          }
+
+          if (item.mediaUrl) {
+            html += `<a class="movieLink" href="${item.mediaUrl}" target="_blank" rel="noopener">動画を見る</a>`;
+          }
+
+          html += `</div>`;
+        }
+
+        card.innerHTML = html;
+        app.appendChild(card);
+      });
+    }
+
+    window.handleSheet = function(json) {
+      try {
+        const rows = json.table.rows.map(row => {
+          return {
+            date: cell(row, 0),
+            articleId: cell(row, 1),
+            title: cell(row, 2),
+            imageUrl: cell(row, 3),
+            description: cell(row, 4),
+
+            info1Title: cell(row, 5),
+            info1Url: cell(row, 6),
+
+            info2Title: cell(row, 7),
+            info2Url: cell(row, 8),
+
+            info3Title: cell(row, 9),
+            info3Url: cell(row, 10),
+
+            info4Title: cell(row, 11),
+            info4Url: cell(row, 12),
+
+            info5Title: cell(row, 13),
+            info5Url: cell(row, 14),
+
+            movieTitle: cell(row, 15),
+            movieDetail: cell(row, 16),
+            mediaUrl: cell(row, 17),
+
+            show: cell(row, 18),
+            sortDate: cell(row, 19),
+            displayOrder: cell(row, 20),
+            displayType: cell(row, 21),
+            month: cell(row, 22)
+          };
+        })
+        .filter(item => String(item.show).trim() === "はい")
+        .sort((a, b) => {
+          const dateDiff = getSortDate(b) - getSortDate(a);
+          if (dateDiff !== 0) return dateDiff;
+
+          const orderA = Number(a.displayOrder || 9999);
+          const orderB = Number(b.displayOrder || 9999);
+          return orderA - orderB;
+        });
+
+        render(rows);
+
+      } catch (e) {
+        app.className = "";
+        app.innerHTML = `<div class="error">読み込みエラーです。シート名と列の位置を確認してください。</div>`;
       }
-
-    </div>
-
-  `;
-
-}
-
-function handleSheet(json){
-
-  const rows =
-    json.table.rows || [];
-
-  const infoItems = [];
-  const mediaItems = [];
-
-  rows.forEach(row=>{
-
-    const display =
-      cell(row,18);
-
-    if(display !== "はい") return;
-
-    const item = {
-
-      date:
-        formatDate(cell(row,0)),
-
-      title:
-        cell(row,2),
-
-      image:
-        cell(row,3),
-
-      desc:
-        cell(row,4),
-
-      mediaUrl:
-        cell(row,17),
-
-      sortDate:
-        Number(cell(row,19)) || 0,
-
-      order:
-        Number(cell(row,20)) || 0,
-
-      type:
-        cell(row,21),
-
-      month:
-        cell(row,22)
-
     };
 
-    if(item.type === "メディア"){
+    function loadSheet() {
+      const script = document.createElement("script");
+      script.src =
+        "https://docs.google.com/spreadsheets/d/" +
+        SHEET_ID +
+        "/gviz/tq?sheet=" +
+        encodeURIComponent(SHEET_NAME) +
+        "&tqx=out:json;responseHandler:handleSheet&v=" +
+        Date.now();
 
-      mediaItems.push(item);
-
-    }else{
-
-      infoItems.push(item);
-
+      document.body.appendChild(script);
     }
 
-  });
-
-  infoItems.sort((a,b)=>{
-
-    if(b.sortDate !== a.sortDate){
-
-      return b.sortDate - a.sortDate;
-
-    }
-
-    return b.order - a.order;
-
-  });
-
-  mediaItems.sort((a,b)=>{
-
-    if(b.sortDate !== a.sortDate){
-
-      return b.sortDate - a.sortDate;
-
-    }
-
-    return b.order - a.order;
-
-  });
-
-  if(infoItems.length > 0){
-
-    document.getElementById("heroTitle").innerHTML =
-      infoItems[0].date + "<br>の暮らし瓦版";
-
-  }
-
-  let html = "";
-
-  html += `
-    <div
-      class="section-title"
-      id="kurashi"
-    >
-      暮らし情報
-    </div>
-  `;
-
-  infoItems
-    .slice(0,5)
-    .forEach(item=>{
-
-      html += createCard(item);
-
-    });
-
-  html += `
-    <div
-      class="section-title"
-      id="media"
-    >
-      地域メディア
-    </div>
-  `;
-
-  if(mediaItems.length === 0){
-
-    html += `
-      <div class="card media">
-
-        <div class="title">
-          過去の地域メディアを見る
-        </div>
-
-        <div class="desc">
-          本日は新しい地域メディア投稿がありません。
-        </div>
-
-      </div>
-    `;
-
-  }else{
-
-    mediaItems
-      .slice(0,5)
-      .forEach(item=>{
-
-        html += createCard(item);
-
-      });
-
-  }
-
-  const content =
-    document.getElementById("content");
-
-  content.className = "";
-
-  content.innerHTML = html;
-
-}
-
-function handleError(){
-
-  document.getElementById("content").innerHTML =
-    "読み込みに失敗しました。";
-
-}
-
-const script =
-  document.createElement("script");
-
-script.src = GVIZ_URL;
-
-script.onerror = handleError;
-
-document.body.appendChild(script);
-
-</script>
-
+    loadSheet();
+  </script>
 </body>
 </html>
