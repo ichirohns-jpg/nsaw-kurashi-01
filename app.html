@@ -40,8 +40,6 @@ body{
 
 }
 
-/* 小さい入口 */
-
 .miniOpenBtn{
 
   width:100%;
@@ -63,8 +61,6 @@ body{
 
 }
 
-/* 開閉 */
-
 .safetyPanel{
 
   display:none;
@@ -80,8 +76,6 @@ body{
   box-shadow:0 8px 18px rgba(0,0,0,.10);
 
 }
-
-/* 名前 */
 
 .nameBox{
 
@@ -169,8 +163,6 @@ body{
 
 }
 
-/* ボタン */
-
 .safeBtn{
 
   width:100%;
@@ -226,7 +218,7 @@ body{
 }
 
 /* =========================
-   トップ
+   タイトル
 ========================= */
 
 .top{
@@ -708,9 +700,9 @@ body{
     </a>
 
     <button class="contactBtn mapBtn"
-      onclick="showCurrentLocation()">
+      onclick="shareCurrentLocation()">
 
-      🗺 今いる場所
+      🗺 今いる場所を共有
 
     </button>
 
@@ -779,9 +771,7 @@ const GAS_URL =
 const app =
 document.getElementById("app");
 
-/* =========================
-   開閉
-========================= */
+/* 開閉 */
 
 function toggleSafetyPanel(){
 
@@ -817,9 +807,7 @@ function toggleNameEdit(){
 
 }
 
-/* =========================
-   名前
-========================= */
+/* 名前 */
 
 function initName(){
 
@@ -893,9 +881,7 @@ function getPersonName(){
 
 }
 
-/* =========================
-   メッセージ
-========================= */
+/* メッセージ */
 
 function showStatus(text,color){
 
@@ -914,9 +900,7 @@ function showStatus(text,color){
 
 }
 
-/* =========================
-   安否送信
-========================= */
+/* 安否送信 */
 
 function sendSafety(status){
 
@@ -1037,25 +1021,26 @@ function sendToGas(name,status,lat,lng){
 
 }
 
-/* =========================
-   現在地
-========================= */
+/* 現在地共有 */
 
-function showCurrentLocation(){
+function shareCurrentLocation(){
 
   if(!navigator.geolocation){
 
-    alert(
-      "位置情報が使えません"
-    );
+    alert("位置情報が使えません");
 
     return;
 
   }
 
+  showStatus(
+    "現在地を取得しています...",
+    "#2563eb"
+  );
+
   navigator.geolocation.getCurrentPosition(
 
-    function(pos){
+    async function(pos){
 
       const lat =
         pos.coords.latitude;
@@ -1063,13 +1048,53 @@ function showCurrentLocation(){
       const lng =
         pos.coords.longitude;
 
-      window.open(
+      const mapUrl =
         "https://www.google.com/maps?q="
         + lat
         + ","
-        + lng,
-        "_blank"
-      );
+        + lng;
+
+      const text =
+        "今いる場所です。\n"
+        + mapUrl;
+
+      if(navigator.share){
+
+        try{
+
+          await navigator.share({
+
+            title:"現在地",
+            text:text,
+            url:mapUrl
+
+          });
+
+          showStatus(
+            "現在地を共有しました",
+            "#16a34a"
+          );
+
+        }catch(e){
+
+          showStatus(
+            "共有をキャンセルしました",
+            "#666666"
+          );
+
+        }
+
+      }else{
+
+        navigator.clipboard.writeText(
+          text
+        );
+
+        alert(
+          "現在地URLをコピーしました"
+        );
+
+      }
 
     },
 
@@ -1079,15 +1104,19 @@ function showCurrentLocation(){
         "位置情報を許可してください"
       );
 
+    },
+
+    {
+      enableHighAccuracy:true,
+      timeout:10000,
+      maximumAge:0
     }
 
   );
 
 }
 
-/* =========================
-   SNS
-========================= */
+/* SNS */
 
 function shareFacebook(){
 
@@ -1131,9 +1160,7 @@ function copyUrl(){
 
 }
 
-/* =========================
-   シート
-========================= */
+/* シート */
 
 function cell(row,index){
 
