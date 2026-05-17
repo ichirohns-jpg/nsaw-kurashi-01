@@ -26,165 +26,96 @@ body{
 }
 
 .top{
-
   background:#ffffff;
-
   border:5px solid #16864a;
-
   border-radius:28px;
-
   padding:28px 20px;
-
   text-align:center;
-
   margin-bottom:24px;
-
   box-shadow:0 8px 22px rgba(0,0,0,.08);
-
 }
 
 .top h1{
-
   margin:0;
-
   font-size:38px;
-
   line-height:1.3;
-
   color:#118047;
-
   font-weight:900;
-
 }
 
 .top p{
-
   margin:16px 0 0;
-
   font-size:22px;
-
   line-height:1.6;
-
   font-weight:800;
-
   color:#31465a;
+}
 
+.sectionTitle{
+  font-size:28px;
+  font-weight:900;
+  margin:30px 0 14px;
+  color:#12324a;
 }
 
 .telBtn{
-
   display:block;
-
   width:100%;
-
   text-decoration:none;
-
   color:#ffffff;
-
   border-radius:28px;
-
-  padding:28px 20px;
-
-  margin-bottom:18px;
-
+  padding:24px 18px;
+  margin-bottom:16px;
   box-shadow:0 8px 18px rgba(0,0,0,.12);
-
 }
 
 .telTitle{
-
-  font-size:30px;
-
+  font-size:27px;
   line-height:1.4;
-
   font-weight:900;
-
-  margin-bottom:10px;
-
+  margin-bottom:8px;
 }
 
 .telNumber{
-
-  font-size:26px;
-
+  font-size:24px;
   line-height:1.4;
-
   font-weight:900;
-
 }
 
-.green{
-  background:#16a34a;
-}
-
-.blue{
-  background:#2563eb;
-}
-
-.orange{
-  background:#f59e0b;
-}
-
-.red{
-  background:#dc2626;
-}
-
-.purple{
-  background:#7c3aed;
-}
-
-.gray{
-  background:#666666;
-}
+.green{background:#16a34a;}
+.blue{background:#2563eb;}
+.orange{background:#f59e0b;}
+.red{background:#dc2626;}
+.purple{background:#7c3aed;}
+.pink{background:#ea4f8b;}
+.sky{background:#0ea5e9;}
+.gray{background:#666666;}
 
 .note{
-
   margin-top:24px;
-
   background:#ffffff;
-
   border-radius:24px;
-
   padding:22px;
-
   font-size:18px;
-
   line-height:1.7;
-
   font-weight:700;
-
   color:#425466;
-
   box-shadow:0 6px 14px rgba(0,0,0,.08);
-
 }
 
 .homeBtn{
-
   display:block;
-
   width:100%;
-
   text-decoration:none;
-
   text-align:center;
-
   background:#16864a;
-
   color:#ffffff;
-
   border-radius:24px;
-
   padding:22px 14px;
-
   margin-top:28px;
-
   font-size:24px;
-
   font-weight:900;
-
   box-shadow:0 8px 18px rgba(0,0,0,.12);
-
 }
 
 </style>
@@ -195,7 +126,6 @@ body{
 <div class="wrap">
 
   <div class="top">
-
     <h1>
       📞<br>
       困った時の連絡先
@@ -204,101 +134,145 @@ body{
     <p>
       押すとそのまま電話できます
     </p>
-
   </div>
 
-  <!-- 地域包括 -->
+  <div class="sectionTitle">
+    緊急・相談
+  </div>
 
-  <a class="telBtn green"
-     href="tel:0484731111">
-
-    <div class="telTitle">
-      地域包括支援センター
-    </div>
-
-    <div class="telNumber">
-      048-473-1111
-    </div>
-
-  </a>
-
-  <!-- 市役所 -->
-
-  <a class="telBtn blue"
-     href="tel:0484731111">
-
-    <div class="telTitle">
-      志木市役所
-    </div>
-
-    <div class="telNumber">
-      048-473-1111
-    </div>
-
-  </a>
-
-  <!-- 救急相談 -->
-
-  <a class="telBtn orange"
-     href="tel:#7119">
-
-    <div class="telTitle">
-      救急相談 #7119
-    </div>
-
-    <div class="telNumber">
-      #7119
-    </div>
-
-  </a>
-
-  <!-- 消防 -->
-
-  <a class="telBtn red"
-     href="tel:119">
-
+  <a class="telBtn red" href="tel:119">
     <div class="telTitle">
       消防・救急
     </div>
-
     <div class="telNumber">
       119
     </div>
-
   </a>
 
-  <!-- タクシー -->
-
-  <a class="telBtn purple"
-     href="tel:0000000000">
-
+  <a class="telBtn orange" href="tel:#7119">
     <div class="telTitle">
-      タクシー
+      救急相談
     </div>
-
     <div class="telNumber">
-      電話番号あとで設定
+      #7119
     </div>
-
   </a>
 
-  <!-- メモ -->
+  <a class="telBtn gray" href="tel:#9110">
+    <div class="telTitle">
+      警察相談
+    </div>
+    <div class="telNumber">
+      #9110
+    </div>
+  </a>
 
-  <div class="note">
-
-    ・緊急時は迷わず119番へ。<br>
-    ・地域包括支援センターは、高齢者や介護の相談窓口です。<br>
-    ・救急車を呼ぶか迷った時は #7119 に相談できます。
-
+  <div class="sectionTitle">
+    四市の市役所
   </div>
 
-  <!-- 戻る -->
+  <a class="telBtn green" href="tel:0484731111">
+    <div class="telTitle">
+      志木市役所
+    </div>
+    <div class="telNumber">
+      048-473-1111
+    </div>
+  </a>
 
-  <a class="homeBtn"
-     href="./app.html">
+  <a class="telBtn blue" href="tel:0484771111">
+    <div class="telTitle">
+      新座市役所
+    </div>
+    <div class="telNumber">
+      048-477-1111
+    </div>
+  </a>
 
-     ← 暮らし情報局へ戻る
+  <a class="telBtn pink" href="tel:0484631111">
+    <div class="telTitle">
+      朝霞市役所
+    </div>
+    <div class="telNumber">
+      048-463-1111
+    </div>
+  </a>
 
+  <a class="telBtn purple" href="tel:0484641111">
+    <div class="telTitle">
+      和光市役所
+    </div>
+    <div class="telNumber">
+      048-464-1111
+    </div>
+  </a>
+
+  <div class="sectionTitle">
+    高齢者・介護相談
+  </div>
+
+  <a class="telBtn green" href="tel:0484860003">
+    <div class="telTitle">
+      志木市 ブロン
+    </div>
+    <div class="telNumber">
+      048-486-0003
+    </div>
+  </a>
+
+  <a class="telBtn green" href="tel:0484855610">
+    <div class="telTitle">
+      志木市 館・幸町
+    </div>
+    <div class="telNumber">
+      048-485-5610
+    </div>
+  </a>
+
+  <a class="telBtn blue" href="tel:0484865011">
+    <div class="telTitle">
+      新座市 北部第一
+    </div>
+    <div class="telNumber">
+      048-486-5011
+    </div>
+  </a>
+
+  <a class="telBtn blue" href="tel:0484805853">
+    <div class="telTitle">
+      新座市 東部第一
+    </div>
+    <div class="telNumber">
+      048-480-5853
+    </div>
+  </a>
+
+  <a class="telBtn pink" href="tel:0484500855">
+    <div class="telTitle">
+      朝霞市 モーニングパーク
+    </div>
+    <div class="telNumber">
+      048-450-0855
+    </div>
+  </a>
+
+  <a class="telBtn purple" href="tel:0484527600">
+    <div class="telTitle">
+      和光市 北地域包括
+    </div>
+    <div class="telNumber">
+      048-452-7600
+    </div>
+  </a>
+
+  <div class="note">
+    ・命に関わる時は迷わず119番へ。<br>
+    ・救急車を呼ぶか迷った時は #7119。<br>
+    ・高齢者や介護の相談は地域包括支援センターへ。
+  </div>
+
+  <a class="homeBtn" href="./app.html">
+    ← 暮らし情報局へ戻る
   </a>
 
 </div>
