@@ -6,1293 +6,271 @@
 <title>NSAW 暮らし情報局</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  background:#eef8f5;
-  color:#14324a;
-  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-}
-
-.wrap{
-  max-width:680px;
-  margin:0 auto;
-  padding:0 12px 40px;
-}
-
-/* =========================
-   安否確認
-========================= */
-
-.fixedBar{
-
-  position:sticky;
-  top:0;
-  z-index:9999;
-
-  background:#eef8f5;
-
-  padding:8px 0 10px;
-
-}
-
-.miniOpenBtn{
-
-  width:100%;
-
-  border:none;
-
-  border-radius:18px;
-
-  background:#16864a;
-
-  color:#ffffff;
-
-  padding:14px 12px;
-
-  font-size:19px;
-  font-weight:900;
-
-  box-shadow:0 4px 10px rgba(0,0,0,.12);
-
-}
-
-.safetyPanel{
-
-  display:none;
-
-  margin-top:10px;
-
-  background:#ffffff;
-
-  border-radius:22px;
-
-  padding:14px;
-
-  box-shadow:0 8px 18px rgba(0,0,0,.10);
-
-}
-
-.nameBox{
-
-  margin-bottom:12px;
-
-}
-
-.nameMiniRow{
-
-  display:flex;
-
-  gap:8px;
-
-  align-items:center;
-
-}
-
-.nameMiniText{
-
-  flex:1;
-
-  font-size:16px;
-  font-weight:900;
-
-  color:#145c37;
-
-}
-
-.nameChangeBtn{
-
-  border:none;
-
-  border-radius:12px;
-
-  background:#3476d6;
-
-  color:#ffffff;
-
-  padding:10px 12px;
-
-  font-size:15px;
-  font-weight:900;
-
-}
-
-.nameEditArea{
-
-  display:none;
-
-  margin-top:10px;
-
-  gap:8px;
-
-}
-
-.nameInput{
-
-  width:100%;
-
-  border:2px solid #c7d8cf;
-
-  border-radius:14px;
-
-  padding:12px;
-
-  font-size:18px;
-  font-weight:800;
-
-}
-
-.nameSave{
-
-  border:none;
-
-  border-radius:14px;
-
-  background:#16864a;
-
-  color:#ffffff;
-
-  padding:12px 16px;
-
-  font-size:16px;
-  font-weight:900;
-
-}
-
-.safeBtn{
-
-  width:100%;
-
-  border:none;
-
-  border-radius:18px;
-
-  padding:16px 12px;
-
-  margin-top:10px;
-
-  font-size:22px;
-  font-weight:900;
-
-  color:#ffffff;
-
-}
-
-.greenBtn{
-  background:#16a34a;
-}
-
-.yellowBtn{
-  background:#f59e0b;
-}
-
-.redBtn{
-  background:#dc2626;
-}
-
-.statusMsg{
-
-  display:none;
-
-  background:#ffffff;
-
-  border:3px solid #16a34a;
-
-  border-radius:18px;
-
-  padding:14px;
-
-  margin-top:12px;
-
-  font-size:18px;
-  font-weight:900;
-
-  text-align:center;
-
-  color:#146c36;
-
-}
-
-/* =========================
-   タイトル
-========================= */
-
-.top{
-
-  background:#ffffff;
-
-  border:5px solid #16864a;
-
-  border-radius:28px;
-
-  padding:24px 18px;
-
-  text-align:center;
-
-  margin:14px 0 18px;
-
-  box-shadow:0 8px 22px rgba(0,0,0,.08);
-
-}
-
-.top h1{
-
-  margin:0;
-
-  font-size:38px;
-
-  line-height:1.25;
-
-  color:#118047;
-
-  font-weight:900;
-
-}
-
-.top p{
-
-  margin:14px 0 0;
-
-  font-size:20px;
-
-  line-height:1.5;
-
-  font-weight:800;
-
-  color:#31465a;
-
-}
-
-/* =========================
-   電話・地図
-========================= */
-
-.contactPanel{
-
-  display:grid;
-
-  grid-template-columns:1fr 1fr;
-
-  gap:12px;
-
-  margin-bottom:20px;
-
-}
-
-.contactBtn{
-
-  display:block;
-
-  text-decoration:none;
-
-  text-align:center;
-
-  color:#ffffff;
-
-  font-size:22px;
-  font-weight:900;
-
-  border-radius:22px;
-
-  padding:20px 10px;
-
-  box-shadow:0 6px 14px rgba(0,0,0,.15);
-
-  border:none;
-
-}
-
-.telBtn{
-  background:#2563eb;
-}
-
-.mapBtn{
-  background:#0f766e;
-}
-
-/* =========================
-   記事
-========================= */
-
-.card{
-
-  background:#ffffff;
-
-  border-radius:28px;
-
-  padding:24px 20px;
-
-  margin-bottom:28px;
-
-  box-shadow:0 10px 26px rgba(0,0,0,.10);
-
-}
-
-.date{
-
-  font-size:26px;
-
-  font-weight:900;
-
-  color:#647386;
-
-  margin-bottom:16px;
-
-}
-
-.title{
-
-  font-size:34px;
-
-  line-height:1.3;
-
-  font-weight:900;
-
-  margin:0 0 18px;
-
-  color:#102e4a;
-
-  word-break:break-word;
-
-}
-
-.image{
-
-  width:100%;
-
-  border-radius:22px;
-
-  margin-bottom:20px;
-
-  display:block;
-
-}
-
-.description{
-
-  font-size:18px;
-
-  line-height:1.7;
-
-  font-weight:700;
-
-  color:#2d4055;
-
-  margin-bottom:20px;
-
-}
-
-.infoBtn{
-
-  display:block;
-
-  width:100%;
-
-  text-decoration:none;
-
-  color:#ffffff;
-
-  font-size:24px;
-
-  line-height:1.4;
-
-  font-weight:900;
-
-  text-align:center;
-
-  padding:22px 14px;
-
-  border-radius:22px;
-
-  margin:14px 0;
-
-  box-shadow:0 6px 14px rgba(0,0,0,.15);
-
-  word-break:break-word;
-
-}
-
-.green{
-  background:#2f9441;
-}
-
-.blue{
-  background:#3476d6;
-}
-
-.pink{
-  background:#ea4f8b;
-}
-
-.orange{
-  background:#ef9819;
-}
-
-.purple{
-  background:#7d4dd8;
-}
-
-/* =========================
-   動画
-========================= */
-
-.movieBox{
-
-  margin-top:22px;
-
-  background:#f2f7ff;
-
-  border:3px solid #2b77d0;
-
-  border-radius:24px;
-
-  padding:20px;
-
-}
-
-.movieTitle{
-
-  font-size:26px;
-
-  font-weight:900;
-
-  color:#1454a8;
-
-  margin-bottom:10px;
-
-}
-
-.movieText{
-
-  font-size:18px;
-
-  line-height:1.7;
-
-  font-weight:700;
-
-  margin-bottom:16px;
-
-}
-
-.movieLink{
-
-  display:block;
-
-  background:#e60033;
-
-  color:#ffffff;
-
-  text-decoration:none;
-
-  text-align:center;
-
-  font-size:24px;
-
-  font-weight:900;
-
-  border-radius:18px;
-
-  padding:20px 12px;
-
-}
-
-/* =========================
-   SNS
-========================= */
-
-.snsBox{
-
-  display:grid;
-
-  grid-template-columns:1fr 1fr;
-
-  gap:12px;
-
-  margin-top:30px;
-
-}
-
-.snsBtn{
-
-  display:block;
-
-  text-decoration:none;
-
-  text-align:center;
-
-  color:#ffffff;
-
-  font-size:22px;
-  font-weight:900;
-
-  border-radius:20px;
-
-  padding:18px 10px;
-
-}
-
-.fb{
-  background:#1877f2;
-}
-
-.x{
-  background:#111111;
-}
-
-.line{
-  background:#06c755;
-}
-
-.copy{
-  background:#666666;
-}
-
-.loading{
-
-  text-align:center;
-
-  font-size:24px;
-
-  font-weight:900;
-
-  padding:40px 0;
-
-}
-
-.error{
-
-  background:#fff0f0;
-
-  color:#b00020;
-
-  border:3px solid #f0a0a0;
-
-  border-radius:20px;
-
-  padding:20px;
-
-  font-size:22px;
-
-  font-weight:800;
-
-  line-height:1.5;
-
-}
-
+*{box-sizing:border-box}
+body{margin:0;background:#eef8f5;color:#14324a;font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif}
+.wrap{max-width:680px;margin:0 auto;padding:0 12px 40px}
+.fixedBar{position:sticky;top:0;z-index:9999;background:#eef8f5;padding:8px 0 10px}
+.miniOpenBtn{width:100%;border:none;border-radius:18px;background:#16864a;color:#fff;padding:14px 12px;font-size:19px;font-weight:900;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.safetyPanel{display:none;margin-top:10px;background:#fff;border-radius:22px;padding:14px;box-shadow:0 8px 18px rgba(0,0,0,.10)}
+.nameMiniRow{display:flex;gap:8px;align-items:center}
+.nameMiniText{flex:1;font-size:16px;font-weight:900;color:#145c37}
+.nameChangeBtn{border:none;border-radius:12px;background:#3476d6;color:#fff;padding:10px 12px;font-size:15px;font-weight:900}
+.nameEditArea{display:none;margin-top:10px;gap:8px}
+.nameInput{width:100%;border:2px solid #c7d8cf;border-radius:14px;padding:12px;font-size:18px;font-weight:800}
+.nameSave{border:none;border-radius:14px;background:#16864a;color:#fff;padding:12px 16px;font-size:16px;font-weight:900}
+.safeBtn{width:100%;border:none;border-radius:18px;padding:16px 12px;margin-top:10px;font-size:22px;font-weight:900;color:#fff}
+.greenBtn{background:#16a34a}.yellowBtn{background:#f59e0b}.redBtn{background:#dc2626}
+.statusMsg{display:none;background:#fff;border:3px solid #16a34a;border-radius:18px;padding:14px;margin-top:12px;font-size:18px;font-weight:900;text-align:center;color:#146c36}
+.top{background:#fff;border:5px solid #16864a;border-radius:28px;padding:24px 18px;text-align:center;margin:14px 0 18px;box-shadow:0 8px 22px rgba(0,0,0,.08)}
+.top h1{margin:0;font-size:38px;line-height:1.25;color:#118047;font-weight:900}
+.top p{margin:14px 0 0;font-size:20px;line-height:1.5;font-weight:800;color:#31465a}
+.contactPanel{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.contactBtn{display:block;text-decoration:none;text-align:center;color:#fff;font-size:22px;font-weight:900;border-radius:22px;padding:20px 10px;box-shadow:0 6px 14px rgba(0,0,0,.15);border:none}
+.telBtn{background:#2563eb}.mapBtn{background:#0f766e}
+.card{background:#fff;border-radius:28px;padding:24px 20px;margin-bottom:28px;box-shadow:0 10px 26px rgba(0,0,0,.10)}
+.date{font-size:26px;font-weight:900;color:#647386;margin-bottom:16px}
+.title{font-size:34px;line-height:1.3;font-weight:900;margin:0 0 18px;color:#102e4a;word-break:break-word}
+.image{width:100%;border-radius:22px;margin-bottom:20px;display:block}
+.description{font-size:18px;line-height:1.7;font-weight:700;color:#2d4055;margin-bottom:20px}
+.infoBtn{display:block;width:100%;text-decoration:none;color:#fff;font-size:24px;line-height:1.4;font-weight:900;text-align:center;padding:22px 14px;border-radius:22px;margin:14px 0;box-shadow:0 6px 14px rgba(0,0,0,.15);word-break:break-word}
+.green{background:#2f9441}.blue{background:#3476d6}.pink{background:#ea4f8b}.orange{background:#ef9819}.purple{background:#7d4dd8}
+.movieBox{margin-top:22px;background:#f2f7ff;border:3px solid #2b77d0;border-radius:24px;padding:20px}
+.movieTitle{font-size:26px;font-weight:900;color:#1454a8;margin-bottom:10px}
+.movieText{font-size:18px;line-height:1.7;font-weight:700;margin-bottom:16px}
+.movieLink{display:block;background:#e60033;color:#fff;text-decoration:none;text-align:center;font-size:24px;font-weight:900;border-radius:18px;padding:20px 12px}
+.snsBox{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:30px}
+.snsBtn{display:block;text-decoration:none;text-align:center;color:#fff;font-size:22px;font-weight:900;border-radius:20px;padding:18px 10px}
+.fb{background:#1877f2}.x{background:#111}.line{background:#06c755}.copy{background:#666}
+.loading{text-align:center;font-size:24px;font-weight:900;padding:40px 0}
+.error{background:#fff0f0;color:#b00020;border:3px solid #f0a0a0;border-radius:20px;padding:20px;font-size:22px;font-weight:800;line-height:1.5}
 </style>
 </head>
 
 <body>
-
 <div class="wrap">
 
-  <!-- 安否確認 -->
-
   <div class="fixedBar">
+    <button class="miniOpenBtn" onclick="toggleSafetyPanel()">😊 安否確認・困りごと</button>
 
-    <button class="miniOpenBtn"
-      onclick="toggleSafetyPanel()">
-
-      😊 安否確認・困りごと
-
-    </button>
-
-    <div id="safetyPanel"
-         class="safetyPanel">
-
-      <div class="nameBox">
-
-        <div class="nameMiniRow">
-
-          <div id="nameMiniText"
-               class="nameMiniText">
-
-            登録名：未設定
-
-          </div>
-
-          <button class="nameChangeBtn"
-            onclick="toggleNameEdit()">
-
-            変更
-
-          </button>
-
-        </div>
-
-        <div id="nameEditArea"
-             class="nameEditArea">
-
-          <input id="nameInput"
-            class="nameInput"
-            placeholder="例：山口さん">
-
-          <button class="nameSave"
-            onclick="saveName()">
-
-            保存
-
-          </button>
-
-        </div>
-
+    <div id="safetyPanel" class="safetyPanel">
+      <div class="nameMiniRow">
+        <div id="nameMiniText" class="nameMiniText">登録名：未設定</div>
+        <button class="nameChangeBtn" onclick="toggleNameEdit()">変更</button>
       </div>
 
-      <button class="safeBtn greenBtn"
-        onclick="sendSafety('genki')">
-
-        😊 元気です
-
-      </button>
-
-      <button class="safeBtn yellowBtn"
-        onclick="sendSafety('komari')">
-
-        😥 何かに困っています
-
-      </button>
-
-      <button class="safeBtn redBtn"
-        onclick="sendSafety('kyukyu')">
-
-        🚨 急いで助けてください
-
-      </button>
-
-      <div id="statusMsg"
-           class="statusMsg">
-
+      <div id="nameEditArea" class="nameEditArea">
+        <input id="nameInput" class="nameInput" placeholder="例：山口さん">
+        <button class="nameSave" onclick="saveName()">保存</button>
       </div>
 
+      <button class="safeBtn greenBtn" onclick="sendSafety('genki')">😊 元気です</button>
+      <button class="safeBtn yellowBtn" onclick="sendSafety('komari')">😥 何かに困っています</button>
+      <button class="safeBtn redBtn" onclick="sendSafety('kyukyu')">🚨 急いで助けてください</button>
+
+      <div id="statusMsg" class="statusMsg"></div>
     </div>
-
   </div>
-
-  <!-- タイトル -->
 
   <div class="top">
-
-    <h1>
-      NSAW<br>
-      暮らし情報局
-    </h1>
-
-    <p>
-      四市の暮らし情報を
-      見やすくまとめています
-    </p>
-
+    <h1>NSAW<br>暮らし情報局</h1>
+    <p>四市の暮らし情報を見やすくまとめています</p>
   </div>
-
-  <!-- 電話・地図 -->
 
   <div class="contactPanel">
-
-    <a class="contactBtn telBtn"
-       href="./phone.html">
-
-       📞 電話帳
-
-    </a>
-
-    <button class="contactBtn mapBtn"
-      onclick="shareCurrentLocation()">
-
-      🗺 今いる場所を共有
-
-    </button>
-
+    <a class="contactBtn telBtn" href="./phone.html">📞 電話帳</a>
+    <button class="contactBtn mapBtn" onclick="openCurrentLocationMap()">🗺 今いる場所を確認</button>
   </div>
 
-  <!-- 記事 -->
-
-  <div id="app"
-       class="loading">
-
-       読み込み中です...
-
-  </div>
-
-  <!-- SNS -->
+  <div id="app" class="loading">読み込み中です...</div>
 
   <div class="snsBox">
-
-    <a class="snsBtn fb"
-       href="#"
-       onclick="shareFacebook();return false;">
-
-       Facebook
-
-    </a>
-
-    <a class="snsBtn x"
-       href="#"
-       onclick="shareX();return false;">
-
-       X
-
-    </a>
-
-    <a class="snsBtn line"
-       href="#"
-       onclick="shareLine();return false;">
-
-       LINE
-
-    </a>
-
-    <a class="snsBtn copy"
-       href="#"
-       onclick="copyUrl();return false;">
-
-       URLコピー
-
-    </a>
-
+    <a class="snsBtn fb" href="#" onclick="shareFacebook();return false;">Facebook</a>
+    <a class="snsBtn x" href="#" onclick="shareX();return false;">X</a>
+    <a class="snsBtn line" href="#" onclick="shareLine();return false;">LINE</a>
+    <a class="snsBtn copy" href="#" onclick="copyUrl();return false;">URLコピー</a>
   </div>
 
 </div>
 
 <script>
-
-const SHEET_ID =
-"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
-
-const SHEET_NAME =
-"NSAW暮らし情報局_データ";
-
-const GAS_URL =
-"https://script.google.com/macros/s/AKfycbz4kvlKDo93xyUfmExcgHj9MqLhyCyxemGM0RWkysNQ_vlAx8AWvPk9McfbJrvM4NIJ/exec";
-
-const app =
-document.getElementById("app");
-
-/* 開閉 */
+const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+const SHEET_NAME = "NSAW暮らし情報局_データ";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbz4kvlKDo93xyUfmExcgHj9MqLhyCyxemGM0RWkysNQ_vlAx8AWvPk9McfbJrvM4NIJ/exec";
+const app = document.getElementById("app");
 
 function toggleSafetyPanel(){
-
-  const panel =
-    document.getElementById("safetyPanel");
-
-  if(panel.style.display === "block"){
-
-    panel.style.display = "none";
-
-  }else{
-
-    panel.style.display = "block";
-
-  }
-
+  const panel = document.getElementById("safetyPanel");
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
 }
 
 function toggleNameEdit(){
-
-  const area =
-    document.getElementById("nameEditArea");
-
-  if(area.style.display === "flex"){
-
-    area.style.display = "none";
-
-  }else{
-
-    area.style.display = "flex";
-
-  }
-
+  const area = document.getElementById("nameEditArea");
+  area.style.display = area.style.display === "flex" ? "none" : "flex";
 }
 
-/* 名前 */
-
 function initName(){
-
-  const saved =
-    localStorage.getItem("nsaw_name") || "";
-
-  const input =
-    document.getElementById("nameInput");
-
-  const text =
-    document.getElementById("nameMiniText");
-
-  input.value = saved;
-
-  if(saved){
-
-    text.innerText =
-      "登録名：" + saved;
-
-  }
-
+  const saved = localStorage.getItem("nsaw_name") || "";
+  document.getElementById("nameInput").value = saved;
+  if(saved) document.getElementById("nameMiniText").innerText = "登録名：" + saved;
 }
 
 function saveName(){
-
-  const input =
-    document.getElementById("nameInput");
-
-  const name =
-    input.value.trim();
-
+  const name = document.getElementById("nameInput").value.trim();
   if(name){
-
-    localStorage.setItem(
-      "nsaw_name",
-      name
-    );
-
-    document.getElementById("nameMiniText")
-      .innerText =
-      "登録名：" + name;
-
-    showStatus(
-      "お名前を保存しました",
-      "#16a34a"
-    );
-
+    localStorage.setItem("nsaw_name", name);
+    document.getElementById("nameMiniText").innerText = "登録名：" + name;
+    showStatus("お名前を保存しました","#16a34a");
   }else{
-
-    localStorage.removeItem(
-      "nsaw_name"
-    );
-
-    document.getElementById("nameMiniText")
-      .innerText =
-      "登録名：未設定";
-
+    localStorage.removeItem("nsaw_name");
+    document.getElementById("nameMiniText").innerText = "登録名：未設定";
   }
-
-  document.getElementById("nameEditArea")
-    .style.display = "none";
-
+  document.getElementById("nameEditArea").style.display = "none";
 }
 
 function getPersonName(){
-
-  const saved =
-    localStorage.getItem("nsaw_name");
-
-  return saved || "名前未設定";
-
+  return localStorage.getItem("nsaw_name") || "名前未設定";
 }
-
-/* メッセージ */
 
 function showStatus(text,color){
-
-  const box =
-    document.getElementById("statusMsg");
-
+  const box = document.getElementById("statusMsg");
   box.style.display = "block";
-
   box.innerText = text;
-
-  box.style.borderColor =
-    color || "#16a34a";
-
-  box.style.color =
-    color || "#146c36";
-
+  box.style.borderColor = color || "#16a34a";
+  box.style.color = color || "#146c36";
 }
 
-/* 安否送信 */
-
 function sendSafety(status){
-
-  const name =
-    getPersonName();
-
-  showStatus(
-    "送信中です...",
-    "#2563eb"
-  );
-
+  const name = getPersonName();
+  showStatus("送信中です...","#2563eb");
   if(status === "kyukyu"){
-
-    sendWithLocation(
-      name,
-      status
-    );
-
-    return;
-
+    sendWithLocation(name,status);
+  }else{
+    sendToGas(name,status,"","");
   }
-
-  sendToGas(
-    name,
-    status,
-    "",
-    ""
-  );
-
 }
 
 function sendWithLocation(name,status){
-
   if(!navigator.geolocation){
-
-    sendToGas(
-      name,
-      status,
-      "",
-      ""
-    );
-
+    sendToGas(name,status,"","");
     return;
-
   }
-
   navigator.geolocation.getCurrentPosition(
-
     function(pos){
-
-      sendToGas(
-        name,
-        status,
-        pos.coords.latitude,
-        pos.coords.longitude
-      );
-
+      sendToGas(name,status,pos.coords.latitude,pos.coords.longitude);
     },
-
     function(){
-
-      sendToGas(
-        name,
-        status,
-        "",
-        ""
-      );
-
+      sendToGas(name,status,"","");
     },
-
-    {
-      enableHighAccuracy:true,
-      timeout:10000,
-      maximumAge:0
-    }
-
+    {enableHighAccuracy:true,timeout:10000,maximumAge:0}
   );
-
 }
 
 function sendToGas(name,status,lat,lng){
-
-  const url =
-    GAS_URL
+  const url = GAS_URL
     + "?name=" + encodeURIComponent(name)
     + "&status=" + encodeURIComponent(status)
     + "&lat=" + encodeURIComponent(lat || "")
     + "&lng=" + encodeURIComponent(lng || "")
     + "&t=" + Date.now();
 
-  fetch(url,{mode:"no-cors"})
-    .then(function(){
-
-      if(status === "genki"){
-
-        showStatus(
-          "😊 元気ですを受け付けました",
-          "#16a34a"
-        );
-
-      }else if(status === "komari"){
-
-        showStatus(
-          "😥 困っていますを受け付けました",
-          "#f59e0b"
-        );
-
-      }else{
-
-        showStatus(
-          "🚨 急ぎの連絡を受け付けました",
-          "#dc2626"
-        );
-
-      }
-
-    });
-
+  fetch(url,{mode:"no-cors"}).then(function(){
+    if(status === "genki"){
+      showStatus("😊 元気ですを受け付けました","#16a34a");
+    }else if(status === "komari"){
+      showStatus("😥 困っていますを受け付けました","#f59e0b");
+    }else{
+      showStatus("🚨 急ぎの連絡を受け付けました","#dc2626");
+    }
+  });
 }
 
-/* 現在地共有 */
-
-function shareCurrentLocation(){
-
+function openCurrentLocationMap(){
   if(!navigator.geolocation){
-
     alert("位置情報が使えません");
-
     return;
-
   }
 
-  showStatus(
-    "現在地を取得しています...",
-    "#2563eb"
-  );
+  showStatus("現在地を取得しています...","#2563eb");
 
   navigator.geolocation.getCurrentPosition(
-
-    async function(pos){
-
-      const lat =
-        pos.coords.latitude;
-
-      const lng =
-        pos.coords.longitude;
-
-      const mapUrl =
-        "https://www.google.com/maps?q="
-        + lat
-        + ","
-        + lng;
-
-      const text =
-        "今いる場所です。\n"
-        + mapUrl;
-
-      if(navigator.share){
-
-        try{
-
-          await navigator.share({
-
-            title:"現在地",
-            text:text,
-            url:mapUrl
-
-          });
-
-          showStatus(
-            "現在地を共有しました",
-            "#16a34a"
-          );
-
-        }catch(e){
-
-          showStatus(
-            "共有をキャンセルしました",
-            "#666666"
-          );
-
-        }
-
-      }else{
-
-        navigator.clipboard.writeText(
-          text
-        );
-
-        alert(
-          "現在地URLをコピーしました"
-        );
-
-      }
-
+    function(pos){
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      const url = "https://www.google.com/maps?q=" + lat + "," + lng;
+      window.open(url,"_blank");
+      showStatus("Google Mapsで現在地を開きました","#16a34a");
     },
-
     function(){
-
-      alert(
-        "位置情報を許可してください"
-      );
-
+      alert("位置情報を許可してください");
     },
-
-    {
-      enableHighAccuracy:true,
-      timeout:10000,
-      maximumAge:0
-    }
-
+    {enableHighAccuracy:true,timeout:10000,maximumAge:0}
   );
-
 }
 
-/* SNS */
-
 function shareFacebook(){
-
-  window.open(
-    "https://www.facebook.com/sharer/sharer.php?u="
-    + encodeURIComponent(location.href),
-    "_blank"
-  );
-
+  window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(location.href),"_blank");
 }
 
 function shareX(){
-
-  window.open(
-    "https://twitter.com/intent/tweet?url="
-    + encodeURIComponent(location.href),
-    "_blank"
-  );
-
+  window.open("https://twitter.com/intent/tweet?url=" + encodeURIComponent(location.href),"_blank");
 }
 
 function shareLine(){
-
-  window.open(
-    "https://social-plugins.line.me/lineit/share?url="
-    + encodeURIComponent(location.href),
-    "_blank"
-  );
-
+  window.open("https://social-plugins.line.me/lineit/share?url=" + encodeURIComponent(location.href),"_blank");
 }
 
 function copyUrl(){
-
-  navigator.clipboard.writeText(
-    location.href
-  );
-
-  alert(
-    "URLをコピーしました"
-  );
-
+  navigator.clipboard.writeText(location.href);
+  alert("URLをコピーしました");
 }
 
-/* シート */
-
 function cell(row,index){
-
   if(!row.c) return "";
-
   if(!row.c[index]) return "";
-
-  return row.c[index].f ||
-         row.c[index].v ||
-         "";
-
+  return row.c[index].f || row.c[index].v || "";
 }
 
 function fixDriveImage(url){
-
   if(!url) return "";
-
   url = String(url);
-
-  let match =
-    url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-
-  if(match){
-
-    return (
-      "https://drive.google.com/thumbnail?id="
-      + match[1]
-      + "&sz=w1200"
-    );
-
-  }
-
-  match =
-    url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-
-  if(match){
-
-    return (
-      "https://drive.google.com/thumbnail?id="
-      + match[1]
-      + "&sz=w1200"
-    );
-
-  }
-
+  let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if(match) return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1200";
+  match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if(match) return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1200";
   return url;
-
 }
 
 function createButton(title,url,colorClass){
-
   if(!title) return "";
-
   if(url){
-
-    return `
-      <a
-        class="infoBtn ${colorClass}"
-        href="${url}"
-        target="_blank"
-        rel="noopener"
-      >
-        ${title}
-      </a>
-    `;
-
+    return '<a class="infoBtn '+colorClass+'" href="'+url+'" target="_blank" rel="noopener">'+title+'</a>';
   }
-
-  return `
-    <div class="infoBtn ${colorClass}">
-      ${title}
-    </div>
-  `;
-
+  return '<div class="infoBtn '+colorClass+'">'+title+'</div>';
 }
 
 function render(rows){
-
   app.className = "";
-
   app.innerHTML = "";
 
   if(!rows.length){
-
-    app.innerHTML =
-      '<div class="error">表示できる情報がありません。</div>';
-
+    app.innerHTML = '<div class="error">表示できる情報がありません。</div>';
     return;
-
   }
 
   rows.forEach(function(item){
-
-    const card =
-      document.createElement("div");
-
+    const card = document.createElement("div");
     card.className = "card";
 
     let html = "";
-
-    html += `
-      <div class="date">
-        ${item.date}
-      </div>
-    `;
-
-    html += `
-      <h2 class="title">
-        ${item.title}
-      </h2>
-    `;
+    html += '<div class="date">'+item.date+'</div>';
+    html += '<h2 class="title">'+item.title+'</h2>';
 
     if(item.imageUrl){
-
-      html += `
-        <img
-          class="image"
-          src="${item.imageUrl}"
-          loading="lazy"
-        >
-      `;
-
+      html += '<img class="image" src="'+item.imageUrl+'" loading="lazy">';
     }
 
     if(item.description){
-
-      html += `
-        <div class="description">
-          ${item.description}
-        </div>
-      `;
-
+      html += '<div class="description">'+item.description+'</div>';
     }
 
     html += createButton(item.info1Title,item.info1Url,"green");
@@ -1302,187 +280,65 @@ function render(rows){
     html += createButton(item.info5Title,item.info5Url,"purple");
 
     if(item.movieTitle || item.movieDetail || item.mediaUrl){
-
-      html += `
-        <div class="movieBox">
-      `;
-
-      if(item.movieTitle){
-
-        html += `
-          <div class="movieTitle">
-            ${item.movieTitle}
-          </div>
-        `;
-
-      }
-
-      if(item.movieDetail){
-
-        html += `
-          <div class="movieText">
-            ${item.movieDetail}
-          </div>
-        `;
-
-      }
-
-      if(item.mediaUrl){
-
-        html += `
-          <a
-            class="movieLink"
-            href="${item.mediaUrl}"
-            target="_blank"
-            rel="noopener"
-          >
-            動画を見る
-          </a>
-        `;
-
-      }
-
-      html += `
-        </div>
-      `;
-
+      html += '<div class="movieBox">';
+      if(item.movieTitle) html += '<div class="movieTitle">'+item.movieTitle+'</div>';
+      if(item.movieDetail) html += '<div class="movieText">'+item.movieDetail+'</div>';
+      if(item.mediaUrl) html += '<a class="movieLink" href="'+item.mediaUrl+'" target="_blank" rel="noopener">動画を見る</a>';
+      html += '</div>';
     }
 
     card.innerHTML = html;
-
     app.appendChild(card);
-
   });
-
 }
 
 window.handleSheet = function(json){
-
   try{
+    let rows = json.table.rows.map(function(row,index){
+      return {
+        rowNo:index,
+        date:cell(row,0),
+        articleId:cell(row,1),
+        title:cell(row,2),
+        imageUrl:fixDriveImage(cell(row,3)),
+        description:cell(row,4),
+        info1Title:cell(row,5),
+        info1Url:cell(row,6),
+        info2Title:cell(row,7),
+        info2Url:cell(row,8),
+        info3Title:cell(row,9),
+        info3Url:cell(row,10),
+        info4Title:cell(row,11),
+        info4Url:cell(row,12),
+        info5Title:cell(row,13),
+        info5Url:cell(row,14),
+        movieTitle:cell(row,15),
+        movieDetail:cell(row,16),
+        mediaUrl:cell(row,17),
+        show:cell(row,18),
+        sortDate:parseInt(cell(row,19)) || 0
+      };
+    });
 
-    let rows =
-      json.table.rows.map(function(row,index){
+    rows = rows.filter(function(item){
+      return String(item.show).trim() === "はい";
+    });
 
-        return {
-
-          rowNo:index,
-
-          date:
-            cell(row,0),
-
-          articleId:
-            cell(row,1),
-
-          title:
-            cell(row,2),
-
-          imageUrl:
-            fixDriveImage(cell(row,3)),
-
-          description:
-            cell(row,4),
-
-          info1Title:
-            cell(row,5),
-
-          info1Url:
-            cell(row,6),
-
-          info2Title:
-            cell(row,7),
-
-          info2Url:
-            cell(row,8),
-
-          info3Title:
-            cell(row,9),
-
-          info3Url:
-            cell(row,10),
-
-          info4Title:
-            cell(row,11),
-
-          info4Url:
-            cell(row,12),
-
-          info5Title:
-            cell(row,13),
-
-          info5Url:
-            cell(row,14),
-
-          movieTitle:
-            cell(row,15),
-
-          movieDetail:
-            cell(row,16),
-
-          mediaUrl:
-            cell(row,17),
-
-          show:
-            cell(row,18),
-
-          sortDate:
-            parseInt(cell(row,19)) || 0
-
-        };
-
-      });
-
-    rows =
-      rows.filter(function(item){
-
-        return (
-          String(item.show).trim()
-          ===
-          "はい"
-        );
-
-      });
-
-    rows =
-      rows.sort(function(a,b){
-
-        if(b.sortDate !== a.sortDate){
-
-          return (
-            b.sortDate
-            -
-            a.sortDate
-          );
-
-        }
-
-        return (
-          b.rowNo
-          -
-          a.rowNo
-        );
-
-      });
+    rows = rows.sort(function(a,b){
+      if(b.sortDate !== a.sortDate) return b.sortDate - a.sortDate;
+      return b.rowNo - a.rowNo;
+    });
 
     render(rows);
-
   }catch(e){
-
     console.error(e);
-
     app.className = "";
-
-    app.innerHTML =
-      '<div class="error">読み込みエラーです。</div>';
-
+    app.innerHTML = '<div class="error">読み込みエラーです。</div>';
   }
-
 };
 
 function loadSheet(){
-
-  const script =
-    document.createElement("script");
-
+  const script = document.createElement("script");
   script.src =
     "https://docs.google.com/spreadsheets/d/"
     + SHEET_ID
@@ -1492,12 +348,10 @@ function loadSheet(){
     + Date.now();
 
   document.body.appendChild(script);
-
 }
 
 initName();
 loadSheet();
-
 </script>
 
 </body>
