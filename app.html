@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>NSAW 暮らし情報局</title>
 
 <meta name="description" content="四市の暮らし情報・電話帳・地図・安心サポート">
@@ -16,271 +15,44 @@
 
 <style>
 *{box-sizing:border-box}
+body{margin:0;background:#eef8f5;color:#14324a;font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif}
+.wrap{max-width:680px;margin:0 auto;padding:0 12px 40px}
 
-body{
-  margin:0;
-  background:#eef8f5;
-  color:#14324a;
-  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-}
+.fixedBar{position:sticky;top:0;z-index:9999;background:#eef8f5;padding:8px 0 10px}
+.miniOpenBtn{width:100%;border:none;border-radius:18px;background:#16864a;color:#fff;padding:14px 12px;font-size:19px;font-weight:900}
+.safetyPanel{display:none;margin-top:10px;background:#fff;border-radius:22px;padding:14px;box-shadow:0 8px 18px rgba(0,0,0,.10)}
+.nameMiniRow{display:flex;gap:8px;align-items:center}
+.nameMiniText{flex:1;font-size:16px;font-weight:900;color:#145c37}
+.nameChangeBtn{border:none;border-radius:12px;background:#3476d6;color:#fff;padding:10px 12px;font-size:15px;font-weight:900}
+.nameEditArea{display:none;margin-top:10px;gap:8px}
+.nameInput{width:100%;border:2px solid #c7d8cf;border-radius:14px;padding:12px;font-size:18px;font-weight:800}
+.nameSave{border:none;border-radius:14px;background:#16864a;color:#fff;padding:12px 16px;font-size:16px;font-weight:900}
+.safeBtn{width:100%;border:none;border-radius:18px;padding:16px 12px;margin-top:10px;font-size:22px;font-weight:900;color:#fff}
+.greenBtn{background:#16a34a}.yellowBtn{background:#f59e0b}.redBtn{background:#dc2626}
+.statusMsg{display:none;background:#fff;border:3px solid #16a34a;border-radius:18px;padding:14px;margin-top:12px;font-size:18px;font-weight:900;text-align:center}
 
-.wrap{
-  max-width:680px;
-  margin:0 auto;
-  padding:0 12px 40px;
-}
+.top{background:#fff;border:5px solid #16864a;border-radius:28px;padding:24px 18px;text-align:center;margin:14px 0 18px;box-shadow:0 8px 22px rgba(0,0,0,.08)}
+.top h1{margin:0;font-size:38px;line-height:1.25;color:#118047;font-weight:900}
+.top p{margin:14px 0 0;font-size:20px;line-height:1.5;font-weight:800;color:#31465a}
 
-.fixedBar{
-  position:sticky;
-  top:0;
-  z-index:9999;
-  background:#eef8f5;
-  padding:8px 0 10px;
-}
+.contactPanel{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px}
+.contactBtn{display:block;text-decoration:none;text-align:center;color:#fff;font-size:24px;font-weight:900;border-radius:22px;padding:22px 12px;box-shadow:0 6px 14px rgba(0,0,0,.15);border:none}
+.telBtn{background:#2563eb}.mapBtn{background:#0f766e}.cityMapBtn{background:#7c3aed}.homeRegisterBtn{background:#15803d}.homeBtn{background:#ea580c}
 
-.miniOpenBtn{
-  width:100%;
-  border:none;
-  border-radius:18px;
-  background:#16864a;
-  color:#fff;
-  padding:14px 12px;
-  font-size:19px;
-  font-weight:900;
-}
+.card{background:#fff;border-radius:28px;padding:24px 20px;margin-bottom:28px;box-shadow:0 10px 26px rgba(0,0,0,.10)}
+.date{font-size:26px;font-weight:900;color:#647386;margin-bottom:16px}
+.title{font-size:34px;line-height:1.3;font-weight:900;margin:0 0 18px;color:#102e4a}
+.image{width:100%;border-radius:22px;margin-bottom:20px;display:block}
+.description{font-size:18px;line-height:1.7;font-weight:700;color:#2d4055;margin-bottom:20px}
+.infoBtn{display:block;width:100%;text-decoration:none;color:#fff;font-size:24px;line-height:1.4;font-weight:900;text-align:center;padding:22px 14px;border-radius:22px;margin:14px 0}
+.green{background:#2f9441}.blue{background:#3476d6}.pink{background:#ea4f8b}.orange{background:#ef9819}.purple{background:#7d4dd8}
 
-.safetyPanel{
-  display:none;
-  margin-top:10px;
-  background:#fff;
-  border-radius:22px;
-  padding:14px;
-  box-shadow:0 8px 18px rgba(0,0,0,.10);
-}
+.articleSnsBox{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;padding-top:18px;border-top:2px solid #e0e8e4}
+.articleSnsBtn{border:none;border-radius:16px;color:#fff;padding:15px 8px;font-size:17px;font-weight:900}
+.fbBtn{background:#1877f2}.xBtn{background:#111}.lineBtn{background:#06c755}.copyBtn{background:#666}
 
-.nameMiniRow{
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
-
-.nameMiniText{
-  flex:1;
-  font-size:16px;
-  font-weight:900;
-  color:#145c37;
-}
-
-.nameChangeBtn{
-  border:none;
-  border-radius:12px;
-  background:#3476d6;
-  color:#fff;
-  padding:10px 12px;
-  font-size:15px;
-  font-weight:900;
-}
-
-.nameEditArea{
-  display:none;
-  margin-top:10px;
-  gap:8px;
-}
-
-.nameInput{
-  width:100%;
-  border:2px solid #c7d8cf;
-  border-radius:14px;
-  padding:12px;
-  font-size:18px;
-  font-weight:800;
-}
-
-.nameSave{
-  border:none;
-  border-radius:14px;
-  background:#16864a;
-  color:#fff;
-  padding:12px 16px;
-  font-size:16px;
-  font-weight:900;
-}
-
-.safeBtn{
-  width:100%;
-  border:none;
-  border-radius:18px;
-  padding:16px 12px;
-  margin-top:10px;
-  font-size:22px;
-  font-weight:900;
-  color:#fff;
-}
-
-.greenBtn{background:#16a34a}
-.yellowBtn{background:#f59e0b}
-.redBtn{background:#dc2626}
-
-.statusMsg{
-  display:none;
-  background:#fff;
-  border:3px solid #16a34a;
-  border-radius:18px;
-  padding:14px;
-  margin-top:12px;
-  font-size:18px;
-  font-weight:900;
-  text-align:center;
-}
-
-.top{
-  background:#fff;
-  border:5px solid #16864a;
-  border-radius:28px;
-  padding:24px 18px;
-  text-align:center;
-  margin:14px 0 18px;
-  box-shadow:0 8px 22px rgba(0,0,0,.08);
-}
-
-.top h1{
-  margin:0;
-  font-size:38px;
-  line-height:1.25;
-  color:#118047;
-  font-weight:900;
-}
-
-.top p{
-  margin:14px 0 0;
-  font-size:20px;
-  line-height:1.5;
-  font-weight:800;
-  color:#31465a;
-}
-
-.contactPanel{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:12px;
-  margin-bottom:24px;
-}
-
-.contactBtn{
-  display:block;
-  text-decoration:none;
-  text-align:center;
-  color:#fff;
-  font-size:24px;
-  font-weight:900;
-  border-radius:22px;
-  padding:22px 12px;
-  box-shadow:0 6px 14px rgba(0,0,0,.15);
-  border:none;
-}
-
-.telBtn{background:#2563eb}
-.mapBtn{background:#0f766e}
-.cityMapBtn{background:#7c3aed}
-.homeRegisterBtn{background:#15803d}
-.homeBtn{background:#ea580c}
-
-.snsBox{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin:22px 0;
-}
-
-.snsBtn{
-  border:none;
-  border-radius:18px;
-  color:#fff;
-  padding:16px 8px;
-  font-size:18px;
-  font-weight:900;
-  box-shadow:0 5px 12px rgba(0,0,0,.14);
-}
-
-.fbBtn{background:#1877f2}
-.xBtn{background:#111}
-.lineBtn{background:#06c755}
-.copyBtn{background:#666}
-
-.card{
-  background:#fff;
-  border-radius:28px;
-  padding:24px 20px;
-  margin-bottom:28px;
-  box-shadow:0 10px 26px rgba(0,0,0,.10);
-}
-
-.date{
-  font-size:26px;
-  font-weight:900;
-  color:#647386;
-  margin-bottom:16px;
-}
-
-.title{
-  font-size:34px;
-  line-height:1.3;
-  font-weight:900;
-  margin:0 0 18px;
-  color:#102e4a;
-}
-
-.image{
-  width:100%;
-  border-radius:22px;
-  margin-bottom:20px;
-  display:block;
-}
-
-.description{
-  font-size:18px;
-  line-height:1.7;
-  font-weight:700;
-  color:#2d4055;
-  margin-bottom:20px;
-}
-
-.infoBtn{
-  display:block;
-  width:100%;
-  text-decoration:none;
-  color:#fff;
-  font-size:24px;
-  line-height:1.4;
-  font-weight:900;
-  text-align:center;
-  padding:22px 14px;
-  border-radius:22px;
-  margin:14px 0;
-}
-
-.green{background:#2f9441}
-.blue{background:#3476d6}
-.pink{background:#ea4f8b}
-.orange{background:#ef9819}
-.purple{background:#7d4dd8}
-
-.loading{
-  text-align:center;
-  font-size:24px;
-  font-weight:900;
-  padding:40px 0;
-}
-
-.error{
-  background:#fff0f0;
-  color:#b00020;
-  border:3px solid #f0a0a0;
-  border-radius:20px;
-  padding:20px;
-  font-size:22px;
-  font-weight:800;
-}
+.loading{text-align:center;font-size:24px;font-weight:900;padding:40px 0}
+.error{background:#fff0f0;color:#b00020;border:3px solid #f0a0a0;border-radius:20px;padding:20px;font-size:22px;font-weight:800}
 </style>
 </head>
 
@@ -289,22 +61,18 @@ body{
 
   <div class="fixedBar">
     <button class="miniOpenBtn" onclick="toggleSafetyPanel()">😊 安否確認・困りごと</button>
-
     <div id="safetyPanel" class="safetyPanel">
       <div class="nameMiniRow">
         <div id="nameMiniText" class="nameMiniText">登録名：未設定</div>
         <button class="nameChangeBtn" onclick="toggleNameEdit()">変更</button>
       </div>
-
       <div id="nameEditArea" class="nameEditArea">
         <input id="nameInput" class="nameInput" placeholder="例：山口さん">
         <button class="nameSave" onclick="saveName()">保存</button>
       </div>
-
       <button class="safeBtn greenBtn" onclick="sendSafety('genki')">😊 元気です</button>
       <button class="safeBtn yellowBtn" onclick="sendSafety('komari')">😥 何かに困っています</button>
       <button class="safeBtn redBtn" onclick="sendSafety('kyukyu')">🚨 急いで助けてください</button>
-
       <div id="statusMsg" class="statusMsg"></div>
     </div>
   </div>
@@ -320,13 +88,6 @@ body{
     <a class="contactBtn cityMapBtn" href="./map.html">🗺 四市マップ</a>
     <button class="contactBtn homeRegisterBtn" onclick="registerHomeLocation()">🏠 今いる場所を家として登録</button>
     <button class="contactBtn homeBtn" onclick="goHome()">🏠 家に帰る</button>
-  </div>
-
-  <div class="snsBox">
-    <button class="snsBtn fbBtn" onclick="shareFacebook()">Facebook</button>
-    <button class="snsBtn xBtn" onclick="shareX()">X</button>
-    <button class="snsBtn lineBtn" onclick="shareLine()">LINE</button>
-    <button class="snsBtn copyBtn" onclick="copyUrl()">URLコピー</button>
   </div>
 
   <div id="app" class="loading">読み込み中です...</div>
@@ -367,15 +128,40 @@ function saveName(){
   document.getElementById("nameEditArea").style.display = "none";
 }
 
+function showStatus(text,color){
+  const box = document.getElementById("statusMsg");
+  box.style.display = "block";
+  box.innerText = text;
+  box.style.borderColor = color;
+  box.style.color = color;
+}
+
 function sendSafety(status){
   const name = localStorage.getItem("nsaw_name") || "名前未設定";
+  showStatus("送信中です...","#2563eb");
+
+  if(status === "kyukyu" && navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(pos){
+      sendToGas(name,status,pos.coords.latitude,pos.coords.longitude);
+    },function(){
+      sendToGas(name,status,"","");
+    });
+  }else{
+    sendToGas(name,status,"","");
+  }
+}
+
+function sendToGas(name,status,lat,lng){
   const url = GAS_URL
     + "?name=" + encodeURIComponent(name)
     + "&status=" + encodeURIComponent(status)
+    + "&lat=" + encodeURIComponent(lat || "")
+    + "&lng=" + encodeURIComponent(lng || "")
     + "&t=" + Date.now();
 
-  fetch(url,{mode:"no-cors"});
-  alert("送信しました");
+  fetch(url,{mode:"no-cors"}).then(function(){
+    showStatus("送信しました","#16a34a");
+  });
 }
 
 function openCurrentLocationMap(){
@@ -412,44 +198,33 @@ function goHome(){
     return;
   }
 
-  window.open(
-    "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng,
-    "_blank"
-  );
+  window.open("https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng, "_blank");
 }
 
-function shareFacebook(){
-  const text =
-`NSAW 暮らし情報局
-
-四市の暮らし情報・電話帳・地図・安心サポート`;
-
-  navigator.clipboard.writeText(text + "\n" + SHARE_URL);
-
-  window.open(
-    "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(SHARE_URL),
-    "_blank"
-  );
+function shareArticleFacebook(title,desc){
+  const text = title + "\n\n" + desc + "\n" + SHARE_URL;
+  navigator.clipboard.writeText(text);
+  window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(SHARE_URL), "_blank");
 }
 
-function shareX(){
+function shareArticleX(title,desc){
   window.open(
     "https://twitter.com/intent/tweet?url=" + encodeURIComponent(SHARE_URL)
-    + "&text=" + encodeURIComponent("NSAW 暮らし情報局"),
+    + "&text=" + encodeURIComponent(title),
     "_blank"
   );
 }
 
-function shareLine(){
+function shareArticleLine(title,desc){
   window.open(
     "https://social-plugins.line.me/lineit/share?url=" + encodeURIComponent(SHARE_URL),
     "_blank"
   );
 }
 
-function copyUrl(){
-  navigator.clipboard.writeText(SHARE_URL);
-  alert("シェアURLをコピーしました");
+function copyArticle(title,desc){
+  navigator.clipboard.writeText(title + "\n\n" + desc + "\n" + SHARE_URL);
+  alert("記事の紹介文をコピーしました");
 }
 
 function cell(row,index){
@@ -460,26 +235,38 @@ function cell(row,index){
 function fixDriveImage(url){
   if(!url) return "";
   url = String(url);
-
   let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  if(match){
-    return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1200";
-  }
-
+  if(match) return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1200";
   match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-  if(match){
-    return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1200";
-  }
-
+  if(match) return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1200";
   return url;
+}
+
+function esc(s){
+  return String(s || "").replace(/[&<>"']/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
 }
 
 function createButton(title,url,colorClass){
   if(!title) return "";
   if(url){
-    return '<a class="infoBtn '+colorClass+'" href="'+url+'" target="_blank" rel="noopener">'+title+'</a>';
+    return '<a class="infoBtn '+colorClass+'" href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(title)+'</a>';
   }
-  return '<div class="infoBtn '+colorClass+'">'+title+'</div>';
+  return '<div class="infoBtn '+colorClass+'">'+esc(title)+'</div>';
+}
+
+function articleSnsHtml(title,desc){
+  const t = JSON.stringify(title || "");
+  const d = JSON.stringify(desc || "");
+  return `
+    <div class="articleSnsBox">
+      <button class="articleSnsBtn fbBtn" onclick='shareArticleFacebook(${t},${d})'>Facebook</button>
+      <button class="articleSnsBtn xBtn" onclick='shareArticleX(${t},${d})'>X</button>
+      <button class="articleSnsBtn lineBtn" onclick='shareArticleLine(${t},${d})'>LINE</button>
+      <button class="articleSnsBtn copyBtn" onclick='copyArticle(${t},${d})'>コピー</button>
+    </div>
+  `;
 }
 
 function render(rows){
@@ -528,15 +315,15 @@ function render(rows){
     card.className = "card";
 
     let html = "";
-    html += '<div class="date">'+item.date+'</div>';
-    html += '<h2 class="title">'+item.title+'</h2>';
+    html += '<div class="date">'+esc(item.date)+'</div>';
+    html += '<h2 class="title">'+esc(item.title)+'</h2>';
 
     if(item.imageUrl){
-      html += '<img class="image" src="'+item.imageUrl+'" loading="lazy">';
+      html += '<img class="image" src="'+esc(item.imageUrl)+'" loading="lazy">';
     }
 
     if(item.description){
-      html += '<div class="description">'+item.description+'</div>';
+      html += '<div class="description">'+esc(item.description)+'</div>';
     }
 
     html += createButton(item.info1Title,item.info1Url,"green");
@@ -546,11 +333,13 @@ function render(rows){
     html += createButton(item.info5Title,item.info5Url,"purple");
 
     if(item.movieTitle || item.movieDetail || item.mediaUrl){
-      html += '<div class="description"><strong>'+item.movieTitle+'</strong><br>'+item.movieDetail+'</div>';
+      html += '<div class="description"><strong>'+esc(item.movieTitle)+'</strong><br>'+esc(item.movieDetail)+'</div>';
       if(item.mediaUrl){
-        html += '<a class="infoBtn orange" href="'+item.mediaUrl+'" target="_blank" rel="noopener">動画を見る</a>';
+        html += '<a class="infoBtn orange" href="'+esc(item.mediaUrl)+'" target="_blank" rel="noopener">動画を見る</a>';
       }
     }
+
+    html += articleSnsHtml(item.title,item.description);
 
     card.innerHTML = html;
     app.appendChild(card);
@@ -570,7 +359,6 @@ function loadSheet(){
     + encodeURIComponent(SHEET_NAME)
     + "&tqx=out:json;responseHandler:handleSheet&v="
     + Date.now();
-
   document.body.appendChild(script);
 }
 
