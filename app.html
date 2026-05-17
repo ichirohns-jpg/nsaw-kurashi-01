@@ -30,6 +30,53 @@ body{
   padding:10px 0 12px;
 }
 
+.nameBox{
+  background:#ffffff;
+  border:3px solid #16864a;
+  border-radius:20px;
+  padding:12px;
+  margin-bottom:10px;
+}
+
+.nameLabel{
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:8px;
+  color:#146c36;
+}
+
+.nameRow{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+}
+
+.nameInput{
+  width:100%;
+  border:2px solid #b8d8c5;
+  border-radius:14px;
+  padding:14px;
+  font-size:20px;
+  font-weight:800;
+}
+
+.nameSave{
+  border:none;
+  border-radius:14px;
+  background:#16864a;
+  color:#ffffff;
+  font-size:18px;
+  font-weight:900;
+  padding:0 14px;
+}
+
+.nameNote{
+  margin-top:8px;
+  font-size:16px;
+  font-weight:800;
+  color:#566;
+}
+
 .safeBtn{
   width:100%;
   border:none;
@@ -256,6 +303,15 @@ body{
 
   <div class="fixedBar">
 
+    <div class="nameBox">
+      <div class="nameLabel">お名前（任意）</div>
+      <div class="nameRow">
+        <input id="nameInput" class="nameInput" placeholder="例：山口さん">
+        <button class="nameSave" onclick="saveName()">保存</button>
+      </div>
+      <div id="nameNote" class="nameNote">未入力でも使えます。</div>
+    </div>
+
     <button class="safeBtn greenBtn" onclick="sendSafety('genki')">
       😊 元気です
     </button>
@@ -306,9 +362,41 @@ const GAS_URL = "https://script.google.com/macros/s/AKfycbz4kvlKDo93xyUfmExcgHj9
 
 const app = document.getElementById("app");
 
+function initName(){
+  const saved = localStorage.getItem("nsaw_name") || "";
+  const input = document.getElementById("nameInput");
+  const note = document.getElementById("nameNote");
+
+  input.value = saved;
+
+  if(saved){
+    note.innerText = "登録名：" + saved;
+  }else{
+    note.innerText = "未入力でも使えます。";
+  }
+}
+
+function saveName(){
+  const input = document.getElementById("nameInput");
+  const name = input.value.trim();
+
+  if(name){
+    localStorage.setItem("nsaw_name", name);
+    document.getElementById("nameNote").innerText = "登録名：" + name;
+    showStatus("お名前を保存しました", "#16a34a");
+  }else{
+    localStorage.removeItem("nsaw_name");
+    document.getElementById("nameNote").innerText = "未入力でも使えます。";
+    showStatus("名前なしで使います", "#2563eb");
+  }
+}
+
 function getPersonName(){
   const params = new URLSearchParams(window.location.search);
-  return params.get("id") || params.get("name") || "名前未設定";
+  const urlName = params.get("id") || params.get("name");
+  const savedName = localStorage.getItem("nsaw_name");
+
+  return urlName || savedName || "名前未設定";
 }
 
 function showStatus(text,color){
@@ -593,6 +681,7 @@ function loadSheet(){
   document.body.appendChild(script);
 }
 
+initName();
 loadSheet();
 </script>
 
