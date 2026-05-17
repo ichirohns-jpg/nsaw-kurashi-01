@@ -50,7 +50,8 @@ body{margin:0;background:#eef8f5;color:#14324a;font-family:"Hiragino Sans","Yu G
 .movieBox{margin-top:22px;background:#f2f7ff;border:3px solid #2b77d0;border-radius:24px;padding:20px}
 .movieTitle{font-size:26px;font-weight:900;color:#1454a8;margin-bottom:10px}
 .movieText{font-size:18px;line-height:1.7;font-weight:700;margin-bottom:16px}
-.movieLink{display:block;background:#e60033;color:#fff;text-decoration:none;text-align:center;font-size:24px;font-weight:900;border-radius:18px;padding:20px 12px}
+.videoFrame{width:100%;aspect-ratio:16/9;border:0;border-radius:18px;background:#000}
+.videoTag{width:100%;border-radius:18px;background:#000}
 
 .articleSnsBox{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;padding-top:18px;border-top:2px solid #e0e8e4}
 .articleSnsBtn{border:none;border-radius:16px;color:#fff;padding:15px 8px;font-size:17px;font-weight:900}
@@ -240,14 +241,63 @@ function cell(row,index){
 function fixDriveImage(url){
   if(!url) return "";
   url = String(url);
-
   let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
   if(match) return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1200";
-
   match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
   if(match) return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1200";
-
   return url;
+}
+
+function getYoutubeId(url){
+  if(!url) return "";
+  url = String(url);
+
+  let m = url.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/);
+  if(m) return m[1];
+
+  m = url.match(/[?&]v=([a-zA-Z0-9_-]{6,})/);
+  if(m) return m[1];
+
+  m = url.match(/shorts\/([a-zA-Z0-9_-]{6,})/);
+  if(m) return m[1];
+
+  m = url.match(/embed\/([a-zA-Z0-9_-]{6,})/);
+  if(m) return m[1];
+
+  return "";
+}
+
+function getDriveId(url){
+  if(!url) return "";
+  url = String(url);
+
+  let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if(m) return m[1];
+
+  m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if(m) return m[1];
+
+  return "";
+}
+
+function videoEmbedHtml(url){
+  if(!url) return "";
+
+  const youtubeId = getYoutubeId(url);
+  if(youtubeId){
+    return '<iframe class="videoFrame" src="https://www.youtube.com/embed/'+youtubeId+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+  }
+
+  const driveId = getDriveId(url);
+  if(driveId && String(url).includes("drive.google.com")){
+    return '<iframe class="videoFrame" src="https://drive.google.com/file/d/'+driveId+'/preview" allow="autoplay" allowfullscreen></iframe>';
+  }
+
+  if(/\.(mp4|webm|ogg|mov|m4v)(\?|#|$)/i.test(url)){
+    return '<video class="videoTag" controls playsinline preload="metadata" src="'+esc(url)+'"></video>';
+  }
+
+  return '<a class="infoBtn orange" href="'+esc(url)+'" target="_blank" rel="noopener">動画を見る</a>';
 }
 
 function esc(s){
@@ -349,7 +399,7 @@ function render(rows){
         html += '<div class="movieText">'+esc(item.movieDetail)+'</div>';
       }
       if(item.mediaUrl){
-        html += '<a class="movieLink" href="'+esc(item.mediaUrl)+'" target="_blank" rel="noopener">動画を見る</a>';
+        html += videoEmbedHtml(item.mediaUrl);
       }
       html += '</div>';
     }
