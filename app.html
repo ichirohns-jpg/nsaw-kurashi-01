@@ -6,7 +6,10 @@
 <title>NSAW 暮らし情報局</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -101,11 +104,25 @@ body{
   word-break:break-word;
 }
 
-.green{background:#16943a}
-.blue{background:#1976d2}
-.pink{background:#f54285}
-.orange{background:#f39c12}
-.purple{background:#7b4fd6}
+.green{
+  background:#16943a;
+}
+
+.blue{
+  background:#1976d2;
+}
+
+.pink{
+  background:#f54285;
+}
+
+.orange{
+  background:#f39c12;
+}
+
+.purple{
+  background:#7b4fd6;
+}
 
 .movieBox{
   margin-top:24px;
@@ -158,6 +175,7 @@ body{
   font-weight:800;
   line-height:1.5;
 }
+
 </style>
 </head>
 
@@ -170,207 +188,383 @@ body{
     <p>四市の暮らし情報を見やすくまとめています</p>
   </div>
 
-  <div id="app" class="loading">読み込み中です...</div>
+  <div id="app" class="loading">
+    読み込み中です...
+  </div>
 
 </div>
 
 <script>
-const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
-const SHEET_NAME = "NSAW暮らし情報局_データ";
 
-const app = document.getElementById("app");
+const SHEET_ID =
+"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
 
-function cellText(row,index){
-  if(!row.c || !row.c[index]) return "";
-  const c = row.c[index];
-  if(c.f) return c.f;
-  if(c.v instanceof Date){
-    const y = c.v.getFullYear();
-    const m = String(c.v.getMonth()+1).padStart(2,"0");
-    const d = String(c.v.getDate()).padStart(2,"0");
-    return y + "/" + m + "/" + d;
-  }
-  return c.v || "";
+const SHEET_NAME =
+"NSAW暮らし情報局_データ";
+
+const app =
+document.getElementById("app");
+
+/* =========================
+   セル取得
+========================= */
+
+function cell(row,index){
+
+  if(!row.c) return "";
+
+  if(!row.c[index]) return "";
+
+  return row.c[index].f ||
+         row.c[index].v ||
+         "";
+
 }
 
-function cellRaw(row,index){
-  if(!row.c || !row.c[index]) return "";
-  return row.c[index].v || "";
-}
+/* =========================
+   ボタン
+========================= */
 
-function dateSortNumber(row){
-  const raw = cellRaw(row,0);
-  const txt = cellText(row,0);
+function createButton(
+  title,
+  url,
+  colorClass
+){
 
-  if(raw instanceof Date){
-    const y = raw.getFullYear();
-    const m = String(raw.getMonth()+1).padStart(2,"0");
-    const d = String(raw.getDate()).padStart(2,"0");
-    return Number(String(y)+m+d);
-  }
-
-  let s = String(raw || txt || "").trim();
-
-  let m = s.match(/Date\((\d+),(\d+),(\d+)\)/);
-  if(m){
-    const y = Number(m[1]);
-    const mo = String(Number(m[2]) + 1).padStart(2,"0");
-    const d = String(Number(m[3])).padStart(2,"0");
-    return Number(String(y) + mo + d);
-  }
-
-  m = s.match(/(\d{4})[\/\-.年](\d{1,2})[\/\-.月](\d{1,2})/);
-  if(m){
-    const y = m[1];
-    const mo = m[2].padStart(2,"0");
-    const d = m[3].padStart(2,"0");
-    return Number(y + mo + d);
-  }
-
-  const nums = s.replace(/[^\d]/g,"");
-  if(nums.length >= 8){
-    return Number(nums.slice(0,8));
-  }
-
-  return 0;
-}
-
-function createButton(title,url,colorClass){
   if(!title) return "";
 
   if(url){
-    return '<a class="infoBtn '+colorClass+'" href="'+url+'" target="_blank" rel="noopener">'+title+'</a>';
+
+    return `
+      <a
+        class="infoBtn ${colorClass}"
+        href="${url}"
+        target="_blank"
+        rel="noopener"
+      >
+        ${title}
+      </a>
+    `;
+
   }
 
-  return '<div class="infoBtn '+colorClass+'">'+title+'</div>';
+  return `
+    <div class="infoBtn ${colorClass}">
+      ${title}
+    </div>
+  `;
+
 }
 
+/* =========================
+   表示
+========================= */
+
 function render(rows){
+
   app.className = "";
+
   app.innerHTML = "";
 
   if(!rows.length){
-    app.innerHTML = '<div class="error">表示できる情報がありません。S列の「表示」が「はい」になっているか確認してください。</div>';
+
+    app.innerHTML = `
+      <div class="error">
+        表示できる情報がありません。
+      </div>
+    `;
+
     return;
+
   }
 
   rows.forEach(function(item){
-    const card = document.createElement("div");
+
+    const card =
+      document.createElement("div");
+
     card.className = "card";
 
     let html = "";
 
-    html += '<div class="date">'+item.date+'</div>';
-    html += '<h2 class="title">'+item.title+'</h2>';
+    html += `
+      <div class="date">
+        ${item.date}
+      </div>
+    `;
+
+    html += `
+      <h2 class="title">
+        ${item.title}
+      </h2>
+    `;
 
     if(item.imageUrl){
-      html += '<img class="image" src="'+item.imageUrl+'" loading="lazy">';
+
+      html += `
+        <img
+          class="image"
+          src="${item.imageUrl}"
+          loading="lazy"
+        >
+      `;
+
     }
 
     if(item.description){
-      html += '<div class="description">'+item.description+'</div>';
+
+      html += `
+        <div class="description">
+          ${item.description}
+        </div>
+      `;
+
     }
 
-    html += createButton(item.info1Title,item.info1Url,"green");
-    html += createButton(item.info2Title,item.info2Url,"blue");
-    html += createButton(item.info3Title,item.info3Url,"pink");
-    html += createButton(item.info4Title,item.info4Url,"orange");
-    html += createButton(item.info5Title,item.info5Url,"purple");
+    html += createButton(
+      item.info1Title,
+      item.info1Url,
+      "green"
+    );
 
-    if(item.movieTitle || item.movieDetail || item.mediaUrl){
-      html += '<div class="movieBox">';
+    html += createButton(
+      item.info2Title,
+      item.info2Url,
+      "blue"
+    );
+
+    html += createButton(
+      item.info3Title,
+      item.info3Url,
+      "pink"
+    );
+
+    html += createButton(
+      item.info4Title,
+      item.info4Url,
+      "orange"
+    );
+
+    html += createButton(
+      item.info5Title,
+      item.info5Url,
+      "purple"
+    );
+
+    if(
+      item.movieTitle ||
+      item.movieDetail ||
+      item.mediaUrl
+    ){
+
+      html += `
+        <div class="movieBox">
+      `;
 
       if(item.movieTitle){
-        html += '<div class="movieTitle">'+item.movieTitle+'</div>';
+
+        html += `
+          <div class="movieTitle">
+            ${item.movieTitle}
+          </div>
+        `;
+
       }
 
       if(item.movieDetail){
-        html += '<div class="movieText">'+item.movieDetail+'</div>';
+
+        html += `
+          <div class="movieText">
+            ${item.movieDetail}
+          </div>
+        `;
+
       }
 
       if(item.mediaUrl){
-        html += '<a class="movieLink" href="'+item.mediaUrl+'" target="_blank" rel="noopener">動画を見る</a>';
+
+        html += `
+          <a
+            class="movieLink"
+            href="${item.mediaUrl}"
+            target="_blank"
+            rel="noopener"
+          >
+            動画を見る
+          </a>
+        `;
+
       }
 
-      html += '</div>';
+      html += `
+        </div>
+      `;
+
     }
 
     card.innerHTML = html;
+
     app.appendChild(card);
+
   });
+
 }
 
+/* =========================
+   シート読み込み
+========================= */
+
 window.handleSheet = function(json){
+
   try{
-    let rows = json.table.rows.map(function(row,index){
-      return {
-        rowNo:index,
-        sortDate:dateSortNumber(row),
 
-        date:cellText(row,0),
-        articleId:cellText(row,1),
-        title:cellText(row,2),
-        imageUrl:cellText(row,3),
-        description:cellText(row,4),
+    let rows =
+      json.table.rows.map(function(row,index){
 
-        info1Title:cellText(row,5),
-        info1Url:cellText(row,6),
+        return {
 
-        info2Title:cellText(row,7),
-        info2Url:cellText(row,8),
+          rowNo:index,
 
-        info3Title:cellText(row,9),
-        info3Url:cellText(row,10),
+          /* A */
+          date:
+            cell(row,0),
 
-        info4Title:cellText(row,11),
-        info4Url:cellText(row,12),
+          /* B */
+          articleId:
+            cell(row,1),
 
-        info5Title:cellText(row,13),
-        info5Url:cellText(row,14),
+          /* C */
+          title:
+            cell(row,2),
 
-        movieTitle:cellText(row,15),
-        movieDetail:cellText(row,16),
-        mediaUrl:cellText(row,17),
+          /* D */
+          imageUrl:
+            cell(row,3),
 
-        show:cellText(row,18)
-      };
-    });
+          /* E */
+          description:
+            cell(row,4),
 
-    rows = rows.filter(function(item){
-      return String(item.show).trim() === "はい";
-    });
+          /* F */
+          info1Title:
+            cell(row,5),
 
-    rows = rows.sort(function(a,b){
-      if(b.sortDate !== a.sortDate){
-        return b.sortDate - a.sortDate;
-      }
-      return b.rowNo - a.rowNo;
-    });
+          /* G */
+          info1Url:
+            cell(row,6),
+
+          /* H */
+          info2Title:
+            cell(row,7),
+
+          /* I */
+          info2Url:
+            cell(row,8),
+
+          /* J */
+          info3Title:
+            cell(row,9),
+
+          /* K */
+          info3Url:
+            cell(row,10),
+
+          /* L */
+          info4Title:
+            cell(row,11),
+
+          /* M */
+          info4Url:
+            cell(row,12),
+
+          /* N */
+          info5Title:
+            cell(row,13),
+
+          /* O */
+          info5Url:
+            cell(row,14),
+
+          /* P */
+          movieTitle:
+            cell(row,15),
+
+          /* Q */
+          movieDetail:
+            cell(row,16),
+
+          /* R */
+          mediaUrl:
+            cell(row,17),
+
+          /* S */
+          show:
+            cell(row,18),
+
+          /* T */
+          sortDate:
+            Number(cell(row,19)) || 0
+
+        };
+
+      });
+
+    rows =
+      rows.filter(function(item){
+
+        return String(item.show)
+          .trim() === "はい";
+
+      });
+
+    rows =
+      rows.sort(function(a,b){
+
+        return (
+          b.sortDate
+          -
+          a.sortDate
+        );
+
+      });
 
     render(rows);
 
   }catch(e){
+
     console.error(e);
+
     app.className = "";
-    app.innerHTML = '<div class="error">読み込みエラーです。シート名・公開設定・列位置を確認してください。</div>';
+
+    app.innerHTML = `
+      <div class="error">
+        読み込みエラーです。
+      </div>
+    `;
+
   }
+
 };
 
 function loadSheet(){
-  const script = document.createElement("script");
+
+  const script =
+    document.createElement("script");
 
   script.src =
-    "https://docs.google.com/spreadsheets/d/" +
-    SHEET_ID +
-    "/gviz/tq?sheet=" +
-    encodeURIComponent(SHEET_NAME) +
-    "&tqx=out:json;responseHandler:handleSheet&v=" +
-    Date.now();
+    "https://docs.google.com/spreadsheets/d/"
+    + SHEET_ID
+    + "/gviz/tq?sheet="
+    + encodeURIComponent(SHEET_NAME)
+    + "&tqx=out:json;responseHandler:handleSheet&v="
+    + Date.now();
 
   document.body.appendChild(script);
+
 }
 
 loadSheet();
+
 </script>
 
 </body>
