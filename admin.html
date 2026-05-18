@@ -38,7 +38,7 @@ body{
 }
 
 .topTitle{
-  font-size:36px;
+  font-size:34px;
   line-height:1.4;
   font-weight:900;
 }
@@ -98,7 +98,7 @@ body{
 }
 
 .name{
-  font-size:32px;
+  font-size:30px;
   line-height:1.4;
   font-weight:900;
   color:#103657;
@@ -133,19 +133,6 @@ body{
   line-height:1.5;
   font-weight:800;
   color:#617387;
-}
-
-.mapBtn{
-  display:block;
-  margin-top:16px;
-  background:#2563eb;
-  color:#fff;
-  text-decoration:none;
-  text-align:center;
-  border-radius:18px;
-  padding:14px 12px;
-  font-size:20px;
-  font-weight:900;
 }
 
 .loading{
@@ -360,54 +347,24 @@ function render(items){
 
     div.className = "card";
 
-    const name =
-      item.name || "";
-
-    const status =
-      item.status || "未確認";
-
-    const date =
-      item.date || "";
-
-    const lat =
-      item.lat || "";
-
-    const lng =
-      item.lng || "";
-
-    let html = "";
-
-    html +=
+    div.innerHTML =
       '<div class="name">'
-      + esc(name)
-      + '</div>';
-
-    html +=
+      + esc(item.name || '')
+      + '</div>'
+      +
       '<div class="status '
-      + statusClass(status)
+      + statusClass(item.status || '')
       + '">'
-      + esc(status)
-      + '</div>';
-
-    if(date){
-
-      html +=
-        '<div class="date">'
-        + esc(date)
-        + '</div>';
-
-    }
-
-    if(lat && lng){
-
-      html +=
-        '<a class="mapBtn" target="_blank" href="https://www.google.com/maps?q='
-        + encodeURIComponent(lat + "," + lng)
-        + '">📍 地図を見る</a>';
-
-    }
-
-    div.innerHTML = html;
+      + esc(item.status || '')
+      + '</div>'
+      +
+      (
+        item.date
+        ? '<div class="date">'
+          + esc(item.date)
+          + '</div>'
+        : ''
+      );
 
     app.appendChild(div);
 
@@ -415,14 +372,33 @@ function render(items){
 
 }
 
-function loadData(){
+fetch(
+  GAS_URL
+  + "?mode=list&t="
+  + Date.now()
+)
+.then(function(res){
 
-  const script =
-    document.createElement("script");
+  return res.json();
 
-  script.src =
-    GAS_URL
-    + "?mode=list&callback=handleData&t="
-    + Date.now();
+})
+.then(function(data){
 
-  document.body.appendChild(script);
+  render(data);
+
+})
+.catch(function(err){
+
+  app.className = "";
+
+  app.innerHTML =
+    '<div class="error">読み込み失敗</div>';
+
+  console.log(err);
+
+});
+
+</script>
+
+</body>
+</html>
