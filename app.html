@@ -28,7 +28,7 @@ body{
   padding:18px 14px 80px;
 }
 
-.top{
+.card{
   background:#fff;
   border-radius:28px;
   overflow:hidden;
@@ -41,7 +41,7 @@ body{
 }
 
 .inner{
-  padding:24px 18px 28px;
+  padding:24px 18px 30px;
 }
 
 .title{
@@ -55,7 +55,7 @@ body{
   font-size:19px;
   line-height:1.7;
   font-weight:700;
-  color:#4d647b;
+  color:#50677d;
 }
 
 .label{
@@ -67,7 +67,7 @@ body{
 .input{
   width:100%;
   border:none;
-  border-radius:20px;
+  border-radius:22px;
   background:#edf4fb;
   padding:20px 16px;
   margin-top:10px;
@@ -115,12 +115,13 @@ body{
   padding:20px 16px;
   text-align:center;
   font-size:22px;
+  line-height:1.6;
   font-weight:900;
   box-shadow:0 8px 18px rgba(0,0,0,.10);
 }
 
 .footer{
-  margin-top:28px;
+  margin-top:30px;
   text-align:center;
   font-size:16px;
   color:#678;
@@ -132,7 +133,7 @@ body{
 
 <div class="wrap">
 
-  <div class="top">
+  <div class="card">
 
     <img
       class="banner"
@@ -208,6 +209,7 @@ body{
 </div>
 
 <script>
+
 const GAS_URL =
 "https://script.google.com/macros/s/AKfycbyx4_EayzmFZNRD8mumHyAfSou8rOrbQI5PVSFMpo3a3YxdLkJtCZ03qM7D-caoF8aM/exec";
 
@@ -308,31 +310,18 @@ function sendData(
     + "&lng=" + encodeURIComponent(lng || "")
     + "&t=" + Date.now();
 
-  fetch(
-    url,
-    {
-      method:"GET",
-      mode:"no-cors"
-    }
-  )
-  .then(function(){
+  const img = new Image();
 
-    showMessage(
-      "送信しました"
-    );
+  img.src = url;
 
-  })
-  .catch(function(){
-
-    showMessage(
-      "送信エラー"
-    );
-
-  });
+  showMessage(
+    "送信しました"
+  );
 
 }
 
 loadName();
+
 </script>
 
 </body>
