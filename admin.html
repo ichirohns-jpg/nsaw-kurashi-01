@@ -21,60 +21,92 @@ body{
 .wrap{
   max-width:720px;
   margin:0 auto;
-  padding:18px 14px 60px;
+  padding:14px 12px 50px;
 }
 
 .top{
   background:#16864a;
   color:#fff;
-  border-radius:28px;
-  padding:26px 18px;
+  border-radius:24px;
+  padding:22px 16px;
   text-align:center;
-  box-shadow:0 10px 24px rgba(0,0,0,.14);
+  box-shadow:0 8px 18px rgba(0,0,0,.12);
 }
 
 .top h1{
   margin:0;
-  font-size:38px;
+  font-size:30px;
   line-height:1.3;
   font-weight:900;
 }
 
 .top p{
-  margin-top:12px;
-  font-size:20px;
-  line-height:1.6;
+  margin-top:10px;
+  font-size:17px;
+  line-height:1.5;
   font-weight:700;
 }
 
+.summary{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+}
+
+.sumBox{
+  background:#fff;
+  border-radius:18px;
+  padding:14px 10px;
+  text-align:center;
+  box-shadow:0 6px 14px rgba(0,0,0,.08);
+}
+
+.sumNum{
+  font-size:28px;
+  font-weight:900;
+  line-height:1;
+}
+
+.sumLabel{
+  margin-top:8px;
+  font-size:14px;
+  font-weight:800;
+  color:#5c6d7e;
+}
+
+.greenText{color:#16a34a}
+.yellowText{color:#f59e0b}
+.redText{color:#dc2626}
+
 .loading{
   text-align:center;
-  padding:50px 0;
-  font-size:26px;
+  padding:40px 0;
+  font-size:22px;
   font-weight:900;
 }
 
 .card{
   background:#fff;
-  border-radius:26px;
-  padding:22px 18px;
-  margin-top:18px;
-  box-shadow:0 10px 24px rgba(0,0,0,.10);
+  border-radius:22px;
+  padding:16px 14px;
+  margin-top:14px;
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
 }
 
 .name{
-  font-size:34px;
+  font-size:28px;
   font-weight:900;
   color:#10314a;
   line-height:1.3;
 }
 
 .status{
-  margin-top:12px;
+  margin-top:10px;
   display:inline-block;
-  border-radius:18px;
-  padding:10px 16px;
-  font-size:22px;
+  border-radius:16px;
+  padding:8px 14px;
+  font-size:18px;
   font-weight:900;
   color:#fff;
 }
@@ -92,32 +124,32 @@ body{
 }
 
 .time{
-  margin-top:14px;
-  font-size:20px;
+  margin-top:12px;
+  font-size:16px;
   font-weight:700;
   color:#546477;
 }
 
 .mapBtn{
   display:block;
-  margin-top:18px;
+  margin-top:14px;
   text-decoration:none;
-  text-align:center;
   background:#2563eb;
   color:#fff;
-  border-radius:20px;
-  padding:18px 14px;
-  font-size:22px;
+  border-radius:16px;
+  padding:14px 12px;
+  text-align:center;
+  font-size:18px;
   font-weight:900;
 }
 
 .empty{
   background:#fff;
-  border-radius:24px;
-  padding:40px 20px;
-  margin-top:20px;
+  border-radius:22px;
+  padding:36px 20px;
+  margin-top:18px;
   text-align:center;
-  font-size:24px;
+  font-size:22px;
   font-weight:900;
 }
 </style>
@@ -128,11 +160,45 @@ body{
 <div class="wrap">
 
   <div class="top">
-    <h1>安否確認<br>管理ページ</h1>
+    <h1>
+      安否確認<br>
+      管理ページ
+    </h1>
 
     <p>
       今日ボタンを押した人の一覧
     </p>
+  </div>
+
+  <div class="summary">
+
+    <div class="sumBox">
+      <div id="genkiCount" class="sumNum greenText">
+        0
+      </div>
+      <div class="sumLabel">
+        元気です
+      </div>
+    </div>
+
+    <div class="sumBox">
+      <div id="komariCount" class="sumNum yellowText">
+        0
+      </div>
+      <div class="sumLabel">
+        困っています
+      </div>
+    </div>
+
+    <div class="sumBox">
+      <div id="kyukyuCount" class="sumNum redText">
+        0
+      </div>
+      <div class="sumLabel">
+        緊急
+      </div>
+    </div>
+
   </div>
 
   <div id="app" class="loading">
@@ -203,6 +269,22 @@ function render(rows){
   app.className = "";
   app.innerHTML = "";
 
+  const today = new Date();
+
+  const yyyy =
+    today.getFullYear();
+
+  const mm =
+    String(today.getMonth() + 1)
+    .padStart(2,"0");
+
+  const dd =
+    String(today.getDate())
+    .padStart(2,"0");
+
+  const todayText =
+    yyyy + "/" + mm + "/" + dd;
+
   const items = rows.map(function(row,index){
 
     return {
@@ -214,12 +296,47 @@ function render(rows){
       lng:cell(row,4)
     };
 
-  }).reverse();
+  })
+  .filter(function(item){
+
+    return String(item.time)
+      .includes(todayText);
+
+  })
+  .reverse();
+
+  let genki = 0;
+  let komari = 0;
+  let kyukyu = 0;
+
+  items.forEach(function(item){
+
+    const s =
+      String(item.status);
+
+    if(s.includes("元気")){
+      genki++;
+    }else if(s.includes("困")){
+      komari++;
+    }else{
+      kyukyu++;
+    }
+
+  });
+
+  document.getElementById("genkiCount").innerText =
+    genki;
+
+  document.getElementById("komariCount").innerText =
+    komari;
+
+  document.getElementById("kyukyuCount").innerText =
+    kyukyu;
 
   if(!items.length){
 
     app.innerHTML =
-      '<div class="empty">データがありません</div>';
+      '<div class="empty">今日のデータはありません</div>';
 
     return;
 
