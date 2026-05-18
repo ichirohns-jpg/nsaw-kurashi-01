@@ -24,48 +24,48 @@ body{
 }
 
 .wrap{
-  max-width:760px;
+  max-width:680px;
   margin:0 auto;
-  padding:18px 14px 100px;
+  padding:16px 12px 80px;
 }
 
 .top{
   background:#13854a;
-  border-radius:28px;
-  padding:28px 18px;
+  border-radius:24px;
+  padding:24px 16px;
   color:#fff;
   text-align:center;
 }
 
 .topTitle{
-  font-size:34px;
+  font-size:30px;
   line-height:1.4;
   font-weight:900;
 }
 
 .topText{
-  margin-top:12px;
-  font-size:20px;
+  margin-top:10px;
+  font-size:18px;
   line-height:1.6;
   font-weight:800;
 }
 
 .countWrap{
-  margin-top:18px;
+  margin-top:16px;
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
-  gap:10px;
+  gap:8px;
 }
 
 .countBox{
   background:#fff;
-  border-radius:22px;
-  padding:14px 8px;
+  border-radius:18px;
+  padding:12px 6px;
   text-align:center;
 }
 
 .countNum{
-  font-size:40px;
+  font-size:34px;
   line-height:1;
   font-weight:900;
 }
@@ -83,34 +83,34 @@ body{
 }
 
 .countLabel{
-  margin-top:10px;
-  font-size:17px;
+  margin-top:8px;
+  font-size:15px;
   font-weight:900;
   color:#64748b;
 }
 
 .card{
-  margin-top:16px;
+  margin-top:12px;
   background:#fff;
-  border-radius:24px;
-  padding:18px 16px;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  border-radius:20px;
+  padding:16px 14px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
 
 .name{
-  font-size:30px;
+  font-size:26px;
   line-height:1.4;
   font-weight:900;
   color:#103657;
 }
 
 .status{
-  margin-top:12px;
+  margin-top:10px;
   display:inline-block;
-  border-radius:18px;
-  padding:12px 18px;
+  border-radius:16px;
+  padding:10px 14px;
   color:#fff;
-  font-size:20px;
+  font-size:17px;
   line-height:1.4;
   font-weight:900;
 }
@@ -128,28 +128,28 @@ body{
 }
 
 .date{
-  margin-top:14px;
-  font-size:18px;
+  margin-top:12px;
+  font-size:15px;
   line-height:1.5;
-  font-weight:800;
+  font-weight:700;
   color:#617387;
 }
 
 .loading{
-  margin-top:40px;
+  margin-top:30px;
   text-align:center;
-  font-size:26px;
+  font-size:22px;
   font-weight:900;
 }
 
 .error{
-  margin-top:20px;
+  margin-top:18px;
   background:#fff0f0;
-  border:3px solid #f0aaaa;
+  border:2px solid #f0aaaa;
   color:#b00020;
-  border-radius:20px;
-  padding:20px;
-  font-size:22px;
+  border-radius:18px;
+  padding:18px;
+  font-size:18px;
   font-weight:900;
 }
 
@@ -178,6 +178,7 @@ body{
   <div class="countWrap">
 
     <div class="countBox">
+
       <div
         id="genkiCount"
         class="countNum greenNum"
@@ -188,9 +189,11 @@ body{
       <div class="countLabel">
         元気
       </div>
+
     </div>
 
     <div class="countBox">
+
       <div
         id="komariCount"
         class="countNum yellowNum"
@@ -201,9 +204,11 @@ body{
       <div class="countLabel">
         困り
       </div>
+
     </div>
 
     <div class="countBox">
+
       <div
         id="mikaninCount"
         class="countNum grayNum"
@@ -214,6 +219,7 @@ body{
       <div class="countLabel">
         未確認
       </div>
+
     </div>
 
   </div>
@@ -387,14 +393,12 @@ fetch(
   render(data);
 
 })
-.catch(function(err){
+.catch(function(){
 
   app.className = "";
 
   app.innerHTML =
     '<div class="error">読み込み失敗</div>';
-
-  console.log(err);
 
 });
 
