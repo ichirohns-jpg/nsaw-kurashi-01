@@ -426,14 +426,16 @@ function render(rows){
 
 }
 
-window.handleSheet =
-function(json){
+function handleSheet(json){
 
   render(
     json.table.rows
   );
 
-};
+}
+
+window.handleSheet =
+handleSheet;
 
 function loadSheet(){
 
@@ -449,8 +451,7 @@ function loadSheet(){
     + encodeURIComponent(
         SHEET_NAME
       )
-    + "&tqx=out:json;responseHandler=handleSheet&v="
-    + Date.now();
+    + "&tqx=out:json;responseHandler=handleSheet";
 
   document.body.appendChild(
     script
