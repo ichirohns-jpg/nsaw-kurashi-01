@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>NSAW 暮らし情報局</title>
+<title>安否確認ページ</title>
 
 <style>
 
@@ -26,7 +26,7 @@ body{
 .wrap{
   max-width:680px;
   margin:0 auto;
-  padding:20px 14px 80px;
+  padding:18px 14px 80px;
 }
 
 .card{
@@ -46,9 +46,10 @@ body{
 }
 
 .title{
-  font-size:32px;
+  font-size:30px;
   line-height:1.4;
   font-weight:900;
+  text-align:center;
 }
 
 .text{
@@ -56,7 +57,8 @@ body{
   font-size:18px;
   line-height:1.7;
   font-weight:700;
-  color:#5a7084;
+  color:#5c7084;
+  text-align:center;
 }
 
 .label{
@@ -87,7 +89,7 @@ body{
   border-radius:22px;
   padding:22px 16px;
   color:#fff;
-  font-size:26px;
+  font-size:24px;
   line-height:1.4;
   font-weight:900;
 }
@@ -104,28 +106,27 @@ body{
   background:#dc2626;
 }
 
-.blue{
-  background:#2563eb;
-}
-
 .message{
   display:none;
-  margin-top:20px;
+  margin-top:18px;
   background:#f0fdf4;
-  border:3px solid #bbf7d0;
-  border-radius:20px;
-  padding:18px 16px;
+  border:2px solid #bbf7d0;
+  border-radius:18px;
+  padding:18px 14px;
   text-align:center;
-  font-size:22px;
+  font-size:20px;
   font-weight:900;
   color:#166534;
 }
 
-.footer{
-  margin-top:30px;
+.back{
+  display:block;
+  margin-top:24px;
   text-align:center;
-  font-size:16px;
-  color:#678;
+  font-size:18px;
+  font-weight:900;
+  color:#2563eb;
+  text-decoration:none;
 }
 
 </style>
@@ -139,18 +140,17 @@ body{
 
     <img
       class="banner"
-      src="https://drive.google.com/thumbnail?id=1weO1_pqGhYZ2fw7mNWad8NN6diA8TQfd&sz=w1200"
+      src="./top.jpg"
     >
 
     <div class="inner">
 
       <div class="title">
-        NSAW 暮らし情報局
+        安否確認ページ
       </div>
 
       <div class="text">
-        毎日の安否確認ページです。<br>
-        状態を押してください。
+        今日の状態を送信してください。
       </div>
 
       <div class="label">
@@ -186,13 +186,6 @@ body{
           🚨 急いで助けてください
         </button>
 
-        <button
-          class="btn blue"
-          onclick="location.href='admin.html'"
-        >
-          📋 管理ページ
-        </button>
-
       </div>
 
       <div
@@ -202,12 +195,15 @@ body{
         送信しました
       </div>
 
+      <a
+        class="back"
+        href="./index.html"
+      >
+        ← トップへ戻る
+      </a>
+
     </div>
 
-  </div>
-
-  <div class="footer">
-    NSAW 暮らし情報局
   </div>
 
 </div>
@@ -300,11 +296,16 @@ function sendData(
 
   const url =
     GAS_URL
-    + "?name=" + encodeURIComponent(name)
-    + "&status=" + encodeURIComponent(status)
-    + "&lat=" + encodeURIComponent(lat || "")
-    + "&lng=" + encodeURIComponent(lng || "")
-    + "&t=" + Date.now();
+    + "?name="
+    + encodeURIComponent(name)
+    + "&status="
+    + encodeURIComponent(status)
+    + "&lat="
+    + encodeURIComponent(lat || "")
+    + "&lng="
+    + encodeURIComponent(lng || "")
+    + "&t="
+    + Date.now();
 
   const img =
     new Image();
