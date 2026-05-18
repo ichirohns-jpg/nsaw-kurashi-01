@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>安否確認 管理ページ</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#eef8f5;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+  color:#14324a;
+}
+
+.wrap{
+  max-width:720px;
+  margin:0 auto;
+  padding:18px 14px 60px;
+}
+
+.top{
+  background:#16864a;
+  color:#fff;
+  border-radius:28px;
+  padding:26px 18px;
+  text-align:center;
+  box-shadow:0 10px 24px rgba(0,0,0,.14);
+}
+
+.top h1{
+  margin:0;
+  font-size:38px;
+  line-height:1.3;
+  font-weight:900;
+}
+
+.top p{
+  margin-top:12px;
+  font-size:20px;
+  line-height:1.6;
+  font-weight:700;
+}
+
+.loading{
+  text-align:center;
+  padding:50px 0;
+  font-size:26px;
+  font-weight:900;
+}
+
+.card{
+  background:#fff;
+  border-radius:26px;
+  padding:22px 18px;
+  margin-top:18px;
+  box-shadow:0 10px 24px rgba(0,0,0,.10);
+}
+
+.name{
+  font-size:34px;
+  font-weight:900;
+  color:#10314a;
+  line-height:1.3;
+}
+
+.status{
+  margin-top:12px;
+  display:inline-block;
+  border-radius:18px;
+  padding:10px 16px;
+  font-size:22px;
+  font-weight:900;
+  color:#fff;
+}
+
+.green{
+  background:#16a34a;
+}
+
+.yellow{
+  background:#f59e0b;
+}
+
+.red{
+  background:#dc2626;
+}
+
+.time{
+  margin-top:14px;
+  font-size:20px;
+  font-weight:700;
+  color:#546477;
+}
+
+.mapBtn{
+  display:block;
+  margin-top:18px;
+  text-decoration:none;
+  text-align:center;
+  background:#2563eb;
+  color:#fff;
+  border-radius:20px;
+  padding:18px 14px;
+  font-size:22px;
+  font-weight:900;
+}
+
+.empty{
+  background:#fff;
+  border-radius:24px;
+  padding:40px 20px;
+  margin-top:20px;
+  text-align:center;
+  font-size:24px;
+  font-weight:900;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <h1>安否確認<br>管理ページ</h1>
+
+    <p>
+      今日ボタンを押した人の一覧
+    </p>
+  </div>
+
+  <div id="app" class="loading">
+    読み込み中です...
+  </div>
+
+</div>
+
+<script>
+const SHEET_ID =
+"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+
+const SHEET_NAME =
+"安否ログ";
+
+const app =
+document.getElementById("app");
+
+function cell(row,index){
+
+  if(!row.c || !row.c[index]) return "";
+
+  return row.c[index].f
+    || row.c[index].v
+    || "";
+
+}
+
+function esc(str){
+
+  return String(str || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+
+}
+
+function statusClass(status){
+
+  status = String(status);
+
+  if(status.includes("元気")){
+    return "green";
+  }
+
+  if(status.includes("困")){
+    return "yellow";
+  }
+
+  return "red";
+
+}
+
+function mapUrl(lat,lng){
+
+  if(!lat || !lng) return "";
+
+  return "https://www.google.com/maps?q="
+    + lat
+    + ","
+    + lng;
+
+}
+
+function render(rows){
+
+  app.className = "";
+  app.innerHTML = "";
+
+  const items = rows.map(function(row,index){
+
+    return {
+      rowNo:index,
+      time:cell(row,0),
+      name:cell(row,1),
+      status:cell(row,2),
+      lat:cell(row,3),
+      lng:cell(row,4)
+    };
+
+  }).reverse();
+
+  if(!items.length){
+
+    app.innerHTML =
+      '<div class="empty">データがありません</div>';
+
+    return;
+
+  }
+
+  items.forEach(function(item){
+
+    const card =
+      document.createElement("div");
+
+    card.className = "card";
+
+    let html = "";
+
+    html +=
+      '<div class="name">'
+      + esc(item.name)
+      + '</div>';
+
+    html +=
+      '<div class="status '
+      + statusClass(item.status)
+      + '">'
+      + esc(item.status)
+      + '</div>';
+
+    html +=
+      '<div class="time">'
+      + esc(item.time)
+      + '</div>';
+
+    const url =
+      mapUrl(item.lat,item.lng);
+
+    if(url){
+
+      html +=
+        '<a class="mapBtn" href="'
+        + url
+        + '" target="_blank">'
+        + '📍 地図を見る'
+        + '</a>';
+
+    }
+
+    card.innerHTML = html;
+
+    app.appendChild(card);
+
+  });
+
+}
+
+window.handleSheet = function(json){
+
+  render(json.table.rows);
+
+};
+
+function loadSheet(){
+
+  const script =
+    document.createElement("script");
+
+  script.src =
+    "https://docs.google.com/spreadsheets/d/"
+    + SHEET_ID
+    + "/gviz/tq?sheet="
+    + encodeURIComponent(SHEET_NAME)
+    + "&tqx=out:json;responseHandler:handleSheet&v="
+    + Date.now();
+
+  document.body.appendChild(script);
+
+}
+
+loadSheet();
+</script>
+
+</body>
+</html>
