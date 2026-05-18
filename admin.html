@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>安否確認 管理ページ</title>
 
 <style>
@@ -16,7 +17,7 @@ body{
 }
 
 .wrap{
-  max-width:820px;
+  max-width:760px;
   margin:0 auto;
   padding:18px 14px 100px;
 }
@@ -58,19 +59,19 @@ body{
 
 .countNum{
   font-size:44px;
-  font-weight:900;
   line-height:1;
+  font-weight:900;
 }
 
 .greenNum{color:#16a34a}
 .yellowNum{color:#f59e0b}
-.redNum{color:#dc2626}
+.grayNum{color:#64748b}
 
 .countLabel{
   margin-top:10px;
-  font-size:17px;
+  font-size:18px;
   font-weight:900;
-  color:#5d7287;
+  color:#64748b;
 }
 
 .card{
@@ -107,24 +108,13 @@ body{
   background:#f59e0b;
 }
 
-.red{
-  background:#dc2626;
-  animation:blink 1s infinite;
-}
-
 .gray{
   background:#94a3b8;
 }
 
-@keyframes blink{
-  0%{opacity:1}
-  50%{opacity:.45}
-  100%{opacity:1}
-}
-
 .date{
   margin-top:14px;
-  font-size:20px;
+  font-size:19px;
   line-height:1.5;
   font-weight:800;
   color:#617387;
@@ -191,7 +181,7 @@ body{
     </div>
 
     <div class="countBox">
-      <div id="mikaninCount" class="countNum redNum">0</div>
+      <div id="mikaninCount" class="countNum grayNum">0</div>
       <div class="countLabel">未確認</div>
     </div>
 
@@ -206,7 +196,7 @@ body{
 <script>
 
 const GAS_URL =
-"https://script.google.com/macros/s/AKfycbym0WU_xeLgszLRh5BsPLFsCZW-ihJbtqVyviM9JZeZz1adO_CG8YkxMZ51gB5MpV2d/exec?mode=list";
+"https://script.google.com/macros/s/AKfycby2Zoya2AGSl8-JsGOfFl9HQIap6A-iGyK-vfsWCm1TfVs4SJTP1eYYb1CObc-skQW5/exec";
 
 const app =
 document.getElementById("app");
@@ -232,11 +222,7 @@ function statusClass(status){
     return "yellow";
   }
 
-  if(status.includes("未確認")){
-    return "gray";
-  }
-
-  return "red";
+  return "gray";
 
 }
 
@@ -263,17 +249,9 @@ function countStatus(items){
 
   });
 
-  document.getElementById(
-    "genkiCount"
-  ).innerText = g;
-
-  document.getElementById(
-    "komariCount"
-  ).innerText = k;
-
-  document.getElementById(
-    "mikaninCount"
-  ).innerText = m;
+  document.getElementById("genkiCount").innerText = g;
+  document.getElementById("komariCount").innerText = k;
+  document.getElementById("mikaninCount").innerText = m;
 
 }
 
@@ -282,9 +260,7 @@ function render(items){
   app.className = "";
   app.innerHTML = "";
 
-  if(
-    !Array.isArray(items)
-  ){
+  if(!Array.isArray(items)){
 
     app.innerHTML =
       '<div class="error">データ取得失敗</div>';
@@ -357,26 +333,29 @@ function render(items){
 
 }
 
-fetch(
-  GAS_URL
-  + "&t="
-  + Date.now()
-)
-.then(function(res){
+function loadData(){
 
-  return res.json();
+  const script =
+    document.createElement("script");
 
-})
-.then(function(data){
+  script.src =
+    GAS_URL
+    + "?mode=list&callback=handleData&t="
+    + Date.now();
+
+  document.body.appendChild(script);
+
+}
+
+function handleData(data){
 
   render(data);
 
-})
-.catch(function(err){
+}
 
-  app.className = "";
+loadData();
 
-  app.innerHTML =
-    '<div class="error">読み込み失敗</div>';
+</script>
 
-  console.log(err);
+</body>
+</html>
