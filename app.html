@@ -7,9 +7,7 @@
 <title>NSAW 暮らし情報局</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -211,7 +209,7 @@ body{
 <script>
 
 const GAS_URL =
-"https://script.google.com/macros/s/AKfycbyx4_EayzmFZNRD8mumHyAfSou8rOrbQI5PVSFMpo3a3YxdLkJtCZ03qM7D-caoF8aM/exec";
+"https://script.google.com/macros/s/AKfycbwZomj8eNaJCETGzmIA7CG1cLzZEXJRd15MNp-aBDLBQo_3l0biA7LtJWqYTeiqUsYC/exec";
 
 const messageBox =
 document.getElementById("message");
@@ -310,7 +308,8 @@ function sendData(
     + "&lng=" + encodeURIComponent(lng || "")
     + "&t=" + Date.now();
 
-  const img = new Image();
+  const img =
+    new Image();
 
   img.src = url;
 
