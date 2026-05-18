@@ -3,23 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>安否確認 管理ページ</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
   background:#eef5f2;
-  font-family:
-  "Hiragino Sans",
-  "Yu Gothic",
-  "Meiryo",
-  sans-serif;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
   color:#17324d;
 }
 
@@ -32,83 +24,77 @@ body{
 .top{
   background:#13854a;
   border-radius:30px;
-  padding:30px 20px;
+  padding:28px 18px;
   color:#fff;
   text-align:center;
 }
 
 .topTitle{
-  font-size:44px;
+  font-size:38px;
   line-height:1.3;
   font-weight:900;
 }
 
 .topText{
-  margin-top:18px;
-  font-size:24px;
+  margin-top:14px;
+  font-size:20px;
   line-height:1.6;
   font-weight:800;
 }
 
 .countWrap{
-  margin-top:20px;
+  margin-top:18px;
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
-  gap:14px;
+  gap:10px;
 }
 
 .countBox{
   background:#fff;
-  border-radius:24px;
-  padding:18px 10px;
+  border-radius:22px;
+  padding:14px 8px;
   text-align:center;
 }
 
 .countNum{
-  font-size:58px;
+  font-size:44px;
   font-weight:900;
+  line-height:1;
 }
 
-.greenNum{
-  color:#16a34a;
-}
-
-.yellowNum{
-  color:#f59e0b;
-}
-
-.redNum{
-  color:#dc2626;
-}
+.greenNum{color:#16a34a}
+.yellowNum{color:#f59e0b}
+.redNum{color:#dc2626}
 
 .countLabel{
   margin-top:10px;
-  font-size:24px;
+  font-size:17px;
   font-weight:900;
   color:#5d7287;
 }
 
 .card{
-  margin-top:18px;
+  margin-top:16px;
   background:#fff;
-  border-radius:28px;
-  padding:24px 20px;
+  border-radius:24px;
+  padding:18px 16px;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
 }
 
 .name{
-  font-size:44px;
+  font-size:34px;
   line-height:1.3;
   font-weight:900;
   color:#103657;
 }
 
 .status{
-  margin-top:18px;
+  margin-top:12px;
   display:inline-block;
-  border-radius:20px;
-  padding:16px 22px;
+  border-radius:18px;
+  padding:12px 18px;
   color:#fff;
-  font-size:28px;
+  font-size:22px;
   line-height:1.4;
   font-weight:900;
 }
@@ -126,6 +112,10 @@ body{
   animation:blink 1s infinite;
 }
 
+.gray{
+  background:#94a3b8;
+}
+
 @keyframes blink{
   0%{opacity:1}
   50%{opacity:.45}
@@ -133,33 +123,43 @@ body{
 }
 
 .date{
-  margin-top:20px;
-  font-size:24px;
+  margin-top:14px;
+  font-size:20px;
   line-height:1.5;
-  font-weight:900;
+  font-weight:800;
   color:#617387;
 }
 
 .mapBtn{
   display:block;
-  margin-top:22px;
+  margin-top:16px;
   background:#2563eb;
   color:#fff;
   text-decoration:none;
   text-align:center;
-  border-radius:22px;
-  padding:18px 14px;
-  font-size:26px;
+  border-radius:18px;
+  padding:16px 12px;
+  font-size:22px;
   font-weight:900;
 }
 
 .loading{
-  margin-top:50px;
+  margin-top:40px;
   text-align:center;
-  font-size:32px;
+  font-size:28px;
   font-weight:900;
 }
 
+.error{
+  margin-top:20px;
+  background:#fff0f0;
+  border:3px solid #f0aaaa;
+  color:#b00020;
+  border-radius:20px;
+  padding:20px;
+  font-size:22px;
+  font-weight:900;
+}
 </style>
 </head>
 
@@ -168,33 +168,31 @@ body{
 <div class="wrap">
 
   <div class="top">
-
     <div class="topTitle">
       安否確認<br>
       管理ページ
     </div>
 
     <div class="topText">
-      今日ボタンを押した人の一覧
+      登録メンバーの最新状態
     </div>
-
   </div>
 
   <div class="countWrap">
 
     <div class="countBox">
       <div id="genkiCount" class="countNum greenNum">0</div>
-      <div class="countLabel">元気です</div>
+      <div class="countLabel">元気</div>
     </div>
 
     <div class="countBox">
       <div id="komariCount" class="countNum yellowNum">0</div>
-      <div class="countLabel">困っています</div>
+      <div class="countLabel">困り</div>
     </div>
 
     <div class="countBox">
-      <div id="kyukyuCount" class="countNum redNum">0</div>
-      <div class="countLabel">緊急</div>
+      <div id="mikaninCount" class="countNum redNum">0</div>
+      <div class="countLabel">未確認</div>
     </div>
 
   </div>
@@ -208,7 +206,7 @@ body{
 <script>
 
 const GAS_URL =
-"https://script.google.com/macros/s/AKfycbxRl_XRANlt2VcRQ_s0u0SLKWSnozvKv3Q8WyfV2P80TTb0KqGJ5LWv0XIUe4BxKCTJ/exec?mode=list";
+"https://script.google.com/macros/s/AKfycbym0WU_xeLgszLRh5BsPLFsCZW-ihJbtqVyviM9JZeZz1adO_CG8YkxMZ51gB5MpV2d/exec?mode=list";
 
 const app =
 document.getElementById("app");
@@ -234,6 +232,10 @@ function statusClass(status){
     return "yellow";
   }
 
+  if(status.includes("未確認")){
+    return "gray";
+  }
+
   return "red";
 
 }
@@ -242,28 +244,36 @@ function countStatus(items){
 
   let g = 0;
   let k = 0;
-  let r = 0;
+  let m = 0;
 
   items.forEach(function(item){
 
-    const status =
+    const s =
       String(item.status || "");
 
-    if(status.includes("元気")){
+    if(s.includes("元気")){
       g++;
     }
-    else if(status.includes("困")){
+    else if(s.includes("困")){
       k++;
     }
     else{
-      r++;
+      m++;
     }
 
   });
 
-  document.getElementById("genkiCount").innerText = g;
-  document.getElementById("komariCount").innerText = k;
-  document.getElementById("kyukyuCount").innerText = r;
+  document.getElementById(
+    "genkiCount"
+  ).innerText = g;
+
+  document.getElementById(
+    "komariCount"
+  ).innerText = k;
+
+  document.getElementById(
+    "mikaninCount"
+  ).innerText = m;
 
 }
 
@@ -272,15 +282,31 @@ function render(items){
   app.className = "";
   app.innerHTML = "";
 
+  if(
+    !Array.isArray(items)
+  ){
+
+    app.innerHTML =
+      '<div class="error">データ取得失敗</div>';
+
+    return;
+
+  }
+
   countStatus(items);
 
   items.forEach(function(item){
+
+    const div =
+      document.createElement("div");
+
+    div.className = "card";
 
     const name =
       item.name || "";
 
     const status =
-      item.status || "";
+      item.status || "未確認";
 
     const date =
       item.date || "";
@@ -290,11 +316,6 @@ function render(items){
 
     const lng =
       item.lng || "";
-
-    const div =
-      document.createElement("div");
-
-    div.className = "card";
 
     let html = "";
 
@@ -310,18 +331,20 @@ function render(items){
       + esc(status)
       + '</div>';
 
-    html +=
-      '<div class="date">'
-      + esc(date)
-      + '</div>';
+    if(date){
+
+      html +=
+        '<div class="date">'
+        + esc(date)
+        + '</div>';
+
+    }
 
     if(lat && lng){
 
       html +=
         '<a class="mapBtn" target="_blank" href="https://www.google.com/maps?q='
-        + lat
-        + ','
-        + lng
+        + encodeURIComponent(lat + "," + lng)
         + '">📍 地図を見る</a>';
 
     }
@@ -334,7 +357,11 @@ function render(items){
 
 }
 
-fetch(GAS_URL)
+fetch(
+  GAS_URL
+  + "&t="
+  + Date.now()
+)
 .then(function(res){
 
   return res.json();
@@ -347,14 +374,9 @@ fetch(GAS_URL)
 })
 .catch(function(err){
 
+  app.className = "";
+
   app.innerHTML =
-    "読み込み失敗";
+    '<div class="error">読み込み失敗</div>';
 
   console.log(err);
-
-});
-
-</script>
-
-</body>
-</html>
