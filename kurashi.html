@@ -99,19 +99,6 @@ body{
   color:#44566c;
 }
 
-.btn{
-  display:block;
-  margin-top:16px;
-  background:#2563eb;
-  border-radius:18px;
-  padding:16px;
-  text-align:center;
-  text-decoration:none;
-  color:#fff;
-  font-size:18px;
-  font-weight:900;
-}
-
 .back{
   display:block;
   margin-top:30px;
@@ -151,9 +138,9 @@ body{
       </div>
 
       <div class="text">
-        四市の暮らし情報、
-        地域動画、
-        お知らせをまとめています。
+        地域情報、
+        安否情報、
+        動画情報を表示しています。
       </div>
 
       <iframe
@@ -187,10 +174,10 @@ body{
 <script>
 
 const SHEET_ID =
-"1Xx0a0dRqSrL6pacX7xY5jyTtiQ1Ot8E03oLmMICfI6M";
+"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
 
 const SHEET_NAME =
-"回覧板データー";
+"安否ログ";
 
 const URL =
 "https://docs.google.com/spreadsheets/d/"
@@ -238,16 +225,13 @@ fetch(URL)
     const date =
       c[0]?.v || "";
 
-    const title =
+    const name =
       c[1]?.v || "";
 
-    const detail =
-      c[3]?.v || "";
+    const status =
+      c[2]?.v || "";
 
-    const link =
-      c[5]?.v || "";
-
-    if(!title){
+    if(!name){
       return;
     }
 
@@ -260,7 +244,7 @@ fetch(URL)
     div.innerHTML =
 
       '<div class="cardTitle">'
-      + esc(title)
+      + esc(name)
       + '</div>'
 
       +
@@ -272,18 +256,8 @@ fetch(URL)
       +
 
       '<div class="cardText">'
-      + esc(detail)
-      + '</div>'
-
-      +
-
-      (
-        link
-        ? '<a class="btn" target="_blank" href="'
-          + esc(link)
-          + '">詳しく見る</a>'
-        : ''
-      );
+      + esc(status)
+      + '</div>';
 
     list.appendChild(div);
 
