@@ -2,280 +2,183 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>暮らし情報 | NSAW 暮らし情報局</title>
+<title>回覧板</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
-  background:#eef7fb;
+  background:#eef5fb;
+  font-family:
+  "Hiragino Sans",
+  "Yu Gothic",
+  "Meiryo",
+  sans-serif;
   color:#17324d;
-  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 }
 
 .wrap{
-  max-width:720px;
+  max-width:760px;
   margin:0 auto;
-  padding:14px;
-}
-
-.back{
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  background:#0d8b46;
-  color:#fff;
-  padding:18px;
-  border-radius:20px;
-  margin-bottom:18px;
-  font-size:24px;
-  font-weight:900;
-}
-
-.hero{
-  background:#fff;
-  border:4px solid #0d8b46;
-  border-radius:24px;
-  padding:18px 14px;
-  margin-bottom:20px;
-  text-align:center;
-  box-shadow:0 6px 18px rgba(0,0,0,.10);
-}
-
-.hero-title{
-  font-size:34px;
-  line-height:1.3;
-  font-weight:900;
-  color:#00843d;
-}
-
-.hero-sub{
-  margin-top:10px;
-  font-size:18px;
-  line-height:1.6;
-  font-weight:900;
+  padding:18px 14px 80px;
 }
 
 .card{
-  background:#fff;
-  border-radius:26px;
-  padding:22px;
-  margin-bottom:24px;
-  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  background:#ffffff;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,.10);
 }
 
-.date{
-  font-size:18px;
-  color:#607080;
-  font-weight:900;
+.banner{
+  width:100%;
+  display:block;
+}
+
+.inner{
+  padding:24px 18px 30px;
 }
 
 .title{
-  font-size:34px;
-  line-height:1.45;
+  font-size:32px;
+  line-height:1.4;
   font-weight:900;
-  margin:18px 0;
+  text-align:center;
 }
 
-.mainimg{
+.text{
+  margin-top:18px;
+  font-size:18px;
+  line-height:1.8;
+  font-weight:700;
+  color:#5b7084;
+}
+
+.video{
+  margin-top:24px;
   width:100%;
-  display:block;
+  aspect-ratio:16/9;
+  border:none;
   border-radius:20px;
-  margin:18px 0;
+  overflow:hidden;
 }
 
-.desc{
+.info{
+  margin-top:24px;
+  background:#f8fbff;
+  border-radius:20px;
+  padding:18px 16px;
+}
+
+.infoTitle{
   font-size:22px;
-  line-height:1.9;
-  font-weight:800;
-  white-space:pre-wrap;
-  margin:18px 0;
+  font-weight:900;
+}
+
+.infoText{
+  margin-top:10px;
+  font-size:17px;
+  line-height:1.8;
+  font-weight:700;
+  color:#5b7084;
 }
 
 .btn{
   display:block;
+  margin-top:24px;
+  background:#2563eb;
+  border-radius:24px;
+  padding:22px 16px;
   text-align:center;
   text-decoration:none;
-  color:#fff;
-  padding:20px 12px;
-  border-radius:20px;
-  margin:14px 0;
+  color:#ffffff;
   font-size:24px;
+  line-height:1.4;
   font-weight:900;
 }
 
-.btn1{background:#1f8f3a}
-.btn2{background:#1976d2}
-.btn3{background:#ff4f87}
-.btn4{background:#ff9800}
-.btn5{background:#7b4bb7}
-
-.footer{
+.back{
+  display:block;
+  margin-top:24px;
   text-align:center;
-  color:#6c7f8d;
-  font-size:15px;
-  line-height:1.8;
-  padding:28px 0 12px;
+  font-size:18px;
+  font-weight:900;
+  color:#2563eb;
+  text-decoration:none;
 }
+
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
 
-<a href="index.html" class="back">トップへ戻る</a>
+  <div class="card">
 
-<div class="hero">
-  <div class="hero-title" id="heroTitle">暮らし情報</div>
-  <div class="hero-sub">
-    四市の暮らし情報を見やすくまとめています
-  </div>
-</div>
+    <img
+      class="banner"
+      src="./top.jpg"
+      alt="回覧板"
+    >
 
-<div id="content">読み込み中です…</div>
+    <div class="inner">
 
-<div class="footer">NSAW 暮らし情報局</div>
+      <div class="title">
+        回覧板
+      </div>
 
-</div>
+      <div class="text">
+        四市の暮らし情報、
+        地域のお知らせ、
+        動画情報をまとめています。
+      </div>
 
-<script>
-const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+      <iframe
+        class="video"
+        src="https://www.youtube.com/embed/videoseries?list=PL"
+        title="地域動画"
+        allowfullscreen
+      ></iframe>
 
-const GVIZ_URL =
-  "https://docs.google.com/spreadsheets/d/" +
-  SHEET_ID +
-  "/gviz/tq?tqx=out:json;responseHandler:handleSheet";
+      <div class="info">
 
-function cell(row,index){
-  if(!row.c[index]) return "";
-  if(row.c[index].f) return String(row.c[index].f);
-  if(row.c[index].v == null) return "";
-  return String(row.c[index].v).trim();
-}
+        <div class="infoTitle">
+          地域情報
+        </div>
 
-function formatDate(value){
-  if(!value) return "";
-  if(value.startsWith("Date(")){
-    const nums = value.match(/\d+/g);
-    if(nums && nums.length >= 3){
-      return nums[0] + "年" + (Number(nums[1]) + 1) + "月" + nums[2] + "日";
-    }
-  }
-  return value;
-}
-
-function esc(text){
-  return String(text || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;");
-}
-
-function makeButton(title,url,num){
-  if(!title || !url) return "";
-  return `
-    <a class="btn btn${num}" href="${esc(url)}" target="_blank" rel="noopener">
-      ${esc(title)}
-    </a>
-  `;
-}
-
-function handleSheet(json){
-  const rows = json.table.rows || [];
-  const items = [];
-
-  rows.forEach(row=>{
-    const display = cell(row,18); // S列：表示
-    const type = cell(row,21);    // V列：情報 / メディア
-
-    if(display !== "はい") return;
-    if(type !== "情報") return;
-
-    items.push({
-      date: formatDate(cell(row,0)),  // A 日付
-      title: cell(row,2),             // C 瓦版タイトル
-      image: cell(row,3),             // D 瓦版画像URL
-      desc: cell(row,4),              // E 説明文
-
-      btn1Text: cell(row,5),          // F
-      btn1Url: cell(row,6),           // G
-      btn2Text: cell(row,7),          // H
-      btn2Url: cell(row,8),           // I
-      btn3Text: cell(row,9),          // J
-      btn3Url: cell(row,10),          // K
-      btn4Text: cell(row,11),         // L
-      btn4Url: cell(row,12),          // M
-      btn5Text: cell(row,13),         // N
-      btn5Url: cell(row,14),          // O
-
-      sortDate: Number(cell(row,19)) || 0, // T
-      order: Number(cell(row,20)) || 0     // U
-    });
-  });
-
-  items.sort((a,b)=>{
-    if(b.sortDate !== a.sortDate) return b.sortDate - a.sortDate;
-    return b.order - a.order;
-  });
-
-  const content = document.getElementById("content");
-
-  if(items.length === 0){
-    content.innerHTML = "表示できる暮らし情報がありません。";
-    return;
-  }
-
-  document.getElementById("heroTitle").innerHTML =
-    items[0].date + "<br>の暮らし情報";
-
-  let html = "";
-
-  items.slice(0,5).forEach(item=>{
-    html += `
-      <div class="card">
-
-        <div class="date">${esc(item.date)}</div>
-
-        <div class="title">${esc(item.title)}</div>
-
-        ${
-          item.image && item.image.startsWith("http")
-          ? `<img class="mainimg" src="${esc(item.image)}">`
-          : ""
-        }
-
-        ${
-          item.desc
-          ? `<div class="desc">${esc(item.desc)}</div>`
-          : ""
-        }
-
-        ${makeButton(item.btn1Text,item.btn1Url,1)}
-        ${makeButton(item.btn2Text,item.btn2Url,2)}
-        ${makeButton(item.btn3Text,item.btn3Url,3)}
-        ${makeButton(item.btn4Text,item.btn4Url,4)}
-        ${makeButton(item.btn5Text,item.btn5Url,5)}
+        <div class="infoText">
+          回覧板や地域情報、
+          動画などを順次追加していきます。
+        </div>
 
       </div>
-    `;
-  });
 
-  content.innerHTML = html;
-}
+      <a
+        class="btn"
+        href="https://ichirohns-jpg.github.io/ShikiConcierge-18/"
+      >
+        📺 地域生活テレビを見る
+      </a>
 
-function handleError(){
-  document.getElementById("content").innerHTML =
-    "読み込みに失敗しました。";
-}
+      <a
+        class="back"
+        href="./index.html"
+      >
+        ← トップへ戻る
+      </a>
 
-const script = document.createElement("script");
-script.src = GVIZ_URL;
-script.onerror = handleError;
-document.body.appendChild(script);
-</script>
+    </div>
+
+  </div>
+
+</div>
 
 </body>
 </html>
