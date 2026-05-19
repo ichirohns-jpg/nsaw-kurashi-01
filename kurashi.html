@@ -69,24 +69,59 @@ body{
 }
 
 .cardTitle{
-  font-size:24px;
+  font-size:28px;
   line-height:1.5;
   font-weight:900;
 }
 
 .cardDate{
   margin-top:10px;
-  font-size:15px;
+  font-size:16px;
   color:#64748b;
   font-weight:700;
 }
 
 .cardText{
   margin-top:14px;
-  font-size:17px;
+  font-size:18px;
   line-height:1.8;
   font-weight:700;
   color:#44566c;
+}
+
+.cardImage{
+  width:100%;
+  margin-top:16px;
+  border-radius:18px;
+  display:block;
+}
+
+.video{
+  width:100%;
+  aspect-ratio:16/9;
+  border:none;
+  border-radius:18px;
+  margin-top:16px;
+}
+
+.btn{
+  display:block;
+  margin-top:16px;
+  background:#2563eb;
+  border-radius:18px;
+  padding:16px;
+  text-align:center;
+  text-decoration:none;
+  color:#fff;
+  font-size:18px;
+  font-weight:900;
+}
+
+.loading{
+  margin-top:40px;
+  text-align:center;
+  font-size:26px;
+  font-weight:900;
 }
 
 .back{
@@ -97,13 +132,6 @@ body{
   font-weight:900;
   color:#2563eb;
   text-decoration:none;
-}
-
-.loading{
-  margin-top:30px;
-  text-align:center;
-  font-size:24px;
-  font-weight:900;
 }
 
 </style>
@@ -128,7 +156,9 @@ body{
       </div>
 
       <div class="text">
-        スプレッドシートの情報を表示しています。
+        四市の暮らし情報、
+        地域動画、
+        お知らせをまとめています。
       </div>
 
       <a
@@ -158,14 +188,7 @@ const SHEET_ID =
 "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
 
 const SHEET_NAME =
-"シート1";
-
-const URL =
-"https://docs.google.com/spreadsheets/d/"
-+ SHEET_ID
-+ "/gviz/tq?sheet="
-+ encodeURIComponent(SHEET_NAME)
-+ "&tqx=out:json";
+"NSAW暮らし情報局_データ";
 
 function esc(str){
 
@@ -176,17 +199,65 @@ function esc(str){
 
 }
 
-fetch(URL)
-.then(r => r.text())
-.then(text => {
+function cell(row,index){
 
-  const json =
-    JSON.parse(
-      text.substring(
-        47,
-        text.length - 2
-      )
-    );
+  if(
+    !row.c ||
+    !row.c[index]
+  ){
+    return "";
+  }
+
+  return row.c[index].v || "";
+
+}
+
+function formatDate(v){
+
+  if(!v){
+    return "";
+  }
+
+  if(typeof v === "string"){
+    return v;
+  }
+
+  if(v instanceof Date){
+
+    const y = v.getFullYear();
+    const m = v.getMonth() + 1;
+    const d = v.getDate();
+
+    return y + "年" + m + "月" + d + "日";
+  }
+
+  return String(v);
+
+}
+
+function youtubeId(url){
+
+  url = String(url || "");
+
+  let m =
+    url.match(/[?&]v=([^&]+)/);
+
+  if(m){
+    return m[1];
+  }
+
+  m =
+    url.match(/youtu\.be\/([^?&]+)/);
+
+  if(m){
+    return m[1];
+  }
+
+  return "";
+
+}
+
+function handleSheet(json){
 
   const rows =
     json.table.rows || [];
@@ -200,17 +271,20 @@ fetch(URL)
 
   rows.forEach(row => {
 
-    const c =
-      row.c || [];
+    const date =
+      formatDate(cell(row,0));
 
     const title =
-      c[0]?.v || "";
+      cell(row,1);
 
     const detail =
-      c[1]?.v || "";
+      cell(row,2);
 
-    const date =
-      c[2]?.v || "";
+    const image =
+      cell(row,3);
+
+    const video =
+      cell(row,4);
 
     if(!title){
       return;
@@ -222,7 +296,7 @@ fetch(URL)
     div.className =
       "card";
 
-    div.innerHTML =
+    let html =
 
       '<div class="cardTitle">'
       + esc(title)
@@ -240,11 +314,50 @@ fetch(URL)
       + esc(detail)
       + '</div>';
 
+    if(image){
+
+      html +=
+
+      '<img class="cardImage" src="'
+      + esc(image)
+      + '">';
+
+    }
+
+    const yt =
+      youtubeId(video);
+
+    if(yt){
+
+      html +=
+
+      '<iframe class="video" src="https://www.youtube.com/embed/'
+      + yt
+      + '" allowfullscreen></iframe>';
+
+    }
+
+    div.innerHTML =
+      html;
+
     list.appendChild(div);
 
   });
 
-});
+}
+
+const script =
+  document.createElement("script");
+
+script.src =
+"https://docs.google.com/spreadsheets/d/"
++ SHEET_ID
++ "/gviz/tq?sheet="
++ encodeURIComponent(SHEET_NAME)
++ "&tqx=out:json;responseHandler=handleSheet&t="
++ Date.now();
+
+document.body.appendChild(script);
 
 </script>
 
