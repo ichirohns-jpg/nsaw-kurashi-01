@@ -26,7 +26,7 @@ body{
 .wrap{
   max-width:760px;
   margin:0 auto;
-  padding:18px 14px 80px;
+  padding:18px 14px 100px;
 }
 
 .card{
@@ -46,7 +46,7 @@ body{
 }
 
 .title{
-  font-size:32px;
+  font-size:34px;
   line-height:1.4;
   font-weight:900;
   text-align:center;
@@ -70,43 +70,60 @@ body{
   background:#000;
 }
 
-.board{
-  margin-top:26px;
-  background:#f8fbff;
-  border-radius:22px;
-  padding:18px 16px;
+.grid{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
 }
 
-.boardTitle{
-  font-size:24px;
+.box{
+  display:block;
+  background:#f8fbff;
+  border-radius:22px;
+  padding:20px 14px;
+  text-decoration:none;
+  color:#17324d;
+  box-shadow:0 4px 10px rgba(0,0,0,.05);
+}
+
+.boxTitle{
+  font-size:22px;
+  line-height:1.5;
   font-weight:900;
 }
 
-.boardText{
-  margin-top:12px;
-  font-size:17px;
-  line-height:1.8;
+.boxText{
+  margin-top:10px;
+  font-size:15px;
+  line-height:1.7;
   font-weight:700;
   color:#5b7084;
 }
 
-.btn{
-  display:block;
-  margin-top:24px;
+.blue{
   background:#2563eb;
-  border-radius:24px;
-  padding:22px 16px;
-  text-align:center;
-  text-decoration:none;
-  color:#ffffff;
-  font-size:24px;
-  line-height:1.4;
-  font-weight:900;
+  color:#fff;
+}
+
+.red{
+  background:#dc2626;
+  color:#fff;
+}
+
+.green{
+  background:#16a34a;
+  color:#fff;
+}
+
+.orange{
+  background:#ea580c;
+  color:#fff;
 }
 
 .back{
   display:block;
-  margin-top:24px;
+  margin-top:30px;
   text-align:center;
   font-size:18px;
   font-weight:900;
@@ -138,7 +155,8 @@ body{
       <div class="text">
         四市の暮らし情報、
         地域動画、
-        お知らせをまとめています。
+        緊急情報、
+        生活情報をまとめています。
       </div>
 
       <iframe
@@ -148,26 +166,87 @@ body{
         allowfullscreen
       ></iframe>
 
-      <div class="board">
+      <div class="grid">
 
-        <div class="boardTitle">
-          地域情報
-        </div>
+        <a
+          class="box blue"
+          href="https://ichirohns-jpg.github.io/ShikiConcierge-18/"
+        >
+          <div class="boxTitle">
+            📺 地域動画
+          </div>
 
-        <div class="boardText">
-          地域のお知らせ、
-          四市情報、
-          動画などを順次掲載していきます。
-        </div>
+          <div class="boxText">
+            四市の地域動画や情報を見る
+          </div>
+        </a>
+
+        <a
+          class="box red"
+          href="tel:119"
+        >
+          <div class="boxTitle">
+            🚒 119通報
+          </div>
+
+          <div class="boxText">
+            火事・救急
+          </div>
+        </a>
+
+        <a
+          class="box green"
+          href="https://www.city.shiki.lg.jp/"
+        >
+          <div class="boxTitle">
+            🏛 市役所情報
+          </div>
+
+          <div class="boxText">
+            志木市ホームページ
+          </div>
+        </a>
+
+        <a
+          class="box orange"
+          href="https://www.google.com/maps/search/コンビニ/"
+        >
+          <div class="boxTitle">
+            🏪 近くのコンビニ
+          </div>
+
+          <div class="boxText">
+            Googleマップで探す
+          </div>
+        </a>
+
+        <a
+          class="box"
+          href="https://www.google.com/maps/search/トイレ/"
+        >
+          <div class="boxTitle">
+            🚻 トイレ
+          </div>
+
+          <div class="boxText">
+            近くのトイレを探す
+          </div>
+        </a>
+
+        <a
+          class="box"
+          href="https://www.google.com/maps/search/病院/"
+        >
+          <div class="boxTitle">
+            🏥 病院
+          </div>
+
+          <div class="boxText">
+            近くの病院を探す
+          </div>
+        </a>
 
       </div>
-
-      <a
-        class="btn"
-        href="https://ichirohns-jpg.github.io/ShikiConcierge-18/"
-      >
-        📺 地域動画を見る
-      </a>
 
       <a
         class="back"
