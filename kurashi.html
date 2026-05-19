@@ -8,21 +8,10 @@
 
 <style>
 
-*{
-box-sizing:border-box;
-}
-
 body{
 margin:0;
-padding:0;
 background:#eef5fb;
 font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#17324d;
-}
-
-.header{
-width:100%;
-background:#fff;
 }
 
 .header img{
@@ -31,23 +20,23 @@ display:block;
 }
 
 .wrap{
-max-width:720px;
+max-width:700px;
 margin:auto;
-padding:14px;
+padding:12px;
 }
 
 .card{
 background:#fff;
 border-radius:18px;
 padding:18px;
-margin-bottom:20px;
-box-shadow:0 4px 14px rgba(0,0,0,.08);
+margin-bottom:18px;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
 
 .date{
 font-size:14px;
 color:#666;
-margin-bottom:10px;
+margin-bottom:8px;
 }
 
 .title{
@@ -65,26 +54,16 @@ white-space:pre-wrap;
 color:#333;
 }
 
-.image{
-margin-top:16px;
-}
-
-.image img{
-width:100%;
-display:block;
-border-radius:14px;
-}
-
 .loading{
-padding:50px;
+padding:40px;
 text-align:center;
 font-size:22px;
 }
 
 .error{
-padding:30px;
+padding:40px;
 text-align:center;
-font-size:20px;
+font-size:22px;
 color:red;
 }
 
@@ -107,9 +86,6 @@ color:red;
 
 <script>
 
-const SHEET_ID = '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
-const SHEET_NAME = 'NSAW暮らし情報局_データ';
-
 window.handleSheet = function(json){
 
 try{
@@ -119,8 +95,6 @@ const rows = json.table.rows || [];
 let html = '';
 
 rows.reverse().forEach((row)=>{
-
-try{
 
 const c = row.c || [];
 
@@ -139,11 +113,6 @@ const detail =
 ? c[2].v
 : '';
 
-const image =
-(c[3] && c[3].v)
-? c[3].v
-: '';
-
 html += `
 
 <div class="card">
@@ -160,35 +129,11 @@ ${title}
 ${detail}
 </div>
 
-${image ? `
-
-<div class="image">
-<img src="${image}">
-</div>
-
-` : ''}
-
 </div>
 
 `;
-
-}catch(e){
-
-console.log(e);
-
-}
 
 });
-
-if(!html){
-
-html = `
-<div class="error">
-データがありません
-</div>
-`;
-
-}
 
 document.getElementById('app').innerHTML = html;
 
@@ -209,11 +154,7 @@ console.log(e);
 const script = document.createElement('script');
 
 script.src =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=' +
-encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json&responseHandler=handleSheet';
+'https://docs.google.com/spreadsheets/d/13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY/gviz/tq?sheet=NSAW暮らし情報局_データ&tqx=out:json&responseHandler=handleSheet';
 
 document.body.appendChild(script);
 
