@@ -4,12 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>瓦板</title>
+<title>NSAW 暮らし情報局</title>
 
-<meta property="og:title" content="NSAW暮らし情報局">
-<meta property="og:description" content="四市の暮らし情報・地域動画・お知らせ">
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg">
+<meta name="description" content="志木・新座・朝霞・和光の暮らし情報">
+
 <meta property="og:type" content="website">
+<meta property="og:title" content="NSAW 暮らし情報局">
+<meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報">
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
+<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/">
+
+<meta name="twitter:card" content="summary_large_image">
 
 <style>
 
@@ -19,148 +24,156 @@
 
 body{
   margin:0;
-  background:#eef5fb;
-  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-  color:#17324d;
+  background:#eef4fa;
+  font-family:
+  "Hiragino Sans",
+  "Yu Gothic",
+  sans-serif;
+  color:#1b2b3a;
+}
+
+.header{
+  width:100%;
+}
+
+.header img{
+  width:100%;
+  display:block;
 }
 
 .wrap{
-  max-width:760px;
-  margin:0 auto;
-  padding:18px 14px 80px;
-}
-
-.top{
-  background:#fff;
-  border-radius:26px;
-  overflow:hidden;
-  box-shadow:0 8px 18px rgba(0,0,0,.08);
-}
-
-.banner{
   width:100%;
-  display:block;
-}
-
-.inner{
-  padding:22px 18px;
-}
-
-.topTitle{
-  font-size:34px;
-  line-height:1.4;
-  font-weight:900;
-  text-align:center;
-}
-
-.topText{
-  margin-top:14px;
-  font-size:18px;
-  line-height:1.8;
-  font-weight:700;
-  color:#5b7084;
-  text-align:center;
+  max-width:760px;
+  margin:auto;
+  padding:14px;
 }
 
 .card{
-  margin-top:20px;
   background:#fff;
-  border-radius:26px;
-  padding:18px 16px;
-  box-shadow:0 8px 18px rgba(0,0,0,.08);
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+.date{
+  font-size:14px;
+  color:#666;
+  margin-bottom:10px;
 }
 
 .title{
-  font-size:30px;
-  line-height:1.45;
+  font-size:28px;
   font-weight:900;
+  line-height:1.4;
+  margin-bottom:16px;
 }
 
-.image{
+.main-image{
   width:100%;
-  margin-top:14px;
-  border-radius:18px;
-  display:block;
+  border-radius:16px;
+  margin-bottom:16px;
 }
 
 .text{
-  margin-top:14px;
   font-size:18px;
-  line-height:1.8;
-  font-weight:700;
-  color:#44566c;
+  line-height:1.9;
   white-space:pre-wrap;
 }
 
-.movieTitle{
-  margin-top:18px;
-  font-size:22px;
-  line-height:1.6;
-  font-weight:900;
+.buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:20px;
 }
 
-.movieText{
-  margin-top:10px;
+.city-btn{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-decoration:none;
+  color:#fff;
+  font-weight:700;
+  padding:14px;
+  border-radius:14px;
   font-size:17px;
-  line-height:1.8;
-  font-weight:700;
-  color:#44566c;
-  white-space:pre-wrap;
+}
+
+.shiki{
+  background:#1e88e5;
+}
+
+.niiza{
+  background:#43a047;
+}
+
+.asaka{
+  background:#fb8c00;
+}
+
+.wako{
+  background:#8e24aa;
 }
 
 .video{
+  margin-top:24px;
+}
+
+.video-title{
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.video-desc{
+  line-height:1.8;
+  margin-bottom:14px;
+}
+
+.video iframe{
   width:100%;
   aspect-ratio:16/9;
   border:none;
-  border-radius:18px;
-  margin-top:16px;
+  border-radius:16px;
+}
+
+.sns{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+}
+
+.sns button{
+  flex:1;
+  border:none;
+  border-radius:14px;
+  padding:14px;
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+}
+
+.fb{
+  background:#1877f2;
+}
+
+.line{
+  background:#06c755;
+}
+
+.x{
   background:#000;
 }
 
-.grid{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+.copy{
+  background:#607d8b;
 }
-
-.btn{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:82px;
-  border:none;
-  border-radius:20px;
-  padding:14px;
-  text-align:center;
-  text-decoration:none;
-  color:#fff;
-  font-size:20px;
-  line-height:1.45;
-  font-weight:900;
-}
-
-.blue{background:#2563eb;}
-.green{background:#16a34a;}
-.orange{background:#ea580c;}
-.purple{background:#7c3aed;}
-.black{background:#111111;}
 
 .loading{
-  margin-top:40px;
   text-align:center;
-  font-size:28px;
-  font-weight:900;
-}
-
-.back{
-  display:block;
-  margin-top:24px;
-  text-align:center;
-  font-size:18px;
-  font-weight:900;
-  color:#2563eb;
-  text-decoration:none;
+  padding:60px 20px;
+  font-size:20px;
 }
 
 </style>
@@ -168,364 +181,255 @@ body{
 
 <body>
 
-<div class="wrap">
+<div class="header">
+  <img src="top-banner.jpg">
+</div>
 
-  <div class="top">
+<div class="wrap" id="app">
 
-    <img
-      class="banner"
-      src="./top.jpg"
-      alt="瓦板"
-    >
-
-    <div class="inner">
-
-      <div class="topTitle">
-        瓦板
-      </div>
-
-      <div class="topText">
-        四市の暮らし情報・地域動画・お知らせをまとめています。
-      </div>
-
-      <a
-        class="back"
-        href="./index.html"
-      >
-        ← トップへ戻る
-      </a>
-
-    </div>
-
-  </div>
-
-  <div id="list">
-
-    <div class="loading">
-      読み込み中...
-    </div>
-
-  </div>
+<div class="loading">
+読み込み中...
+</div>
 
 </div>
 
 <script>
 
 const SHEET_ID =
-"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+"1Xx0a0dRqSrL6pacX7xY5jyTtiQ1Ot8E03oLmMICfI6M";
 
 const SHEET_NAME =
 "NSAW暮らし情報局_データ";
 
-function esc(str){
+const params = new URLSearchParams(location.search);
 
-  return String(str || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;");
+const targetId = params.get("id") || "";
 
-}
+const jsonpUrl =
+"https://docs.google.com/spreadsheets/d/"
++ SHEET_ID +
+"/gviz/tq?sheet="
++ encodeURIComponent(SHEET_NAME)
++ "&tqx=out:json;responseHandler=handleSheet";
 
-function cell(row,i){
+const script = document.createElement("script");
 
-  if(!row.c || !row.c[i]){
-    return "";
-  }
+script.src = jsonpUrl;
 
-  return row.c[i].v || "";
-
-}
-
-function drive(url){
-
-  url = String(url || "");
-
-  let m =
-    url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-
-  if(m){
-
-    return "https://drive.google.com/thumbnail?id="
-      + m[1]
-      + "&sz=w1600";
-
-  }
-
-  m =
-    url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-
-  if(m){
-
-    return "https://drive.google.com/thumbnail?id="
-      + m[1]
-      + "&sz=w1600";
-
-  }
-
-  return url;
-
-}
-
-function youtubeId(url){
-
-  url = String(url || "");
-
-  let m =
-    url.match(/[?&]v=([^&]+)/);
-
-  if(m) return m[1];
-
-  m =
-    url.match(/youtu\.be\/([^?&]+)/);
-
-  if(m) return m[1];
-
-  m =
-    url.match(/shorts\/([^?&]+)/);
-
-  if(m) return m[1];
-
-  return "";
-
-}
+document.body.appendChild(script);
 
 function handleSheet(json){
 
   const rows =
-    (json.table.rows || [])
-    .map((row,idx)=>({
+  json.table.rows || [];
 
-      idx,
+  let html = "";
 
-      id:cell(row,1),
+  rows.forEach(row=>{
 
-      title:cell(row,2),
+    const c = row.c || [];
 
-      image:drive(cell(row,3)),
+    const date = get(c,0);
+    const id = get(c,1);
+    const title = get(c,2);
+    const image = get(c,3);
+    const text = get(c,4);
 
-      detail:cell(row,4),
+    const info1Title = get(c,5);
+    const info1Url = get(c,6);
 
-      info1Title:cell(row,5),
-      info1Url:cell(row,6),
+    const info2Title = get(c,7);
+    const info2Url = get(c,8);
 
-      info2Title:cell(row,7),
-      info2Url:cell(row,8),
+    const info3Title = get(c,9);
+    const info3Url = get(c,10);
 
-      info3Title:cell(row,9),
-      info3Url:cell(row,10),
+    const info4Title = get(c,11);
+    const info4Url = get(c,12);
 
-      info4Title:cell(row,11),
-      info4Url:cell(row,12),
+    const videoTitle = get(c,13);
+    const videoDesc = get(c,14);
+    const videoUrl = get(c,15);
 
-      movieTitle:cell(row,13),
+    const flag = get(c,16);
 
-      movieText:cell(row,14),
+    if(flag !== "はい") return;
 
-      videoTitle:cell(row,15),
-
-      videoText:cell(row,16),
-
-      video:cell(row,17),
-
-      show:cell(row,18),
-
-      sort:Number(cell(row,19)) || 0
-
-    }))
-    .filter(x=>String(x.show).trim()==="はい")
-    .sort((a,b)=>(b.sort-a.sort)||(b.idx-a.idx));
-
-  const list =
-    document.getElementById("list");
-
-  list.innerHTML = "";
-
-  rows.forEach((item,index)=>{
-
-    if(!item.title){
-      return;
-    }
-
-    let html =
-    `<div class="card">`;
-
-    html +=
-    `<div class="title">
-      ${esc(item.title)}
-    </div>`;
-
-    if(item.image){
-
-      html +=
-      `<img
-        class="image"
-        src="${esc(item.image)}">`;
-
-    }
-
-    if(item.detail){
-
-      html +=
-      `<div class="text">
-        ${esc(item.detail)}
-      </div>`;
-
-    }
-
-    html += `<div class="grid">`;
-
-    if(item.info1Title && item.info1Url){
-
-      html +=
-      `<a
-        class="btn blue"
-        href="${esc(item.info1Url)}"
-        target="_blank">
-        ${esc(item.info1Title)}
-      </a>`;
-
-    }
-
-    if(item.info2Title && item.info2Url){
-
-      html +=
-      `<a
-        class="btn green"
-        href="${esc(item.info2Url)}"
-        target="_blank">
-        ${esc(item.info2Title)}
-      </a>`;
-
-    }
-
-    if(item.info3Title && item.info3Url){
-
-      html +=
-      `<a
-        class="btn orange"
-        href="${esc(item.info3Url)}"
-        target="_blank">
-        ${esc(item.info3Title)}
-      </a>`;
-
-    }
-
-    if(item.info4Title && item.info4Url){
-
-      html +=
-      `<a
-        class="btn purple"
-        href="${esc(item.info4Url)}"
-        target="_blank">
-        ${esc(item.info4Title)}
-      </a>`;
-
-    }
-
-    html += `</div>`;
-
-    if(item.movieTitle){
-
-      html +=
-      `<div class="movieTitle">
-        ${esc(item.movieTitle)}
-      </div>`;
-
-    }
-
-    if(item.movieText){
-
-      html +=
-      `<div class="movieText">
-        ${esc(item.movieText)}
-      </div>`;
-
-    }
-
-    if(item.videoTitle){
-
-      html +=
-      `<div class="movieTitle">
-        ${esc(item.videoTitle)}
-      </div>`;
-
-    }
-
-    if(item.videoText){
-
-      html +=
-      `<div class="movieText">
-        ${esc(item.videoText)}
-      </div>`;
-
-    }
-
-    const yt =
-      youtubeId(item.video);
-
-    if(yt){
-
-      html +=
-      `<iframe
-        class="video"
-        src="https://www.youtube.com/embed/${esc(yt)}"
-        allowfullscreen>
-      </iframe>`;
-
-    }
-
-    const num =
-      String(item.id || (index+1))
-      .replace(/\D/g,"")
-      .padStart(3,"0");
+    if(targetId && id !== targetId) return;
 
     const shareUrl =
-      "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id="
-      + num;
+    "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id="
+    + id;
 
-    html +=
-    `<div class="grid">
+    html += `
 
-      <button
-        class="btn blue"
-        onclick="shareFacebook('${shareUrl}')"
-        type="button">
+    <div class="card">
+
+      <div class="date">
+        ${date}
+      </div>
+
+      <div class="title">
+        ${title}
+      </div>
+
+      ${
+        image
+        ?
+        `<img class="main-image" src="${image}">`
+        :
+        ``
+      }
+
+      <div class="text">
+        ${escapeHtml(text)}
+      </div>
+
+      <div class="buttons">
+
+        ${
+          info1Title && info1Url
+          ?
+          `<a class="city-btn shiki" href="${info1Url}" target="_blank">${info1Title}</a>`
+          :
+          ``
+        }
+
+        ${
+          info2Title && info2Url
+          ?
+          `<a class="city-btn niiza" href="${info2Url}" target="_blank">${info2Title}</a>`
+          :
+          ``
+        }
+
+        ${
+          info3Title && info3Url
+          ?
+          `<a class="city-btn asaka" href="${info3Url}" target="_blank">${info3Title}</a>`
+          :
+          ``
+        }
+
+        ${
+          info4Title && info4Url
+          ?
+          `<a class="city-btn wako" href="${info4Url}" target="_blank">${info4Title}</a>`
+          :
+          ``
+        }
+
+      </div>
+
+      ${
+        videoUrl
+        ?
+        `
+        <div class="video">
+
+          <div class="video-title">
+            ${videoTitle}
+          </div>
+
+          <div class="video-desc">
+            ${videoDesc}
+          </div>
+
+          ${buildVideo(videoUrl)}
+
+        </div>
+        `
+        :
+        ``
+      }
+
+      <div class="sns">
+
+        <button class="fb"
+        onclick="shareFacebook('${shareUrl}')">
         Facebook
-      </button>
+        </button>
 
-      <button
-        class="btn green"
-        onclick="shareLine('${shareUrl}')"
-        type="button">
+        <button class="line"
+        onclick="shareLine('${shareUrl}')">
         LINE
-      </button>
+        </button>
 
-      <button
-        class="btn black"
-        onclick="shareX('${shareUrl}')"
-        type="button">
+        <button class="x"
+        onclick="shareX('${shareUrl}')">
         X
-      </button>
+        </button>
 
-      <button
-        class="btn purple"
-        onclick="copyUrl('${shareUrl}')"
-        type="button">
-        コピー
-      </button>
+        <button class="copy"
+        onclick="copyUrl('${shareUrl}')">
+        URLコピー
+        </button>
 
-    </div>`;
+      </div>
 
-    html += `</div>`;
+    </div>
 
-    list.insertAdjacentHTML(
-      "beforeend",
-      html
-    );
-
+    `;
   });
 
+  if(!html){
+
+    html = `
+    <div class="loading">
+    記事がありません
+    </div>
+    `;
+  }
+
+  document.getElementById("app").innerHTML =
+  html;
+}
+
+function get(c,i){
+
+  return c[i] && c[i].v
+  ? c[i].v
+  : "";
+}
+
+function buildVideo(url){
+
+  if(url.includes("youtube.com") ||
+     url.includes("youtu.be")){
+
+    let id = "";
+
+    if(url.includes("watch?v=")){
+
+      id =
+      url.split("watch?v=")[1]
+      .split("&")[0];
+
+    }else if(url.includes("youtu.be/")){
+
+      id =
+      url.split("youtu.be/")[1]
+      .split("?")[0];
+
+    }
+
+    return `
+    <iframe
+    src="https://www.youtube.com/embed/${id}"
+    allowfullscreen>
+    </iframe>
+    `;
+  }
+
+  return `
+  <video controls playsinline
+  style="
+  width:100%;
+  border-radius:16px;
+  ">
+  <source src="${url}">
+  </video>
+  `;
 }
 
 function shareFacebook(url){
@@ -535,17 +439,6 @@ function shareFacebook(url){
     + encodeURIComponent(url),
     "_blank"
   );
-
-}
-
-function shareLine(url){
-
-  window.open(
-    "https://social-plugins.line.me/lineit/share?url="
-    + encodeURIComponent(url),
-    "_blank"
-  );
-
 }
 
 function shareX(url){
@@ -555,7 +448,15 @@ function shareX(url){
     + encodeURIComponent(url),
     "_blank"
   );
+}
 
+function shareLine(url){
+
+  window.open(
+    "https://social-plugins.line.me/lineit/share?url="
+    + encodeURIComponent(url),
+    "_blank"
+  );
 }
 
 function copyUrl(url){
@@ -563,24 +464,16 @@ function copyUrl(url){
   navigator.clipboard.writeText(url);
 
   alert("URLをコピーしました");
-
 }
 
-window.handleSheet =
-handleSheet;
+function escapeHtml(str){
 
-const script =
-document.createElement("script");
-
-script.src =
-"https://docs.google.com/spreadsheets/d/"
-+ SHEET_ID
-+ "/gviz/tq?sheet="
-+ encodeURIComponent(SHEET_NAME)
-+ "&tqx=responseHandler:handleSheet;out:json&t="
-+ Date.now();
-
-document.body.appendChild(script);
+  return String(str)
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;");
+}
 
 </script>
 
