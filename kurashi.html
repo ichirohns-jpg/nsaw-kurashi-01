@@ -6,13 +6,6 @@
 
 <title>NSAW 暮らし情報局</title>
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="NSAW 暮らし情報局">
-<meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報">
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
-
-<meta name="twitter:card" content="summary_large_image">
-
 <style>
 
 *{
@@ -298,20 +291,27 @@ window.handleSheet = function(json){
 
       });
 
-      if(rowData["表示"] !== "はい"){
+      const flag =
+      Object.values(rowData)
+      .includes("はい");
+
+      if(!flag){
         return;
       }
 
+      const id =
+      rowData["ID"] || "";
+
       if(
         targetId &&
-        rowData["ID"] !== targetId
+        id !== targetId
       ){
         return;
       }
 
       const shareUrl =
       "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id="
-      + rowData["ID"];
+      + id;
 
       html += `
 
@@ -452,7 +452,7 @@ window.handleSheet = function(json){
     document.getElementById("app").innerHTML =
     `
     <div class="error">
-    読み込みエラーが発生しました
+    読み込みエラー
     <br><br>
     ${e.message}
     </div>
