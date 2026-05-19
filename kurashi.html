@@ -1,170 +1,3 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>NSAW 暮らし情報局</title>
-
-<style>
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  background:#eef4fa;
-  font-family:
-  "Hiragino Sans",
-  "Yu Gothic",
-  sans-serif;
-  color:#1b2b3a;
-}
-
-.header img{
-  width:100%;
-  display:block;
-}
-
-.wrap{
-  width:100%;
-  max-width:760px;
-  margin:auto;
-  padding:14px;
-}
-
-.card{
-  background:#fff;
-  border-radius:20px;
-  padding:18px;
-  margin-bottom:18px;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
-}
-
-.date{
-  font-size:14px;
-  color:#666;
-  margin-bottom:10px;
-}
-
-.title{
-  font-size:28px;
-  font-weight:900;
-  line-height:1.4;
-  margin-bottom:16px;
-}
-
-.main-image{
-  width:100%;
-  border-radius:16px;
-  margin-bottom:16px;
-}
-
-.text{
-  font-size:18px;
-  line-height:1.9;
-  white-space:pre-wrap;
-}
-
-.buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:20px;
-}
-
-.city-btn{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-decoration:none;
-  color:#fff;
-  font-weight:700;
-  padding:14px;
-  border-radius:14px;
-  font-size:17px;
-}
-
-.shiki{background:#1e88e5;}
-.niiza{background:#43a047;}
-.asaka{background:#fb8c00;}
-.wako{background:#8e24aa;}
-
-.video{
-  margin-top:24px;
-}
-
-.video-title{
-  font-size:22px;
-  font-weight:900;
-  margin-bottom:10px;
-}
-
-.video-desc{
-  line-height:1.8;
-  margin-bottom:14px;
-}
-
-.video iframe,
-.video video{
-  width:100%;
-  border:none;
-  border-radius:16px;
-  aspect-ratio:16/9;
-}
-
-.sns{
-  display:flex;
-  gap:10px;
-  margin-top:22px;
-  flex-wrap:wrap;
-}
-
-.sns button{
-  flex:1;
-  min-width:120px;
-  border:none;
-  border-radius:14px;
-  padding:14px;
-  color:#fff;
-  font-size:16px;
-  font-weight:700;
-}
-
-.fb{background:#1877f2;}
-.line{background:#06c755;}
-.x{background:#000;}
-.copy{background:#607d8b;}
-
-.loading,
-.error{
-  text-align:center;
-  padding:60px 20px;
-  font-size:20px;
-}
-
-.error{
-  color:#c62828;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="header">
-  <img src="top-banner.jpg">
-</div>
-
-<div class="wrap" id="app">
-
-<div class="loading">
-読み込み中...
-</div>
-
-</div>
-
 <script>
 
 const SHEET_ID =
@@ -186,6 +19,14 @@ function esc(str){
   .replace(/</g,"&lt;")
   .replace(/>/g,"&gt;")
   .replace(/"/g,"&quot;");
+}
+
+function cleanKey(str){
+
+  return String(str || "")
+  .replace(/\s/g,"")
+  .replace(/　/g,"")
+  .trim();
 }
 
 function shareFacebook(url){
@@ -272,7 +113,7 @@ window.handleSheet = function(json){
     json.table.rows || [];
 
     const headers =
-    cols.map(col => col.label);
+    cols.map(col => cleanKey(col.label));
 
     let html = "";
 
@@ -473,6 +314,3 @@ script.src =
 document.body.appendChild(script);
 
 </script>
-
-</body>
-</html>
