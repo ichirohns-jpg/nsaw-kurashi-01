@@ -6,89 +6,44 @@
 
 <title>NSAW暮らし情報局</title>
 
-<meta name="description" content="志木・新座・朝霞・和光の暮らし情報を、見やすく届けます。">
-
-<meta property="og:type" content="website">
-<meta property="og:locale" content="ja_JP">
-<meta property="og:site_name" content="NSAW暮らし情報局">
-
-<meta property="og:title" content="NSAW暮らし情報局">
-<meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報を、見やすく届けます。">
-
-<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html">
-
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
-
-<meta property="og:image:secure_url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
-
-<meta property="og:image:type" content="image/jpeg">
-
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-
-<meta name="twitter:card" content="summary_large_image">
-
-<meta name="twitter:title" content="NSAW暮らし情報局">
-
-<meta name="twitter:description" content="志木・新座・朝霞・和光の暮らし情報を、見やすく届けます。">
-
-<meta name="twitter:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
-
 <style>
-
-*{
-box-sizing:border-box;
-}
 
 body{
 margin:0;
-padding:0;
 background:#eef5fb;
 font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#17324d;
-}
-
-.header{
-width:100%;
-background:#fff;
-padding:12px;
-box-shadow:0 2px 10px rgba(0,0,0,.08);
-position:sticky;
-top:0;
-z-index:100;
 }
 
 .header img{
 width:100%;
-border-radius:16px;
 display:block;
 }
 
 .wrap{
-max-width:700px;
-margin:0 auto;
-padding:14px;
+max-width:720px;
+margin:auto;
+padding:12px;
 }
 
 .card{
 background:#fff;
-border-radius:20px;
-padding:18px;
+border-radius:18px;
+padding:16px;
 margin-bottom:18px;
-box-shadow:0 4px 14px rgba(0,0,0,.08);
+box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
 
 .date{
 font-size:14px;
-color:#6b7b8c;
+color:#666;
 margin-bottom:8px;
 }
 
 .title{
 font-size:26px;
-font-weight:700;
-line-height:1.5;
+font-weight:bold;
 margin-bottom:12px;
+line-height:1.5;
 }
 
 .detail{
@@ -107,36 +62,10 @@ border-radius:14px;
 display:block;
 }
 
-.buttons{
-margin-top:16px;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.btn{
-display:inline-block;
-padding:12px 18px;
-border-radius:12px;
-background:#1877f2;
-color:#fff;
-text-decoration:none;
-font-size:16px;
-font-weight:700;
-}
-
-.btn.line{
-background:#06c755;
-}
-
-.btn.x{
-background:#111;
-}
-
 .loading{
 padding:40px;
 text-align:center;
-font-size:20px;
+font-size:22px;
 }
 
 </style>
@@ -161,24 +90,13 @@ font-size:20px;
 const SHEET_ID = '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
 const SHEET_NAME = 'NSAW暮らし情報局_データ';
 
-const url =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=' +
-encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json&responseHandler=handleSheet';
-
-const script = document.createElement('script');
-script.src = url;
-document.body.appendChild(script);
-
-function handleSheet(json){
+window.handleSheet = function(json){
 
 const rows = json.table.rows || [];
 
 let html = '';
 
-rows.reverse().forEach((row,index)=>{
+rows.reverse().forEach((row)=>{
 
 const c = row.c || [];
 
@@ -186,9 +104,6 @@ const date = c[0]?.v || '';
 const title = c[1]?.v || '';
 const detail = c[2]?.v || '';
 const image = c[3]?.v || '';
-
-const shareUrl =
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-001.html?v=' + Date.now();
 
 html += `
 <div class="card">
@@ -205,28 +120,6 @@ ${image ? `
 </div>
 ` : ''}
 
-<div class="buttons">
-
-<a class="btn"
-target="_blank"
-href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}">
-Facebook
-</a>
-
-<a class="btn line"
-target="_blank"
-href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}">
-LINE
-</a>
-
-<a class="btn x"
-target="_blank"
-href="https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}">
-X
-</a>
-
-</div>
-
 </div>
 `;
 
@@ -234,7 +127,18 @@ X
 
 document.getElementById('app').innerHTML = html;
 
-}
+};
+
+const script = document.createElement('script');
+
+script.src =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json&responseHandler=handleSheet';
+
+document.body.appendChild(script);
 
 </script>
 
