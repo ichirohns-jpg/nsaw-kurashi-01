@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NSAW暮らし情報局</title>
 
@@ -14,57 +14,55 @@ background:#eef5fb;
 font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 }
 
-.header img{
+.top img{
 width:100%;
 display:block;
 }
 
 .wrap{
-max-width:700px;
+max-width:760px;
 margin:auto;
-padding:12px;
+padding:14px;
 }
 
 .card{
 background:#fff;
-border-radius:18px;
+border-radius:20px;
 padding:18px;
-margin-bottom:18px;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
+margin-bottom:20px;
+box-shadow:0 4px 14px rgba(0,0,0,.08);
 }
 
-.date{
+.city{
 font-size:14px;
-color:#666;
+font-weight:bold;
+color:#1877f2;
 margin-bottom:8px;
 }
 
 .title{
-font-size:28px;
+font-size:24px;
 font-weight:bold;
-line-height:1.5;
-margin-bottom:14px;
+line-height:1.6;
+margin-bottom:12px;
 color:#17324d;
 }
 
-.detail{
-font-size:18px;
-line-height:1.9;
-white-space:pre-wrap;
-color:#333;
+.link{
+display:inline-block;
+padding:12px 18px;
+background:#1877f2;
+color:#fff;
+border-radius:12px;
+text-decoration:none;
+font-size:16px;
+font-weight:bold;
 }
 
 .loading{
-padding:40px;
+padding:50px;
 text-align:center;
 font-size:22px;
-}
-
-.error{
-padding:40px;
-text-align:center;
-font-size:22px;
-color:red;
 }
 
 </style>
@@ -72,7 +70,7 @@ color:red;
 
 <body>
 
-<div class="header">
+<div class="top">
 <img src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 </div>
 
@@ -88,8 +86,6 @@ color:red;
 
 window.handleSheet = function(json){
 
-try{
-
 const rows = json.table.rows || [];
 
 let html = '';
@@ -98,56 +94,101 @@ rows.reverse().forEach((row)=>{
 
 const c = row.c || [];
 
-const date =
+const city1 =
 (c[0] && c[0].v)
 ? c[0].v
 : '';
 
-const title =
+const title1 =
 (c[1] && c[1].v)
 ? c[1].v
 : '';
 
-const detail =
+const url1 =
 (c[2] && c[2].v)
 ? c[2].v
 : '';
 
-html += `
+const city2 =
+(c[3] && c[3].v)
+? c[3].v
+: '';
 
+const title2 =
+(c[4] && c[4].v)
+? c[4].v
+: '';
+
+const url2 =
+(c[5] && c[5].v)
+? c[5].v
+: '';
+
+const city3 =
+(c[6] && c[6].v)
+? c[6].v
+: '';
+
+const title3 =
+(c[7] && c[7].v)
+? c[7].v
+: '';
+
+const url3 =
+(c[8] && c[8].v)
+? c[8].v
+: '';
+
+const city4 =
+(c[9] && c[9].v)
+? c[9].v
+: '';
+
+const title4 =
+(c[10] && c[10].v)
+? c[10].v
+: '';
+
+const url4 =
+(c[11] && c[11].v)
+? c[11].v
+: '';
+
+function makeCard(city,title,url){
+
+if(!title) return '';
+
+return `
 <div class="card">
 
-<div class="date">
-${date}
+<div class="city">
+${city}
 </div>
 
 <div class="title">
 ${title}
 </div>
 
-<div class="detail">
-${detail}
-</div>
+<a class="link"
+href="${url}"
+target="_blank">
+詳しく見る
+</a>
 
 </div>
-
 `;
+
+}
+
+html +=
+makeCard(city1,title1,url1) +
+makeCard(city2,title2,url2) +
+makeCard(city3,title3,url3) +
+makeCard(city4,title4,url4);
 
 });
 
 document.getElementById('app').innerHTML = html;
-
-}catch(e){
-
-document.getElementById('app').innerHTML = `
-<div class="error">
-読み込みエラー
-</div>
-`;
-
-console.log(e);
-
-}
 
 };
 
