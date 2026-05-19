@@ -6,11 +6,6 @@
 
 <title>瓦板</title>
 
-<meta property="og:title" content="NSAW暮らし情報局">
-<meta property="og:description" content="四市の暮らし情報・地域動画・お知らせ">
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
-<meta property="og:type" content="website">
-
 <style>
 
 *{
@@ -352,6 +347,18 @@ function handleSheet(json){
     .filter(Boolean)
     .join("\n\n");
 
+    const info1Title = cell(row,5);
+    const info1Url   = cell(row,6);
+
+    const info2Title = cell(row,7);
+    const info2Url   = cell(row,8);
+
+    const info3Title = cell(row,9);
+    const info3Url   = cell(row,10);
+
+    const info4Title = cell(row,11);
+    const info4Url   = cell(row,12);
+
     const video =
       cell(row,17);
 
@@ -392,6 +399,62 @@ function handleSheet(json){
       `;
 
     }
+
+    html += `<div class="grid">`;
+
+    if(info1Title && info1Url){
+
+      html += `
+      <a
+        class="btn blue"
+        href="${esc(info1Url)}"
+        target="_blank">
+        ${esc(info1Title)}
+      </a>
+      `;
+
+    }
+
+    if(info2Title && info2Url){
+
+      html += `
+      <a
+        class="btn green"
+        href="${esc(info2Url)}"
+        target="_blank">
+        ${esc(info2Title)}
+      </a>
+      `;
+
+    }
+
+    if(info3Title && info3Url){
+
+      html += `
+      <a
+        class="btn orange"
+        href="${esc(info3Url)}"
+        target="_blank">
+        ${esc(info3Title)}
+      </a>
+      `;
+
+    }
+
+    if(info4Title && info4Url){
+
+      html += `
+      <a
+        class="btn purple"
+        href="${esc(info4Url)}"
+        target="_blank">
+        ${esc(info4Title)}
+      </a>
+      `;
+
+    }
+
+    html += `</div>`;
 
     const yt =
       youtubeId(video);
