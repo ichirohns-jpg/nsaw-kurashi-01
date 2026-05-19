@@ -99,22 +99,6 @@ body{
   white-space:pre-wrap;
 }
 
-.movieTitle{
-  margin-top:18px;
-  font-size:22px;
-  line-height:1.6;
-  font-weight:900;
-}
-
-.movieText{
-  margin-top:10px;
-  font-size:17px;
-  line-height:1.8;
-  font-weight:700;
-  color:#44566c;
-  white-space:pre-wrap;
-}
-
 .video{
   width:100%;
   aspect-ratio:16/9;
@@ -353,13 +337,23 @@ function handleSheet(json){
 
     const date = cell(row,0);
     const title = cell(row,2);
-    const image = drive(cell(row,3));
-    const detail = cell(row,4);
 
-    const movieTitle = cell(row,15);
-    const movieText = cell(row,16);
+    const image =
+      drive(cell(row,3));
 
-    const video = cell(row,17);
+    const detail =
+    [
+      cell(row,4),
+      cell(row,13),
+      cell(row,14),
+      cell(row,15),
+      cell(row,16)
+    ]
+    .filter(Boolean)
+    .join("\n\n");
+
+    const video =
+      cell(row,17);
 
     if(!title){
       return;
@@ -394,26 +388,6 @@ function handleSheet(json){
       html += `
       <div class="text">
         ${esc(detail)}
-      </div>
-      `;
-
-    }
-
-    if(movieTitle){
-
-      html += `
-      <div class="movieTitle">
-        ${esc(movieTitle)}
-      </div>
-      `;
-
-    }
-
-    if(movieText){
-
-      html += `
-      <div class="movieText">
-        ${esc(movieText)}
       </div>
       `;
 
