@@ -114,6 +114,7 @@ body{
   align-items:center;
   justify-content:center;
   min-height:95px;
+  border:none;
   border-radius:22px;
   padding:18px 14px;
   text-align:center;
@@ -142,6 +143,10 @@ body{
 
 .red{
   background:#dc2626;
+}
+
+.black{
+  background:#111111;
 }
 
 .section{
@@ -270,6 +275,50 @@ body{
       >
         110
       </a>
+
+    </div>
+
+  </div>
+
+  <div class="section">
+
+    <div class="sectionTitle">
+      SNS共有
+    </div>
+
+    <div class="grid">
+
+      <button
+        class="btn blue"
+        type="button"
+        onclick="shareFacebook()"
+      >
+        Facebook
+      </button>
+
+      <button
+        class="btn green"
+        type="button"
+        onclick="shareLine()"
+      >
+        LINE
+      </button>
+
+      <button
+        class="btn black"
+        type="button"
+        onclick="shareX()"
+      >
+        X
+      </button>
+
+      <button
+        class="btn purple"
+        type="button"
+        onclick="copyUrl()"
+      >
+        URLコピー
+      </button>
 
     </div>
 
@@ -560,6 +609,46 @@ function handleSheet(json){
     list.appendChild(div);
 
   });
+
+}
+
+function shareFacebook(){
+
+  window.open(
+    "https://www.facebook.com/sharer/sharer.php?u="
+    + encodeURIComponent(location.href),
+    "_blank"
+  );
+
+}
+
+function shareLine(){
+
+  window.open(
+    "https://social-plugins.line.me/lineit/share?url="
+    + encodeURIComponent(location.href),
+    "_blank"
+  );
+
+}
+
+function shareX(){
+
+  window.open(
+    "https://twitter.com/intent/tweet?url="
+    + encodeURIComponent(location.href),
+    "_blank"
+  );
+
+}
+
+function copyUrl(){
+
+  navigator.clipboard.writeText(
+    location.href
+  );
+
+  alert("URLをコピーしました");
 
 }
 
