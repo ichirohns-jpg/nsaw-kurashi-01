@@ -102,19 +102,7 @@ body{
   border:none;
   border-radius:18px;
   margin-top:16px;
-}
-
-.btn{
-  display:block;
-  margin-top:16px;
-  background:#2563eb;
-  border-radius:18px;
-  padding:16px;
-  text-align:center;
-  text-decoration:none;
-  color:#fff;
-  font-size:18px;
-  font-weight:900;
+  background:#000;
 }
 
 .loading{
@@ -347,14 +335,14 @@ function handleSheet(json){
 }
 
 const script =
-  document.createElement("script");
+document.createElement("script");
 
 script.src =
 "https://docs.google.com/spreadsheets/d/"
 + SHEET_ID
 + "/gviz/tq?sheet="
 + encodeURIComponent(SHEET_NAME)
-+ "&tqx=out:json;responseHandler=handleSheet&t="
++ "&tqx=out:json&responseHandler=handleSheet&t="
 + Date.now();
 
 document.body.appendChild(script);
