@@ -86,6 +86,15 @@ body{
   white-space:pre-wrap;
 }
 
+.movieText{
+  margin-top:18px;
+  font-size:18px;
+  line-height:1.8;
+  font-weight:700;
+  color:#17324d;
+  white-space:pre-wrap;
+}
+
 .cardImage{
   width:100%;
   margin-top:16px;
@@ -383,46 +392,28 @@ function handleSheet(json){
 
   rows.forEach((row,index) => {
 
-    const date =
-      cell(row,0);
+    const date = cell(row,0);
+    const title = cell(row,2);
+    const image = fixDriveImage(cell(row,3));
 
-    const title =
-      cell(row,2);
+    const detail = cell(row,4);
 
-    const image =
-      fixDriveImage(
-        cell(row,3)
-      );
+    const city1 = cell(row,5);
+    const city1url = cell(row,6);
 
-    const detail =
-      cell(row,4);
+    const city2 = cell(row,7);
+    const city2url = cell(row,8);
 
-    const city1 =
-      cell(row,5);
+    const city3 = cell(row,9);
+    const city3url = cell(row,10);
 
-    const city1url =
-      cell(row,6);
+    const city4 = cell(row,11);
+    const city4url = cell(row,12);
 
-    const city2 =
-      cell(row,7);
+    const movieTitle = cell(row,15);
+    const movieText = cell(row,16);
 
-    const city2url =
-      cell(row,8);
-
-    const city3 =
-      cell(row,9);
-
-    const city3url =
-      cell(row,10);
-
-    const city4 =
-      cell(row,11);
-
-    const city4url =
-      cell(row,12);
-
-    const video =
-      cell(row,17);
+    const video = cell(row,17);
 
     if(!title){
       return;
@@ -521,6 +512,26 @@ function handleSheet(json){
     }
 
     html += '</div>';
+
+    if(movieTitle){
+
+      html +=
+
+      '<div class="movieText">'
+      + esc(movieTitle)
+      + '</div>';
+
+    }
+
+    if(movieText){
+
+      html +=
+
+      '<div class="movieText">'
+      + esc(movieText)
+      + '</div>';
+
+    }
 
     const yt =
       youtubeId(video);
