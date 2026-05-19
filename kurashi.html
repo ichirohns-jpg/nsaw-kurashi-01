@@ -6,18 +6,7 @@
 
 <title>NSAW 暮らし情報局</title>
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="NSAW 暮らし情報局">
-<meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報">
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
-
-<meta name="twitter:card" content="summary_large_image">
-
 <style>
-
-*{
-  box-sizing:border-box;
-}
 
 body{
   margin:0;
@@ -26,133 +15,37 @@ body{
   "Hiragino Sans",
   "Yu Gothic",
   sans-serif;
-  color:#1b2b3a;
-}
-
-.header img{
-  width:100%;
-  display:block;
 }
 
 .wrap{
-  width:100%;
-  max-width:760px;
+  max-width:700px;
   margin:auto;
-  padding:14px;
+  padding:20px;
 }
 
-.card{
-  background:#fff;
+.box{
+  background:white;
   border-radius:20px;
-  padding:18px;
-  margin-bottom:18px;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
 }
 
-.date{
-  font-size:14px;
-  color:#666;
-  margin-bottom:10px;
-}
-
-.title{
-  font-size:28px;
-  font-weight:900;
-  line-height:1.4;
-  margin-bottom:16px;
-}
-
-.main-image{
-  width:100%;
-  border-radius:16px;
-  margin-bottom:16px;
-}
-
-.text{
-  font-size:18px;
-  line-height:1.9;
-  white-space:pre-wrap;
-}
-
-.buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:20px;
-}
-
-.city-btn{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-decoration:none;
-  color:#fff;
-  font-weight:700;
-  padding:14px;
-  border-radius:14px;
-  font-size:17px;
-}
-
-.shiki{background:#1e88e5;}
-.niiza{background:#43a047;}
-.asaka{background:#fb8c00;}
-.wako{background:#8e24aa;}
-
-.video{
-  margin-top:24px;
-}
-
-.video-title{
-  font-size:22px;
-  font-weight:900;
-  margin-bottom:10px;
-}
-
-.video-desc{
-  line-height:1.8;
-  margin-bottom:14px;
-}
-
-.video iframe,
-.video video{
-  width:100%;
-  border:none;
-  border-radius:16px;
-  aspect-ratio:16/9;
-}
-
-.sns{
-  display:flex;
-  gap:10px;
-  margin-top:22px;
-  flex-wrap:wrap;
-}
-
-.sns button{
-  flex:1;
-  min-width:120px;
-  border:none;
-  border-radius:14px;
-  padding:14px;
-  color:#fff;
-  font-size:16px;
-  font-weight:700;
-}
-
-.fb{background:#1877f2;}
-.line{background:#06c755;}
-.x{background:#000;}
-.copy{background:#607d8b;}
-
-.loading,
-.error{
+.loading{
+  font-size:24px;
   text-align:center;
-  padding:60px 20px;
-  font-size:20px;
 }
 
 .error{
-  color:#c62828;
+  color:red;
+  white-space:pre-wrap;
+  line-height:1.8;
+}
+
+.ok{
+  color:#1565c0;
+  font-weight:900;
+  margin-bottom:12px;
 }
 
 </style>
@@ -160,15 +53,17 @@ body{
 
 <body>
 
-<div class="header">
-  <img src="top-banner.jpg">
-</div>
+<div class="wrap">
 
-<div class="wrap" id="app">
+<div class="box">
 
-<div class="loading">
+<div class="loading" id="status">
 読み込み中...
 </div>
+
+</div>
+
+<div id="debug"></div>
 
 </div>
 
@@ -180,91 +75,13 @@ const SHEET_ID =
 const SHEET_NAME =
 "NSAW暮らし情報局_データ";
 
-const params =
-new URLSearchParams(location.search);
+function show(msg){
 
-const targetId =
-params.get("id") || "";
-
-function esc(str){
-
-  return String(str || "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;");
-}
-
-function shareFacebook(url){
-
-  window.open(
-    "https://www.facebook.com/sharer/sharer.php?u="
-    + encodeURIComponent(url),
-    "_blank"
-  );
-}
-
-function shareX(url){
-
-  window.open(
-    "https://twitter.com/intent/tweet?url="
-    + encodeURIComponent(url),
-    "_blank"
-  );
-}
-
-function shareLine(url){
-
-  window.open(
-    "https://social-plugins.line.me/lineit/share?url="
-    + encodeURIComponent(url),
-    "_blank"
-  );
-}
-
-function copyUrl(url){
-
-  navigator.clipboard.writeText(url);
-
-  alert("URLをコピーしました");
-}
-
-function buildVideo(url){
-
-  if(!url) return "";
-
-  if(
-    url.includes("youtube.com") ||
-    url.includes("youtu.be")
-  ){
-
-    let id = "";
-
-    if(url.includes("watch?v=")){
-
-      id =
-      url.split("watch?v=")[1]
-      .split("&")[0];
-
-    }else if(url.includes("youtu.be/")){
-
-      id =
-      url.split("youtu.be/")[1]
-      .split("?")[0];
-    }
-
-    return `
-    <iframe
-      src="https://www.youtube.com/embed/${id}"
-      allowfullscreen>
-    </iframe>
-    `;
-  }
-
-  return `
-  <video controls playsinline>
-    <source src="${url}">
-  </video>
+  document.getElementById("debug").innerHTML +=
+  `
+  <div class="box">
+    <div class="error">${msg}</div>
+  </div>
   `;
 }
 
@@ -272,18 +89,35 @@ window.handleSheet = function(json){
 
   try{
 
+    document.getElementById("status").innerHTML =
+    "JSON受信成功";
+
     const cols =
     json.table.cols || [];
 
     const rows =
     json.table.rows || [];
 
+    show("列数: " + cols.length);
+    show("行数: " + rows.length);
+
     const headers =
     cols.map(col => col.label);
 
+    show(
+      "ヘッダー:<br>" +
+      headers.join(" / ")
+    );
+
+    if(rows.length === 0){
+
+      show("行データが0件");
+      return;
+    }
+
     let html = "";
 
-    rows.forEach(row=>{
+    rows.forEach((row,index)=>{
 
       const c = row.c || [];
 
@@ -298,177 +132,100 @@ window.handleSheet = function(json){
 
       });
 
-      if(rowData["表示"] !== "はい"){
-        return;
-      }
-
-      if(
-        targetId &&
-        rowData["ID"] !== targetId
-      ){
-        return;
-      }
-
-      const shareUrl =
-      "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id="
-      + rowData["ID"];
-
       html += `
+      <div class="box">
 
-      <div class="card">
-
-        <div class="date">
-          ${esc(rowData["日付"])}
+        <div class="ok">
+          ${index + 1}件目
         </div>
 
-        <div class="title">
-          ${esc(rowData["タイトル"])}
-        </div>
+        日付:
+        ${rowData["日付"] || "なし"}
 
-        ${
-          rowData["画像URL"]
-          ?
-          `<img class="main-image" src="${rowData["画像URL"]}">`
-          :
-          ``
-        }
+        <br><br>
 
-        <div class="text">
-          ${esc(rowData["本文"])}
-        </div>
+        ID:
+        ${rowData["ID"] || "なし"}
 
-        <div class="buttons">
+        <br><br>
 
-          ${
-            rowData["情報1タイトル"] &&
-            rowData["情報1URL"]
-            ?
-            `<a class="city-btn shiki" href="${rowData["情報1URL"]}" target="_blank">${esc(rowData["情報1タイトル"])}</a>`
-            :
-            ``
-          }
+        タイトル:
+        ${rowData["タイトル"] || "なし"}
 
-          ${
-            rowData["情報2タイトル"] &&
-            rowData["情報2URL"]
-            ?
-            `<a class="city-btn niiza" href="${rowData["情報2URL"]}" target="_blank">${esc(rowData["情報2タイトル"])}</a>`
-            :
-            ``
-          }
+        <br><br>
 
-          ${
-            rowData["情報3タイトル"] &&
-            rowData["情報3URL"]
-            ?
-            `<a class="city-btn asaka" href="${rowData["情報3URL"]}" target="_blank">${esc(rowData["情報3タイトル"])}</a>`
-            :
-            ``
-          }
-
-          ${
-            rowData["情報4タイトル"] &&
-            rowData["情報4URL"]
-            ?
-            `<a class="city-btn wako" href="${rowData["情報4URL"]}" target="_blank">${esc(rowData["情報4タイトル"])}</a>`
-            :
-            ``
-          }
-
-        </div>
-
-        ${
-          rowData["動画URL"]
-          ?
-          `
-          <div class="video">
-
-            <div class="video-title">
-              ${esc(rowData["動画タイトル"])}
-            </div>
-
-            <div class="video-desc">
-              ${esc(rowData["動画説明"])}
-            </div>
-
-            ${buildVideo(rowData["動画URL"])}
-
-          </div>
-          `
-          :
-          ``
-        }
-
-        <div class="sns">
-
-          <button
-            class="fb"
-            onclick="shareFacebook('${shareUrl}')">
-            Facebook
-          </button>
-
-          <button
-            class="line"
-            onclick="shareLine('${shareUrl}')">
-            LINE
-          </button>
-
-          <button
-            class="x"
-            onclick="shareX('${shareUrl}')">
-            X
-          </button>
-
-          <button
-            class="copy"
-            onclick="copyUrl('${shareUrl}')">
-            URLコピー
-          </button>
-
-        </div>
+        表示:
+        ${rowData["表示"] || "なし"}
 
       </div>
-
       `;
     });
 
-    if(!html){
-
-      html =
-      `
-      <div class="error">
-      表示できる記事がありません
-      </div>
-      `;
-    }
-
-    document.getElementById("app").innerHTML =
+    document.getElementById("debug").innerHTML +=
     html;
 
   }catch(e){
 
-    console.error(e);
+    document.getElementById("status").innerHTML =
+    "エラー";
 
-    document.getElementById("app").innerHTML =
-    `
-    <div class="error">
-    読み込みエラーが発生しました
-    </div>
-    `;
+    show(
+      "handleSheetエラー:<br><br>" +
+      e.message
+    );
+
+    console.error(e);
   }
 };
 
-const script =
-document.createElement("script");
+window.onerror = function(msg){
 
-script.src =
+  show(
+    "window.onerror:<br><br>" +
+    msg
+  );
+};
+
+const url =
 "https://docs.google.com/spreadsheets/d/"
 + SHEET_ID
 + "/gviz/tq?sheet="
 + encodeURIComponent(SHEET_NAME)
 + "&tqx=out:json;responseHandler=handleSheet";
 
+show("読み込みURL:<br><br>" + url);
+
+const script =
+document.createElement("script");
+
+script.src = url;
+
+script.onerror = function(){
+
+  document.getElementById("status").innerHTML =
+  "script読み込み失敗";
+
+  show("JSONP script.onerror 発生");
+};
+
 document.body.appendChild(script);
+
+setTimeout(function(){
+
+  if(
+    document.getElementById("status").innerHTML
+    === "読み込み中..."
+  ){
+
+    document.getElementById("status").innerHTML =
+    "タイムアウト";
+
+    show(
+      "handleSheet が呼ばれていません"
+    );
+  }
+
+},8000);
 
 </script>
 
