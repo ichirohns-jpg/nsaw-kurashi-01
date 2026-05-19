@@ -29,7 +29,7 @@ body{
   padding:18px 14px 100px;
 }
 
-.card{
+.top{
   background:#ffffff;
   border-radius:28px;
   overflow:hidden;
@@ -70,65 +70,46 @@ body{
   background:#000;
 }
 
-.section{
-  margin-top:28px;
+.card{
+  margin-top:18px;
+  background:#ffffff;
+  border-radius:24px;
+  padding:18px 16px;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
 }
 
-.sectionTitle{
-  font-size:26px;
+.cardTitle{
+  font-size:24px;
   line-height:1.5;
   font-weight:900;
 }
 
-.grid{
-  margin-top:14px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-
-.box{
-  display:block;
-  background:#f8fbff;
-  border-radius:22px;
-  padding:18px 14px;
-  text-decoration:none;
-  color:#17324d;
-  box-shadow:0 4px 10px rgba(0,0,0,.05);
-}
-
-.boxTitle{
-  font-size:20px;
-  line-height:1.5;
-  font-weight:900;
-}
-
-.boxText{
+.cardDate{
   margin-top:10px;
   font-size:15px;
-  line-height:1.7;
+  color:#64748b;
   font-weight:700;
-  color:#5b7084;
 }
 
-.blue{
+.cardText{
+  margin-top:14px;
+  font-size:17px;
+  line-height:1.8;
+  font-weight:700;
+  color:#44566c;
+}
+
+.btn{
+  display:block;
+  margin-top:16px;
   background:#2563eb;
+  border-radius:18px;
+  padding:16px;
+  text-align:center;
+  text-decoration:none;
   color:#fff;
-}
-
-.red{
-  background:#dc2626;
-  color:#fff;
-}
-
-.green{
-  background:#16a34a;
-  color:#fff;
-}
-
-.orange{
-  background:#ea580c;
-  color:#fff;
+  font-size:18px;
+  font-weight:900;
 }
 
 .back{
@@ -141,6 +122,13 @@ body{
   text-decoration:none;
 }
 
+.loading{
+  margin-top:30px;
+  text-align:center;
+  font-size:24px;
+  font-weight:900;
+}
+
 </style>
 </head>
 
@@ -148,7 +136,7 @@ body{
 
 <div class="wrap">
 
-  <div class="card">
+  <div class="top">
 
     <img
       class="banner"
@@ -175,70 +163,6 @@ body{
         allowfullscreen
       ></iframe>
 
-      <div class="section">
-
-        <div class="sectionTitle">
-          地域情報
-        </div>
-
-        <div class="grid">
-
-          <a
-            class="box blue"
-            href="https://ichirohns-jpg.github.io/ShikiConcierge-18/"
-          >
-            <div class="boxTitle">
-              📺 地域動画
-            </div>
-
-            <div class="boxText">
-              四市の地域動画を見る
-            </div>
-          </a>
-
-          <a
-            class="box green"
-            href="https://www.city.shiki.lg.jp/"
-          >
-            <div class="boxTitle">
-              🏛 市役所情報
-            </div>
-
-            <div class="boxText">
-              志木市ホームページ
-            </div>
-          </a>
-
-          <a
-            class="box red"
-            href="tel:119"
-          >
-            <div class="boxTitle">
-              🚒 緊急連絡
-            </div>
-
-            <div class="boxText">
-              火事・救急・緊急時
-            </div>
-          </a>
-
-          <a
-            class="box orange"
-            href="https://www.google.com/maps/search/病院/"
-          >
-            <div class="boxTitle">
-              🏥 病院
-            </div>
-
-            <div class="boxText">
-              近くの病院を探す
-            </div>
-          </a>
-
-        </div>
-
-      </div>
-
       <a
         class="back"
         href="./index.html"
@@ -250,7 +174,124 @@ body{
 
   </div>
 
+  <div id="list">
+
+    <div class="loading">
+      読み込み中...
+    </div>
+
+  </div>
+
 </div>
+
+<script>
+
+const SHEET_ID =
+"1Xx0a0dRqSrL6pacX7xY5jyTtiQ1Ot8E03oLmMICfI6M";
+
+const SHEET_NAME =
+"回覧板データー";
+
+const URL =
+"https://docs.google.com/spreadsheets/d/"
++ SHEET_ID
++ "/gviz/tq?sheet="
++ encodeURIComponent(SHEET_NAME)
++ "&tqx=out:json";
+
+function esc(str){
+
+  return String(str || "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;");
+
+}
+
+fetch(URL)
+.then(r => r.text())
+.then(text => {
+
+  const json =
+    JSON.parse(
+      text.substring(
+        47,
+        text.length - 2
+      )
+    );
+
+  const rows =
+    json.table.rows || [];
+
+  const list =
+    document.getElementById("list");
+
+  list.innerHTML = "";
+
+  rows.reverse();
+
+  rows.forEach(row => {
+
+    const c =
+      row.c || [];
+
+    const date =
+      c[0]?.v || "";
+
+    const title =
+      c[1]?.v || "";
+
+    const detail =
+      c[3]?.v || "";
+
+    const link =
+      c[5]?.v || "";
+
+    if(!title){
+      return;
+    }
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "card";
+
+    div.innerHTML =
+
+      '<div class="cardTitle">'
+      + esc(title)
+      + '</div>'
+
+      +
+
+      '<div class="cardDate">'
+      + esc(date)
+      + '</div>'
+
+      +
+
+      '<div class="cardText">'
+      + esc(detail)
+      + '</div>'
+
+      +
+
+      (
+        link
+        ? '<a class="btn" target="_blank" href="'
+          + esc(link)
+          + '">詳しく見る</a>'
+        : ''
+      );
+
+    list.appendChild(div);
+
+  });
+
+});
+
+</script>
 
 </body>
 </html>
