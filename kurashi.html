@@ -221,16 +221,16 @@ new URLSearchParams(location.search);
 const targetId =
 params.get("id") || "";
 
-function get(c,i){
+function get(c){
 
-  return c[i] && c[i].v != null
-  ? String(c[i].v)
+  return c && c.v != null
+  ? String(c.v)
   : "";
 }
 
 function escapeHtml(str){
 
-  return String(str)
+  return String(str || "")
   .replace(/&/g,"&amp;")
   .replace(/</g,"&lt;")
   .replace(/>/g,"&gt;")
@@ -317,39 +317,46 @@ window.handleSheet = function(json){
     const rows =
     json.table.rows || [];
 
+    if(rows.length <= 1){
+
+      document.getElementById("app").innerHTML =
+      `
+      <div class="error">
+      データがありません
+      </div>
+      `;
+
+      return;
+    }
+
+    const headers =
+    rows[0].c.map(col => get(col));
+
     let html = "";
 
-    rows.forEach(row=>{
+    for(let r = 1; r < rows.length; r++){
+
+      const row = rows[r];
 
       const c = row.c || [];
 
-      const date = get(c,0);
-      const id = get(c,1);
-      const title = get(c,2);
-      const image = get(c,3);
-      const text = get(c,4);
+      const rowData = {};
 
-      const info1Title = get(c,5);
-      const info1Url = get(c,6);
+      headers.forEach((h,i)=>{
 
-      const info2Title = get(c,7);
-      const info2Url = get(c,8);
+        rowData[h] = get(c[i]);
 
-      const info3Title = get(c,9);
-      const info3Url = get(c,10);
+      });
 
-      const info4Title = get(c,11);
-      const info4Url = get(c,12);
+      const flag =
+      rowData["表示"];
 
-      const videoTitle = get(c,15);
-      const videoDesc = get(c,16);
-      const videoUrl = get(c,17);
+      if(flag !== "はい") continue;
 
-      const flag = get(c,18);
+      const id =
+      rowData["ID"];
 
-      if(flag !== "はい") return;
-
-      if(targetId && id !== targetId) return;
+      if(targetId && id !== targetId) continue;
 
       const shareUrl =
       "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id="
@@ -360,55 +367,59 @@ window.handleSheet = function(json){
       <div class="card">
 
         <div class="date">
-          ${date}
+          ${escapeHtml(rowData["日付"])}
         </div>
 
         <div class="title">
-          ${escapeHtml(title)}
+          ${escapeHtml(rowData["タイトル"])}
         </div>
 
         ${
-          image
+          rowData["画像URL"]
           ?
-          `<img class="main-image" src="${image}">`
+          `<img class="main-image" src="${rowData["画像URL"]}">`
           :
           ``
         }
 
         <div class="text">
-          ${escapeHtml(text)}
+          ${escapeHtml(rowData["本文"])}
         </div>
 
         <div class="buttons">
 
           ${
-            info1Title && info1Url
+            rowData["情報1タイトル"] &&
+            rowData["情報1URL"]
             ?
-            `<a class="city-btn shiki" href="${info1Url}" target="_blank">${escapeHtml(info1Title)}</a>`
+            `<a class="city-btn shiki" href="${rowData["情報1URL"]}" target="_blank">${escapeHtml(rowData["情報1タイトル"])}</a>`
             :
             ``
           }
 
           ${
-            info2Title && info2Url
+            rowData["情報2タイトル"] &&
+            rowData["情報2URL"]
             ?
-            `<a class="city-btn niiza" href="${info2Url}" target="_blank">${escapeHtml(info2Title)}</a>`
+            `<a class="city-btn niiza" href="${rowData["情報2URL"]}" target="_blank">${escapeHtml(rowData["情報2タイトル"])}</a>`
             :
             ``
           }
 
           ${
-            info3Title && info3Url
+            rowData["情報3タイトル"] &&
+            rowData["情報3URL"]
             ?
-            `<a class="city-btn asaka" href="${info3Url}" target="_blank">${escapeHtml(info3Title)}</a>`
+            `<a class="city-btn asaka" href="${rowData["情報3URL"]}" target="_blank">${escapeHtml(rowData["情報3タイトル"])}</a>`
             :
             ``
           }
 
           ${
-            info4Title && info4Url
+            rowData["情報4タイトル"] &&
+            rowData["情報4URL"]
             ?
-            `<a class="city-btn wako" href="${info4Url}" target="_blank">${escapeHtml(info4Title)}</a>`
+            `<a class="city-btn wako" href="${rowData["情報4URL"]}" target="_blank">${escapeHtml(rowData["情報4タイトル"])}</a>`
             :
             ``
           }
@@ -416,20 +427,20 @@ window.handleSheet = function(json){
         </div>
 
         ${
-          videoUrl
+          rowData["動画URL"]
           ?
           `
           <div class="video">
 
             <div class="video-title">
-              ${escapeHtml(videoTitle)}
+              ${escapeHtml(rowData["動画タイトル"])}
             </div>
 
             <div class="video-desc">
-              ${escapeHtml(videoDesc)}
+              ${escapeHtml(rowData["動画説明"])}
             </div>
 
-            ${buildVideo(videoUrl)}
+            ${buildVideo(rowData["動画URL"])}
 
           </div>
           `
@@ -468,11 +479,12 @@ window.handleSheet = function(json){
       </div>
 
       `;
-    });
+    }
 
     if(!html){
 
-      html = `
+      html =
+      `
       <div class="error">
       表示できる記事がありません
       </div>
@@ -484,14 +496,14 @@ window.handleSheet = function(json){
 
   }catch(e){
 
+    console.error(e);
+
     document.getElementById("app").innerHTML =
     `
     <div class="error">
     読み込みエラーが発生しました
     </div>
     `;
-
-    console.error(e);
   }
 };
 
