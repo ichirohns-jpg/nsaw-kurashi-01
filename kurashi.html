@@ -70,8 +70,18 @@ body{
   background:#000;
 }
 
-.grid{
+.section{
   margin-top:28px;
+}
+
+.sectionTitle{
+  font-size:26px;
+  line-height:1.5;
+  font-weight:900;
+}
+
+.grid{
+  margin-top:14px;
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:14px;
@@ -81,14 +91,14 @@ body{
   display:block;
   background:#f8fbff;
   border-radius:22px;
-  padding:20px 14px;
+  padding:18px 14px;
   text-decoration:none;
   color:#17324d;
   box-shadow:0 4px 10px rgba(0,0,0,.05);
 }
 
 .boxTitle{
-  font-size:22px;
+  font-size:20px;
   line-height:1.5;
   font-weight:900;
 }
@@ -155,8 +165,7 @@ body{
       <div class="text">
         四市の暮らし情報、
         地域動画、
-        緊急情報、
-        生活情報をまとめています。
+        お知らせをまとめています。
       </div>
 
       <iframe
@@ -166,85 +175,67 @@ body{
         allowfullscreen
       ></iframe>
 
-      <div class="grid">
+      <div class="section">
 
-        <a
-          class="box blue"
-          href="https://ichirohns-jpg.github.io/ShikiConcierge-18/"
-        >
-          <div class="boxTitle">
-            📺 地域動画
-          </div>
+        <div class="sectionTitle">
+          地域情報
+        </div>
 
-          <div class="boxText">
-            四市の地域動画や情報を見る
-          </div>
-        </a>
+        <div class="grid">
 
-        <a
-          class="box red"
-          href="tel:119"
-        >
-          <div class="boxTitle">
-            🚒 119通報
-          </div>
+          <a
+            class="box blue"
+            href="https://ichirohns-jpg.github.io/ShikiConcierge-18/"
+          >
+            <div class="boxTitle">
+              📺 地域動画
+            </div>
 
-          <div class="boxText">
-            火事・救急
-          </div>
-        </a>
+            <div class="boxText">
+              四市の地域動画を見る
+            </div>
+          </a>
 
-        <a
-          class="box green"
-          href="https://www.city.shiki.lg.jp/"
-        >
-          <div class="boxTitle">
-            🏛 市役所情報
-          </div>
+          <a
+            class="box green"
+            href="https://www.city.shiki.lg.jp/"
+          >
+            <div class="boxTitle">
+              🏛 市役所情報
+            </div>
 
-          <div class="boxText">
-            志木市ホームページ
-          </div>
-        </a>
+            <div class="boxText">
+              志木市ホームページ
+            </div>
+          </a>
 
-        <a
-          class="box orange"
-          href="https://www.google.com/maps/search/コンビニ/"
-        >
-          <div class="boxTitle">
-            🏪 近くのコンビニ
-          </div>
+          <a
+            class="box red"
+            href="tel:119"
+          >
+            <div class="boxTitle">
+              🚒 緊急連絡
+            </div>
 
-          <div class="boxText">
-            Googleマップで探す
-          </div>
-        </a>
+            <div class="boxText">
+              火事・救急・緊急時
+            </div>
+          </a>
 
-        <a
-          class="box"
-          href="https://www.google.com/maps/search/トイレ/"
-        >
-          <div class="boxTitle">
-            🚻 トイレ
-          </div>
+          <a
+            class="box orange"
+            href="https://www.google.com/maps/search/病院/"
+          >
+            <div class="boxTitle">
+              🏥 病院を探す
+            </div>
 
-          <div class="boxText">
-            近くのトイレを探す
-          </div>
-        </a>
+            <div class="boxText">
+              近くの病院を見る
+            </div>
+          </a>
 
-        <a
-          class="box"
-          href="https://www.google.com/maps/search/病院/"
-        >
-          <div class="boxTitle">
-            🏥 病院
-          </div>
-
-          <div class="boxText">
-            近くの病院を探す
-          </div>
-        </a>
+        </div>
 
       </div>
 
