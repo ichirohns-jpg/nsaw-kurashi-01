@@ -15,18 +15,14 @@
 body{
   margin:0;
   background:#eef5fb;
-  font-family:
-  "Hiragino Sans",
-  "Yu Gothic",
-  "Meiryo",
-  sans-serif;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
   color:#17324d;
 }
 
 .wrap{
-  max-width:700px;
+  max-width:760px;
   margin:0 auto;
-  padding:18px 14px 90px;
+  padding:18px 14px 100px;
 }
 
 .card{
@@ -46,14 +42,14 @@ body{
 }
 
 .title{
-  font-size:32px;
+  font-size:34px;
   line-height:1.4;
   font-weight:900;
   text-align:center;
 }
 
 .text{
-  margin-top:16px;
+  margin-top:18px;
   font-size:18px;
   line-height:1.8;
   font-weight:700;
@@ -84,7 +80,7 @@ body{
   gap:14px;
 }
 
-.btn{
+.mainBtn{
   width:100%;
   border:none;
   border-radius:22px;
@@ -141,29 +137,75 @@ body{
 }
 
 .sectionTitle{
-  font-size:26px;
+  font-size:30px;
   line-height:1.5;
   font-weight:900;
 }
 
-.grid{
-  margin-top:14px;
+.cityGrid{
+  margin-top:16px;
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:14px;
+  gap:16px;
+}
+
+.cityCard{
+  border-radius:26px;
+  padding:18px 16px;
+  color:#fff;
+}
+
+.cityName{
+  font-size:28px;
+  line-height:1.4;
+  font-weight:900;
+  text-align:center;
+}
+
+.citySub{
+  margin-top:6px;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:900;
+  text-align:center;
+}
+
+.linkBtns{
+  margin-top:14px;
+  display:grid;
+  gap:10px;
 }
 
 .linkBtn{
+  display:block;
+  border-radius:18px;
+  padding:14px 12px;
+  text-decoration:none;
+  text-align:center;
+  color:#17324d;
+  background:rgba(255,255,255,.92);
+  font-size:18px;
+  font-weight:900;
+}
+
+.lifeGrid{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.lifeBtn{
   display:flex;
   align-items:center;
   justify-content:center;
-  text-align:center;
-  min-height:110px;
-  border-radius:22px;
-  padding:18px 14px;
+  min-height:130px;
+  border-radius:28px;
+  padding:20px 14px;
   text-decoration:none;
   color:#fff;
-  font-size:21px;
+  text-align:center;
+  font-size:26px;
   line-height:1.5;
   font-weight:900;
 }
@@ -216,21 +258,21 @@ body{
       <div class="btns">
 
         <button
-          class="btn green"
+          class="mainBtn green"
           onclick="sendSafety('😊 元気です')"
         >
           😊 元気です
         </button>
 
         <button
-          class="btn yellow"
+          class="mainBtn yellow"
           onclick="sendSafety('😥 困っています')"
         >
           😥 困っています
         </button>
 
         <button
-          class="btn red"
+          class="mainBtn red"
           onclick="sendSafety('🚨 急いで助けてください')"
         >
           🚨 急いで助けてください
@@ -251,39 +293,131 @@ body{
           地域包括支援センター
         </div>
 
-        <div class="grid">
+        <div class="cityGrid">
 
-          <a
-            class="linkBtn blue"
-            href="tel:0484731111"
-          >
-            志木市<br>
-            地域包括
-          </a>
+          <div class="cityCard blue">
 
-          <a
-            class="linkBtn green"
-            href="tel:0484776891"
-          >
-            新座市<br>
-            地域包括
-          </a>
+            <div class="cityName">
+              志木市
+            </div>
 
-          <a
-            class="linkBtn orange"
-            href="tel:0484631921"
-          >
-            朝霞市<br>
-            地域包括
-          </a>
+            <div class="citySub">
+              地域包括
+            </div>
 
-          <a
-            class="linkBtn gray"
-            href="tel:0484249123"
-          >
-            和光市<br>
-            地域包括
-          </a>
+            <div class="linkBtns">
+
+              <a
+                class="linkBtn"
+                href="tel:0484731111"
+              >
+                TEL
+              </a>
+
+              <a
+                class="linkBtn"
+                href="https://www.city.shiki.lg.jp/"
+                target="_blank"
+              >
+                HP
+              </a>
+
+            </div>
+
+          </div>
+
+          <div class="cityCard green">
+
+            <div class="cityName">
+              新座市
+            </div>
+
+            <div class="citySub">
+              地域包括
+            </div>
+
+            <div class="linkBtns">
+
+              <a
+                class="linkBtn"
+                href="tel:0484776891"
+              >
+                TEL
+              </a>
+
+              <a
+                class="linkBtn"
+                href="https://www.city.niiza.lg.jp/"
+                target="_blank"
+              >
+                HP
+              </a>
+
+            </div>
+
+          </div>
+
+          <div class="cityCard orange">
+
+            <div class="cityName">
+              朝霞市
+            </div>
+
+            <div class="citySub">
+              地域包括
+            </div>
+
+            <div class="linkBtns">
+
+              <a
+                class="linkBtn"
+                href="tel:0484631921"
+              >
+                TEL
+              </a>
+
+              <a
+                class="linkBtn"
+                href="https://www.city.asaka.lg.jp/"
+                target="_blank"
+              >
+                HP
+              </a>
+
+            </div>
+
+          </div>
+
+          <div class="cityCard gray">
+
+            <div class="cityName">
+              和光市
+            </div>
+
+            <div class="citySub">
+              地域包括
+            </div>
+
+            <div class="linkBtns">
+
+              <a
+                class="linkBtn"
+                href="tel:0484249123"
+              >
+                TEL
+              </a>
+
+              <a
+                class="linkBtn"
+                href="https://www.city.wako.lg.jp/"
+                target="_blank"
+              >
+                HP
+              </a>
+
+            </div>
+
+          </div>
 
         </div>
 
@@ -295,10 +429,10 @@ body{
           近くの生活情報
         </div>
 
-        <div class="grid">
+        <div class="lifeGrid">
 
           <a
-            class="linkBtn blue"
+            class="lifeBtn blue"
             href="https://www.google.com/maps/search/近くのコンビニ/"
             target="_blank"
           >
@@ -307,7 +441,7 @@ body{
           </a>
 
           <a
-            class="linkBtn green"
+            class="lifeBtn green"
             href="https://www.google.com/maps/search/近くのトイレ/"
             target="_blank"
           >
@@ -316,7 +450,7 @@ body{
           </a>
 
           <a
-            class="linkBtn red"
+            class="lifeBtn red"
             href="https://www.google.com/maps/search/近くの病院/"
             target="_blank"
           >
@@ -325,40 +459,12 @@ body{
           </a>
 
           <a
-            class="linkBtn purple"
+            class="lifeBtn purple"
             href="https://www.google.com/maps/search/近くの薬局/"
             target="_blank"
           >
             💊<br>
             薬局
-          </a>
-
-        </div>
-
-      </div>
-
-      <div class="section">
-
-        <div class="sectionTitle">
-          緊急連絡
-        </div>
-
-        <div class="grid">
-
-          <a
-            class="linkBtn red"
-            href="tel:119"
-          >
-            🚒<br>
-            119
-          </a>
-
-          <a
-            class="linkBtn orange"
-            href="tel:110"
-          >
-            🚓<br>
-            110
           </a>
 
         </div>
