@@ -102,15 +102,34 @@ body{
   background:#000;
 }
 
+.section{
+  margin-top:30px;
+}
+
+.sectionTitle{
+  font-size:28px;
+  line-height:1.5;
+  font-weight:900;
+}
+
+.grid{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
 .btn{
-  display:block;
-  margin-top:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100px;
   border-radius:22px;
-  padding:22px 16px;
+  padding:18px 14px;
   text-align:center;
   text-decoration:none;
   color:#fff;
-  font-size:24px;
+  font-size:22px;
   line-height:1.5;
   font-weight:900;
 }
@@ -129,6 +148,10 @@ body{
 
 .purple{
   background:#7c3aed;
+}
+
+.red{
+  background:#dc2626;
 }
 
 .loading{
@@ -194,6 +217,136 @@ body{
 
   </div>
 
+  <div class="section">
+
+    <div class="sectionTitle">
+      四市情報
+    </div>
+
+    <div class="grid">
+
+      <a
+        class="btn blue"
+        href="https://www.city.shiki.lg.jp/"
+        target="_blank"
+      >
+        志木市HP
+      </a>
+
+      <a
+        class="btn blue"
+        href="tel:0484731111"
+      >
+        志木包括
+      </a>
+
+      <a
+        class="btn green"
+        href="https://www.city.niiza.lg.jp/"
+        target="_blank"
+      >
+        新座市HP
+      </a>
+
+      <a
+        class="btn green"
+        href="tel:0484776891"
+      >
+        新座包括
+      </a>
+
+      <a
+        class="btn orange"
+        href="https://www.city.asaka.lg.jp/"
+        target="_blank"
+      >
+        朝霞市HP
+      </a>
+
+      <a
+        class="btn orange"
+        href="tel:0484631921"
+      >
+        朝霞包括
+      </a>
+
+      <a
+        class="btn purple"
+        href="https://www.city.wako.lg.jp/"
+        target="_blank"
+      >
+        和光市HP
+      </a>
+
+      <a
+        class="btn purple"
+        href="tel:0484249123"
+      >
+        和光包括
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="section">
+
+    <div class="sectionTitle">
+      生活情報
+    </div>
+
+    <div class="grid">
+
+      <a
+        class="btn blue"
+        href="https://www.google.com/maps/search/近くのコンビニ/"
+        target="_blank"
+      >
+        コンビニ
+      </a>
+
+      <a
+        class="btn green"
+        href="https://www.google.com/maps/search/近くのトイレ/"
+        target="_blank"
+      >
+        トイレ
+      </a>
+
+      <a
+        class="btn red"
+        href="https://www.google.com/maps/search/近くの病院/"
+        target="_blank"
+      >
+        病院
+      </a>
+
+      <a
+        class="btn purple"
+        href="https://www.google.com/maps/search/近くの薬局/"
+        target="_blank"
+      >
+        薬局
+      </a>
+
+      <a
+        class="btn red"
+        href="tel:119"
+      >
+        119
+      </a>
+
+      <a
+        class="btn orange"
+        href="tel:110"
+      >
+        110
+      </a>
+
+    </div>
+
+  </div>
+
 </div>
 
 <script>
@@ -221,30 +374,6 @@ function cell(row,index){
   }
 
   return row.c[index].f || row.c[index].v || "";
-
-}
-
-function cityClass(title){
-
-  title = String(title || "");
-
-  if(title.includes("志木")){
-    return "blue";
-  }
-
-  if(title.includes("新座")){
-    return "green";
-  }
-
-  if(title.includes("朝霞")){
-    return "orange";
-  }
-
-  if(title.includes("和光")){
-    return "purple";
-  }
-
-  return "blue";
 
 }
 
@@ -379,14 +508,6 @@ function handleSheet(json){
       + '</div>';
 
     }
-
-    html +=
-
-      '<a class="btn '
-      + cityClass(title)
-      + '" href="#">'
-      + esc(title)
-      + '</a>';
 
     const yt =
       youtubeId(video);
