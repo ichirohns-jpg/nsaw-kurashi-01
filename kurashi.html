@@ -1,3 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>NSAW 暮らし情報局</title>
+
+<style>
+
+body{
+  margin:0;
+  background:#eef4fa;
+  font-family:
+  "Hiragino Sans",
+  "Yu Gothic",
+  sans-serif;
+  color:#1b2b3a;
+}
+
+.header img{
+  width:100%;
+  display:block;
+}
+
+.wrap{
+  max-width:760px;
+  margin:auto;
+  padding:14px;
+}
+
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+.date{
+  font-size:14px;
+  color:#666;
+  margin-bottom:10px;
+}
+
+.title{
+  font-size:28px;
+  font-weight:900;
+  margin-bottom:16px;
+}
+
+.main-image{
+  width:100%;
+  border-radius:16px;
+  margin-bottom:16px;
+}
+
+.text{
+  font-size:18px;
+  line-height:1.8;
+  white-space:pre-wrap;
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:20px;
+}
+
+.city-btn{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-decoration:none;
+  color:#fff;
+  font-weight:700;
+  padding:14px;
+  border-radius:14px;
+}
+
+.shiki{background:#1e88e5;}
+.niiza{background:#43a047;}
+.asaka{background:#fb8c00;}
+.wako{background:#8e24aa;}
+
+.video{
+  margin-top:24px;
+}
+
+.video iframe,
+.video video{
+  width:100%;
+  border:none;
+  border-radius:16px;
+  aspect-ratio:16/9;
+}
+
+.sns{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+  flex-wrap:wrap;
+}
+
+.sns button{
+  flex:1;
+  border:none;
+  border-radius:14px;
+  padding:14px;
+  color:#fff;
+  font-weight:700;
+}
+
+.fb{background:#1877f2;}
+.line{background:#06c755;}
+.x{background:#000;}
+.copy{background:#607d8b;}
+
+.loading,
+.error{
+  text-align:center;
+  padding:60px 20px;
+  font-size:20px;
+}
+
+.error{
+  color:#c62828;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<img src="top-banner.jpg">
+</div>
+
+<div class="wrap" id="app">
+
+<div class="loading">
+読み込み中...
+</div>
+
+</div>
+
 <script>
 
 const SHEET_ID =
@@ -17,16 +164,46 @@ function esc(str){
   return String(str || "")
   .replace(/&/g,"&amp;")
   .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;");
+  .replace(/>/g,"&gt;");
 }
 
-function cleanKey(str){
+function buildVideo(url){
 
-  return String(str || "")
-  .replace(/\s/g,"")
-  .replace(/　/g,"")
-  .trim();
+  if(!url) return "";
+
+  if(
+    url.includes("youtube.com") ||
+    url.includes("youtu.be")
+  ){
+
+    let id = "";
+
+    if(url.includes("watch?v=")){
+
+      id =
+      url.split("watch?v=")[1]
+      .split("&")[0];
+
+    }else if(url.includes("youtu.be/")){
+
+      id =
+      url.split("youtu.be/")[1]
+      .split("?")[0];
+    }
+
+    return `
+    <iframe
+    src="https://www.youtube.com/embed/${id}"
+    allowfullscreen>
+    </iframe>
+    `;
+  }
+
+  return `
+  <video controls playsinline>
+  <source src="${url}">
+  </video>
+  `;
 }
 
 function shareFacebook(url){
@@ -63,57 +240,12 @@ function copyUrl(url){
   alert("URLをコピーしました");
 }
 
-function buildVideo(url){
-
-  if(!url) return "";
-
-  if(
-    url.includes("youtube.com") ||
-    url.includes("youtu.be")
-  ){
-
-    let id = "";
-
-    if(url.includes("watch?v=")){
-
-      id =
-      url.split("watch?v=")[1]
-      .split("&")[0];
-
-    }else if(url.includes("youtu.be/")){
-
-      id =
-      url.split("youtu.be/")[1]
-      .split("?")[0];
-    }
-
-    return `
-    <iframe
-      src="https://www.youtube.com/embed/${id}"
-      allowfullscreen>
-    </iframe>
-    `;
-  }
-
-  return `
-  <video controls playsinline>
-    <source src="${url}">
-  </video>
-  `;
-}
-
 window.handleSheet = function(json){
 
   try{
 
-    const cols =
-    json.table.cols || [];
-
     const rows =
     json.table.rows || [];
-
-    const headers =
-    cols.map(col => cleanKey(col.label));
 
     let html = "";
 
@@ -121,31 +253,64 @@ window.handleSheet = function(json){
 
       const c = row.c || [];
 
-      const rowData = {};
+      const date =
+      c[0] && c[0].v ? c[0].v : "";
 
-      headers.forEach((h,i)=>{
+      const id =
+      c[1] && c[1].v ? c[1].v : "";
 
-        rowData[h] =
-        c[i] && c[i].v != null
-        ? String(c[i].v)
-        : "";
+      const title =
+      c[2] && c[2].v ? c[2].v : "";
 
-      });
+      const image =
+      c[3] && c[3].v ? c[3].v : "";
+
+      const text =
+      c[4] && c[4].v ? c[4].v : "";
+
+      const info1Title =
+      c[5] && c[5].v ? c[5].v : "";
+
+      const info1Url =
+      c[6] && c[6].v ? c[6].v : "";
+
+      const info2Title =
+      c[7] && c[7].v ? c[7].v : "";
+
+      const info2Url =
+      c[8] && c[8].v ? c[8].v : "";
+
+      const info3Title =
+      c[9] && c[9].v ? c[9].v : "";
+
+      const info3Url =
+      c[10] && c[10].v ? c[10].v : "";
+
+      const info4Title =
+      c[11] && c[11].v ? c[11].v : "";
+
+      const info4Url =
+      c[12] && c[12].v ? c[12].v : "";
+
+      const videoTitle =
+      c[15] && c[15].v ? c[15].v : "";
+
+      const videoDesc =
+      c[16] && c[16].v ? c[16].v : "";
+
+      const videoUrl =
+      c[17] && c[17].v ? c[17].v : "";
 
       const flag =
-      Object.values(rowData)
-      .includes("はい");
+      c[18] && c[18].v ? c[18].v : "";
 
-      if(!flag){
+      if(flag !== "はい"){
         return;
       }
 
-      const id =
-      rowData["ID"] || "";
-
       if(
         targetId &&
-        id !== targetId
+        id != targetId
       ){
         return;
       }
@@ -159,80 +324,74 @@ window.handleSheet = function(json){
       <div class="card">
 
         <div class="date">
-          ${esc(rowData["日付"])}
+        ${date}
         </div>
 
         <div class="title">
-          ${esc(rowData["タイトル"])}
+        ${esc(title)}
         </div>
 
         ${
-          rowData["画像URL"]
+          image
           ?
-          `<img class="main-image" src="${rowData["画像URL"]}">`
+          `<img class="main-image" src="${image}">`
           :
           ``
         }
 
         <div class="text">
-          ${esc(rowData["本文"])}
+        ${esc(text)}
         </div>
 
         <div class="buttons">
 
-          ${
-            rowData["情報1タイトル"] &&
-            rowData["情報1URL"]
-            ?
-            `<a class="city-btn shiki" href="${rowData["情報1URL"]}" target="_blank">${esc(rowData["情報1タイトル"])}</a>`
-            :
-            ``
-          }
+        ${
+          info1Title && info1Url
+          ?
+          `<a class="city-btn shiki" href="${info1Url}" target="_blank">${info1Title}</a>`
+          :
+          ``
+        }
 
-          ${
-            rowData["情報2タイトル"] &&
-            rowData["情報2URL"]
-            ?
-            `<a class="city-btn niiza" href="${rowData["情報2URL"]}" target="_blank">${esc(rowData["情報2タイトル"])}</a>`
-            :
-            ``
-          }
+        ${
+          info2Title && info2Url
+          ?
+          `<a class="city-btn niiza" href="${info2Url}" target="_blank">${info2Title}</a>`
+          :
+          ``
+        }
 
-          ${
-            rowData["情報3タイトル"] &&
-            rowData["情報3URL"]
-            ?
-            `<a class="city-btn asaka" href="${rowData["情報3URL"]}" target="_blank">${esc(rowData["情報3タイトル"])}</a>`
-            :
-            ``
-          }
+        ${
+          info3Title && info3Url
+          ?
+          `<a class="city-btn asaka" href="${info3Url}" target="_blank">${info3Title}</a>`
+          :
+          ``
+        }
 
-          ${
-            rowData["情報4タイトル"] &&
-            rowData["情報4URL"]
-            ?
-            `<a class="city-btn wako" href="${rowData["情報4URL"]}" target="_blank">${esc(rowData["情報4タイトル"])}</a>`
-            :
-            ``
-          }
+        ${
+          info4Title && info4Url
+          ?
+          `<a class="city-btn wako" href="${info4Url}" target="_blank">${info4Title}</a>`
+          :
+          ``
+        }
 
         </div>
 
         ${
-          rowData["動画URL"]
+          videoUrl
           ?
           `
           <div class="video">
 
-            <div class="video-title">
-              ${esc(rowData["動画タイトル"])}
-            </div>
+          <h3>${videoTitle}</h3>
 
-            <div class="video-desc">
-              ${esc(rowData["動画説明"])}
-            </div>
+          <div>
+          ${videoDesc}
+          </div>
 
-            ${buildVideo(rowData["動画URL"])}
+          ${buildVideo(videoUrl)}
 
           </div>
           `
@@ -242,29 +401,29 @@ window.handleSheet = function(json){
 
         <div class="sns">
 
-          <button
-            class="fb"
-            onclick="shareFacebook('${shareUrl}')">
-            Facebook
-          </button>
+        <button
+        class="fb"
+        onclick="shareFacebook('${shareUrl}')">
+        Facebook
+        </button>
 
-          <button
-            class="line"
-            onclick="shareLine('${shareUrl}')">
-            LINE
-          </button>
+        <button
+        class="line"
+        onclick="shareLine('${shareUrl}')">
+        LINE
+        </button>
 
-          <button
-            class="x"
-            onclick="shareX('${shareUrl}')">
-            X
-          </button>
+        <button
+        class="x"
+        onclick="shareX('${shareUrl}')">
+        X
+        </button>
 
-          <button
-            class="copy"
-            onclick="copyUrl('${shareUrl}')">
-            URLコピー
-          </button>
+        <button
+        class="copy"
+        onclick="copyUrl('${shareUrl}')">
+        URLコピー
+        </button>
 
         </div>
 
@@ -287,8 +446,6 @@ window.handleSheet = function(json){
     html;
 
   }catch(e){
-
-    console.error(e);
 
     document.getElementById("app").innerHTML =
     `
@@ -314,3 +471,6 @@ script.src =
 document.body.appendChild(script);
 
 </script>
+
+</body>
+</html>
