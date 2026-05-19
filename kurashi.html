@@ -3,351 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>瓦板</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  background:#eef5fb;
-  font-family:
-  "Hiragino Sans",
-  "Yu Gothic",
-  "Meiryo",
-  sans-serif;
-  color:#17324d;
-}
-
-.wrap{
-  max-width:760px;
-  margin:0 auto;
-  padding:18px 14px 100px;
-}
-
-.top{
-  background:#ffffff;
-  border-radius:28px;
-  overflow:hidden;
-  box-shadow:0 8px 20px rgba(0,0,0,.10);
-}
-
-.banner{
-  width:100%;
-  display:block;
-}
-
-.inner{
-  padding:24px 18px 30px;
-}
-
-.title{
-  font-size:34px;
-  line-height:1.4;
-  font-weight:900;
-  text-align:center;
-}
-
-.text{
-  margin-top:18px;
-  font-size:18px;
-  line-height:1.8;
-  font-weight:700;
-  color:#5b7084;
-}
-
-.card{
-  margin-top:18px;
-  background:#ffffff;
-  border-radius:24px;
-  padding:18px 16px;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
-}
-
-.cardTitle{
-  font-size:28px;
-  line-height:1.5;
-  font-weight:900;
-}
-
-.cardDate{
-  margin-top:10px;
-  font-size:16px;
-  color:#64748b;
-  font-weight:700;
-}
-
-.cardText{
-  margin-top:14px;
-  font-size:18px;
-  line-height:1.8;
-  font-weight:700;
-  color:#44566c;
-}
-
-.cardImage{
-  width:100%;
-  margin-top:16px;
-  border-radius:18px;
-  display:block;
-}
-
-.video{
-  width:100%;
-  aspect-ratio:16/9;
-  border:none;
-  border-radius:18px;
-  margin-top:16px;
-  background:#000;
-}
-
-.loading{
-  margin-top:40px;
-  text-align:center;
-  font-size:26px;
-  font-weight:900;
-}
-
-.back{
-  display:block;
-  margin-top:30px;
-  text-align:center;
-  font-size:18px;
-  font-weight:900;
-  color:#2563eb;
-  text-decoration:none;
-}
-
+*{box-sizing:border-box}
+body{margin:0;background:#eef5fb;font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;color:#17324d}
+.wrap{max-width:760px;margin:0 auto;padding:18px 14px 100px}
+.top,.card{background:#fff;border-radius:26px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.10)}
+.banner,.image{width:100%;display:block}
+.inner{padding:22px 18px}
+.title{font-size:32px;line-height:1.4;font-weight:900;text-align:center}
+.text{margin-top:14px;font-size:18px;line-height:1.8;font-weight:700;color:#5b7084}
+.card{margin-top:18px;padding:18px 16px}
+.cardTitle{font-size:26px;line-height:1.45;font-weight:900}
+.date{margin-top:8px;font-size:15px;color:#64748b;font-weight:800}
+.image{margin-top:14px;border-radius:18px}
+.desc{margin-top:14px;font-size:17px;line-height:1.8;font-weight:700;color:#44566c;white-space:pre-wrap}
+.btn{display:block;margin-top:12px;background:#2563eb;border-radius:18px;padding:15px;text-align:center;text-decoration:none;color:#fff;font-size:18px;font-weight:900}
+.movieBox{margin-top:18px;background:#f2f7ff;border-radius:20px;padding:16px}
+.movieTitle{font-size:22px;font-weight:900;color:#1454a8}
+.movieText{margin-top:8px;font-size:16px;line-height:1.7;font-weight:700;color:#44566c}
+.video{width:100%;aspect-ratio:16/9;border:0;border-radius:18px;margin-top:14px;background:#000}
+.loading{margin-top:30px;text-align:center;font-size:24px;font-weight:900}
+.back{display:block;margin-top:24px;text-align:center;font-size:18px;font-weight:900;color:#2563eb;text-decoration:none}
 </style>
 </head>
 
 <body>
-
 <div class="wrap">
 
   <div class="top">
-
-    <img
-      class="banner"
-      src="./top.jpg"
-      alt="瓦板"
-    >
-
+    <img class="banner" src="./top.jpg" alt="瓦板">
     <div class="inner">
-
-      <div class="title">
-        瓦板
-      </div>
-
-      <div class="text">
-        四市の暮らし情報、
-        地域動画、
-        お知らせをまとめています。
-      </div>
-
-      <a
-        class="back"
-        href="./index.html"
-      >
-        ← トップへ戻る
-      </a>
-
+      <div class="title">瓦板</div>
+      <div class="text">四市の暮らし情報と、お楽しみ動画をまとめています。</div>
+      <a class="back" href="./index.html">← トップへ戻る</a>
     </div>
-
   </div>
 
-  <div id="list">
-
-    <div class="loading">
-      読み込み中...
-    </div>
-
-  </div>
+  <div id="list" class="loading">読み込み中...</div>
 
 </div>
 
 <script>
+const SHEET_ID = "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+const SHEET_NAME = "NSAW暮らし情報局_データ";
 
-const SHEET_ID =
-"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
-
-const SHEET_NAME =
-"NSAW暮らし情報局_データ";
-
-function esc(str){
-
-  return String(str || "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;");
-
+function esc(s){
+  return String(s||"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
 }
 
-function cell(row,index){
-
-  if(
-    !row.c ||
-    !row.c[index]
-  ){
-    return "";
-  }
-
-  return row.c[index].v || "";
-
+function cell(row,i){
+  if(!row.c || !row.c[i]) return "";
+  return row.c[i].f || row.c[i].v || "";
 }
 
-function formatDate(v){
+function fixDriveImage(url){
+  url = String(url || "");
+  if(!url) return "";
 
-  if(!v){
-    return "";
-  }
+  let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if(m) return "https://drive.google.com/thumbnail?id=" + m[1] + "&sz=w1600";
 
-  if(typeof v === "string"){
-    return v;
-  }
+  m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if(m) return "https://drive.google.com/thumbnail?id=" + m[1] + "&sz=w1600";
 
-  if(v instanceof Date){
-
-    const y = v.getFullYear();
-    const m = v.getMonth() + 1;
-    const d = v.getDate();
-
-    return y + "年" + m + "月" + d + "日";
-  }
-
-  return String(v);
-
+  return url;
 }
 
 function youtubeId(url){
-
   url = String(url || "");
+  let m = url.match(/[?&]v=([^&]+)/);
+  if(m) return m[1];
 
-  let m =
-    url.match(/[?&]v=([^&]+)/);
+  m = url.match(/youtu\.be\/([^?&]+)/);
+  if(m) return m[1];
 
-  if(m){
-    return m[1];
-  }
+  m = url.match(/shorts\/([^?&]+)/);
+  if(m) return m[1];
 
-  m =
-    url.match(/youtu\.be\/([^?&]+)/);
-
-  if(m){
-    return m[1];
-  }
+  m = url.match(/embed\/([^?&]+)/);
+  if(m) return m[1];
 
   return "";
+}
 
+function videoHtml(url){
+  const id = youtubeId(url);
+  if(!id) return "";
+  return '<iframe class="video" src="https://www.youtube.com/embed/' + esc(id) + '" allowfullscreen></iframe>';
 }
 
 function handleSheet(json){
+  const rows = (json.table.rows || []).map((row,index)=>({
+    index:index,
+    date:cell(row,0),
+    id:cell(row,1),
+    title:cell(row,2),
+    image:fixDriveImage(cell(row,3)),
+    desc:cell(row,4),
+    info:[
+      [cell(row,5),cell(row,6)],
+      [cell(row,7),cell(row,8)],
+      [cell(row,9),cell(row,10)],
+      [cell(row,11),cell(row,12)],
+      [cell(row,13),cell(row,14)]
+    ],
+    movieTitle:cell(row,15),
+    movieText:cell(row,16),
+    media:cell(row,17),
+    show:cell(row,18),
+    sort:Number(cell(row,19)) || 0
+  }))
+  .filter(x => String(x.show).trim() === "はい")
+  .sort((a,b)=>(b.sort-a.sort)||(b.index-a.index));
 
-  const rows =
-    json.table.rows || [];
-
-  const list =
-    document.getElementById("list");
-
+  const list = document.getElementById("list");
+  list.className = "";
   list.innerHTML = "";
 
-  rows.reverse();
+  rows.forEach(item=>{
+    let html = '<div class="card">';
 
-  rows.forEach(row => {
+    html += '<div class="cardTitle">' + esc(item.title) + '</div>';
+    html += '<div class="date">' + esc(item.date) + '</div>';
 
-    const date =
-      formatDate(cell(row,0));
-
-    const title =
-      cell(row,1);
-
-    const detail =
-      cell(row,2);
-
-    const image =
-      cell(row,3);
-
-    const video =
-      cell(row,4);
-
-    if(!title){
-      return;
+    if(item.image){
+      html += '<img class="image" src="' + esc(item.image) + '" loading="lazy">';
     }
 
-    const div =
-      document.createElement("div");
-
-    div.className =
-      "card";
-
-    let html =
-
-      '<div class="cardTitle">'
-      + esc(title)
-      + '</div>'
-
-      +
-
-      '<div class="cardDate">'
-      + esc(date)
-      + '</div>'
-
-      +
-
-      '<div class="cardText">'
-      + esc(detail)
-      + '</div>';
-
-    if(image){
-
-      html +=
-
-      '<img class="cardImage" src="'
-      + esc(image)
-      + '">';
-
+    if(item.desc){
+      html += '<div class="desc">' + esc(item.desc) + '</div>';
     }
 
-    const yt =
-      youtubeId(video);
+    item.info.forEach(pair=>{
+      if(pair[0] && pair[1]){
+        html += '<a class="btn" href="' + esc(pair[1]) + '" target="_blank">' + esc(pair[0]) + '</a>';
+      }
+    });
 
-    if(yt){
-
-      html +=
-
-      '<iframe class="video" src="https://www.youtube.com/embed/'
-      + yt
-      + '" allowfullscreen></iframe>';
-
+    if(item.movieTitle || item.movieText || item.media){
+      html += '<div class="movieBox">';
+      if(item.movieTitle) html += '<div class="movieTitle">' + esc(item.movieTitle) + '</div>';
+      if(item.movieText) html += '<div class="movieText">' + esc(item.movieText) + '</div>';
+      if(item.media) html += videoHtml(item.media);
+      html += '</div>';
     }
 
-    div.innerHTML =
-      html;
-
-    list.appendChild(div);
-
+    html += '</div>';
+    list.insertAdjacentHTML("beforeend",html);
   });
-
 }
 
-const script =
-document.createElement("script");
-
+const script = document.createElement("script");
 script.src =
-"https://docs.google.com/spreadsheets/d/"
-+ SHEET_ID
-+ "/gviz/tq?sheet="
-+ encodeURIComponent(SHEET_NAME)
-+ "&tqx=out:json&responseHandler=handleSheet&t="
-+ Date.now();
+  "https://docs.google.com/spreadsheets/d/" + SHEET_ID +
+  "/gviz/tq?sheet=" + encodeURIComponent(SHEET_NAME) +
+  "&tqx=out:json;responseHandler:handleSheet&t=" + Date.now();
 
 document.body.appendChild(script);
-
 </script>
-
 </body>
 </html>
