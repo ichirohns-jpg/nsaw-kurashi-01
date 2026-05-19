@@ -6,13 +6,10 @@
 
 <title>NSAW 暮らし情報局</title>
 
-<meta name="description" content="志木・新座・朝霞・和光の暮らし情報">
-
 <meta property="og:type" content="website">
 <meta property="og:title" content="NSAW 暮らし情報局">
 <meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報">
 <meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
-<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/">
 
 <meta name="twitter:card" content="summary_large_image">
 
@@ -30,10 +27,6 @@ body{
   "Yu Gothic",
   sans-serif;
   color:#1b2b3a;
-}
-
-.header{
-  width:100%;
 }
 
 .header img{
@@ -100,21 +93,10 @@ body{
   font-size:17px;
 }
 
-.shiki{
-  background:#1e88e5;
-}
-
-.niiza{
-  background:#43a047;
-}
-
-.asaka{
-  background:#fb8c00;
-}
-
-.wako{
-  background:#8e24aa;
-}
+.shiki{background:#1e88e5;}
+.niiza{background:#43a047;}
+.asaka{background:#fb8c00;}
+.wako{background:#8e24aa;}
 
 .video{
   margin-top:24px;
@@ -131,16 +113,12 @@ body{
   margin-bottom:14px;
 }
 
-.video iframe{
-  width:100%;
-  aspect-ratio:16/9;
-  border:none;
-  border-radius:16px;
-}
-
+.video iframe,
 .video video{
   width:100%;
+  border:none;
   border-radius:16px;
+  aspect-ratio:16/9;
 }
 
 .sns{
@@ -161,32 +139,19 @@ body{
   font-weight:700;
 }
 
-.fb{
-  background:#1877f2;
-}
+.fb{background:#1877f2;}
+.line{background:#06c755;}
+.x{background:#000;}
+.copy{background:#607d8b;}
 
-.line{
-  background:#06c755;
-}
-
-.x{
-  background:#000;
-}
-
-.copy{
-  background:#607d8b;
-}
-
-.loading{
+.loading,
+.error{
   text-align:center;
   padding:60px 20px;
   font-size:20px;
 }
 
 .error{
-  text-align:center;
-  padding:60px 20px;
-  font-size:18px;
   color:#c62828;
 }
 
@@ -221,20 +186,47 @@ new URLSearchParams(location.search);
 const targetId =
 params.get("id") || "";
 
-function get(c){
-
-  return c && c.v != null
-  ? String(c.v)
-  : "";
-}
-
-function escapeHtml(str){
+function esc(str){
 
   return String(str || "")
   .replace(/&/g,"&amp;")
   .replace(/</g,"&lt;")
   .replace(/>/g,"&gt;")
   .replace(/"/g,"&quot;");
+}
+
+function shareFacebook(url){
+
+  window.open(
+    "https://www.facebook.com/sharer/sharer.php?u="
+    + encodeURIComponent(url),
+    "_blank"
+  );
+}
+
+function shareX(url){
+
+  window.open(
+    "https://twitter.com/intent/tweet?url="
+    + encodeURIComponent(url),
+    "_blank"
+  );
+}
+
+function shareLine(url){
+
+  window.open(
+    "https://social-plugins.line.me/lineit/share?url="
+    + encodeURIComponent(url),
+    "_blank"
+  );
+}
+
+function copyUrl(url){
+
+  navigator.clipboard.writeText(url);
+
+  alert("URLをコピーしました");
 }
 
 function buildVideo(url){
@@ -276,67 +268,22 @@ function buildVideo(url){
   `;
 }
 
-function shareFacebook(url){
-
-  window.open(
-    "https://www.facebook.com/sharer/sharer.php?u="
-    + encodeURIComponent(url),
-    "_blank"
-  );
-}
-
-function shareX(url){
-
-  window.open(
-    "https://twitter.com/intent/tweet?url="
-    + encodeURIComponent(url),
-    "_blank"
-  );
-}
-
-function shareLine(url){
-
-  window.open(
-    "https://social-plugins.line.me/lineit/share?url="
-    + encodeURIComponent(url),
-    "_blank"
-  );
-}
-
-function copyUrl(url){
-
-  navigator.clipboard.writeText(url);
-
-  alert("URLをコピーしました");
-}
-
 window.handleSheet = function(json){
 
   try{
 
+    const cols =
+    json.table.cols || [];
+
     const rows =
     json.table.rows || [];
 
-    if(rows.length <= 1){
-
-      document.getElementById("app").innerHTML =
-      `
-      <div class="error">
-      データがありません
-      </div>
-      `;
-
-      return;
-    }
-
     const headers =
-    rows[0].c.map(col => get(col));
+    cols.map(col => col.label);
 
     let html = "";
 
-    for(let r = 1; r < rows.length; r++){
-
-      const row = rows[r];
+    rows.forEach(row=>{
 
       const c = row.c || [];
 
@@ -344,34 +291,38 @@ window.handleSheet = function(json){
 
       headers.forEach((h,i)=>{
 
-        rowData[h] = get(c[i]);
+        rowData[h] =
+        c[i] && c[i].v != null
+        ? String(c[i].v)
+        : "";
 
       });
 
-      const flag =
-      rowData["表示"];
+      if(rowData["表示"] !== "はい"){
+        return;
+      }
 
-      if(flag !== "はい") continue;
-
-      const id =
-      rowData["ID"];
-
-      if(targetId && id !== targetId) continue;
+      if(
+        targetId &&
+        rowData["ID"] !== targetId
+      ){
+        return;
+      }
 
       const shareUrl =
       "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id="
-      + id;
+      + rowData["ID"];
 
       html += `
 
       <div class="card">
 
         <div class="date">
-          ${escapeHtml(rowData["日付"])}
+          ${esc(rowData["日付"])}
         </div>
 
         <div class="title">
-          ${escapeHtml(rowData["タイトル"])}
+          ${esc(rowData["タイトル"])}
         </div>
 
         ${
@@ -383,7 +334,7 @@ window.handleSheet = function(json){
         }
 
         <div class="text">
-          ${escapeHtml(rowData["本文"])}
+          ${esc(rowData["本文"])}
         </div>
 
         <div class="buttons">
@@ -392,7 +343,7 @@ window.handleSheet = function(json){
             rowData["情報1タイトル"] &&
             rowData["情報1URL"]
             ?
-            `<a class="city-btn shiki" href="${rowData["情報1URL"]}" target="_blank">${escapeHtml(rowData["情報1タイトル"])}</a>`
+            `<a class="city-btn shiki" href="${rowData["情報1URL"]}" target="_blank">${esc(rowData["情報1タイトル"])}</a>`
             :
             ``
           }
@@ -401,7 +352,7 @@ window.handleSheet = function(json){
             rowData["情報2タイトル"] &&
             rowData["情報2URL"]
             ?
-            `<a class="city-btn niiza" href="${rowData["情報2URL"]}" target="_blank">${escapeHtml(rowData["情報2タイトル"])}</a>`
+            `<a class="city-btn niiza" href="${rowData["情報2URL"]}" target="_blank">${esc(rowData["情報2タイトル"])}</a>`
             :
             ``
           }
@@ -410,7 +361,7 @@ window.handleSheet = function(json){
             rowData["情報3タイトル"] &&
             rowData["情報3URL"]
             ?
-            `<a class="city-btn asaka" href="${rowData["情報3URL"]}" target="_blank">${escapeHtml(rowData["情報3タイトル"])}</a>`
+            `<a class="city-btn asaka" href="${rowData["情報3URL"]}" target="_blank">${esc(rowData["情報3タイトル"])}</a>`
             :
             ``
           }
@@ -419,7 +370,7 @@ window.handleSheet = function(json){
             rowData["情報4タイトル"] &&
             rowData["情報4URL"]
             ?
-            `<a class="city-btn wako" href="${rowData["情報4URL"]}" target="_blank">${escapeHtml(rowData["情報4タイトル"])}</a>`
+            `<a class="city-btn wako" href="${rowData["情報4URL"]}" target="_blank">${esc(rowData["情報4タイトル"])}</a>`
             :
             ``
           }
@@ -433,11 +384,11 @@ window.handleSheet = function(json){
           <div class="video">
 
             <div class="video-title">
-              ${escapeHtml(rowData["動画タイトル"])}
+              ${esc(rowData["動画タイトル"])}
             </div>
 
             <div class="video-desc">
-              ${escapeHtml(rowData["動画説明"])}
+              ${esc(rowData["動画説明"])}
             </div>
 
             ${buildVideo(rowData["動画URL"])}
@@ -479,7 +430,7 @@ window.handleSheet = function(json){
       </div>
 
       `;
-    }
+    });
 
     if(!html){
 
