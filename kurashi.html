@@ -2,67 +2,171 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>NSAW暮らし情報局</title>
+<title>瓦板</title>
+
+<meta property="og:title" content="NSAW暮らし情報局">
+<meta property="og:description" content="四市の暮らし情報・地域動画・お知らせ">
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
 
 <style>
 
-body{
-margin:0;
-background:#eef5fb;
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+*{
+  box-sizing:border-box;
 }
 
-.top img{
-width:100%;
-display:block;
+body{
+  margin:0;
+  background:#eef5fb;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+  color:#17324d;
 }
 
 .wrap{
-max-width:760px;
-margin:auto;
-padding:14px;
+  max-width:760px;
+  margin:0 auto;
+  padding:18px 14px 100px;
+}
+
+.top{
+  background:#fff;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,.10);
+}
+
+.banner{
+  width:100%;
+  display:block;
+}
+
+.inner{
+  padding:22px 18px 30px;
+}
+
+.topTitle{
+  font-size:34px;
+  line-height:1.4;
+  font-weight:900;
+  text-align:center;
+}
+
+.topText{
+  margin-top:14px;
+  font-size:18px;
+  line-height:1.8;
+  font-weight:700;
+  color:#5b7084;
+  text-align:center;
 }
 
 .card{
-background:#fff;
-border-radius:20px;
-padding:18px;
-margin-bottom:20px;
-box-shadow:0 4px 14px rgba(0,0,0,.08);
-}
-
-.city{
-font-size:14px;
-font-weight:bold;
-color:#1877f2;
-margin-bottom:8px;
+  margin-top:22px;
+  background:#fff;
+  border-radius:26px;
+  padding:18px 16px;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
 }
 
 .title{
-font-size:24px;
-font-weight:bold;
-line-height:1.6;
-margin-bottom:12px;
-color:#17324d;
+  font-size:30px;
+  line-height:1.5;
+  font-weight:900;
 }
 
-.link{
-display:inline-block;
-padding:12px 18px;
-background:#1877f2;
-color:#fff;
-border-radius:12px;
-text-decoration:none;
-font-size:16px;
-font-weight:bold;
+.date{
+  margin-top:8px;
+  font-size:16px;
+  color:#64748b;
+  font-weight:800;
 }
+
+.image{
+  width:100%;
+  margin-top:16px;
+  border-radius:18px;
+  display:block;
+}
+
+.text{
+  margin-top:16px;
+  white-space:pre-wrap;
+  font-size:18px;
+  line-height:1.8;
+  font-weight:700;
+  color:#44566c;
+}
+
+.movieTitle{
+  margin-top:18px;
+  font-size:22px;
+  line-height:1.6;
+  font-weight:900;
+}
+
+.movieText{
+  margin-top:8px;
+  white-space:pre-wrap;
+  font-size:17px;
+  line-height:1.8;
+  font-weight:700;
+  color:#44566c;
+}
+
+.video{
+  width:100%;
+  aspect-ratio:16/9;
+  border:none;
+  border-radius:18px;
+  margin-top:16px;
+  background:#000;
+}
+
+.grid{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:82px;
+  border:none;
+  border-radius:20px;
+  padding:14px;
+  color:#fff;
+  text-decoration:none;
+  text-align:center;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:900;
+}
+
+.blue{background:#2563eb;}
+.green{background:#16a34a;}
+.orange{background:#ea580c;}
+.purple{background:#7c3aed;}
+.black{background:#111111;}
 
 .loading{
-padding:50px;
-text-align:center;
-font-size:22px;
+  margin-top:40px;
+  text-align:center;
+  font-size:28px;
+  font-weight:900;
+}
+
+.back{
+  display:block;
+  margin-top:24px;
+  text-align:center;
+  font-size:18px;
+  font-weight:900;
+  color:#2563eb;
+  text-decoration:none;
 }
 
 </style>
@@ -70,136 +174,117 @@ font-size:22px;
 
 <body>
 
-<div class="top">
-<img src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
-</div>
+<div class="wrap">
 
-<div class="wrap" id="app">
+  <div class="top">
 
-<div class="loading">
-読み込み中...
-</div>
+    <img
+      class="banner"
+      src="./top.jpg"
+      alt="瓦板"
+    >
+
+    <div class="inner">
+
+      <div class="topTitle">
+        瓦板
+      </div>
+
+      <div class="topText">
+        四市の暮らし情報・地域動画・お知らせをまとめています。
+      </div>
+
+      <a
+        class="back"
+        href="./index.html"
+      >
+        ← トップへ戻る
+      </a>
+
+    </div>
+
+  </div>
+
+  <div id="list">
+
+    <div class="loading">
+      読み込み中...
+    </div>
+
+  </div>
 
 </div>
 
 <script>
 
-window.handleSheet = function(json){
+const SHEET_ID =
+"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
 
-const rows = json.table.rows || [];
+const SHEET_NAME =
+"NSAW暮らし情報局_データ";
 
-let html = '';
+function esc(str){
 
-rows.reverse().forEach((row)=>{
-
-const c = row.c || [];
-
-const city1 =
-(c[0] && c[0].v)
-? c[0].v
-: '';
-
-const title1 =
-(c[1] && c[1].v)
-? c[1].v
-: '';
-
-const url1 =
-(c[2] && c[2].v)
-? c[2].v
-: '';
-
-const city2 =
-(c[3] && c[3].v)
-? c[3].v
-: '';
-
-const title2 =
-(c[4] && c[4].v)
-? c[4].v
-: '';
-
-const url2 =
-(c[5] && c[5].v)
-? c[5].v
-: '';
-
-const city3 =
-(c[6] && c[6].v)
-? c[6].v
-: '';
-
-const title3 =
-(c[7] && c[7].v)
-? c[7].v
-: '';
-
-const url3 =
-(c[8] && c[8].v)
-? c[8].v
-: '';
-
-const city4 =
-(c[9] && c[9].v)
-? c[9].v
-: '';
-
-const title4 =
-(c[10] && c[10].v)
-? c[10].v
-: '';
-
-const url4 =
-(c[11] && c[11].v)
-? c[11].v
-: '';
-
-function makeCard(city,title,url){
-
-if(!title) return '';
-
-return `
-<div class="card">
-
-<div class="city">
-${city}
-</div>
-
-<div class="title">
-${title}
-</div>
-
-<a class="link"
-href="${url}"
-target="_blank">
-詳しく見る
-</a>
-
-</div>
-`;
+  return String(str || "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;");
 
 }
 
-html +=
-makeCard(city1,title1,url1) +
-makeCard(city2,title2,url2) +
-makeCard(city3,title3,url3) +
-makeCard(city4,title4,url4);
+function cell(row,i){
 
-});
+  if(!row.c || !row.c[i]){
+    return "";
+  }
 
-document.getElementById('app').innerHTML = html;
+  return row.c[i].v || "";
 
-};
+}
 
-const script = document.createElement('script');
+function drive(url){
 
-script.src =
-'https://docs.google.com/spreadsheets/d/13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY/gviz/tq?sheet=NSAW暮らし情報局_データ&tqx=out:json&responseHandler=handleSheet';
+  url = String(url || "");
 
-document.body.appendChild(script);
+  let m =
+    url.match(/[-\w]{25,}/);
 
-</script>
+  if(m){
 
-</body>
-</html>
+    return "https://drive.google.com/thumbnail?id="
+    + m[0]
+    + "&sz=w1600";
+
+  }
+
+  return url;
+
+}
+
+function youtubeId(url){
+
+  url = String(url || "");
+
+  let m =
+    url.match(/[?&]v=([^&]+)/);
+
+  if(m) return m[1];
+
+  m =
+    url.match(/youtu\.be\/([^?&]+)/);
+
+  if(m) return m[1];
+
+  m =
+    url.match(/shorts\/([^?&]+)/);
+
+  if(m) return m[1];
+
+  return "";
+
+}
+
+function shareButtons(num){
+
+ 
