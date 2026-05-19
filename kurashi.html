@@ -4,175 +4,139 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>瓦板</title>
+<title>NSAW暮らし情報局</title>
+
+<meta name="description" content="志木・新座・朝霞・和光の暮らし情報を、見やすく届けます。">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="NSAW暮らし情報局">
+
+<meta property="og:title" content="NSAW暮らし情報局">
+<meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報を、見やすく届けます。">
+
+<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html">
+
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
+
+<meta property="og:image:secure_url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
+
+<meta property="og:image:type" content="image/jpeg">
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="twitter:title" content="NSAW暮らし情報局">
+
+<meta name="twitter:description" content="志木・新座・朝霞・和光の暮らし情報を、見やすく届けます。">
+
+<meta name="twitter:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 
 <style>
 
 *{
-  box-sizing:border-box;
+box-sizing:border-box;
 }
 
 body{
-  margin:0;
-  background:#eef5fb;
-  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-  color:#17324d;
+margin:0;
+padding:0;
+background:#eef5fb;
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+color:#17324d;
+}
+
+.header{
+width:100%;
+background:#fff;
+padding:12px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.header img{
+width:100%;
+border-radius:16px;
+display:block;
 }
 
 .wrap{
-  max-width:760px;
-  margin:0 auto;
-  padding:18px 14px 100px;
-}
-
-.top{
-  background:#ffffff;
-  border-radius:28px;
-  overflow:hidden;
-  box-shadow:0 8px 20px rgba(0,0,0,.10);
-}
-
-.banner{
-  width:100%;
-  display:block;
-}
-
-.inner{
-  padding:24px 18px 30px;
-}
-
-.title{
-  font-size:34px;
-  line-height:1.4;
-  font-weight:900;
-  text-align:center;
-}
-
-.text{
-  margin-top:18px;
-  font-size:18px;
-  line-height:1.8;
-  font-weight:700;
-  color:#5b7084;
+max-width:700px;
+margin:0 auto;
+padding:14px;
 }
 
 .card{
-  margin-top:22px;
-  background:#ffffff;
-  border-radius:26px;
-  padding:20px 18px;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
+background:#fff;
+border-radius:20px;
+padding:18px;
+margin-bottom:18px;
+box-shadow:0 4px 14px rgba(0,0,0,.08);
 }
 
-.cardTitle{
-  font-size:30px;
-  line-height:1.5;
-  font-weight:900;
+.date{
+font-size:14px;
+color:#6b7b8c;
+margin-bottom:8px;
 }
 
-.cardDate{
-  margin-top:10px;
-  font-size:16px;
-  color:#64748b;
-  font-weight:700;
+.title{
+font-size:26px;
+font-weight:700;
+line-height:1.5;
+margin-bottom:12px;
 }
 
-.cardText{
-  margin-top:14px;
-  font-size:18px;
-  line-height:1.8;
-  font-weight:700;
-  color:#44566c;
-  white-space:pre-wrap;
+.detail{
+font-size:18px;
+line-height:1.8;
+white-space:pre-wrap;
 }
 
-.movieText{
-  margin-top:18px;
-  font-size:18px;
-  line-height:1.8;
-  font-weight:700;
-  color:#17324d;
-  white-space:pre-wrap;
+.image{
+margin-top:14px;
 }
 
-.cardImage{
-  width:100%;
-  margin-top:16px;
-  border-radius:18px;
-  display:block;
+.image img{
+width:100%;
+border-radius:14px;
+display:block;
 }
 
-.video{
-  width:100%;
-  aspect-ratio:16/9;
-  border:none;
-  border-radius:18px;
-  margin-top:16px;
-  background:#000;
-}
-
-.grid{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
+.buttons{
+margin-top:16px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
 }
 
 .btn{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:90px;
-  border:none;
-  border-radius:22px;
-  padding:18px 14px;
-  text-align:center;
-  text-decoration:none;
-  color:#fff;
-  font-size:22px;
-  line-height:1.5;
-  font-weight:900;
+display:inline-block;
+padding:12px 18px;
+border-radius:12px;
+background:#1877f2;
+color:#fff;
+text-decoration:none;
+font-size:16px;
+font-weight:700;
 }
 
-.blue{
-  background:#2563eb;
+.btn.line{
+background:#06c755;
 }
 
-.green{
-  background:#16a34a;
-}
-
-.orange{
-  background:#ea580c;
-}
-
-.purple{
-  background:#7c3aed;
-}
-
-.red{
-  background:#dc2626;
-}
-
-.black{
-  background:#111111;
+.btn.x{
+background:#111;
 }
 
 .loading{
-  margin-top:40px;
-  text-align:center;
-  font-size:26px;
-  font-weight:900;
-}
-
-.back{
-  display:block;
-  margin-top:30px;
-  text-align:center;
-  font-size:18px;
-  font-weight:900;
-  color:#2563eb;
-  text-decoration:none;
+padding:40px;
+text-align:center;
+font-size:20px;
 }
 
 </style>
@@ -180,443 +144,97 @@ body{
 
 <body>
 
-<div class="wrap">
+<div class="header">
+<img src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
+</div>
 
-  <div class="top">
+<div class="wrap" id="app">
 
-    <img
-      class="banner"
-      src="./top.jpg"
-      alt="瓦板"
-    >
-
-    <div class="inner">
-
-      <div class="title">
-        瓦板
-      </div>
-
-      <div class="text">
-        四市の暮らし情報、
-        地域動画、
-        お知らせをまとめています。
-      </div>
-
-      <a
-        class="back"
-        href="./index.html"
-      >
-        ← トップへ戻る
-      </a>
-
-    </div>
-
-  </div>
-
-  <div id="list">
-
-    <div class="loading">
-      読み込み中...
-    </div>
-
-  </div>
+<div class="loading">
+読み込み中...
+</div>
 
 </div>
 
 <script>
 
-const SHEET_ID =
-"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+const SHEET_ID = '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
+const SHEET_NAME = 'NSAW暮らし情報局_データ';
 
-const SHEET_NAME =
-"NSAW暮らし情報局_データ";
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json&responseHandler=handleSheet';
 
-function esc(str){
-
-  return String(str || "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;");
-
-}
-
-function cell(row,index){
-
-  if(!row.c || !row.c[index]){
-    return "";
-  }
-
-  return row.c[index].f || row.c[index].v || "";
-
-}
-
-function fixDriveImage(url){
-
-  url = String(url || "");
-
-  let m =
-    url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-
-  if(m){
-
-    return "https://drive.google.com/thumbnail?id="
-    + m[1]
-    + "&sz=w1600";
-
-  }
-
-  m =
-    url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-
-  if(m){
-
-    return "https://drive.google.com/thumbnail?id="
-    + m[1]
-    + "&sz=w1600";
-
-  }
-
-  return url;
-
-}
-
-function youtubeId(url){
-
-  url = String(url || "");
-
-  let m =
-    url.match(/[?&]v=([^&]+)/);
-
-  if(m){
-    return m[1];
-  }
-
-  m =
-    url.match(/youtu\.be\/([^?&]+)/);
-
-  if(m){
-    return m[1];
-  }
-
-  m =
-    url.match(/shorts\/([^?&]+)/);
-
-  if(m){
-    return m[1];
-  }
-
-  return "";
-
-}
-
-function buttonClass(text){
-
-  text = String(text || "");
-
-  if(text.includes("志木")){
-    return "blue";
-  }
-
-  if(text.includes("新座")){
-    return "green";
-  }
-
-  if(text.includes("朝霞")){
-    return "orange";
-  }
-
-  if(text.includes("和光")){
-    return "purple";
-  }
-
-  return "blue";
-
-}
-
-function shareButtons(url){
-
-  return `
-
-  <div class="grid">
-
-    <button
-      class="btn blue"
-      onclick="shareFacebook('${url}')"
-      type="button"
-    >
-      Facebook
-    </button>
-
-    <button
-      class="btn green"
-      onclick="shareLine('${url}')"
-      type="button"
-    >
-      LINE
-    </button>
-
-    <button
-      class="btn black"
-      onclick="shareX('${url}')"
-      type="button"
-    >
-      X
-    </button>
-
-    <button
-      class="btn purple"
-      onclick="copyUrl('${url}')"
-      type="button"
-    >
-      コピー
-    </button>
-
-  </div>
-
-  `;
-
-}
+const script = document.createElement('script');
+script.src = url;
+document.body.appendChild(script);
 
 function handleSheet(json){
 
-  const rows =
-    json.table.rows || [];
+const rows = json.table.rows || [];
 
-  const list =
-    document.getElementById("list");
+let html = '';
 
-  list.innerHTML = "";
+rows.reverse().forEach((row,index)=>{
 
-  rows.reverse();
+const c = row.c || [];
 
-  rows.forEach((row,index) => {
+const date = c[0]?.v || '';
+const title = c[1]?.v || '';
+const detail = c[2]?.v || '';
+const image = c[3]?.v || '';
 
-    const date = cell(row,0);
-    const title = cell(row,2);
-    const image = fixDriveImage(cell(row,3));
+const shareUrl =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-001.html?v=' + Date.now();
 
-    const detail = cell(row,4);
+html += `
+<div class="card">
 
-    const city1 = cell(row,5);
-    const city1url = cell(row,6);
+<div class="date">${date}</div>
 
-    const city2 = cell(row,7);
-    const city2url = cell(row,8);
+<div class="title">${title}</div>
 
-    const city3 = cell(row,9);
-    const city3url = cell(row,10);
+<div class="detail">${detail}</div>
 
-    const city4 = cell(row,11);
-    const city4url = cell(row,12);
+${image ? `
+<div class="image">
+<img src="${image}">
+</div>
+` : ''}
 
-    const movieTitle = cell(row,15);
-    const movieText = cell(row,16);
+<div class="buttons">
 
-    const video = cell(row,17);
+<a class="btn"
+target="_blank"
+href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}">
+Facebook
+</a>
 
-    if(!title){
-      return;
-    }
+<a class="btn line"
+target="_blank"
+href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}">
+LINE
+</a>
 
-    const div =
-      document.createElement("div");
+<a class="btn x"
+target="_blank"
+href="https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}">
+X
+</a>
 
-    div.className =
-      "card";
+</div>
 
-    let html =
+</div>
+`;
 
-      '<div class="cardTitle">'
-      + esc(title)
-      + '</div>'
+});
 
-      +
-
-      '<div class="cardDate">'
-      + esc(date)
-      + '</div>';
-
-    if(image){
-
-      html +=
-
-      '<img class="cardImage" src="'
-      + esc(image)
-      + '">';
-
-    }
-
-    if(detail){
-
-      html +=
-
-      '<div class="cardText">'
-      + esc(detail)
-      + '</div>';
-
-    }
-
-    html += '<div class="grid">';
-
-    if(city1 && city1url){
-
-      html +=
-      '<a class="btn '
-      + buttonClass(city1)
-      + '" href="'
-      + esc(city1url)
-      + '" target="_blank">'
-      + esc(city1)
-      + '</a>';
-
-    }
-
-    if(city2 && city2url){
-
-      html +=
-      '<a class="btn '
-      + buttonClass(city2)
-      + '" href="'
-      + esc(city2url)
-      + '" target="_blank">'
-      + esc(city2)
-      + '</a>';
-
-    }
-
-    if(city3 && city3url){
-
-      html +=
-      '<a class="btn '
-      + buttonClass(city3)
-      + '" href="'
-      + esc(city3url)
-      + '" target="_blank">'
-      + esc(city3)
-      + '</a>';
-
-    }
-
-    if(city4 && city4url){
-
-      html +=
-      '<a class="btn '
-      + buttonClass(city4)
-      + '" href="'
-      + esc(city4url)
-      + '" target="_blank">'
-      + esc(city4)
-      + '</a>';
-
-    }
-
-    html += '</div>';
-
-    if(movieTitle){
-
-      html +=
-
-      '<div class="movieText">'
-      + esc(movieTitle)
-      + '</div>';
-
-    }
-
-    if(movieText){
-
-      html +=
-
-      '<div class="movieText">'
-      + esc(movieText)
-      + '</div>';
-
-    }
-
-    const yt =
-      youtubeId(video);
-
-    if(yt){
-
-      html +=
-
-      '<iframe class="video" src="https://www.youtube.com/embed/'
-      + yt
-      + '" allowfullscreen></iframe>';
-
-    }
-
-    const shareUrl =
-      location.origin
-      + location.pathname
-      + "?id="
-      + index;
-
-    html += shareButtons(
-      encodeURIComponent(shareUrl)
-    );
-
-    div.innerHTML =
-      html;
-
-    list.appendChild(div);
-
-  });
+document.getElementById('app').innerHTML = html;
 
 }
-
-function shareFacebook(url){
-
-  window.open(
-    "https://www.facebook.com/sharer/sharer.php?u="
-    + url,
-    "_blank"
-  );
-
-}
-
-function shareLine(url){
-
-  window.open(
-    "https://social-plugins.line.me/lineit/share?url="
-    + url,
-    "_blank"
-  );
-
-}
-
-function shareX(url){
-
-  window.open(
-    "https://twitter.com/intent/tweet?url="
-    + url,
-    "_blank"
-  );
-
-}
-
-function copyUrl(url){
-
-  navigator.clipboard.writeText(
-    decodeURIComponent(url)
-  );
-
-  alert("URLをコピーしました");
-
-}
-
-const script =
-document.createElement("script");
-
-script.src =
-"https://docs.google.com/spreadsheets/d/"
-+ SHEET_ID
-+ "/gviz/tq?sheet="
-+ encodeURIComponent(SHEET_NAME)
-+ "&tqx=responseHandler:handleSheet;out:json&t="
-+ Date.now();
-
-document.body.appendChild(script);
 
 </script>
 
