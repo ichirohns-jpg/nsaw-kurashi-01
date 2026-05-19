@@ -3,202 +3,586 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>瓦板</title>
 
 <meta property="og:title" content="NSAW暮らし情報局">
 <meta property="og:description" content="四市の暮らし情報・地域動画・お知らせ">
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg">
 <meta property="og:type" content="website">
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#eef5fb;font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;color:#17324d}
-.wrap{max-width:760px;margin:0 auto;padding:18px 14px 80px}
-.top{background:#fff;border-radius:26px;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,.08)}
-.banner{width:100%;display:block}
-.inner{padding:22px 18px}
-.topTitle{font-size:34px;line-height:1.4;font-weight:900;text-align:center}
-.topText{margin-top:14px;font-size:18px;line-height:1.8;font-weight:700;color:#5b7084;text-align:center}
-.card{margin-top:20px;background:#fff;border-radius:26px;padding:18px 16px;box-shadow:0 8px 18px rgba(0,0,0,.08)}
-.title{font-size:30px;line-height:1.45;font-weight:900}
-.image{width:100%;margin-top:14px;border-radius:18px;display:block}
-.text{margin-top:14px;font-size:18px;line-height:1.8;font-weight:700;color:#44566c;white-space:pre-wrap}
-.movieTitle{margin-top:18px;font-size:22px;line-height:1.6;font-weight:900}
-.movieText{margin-top:10px;font-size:17px;line-height:1.8;font-weight:700;color:#44566c;white-space:pre-wrap}
-.video{width:100%;aspect-ratio:16/9;border:none;border-radius:18px;margin-top:16px;background:#000}
-.grid{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.btn{display:flex;align-items:center;justify-content:center;min-height:82px;border:none;border-radius:20px;padding:14px;text-align:center;text-decoration:none;color:#fff;font-size:20px;line-height:1.45;font-weight:900}
-.blue{background:#2563eb}.green{background:#16a34a}.orange{background:#ea580c}.purple{background:#7c3aed}.black{background:#111}
-.loading{margin-top:40px;text-align:center;font-size:28px;font-weight:900}
-.back{display:block;margin-top:24px;text-align:center;font-size:18px;font-weight:900;color:#2563eb;text-decoration:none}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#eef5fb;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+  color:#17324d;
+}
+
+.wrap{
+  max-width:760px;
+  margin:0 auto;
+  padding:18px 14px 80px;
+}
+
+.top{
+  background:#fff;
+  border-radius:26px;
+  overflow:hidden;
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+.banner{
+  width:100%;
+  display:block;
+}
+
+.inner{
+  padding:22px 18px;
+}
+
+.topTitle{
+  font-size:34px;
+  line-height:1.4;
+  font-weight:900;
+  text-align:center;
+}
+
+.topText{
+  margin-top:14px;
+  font-size:18px;
+  line-height:1.8;
+  font-weight:700;
+  color:#5b7084;
+  text-align:center;
+}
+
+.card{
+  margin-top:20px;
+  background:#fff;
+  border-radius:26px;
+  padding:18px 16px;
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+.title{
+  font-size:30px;
+  line-height:1.45;
+  font-weight:900;
+}
+
+.image{
+  width:100%;
+  margin-top:14px;
+  border-radius:18px;
+  display:block;
+}
+
+.text{
+  margin-top:14px;
+  font-size:18px;
+  line-height:1.8;
+  font-weight:700;
+  color:#44566c;
+  white-space:pre-wrap;
+}
+
+.movieTitle{
+  margin-top:18px;
+  font-size:22px;
+  line-height:1.6;
+  font-weight:900;
+}
+
+.movieText{
+  margin-top:10px;
+  font-size:17px;
+  line-height:1.8;
+  font-weight:700;
+  color:#44566c;
+  white-space:pre-wrap;
+}
+
+.video{
+  width:100%;
+  aspect-ratio:16/9;
+  border:none;
+  border-radius:18px;
+  margin-top:16px;
+  background:#000;
+}
+
+.grid{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:82px;
+  border:none;
+  border-radius:20px;
+  padding:14px;
+  text-align:center;
+  text-decoration:none;
+  color:#fff;
+  font-size:20px;
+  line-height:1.45;
+  font-weight:900;
+}
+
+.blue{background:#2563eb;}
+.green{background:#16a34a;}
+.orange{background:#ea580c;}
+.purple{background:#7c3aed;}
+.black{background:#111111;}
+
+.loading{
+  margin-top:40px;
+  text-align:center;
+  font-size:28px;
+  font-weight:900;
+}
+
+.back{
+  display:block;
+  margin-top:24px;
+  text-align:center;
+  font-size:18px;
+  font-weight:900;
+  color:#2563eb;
+  text-decoration:none;
+}
+
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
 
   <div class="top">
-    <img class="banner" src="./top.jpg" alt="瓦板">
+
+    <img
+      class="banner"
+      src="./top.jpg"
+      alt="瓦板"
+    >
+
     <div class="inner">
-      <div class="topTitle">瓦板</div>
-      <div class="topText">四市の暮らし情報・地域動画・お知らせをまとめています。</div>
-      <a class="back" href="./index.html">← トップへ戻る</a>
+
+      <div class="topTitle">
+        瓦板
+      </div>
+
+      <div class="topText">
+        四市の暮らし情報・地域動画・お知らせをまとめています。
+      </div>
+
+      <a
+        class="back"
+        href="./index.html"
+      >
+        ← トップへ戻る
+      </a>
+
     </div>
+
   </div>
 
-  <div id="list"><div class="loading">読み込み中...</div></div>
+  <div id="list">
+
+    <div class="loading">
+      読み込み中...
+    </div>
+
+  </div>
 
 </div>
 
 <script>
-const SHEET_ID="13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
-const SHEET_NAME="NSAW暮らし情報局_データ";
 
-function esc(s){
-  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const SHEET_ID =
+"13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
+
+const SHEET_NAME =
+"NSAW暮らし情報局_データ";
+
+function esc(str){
+
+  return String(str || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+
 }
 
 function cell(row,i){
-  if(!row.c || !row.c[i]) return "";
-  const c=row.c[i];
-  if(c.f) return c.f;
-  return c.v || "";
+
+  if(!row.c || !row.c[i]){
+    return "";
+  }
+
+  return row.c[i].v || "";
+
 }
 
 function drive(url){
-  url=String(url||"");
-  let m=url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  if(m) return "https://drive.google.com/thumbnail?id="+m[1]+"&sz=w1600";
-  m=url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-  if(m) return "https://drive.google.com/thumbnail?id="+m[1]+"&sz=w1600";
+
+  url = String(url || "");
+
+  let m =
+    url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+
+  if(m){
+
+    return "https://drive.google.com/thumbnail?id="
+      + m[1]
+      + "&sz=w1600";
+
+  }
+
+  m =
+    url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+
+  if(m){
+
+    return "https://drive.google.com/thumbnail?id="
+      + m[1]
+      + "&sz=w1600";
+
+  }
+
   return url;
+
 }
 
 function youtubeId(url){
-  url=String(url||"");
-  let m=url.match(/[?&]v=([^&]+)/);
+
+  url = String(url || "");
+
+  let m =
+    url.match(/[?&]v=([^&]+)/);
+
   if(m) return m[1];
-  m=url.match(/youtu\.be\/([^?&]+)/);
+
+  m =
+    url.match(/youtu\.be\/([^?&]+)/);
+
   if(m) return m[1];
-  m=url.match(/shorts\/([^?&]+)/);
+
+  m =
+    url.match(/shorts\/([^?&]+)/);
+
   if(m) return m[1];
-  m=url.match(/embed\/([^?&]+)/);
-  if(m) return m[1];
+
   return "";
+
 }
 
 function handleSheet(json){
-  const rows=(json.table.rows||[]).map((row,idx)=>({
-    idx,
-    date:cell(row,0),
-    id:cell(row,1),
-    title:cell(row,2),
-    image:drive(cell(row,3)),
-    detail:cell(row,4),
-    info1Title:cell(row,5),
-    info1Url:cell(row,6),
-    info2Title:cell(row,7),
-    info2Url:cell(row,8),
-    info3Title:cell(row,9),
-    info3Url:cell(row,10),
-    info4Title:cell(row,11),
-    info4Url:cell(row,12),
-    movieTitle:cell(row,15),
-    movieText:cell(row,16),
-    video:cell(row,17),
-    show:cell(row,18),
-    sort:Number(cell(row,19))||0
-  }))
-  .filter(x=>String(x.show).trim()==="はい")
-  .sort((a,b)=>(b.sort-a.sort)||(b.idx-a.idx));
 
-  const list=document.getElementById("list");
-  list.innerHTML="";
+  const rows =
+    (json.table.rows || [])
+    .map((row,idx)=>({
+
+      idx,
+
+      id:cell(row,1),
+
+      title:cell(row,2),
+
+      image:drive(cell(row,3)),
+
+      detail:cell(row,4),
+
+      info1Title:cell(row,5),
+      info1Url:cell(row,6),
+
+      info2Title:cell(row,7),
+      info2Url:cell(row,8),
+
+      info3Title:cell(row,9),
+      info3Url:cell(row,10),
+
+      info4Title:cell(row,11),
+      info4Url:cell(row,12),
+
+      movieTitle:cell(row,13),
+
+      movieText:cell(row,14),
+
+      videoTitle:cell(row,15),
+
+      videoText:cell(row,16),
+
+      video:cell(row,17),
+
+      show:cell(row,18),
+
+      sort:Number(cell(row,19)) || 0
+
+    }))
+    .filter(x=>String(x.show).trim()==="はい")
+    .sort((a,b)=>(b.sort-a.sort)||(b.idx-a.idx));
+
+  const list =
+    document.getElementById("list");
+
+  list.innerHTML = "";
 
   rows.forEach((item,index)=>{
-    if(!item.title) return;
 
-    let html='<div class="card">';
-    html+='<div class="title">'+esc(item.title)+'</div>';
+    if(!item.title){
+      return;
+    }
+
+    let html =
+    `<div class="card">`;
+
+    html +=
+    `<div class="title">
+      ${esc(item.title)}
+    </div>`;
 
     if(item.image){
-      html+='<img class="image" src="'+esc(item.image)+'">';
+
+      html +=
+      `<img
+        class="image"
+        src="${esc(item.image)}">`;
+
     }
 
     if(item.detail){
-      html+='<div class="text">'+esc(item.detail)+'</div>';
+
+      html +=
+      `<div class="text">
+        ${esc(item.detail)}
+      </div>`;
+
     }
 
-    html+='<div class="grid">';
+    html += `<div class="grid">`;
 
     if(item.info1Title && item.info1Url){
-      html+='<a class="btn blue" href="'+esc(item.info1Url)+'" target="_blank">'+esc(item.info1Title)+'</a>';
+
+      html +=
+      `<a
+        class="btn blue"
+        href="${esc(item.info1Url)}"
+        target="_blank">
+        ${esc(item.info1Title)}
+      </a>`;
+
     }
 
     if(item.info2Title && item.info2Url){
-      html+='<a class="btn green" href="'+esc(item.info2Url)+'" target="_blank">'+esc(item.info2Title)+'</a>';
+
+      html +=
+      `<a
+        class="btn green"
+        href="${esc(item.info2Url)}"
+        target="_blank">
+        ${esc(item.info2Title)}
+      </a>`;
+
     }
 
     if(item.info3Title && item.info3Url){
-      html+='<a class="btn orange" href="'+esc(item.info3Url)+'" target="_blank">'+esc(item.info3Title)+'</a>';
+
+      html +=
+      `<a
+        class="btn orange"
+        href="${esc(item.info3Url)}"
+        target="_blank">
+        ${esc(item.info3Title)}
+      </a>`;
+
     }
 
     if(item.info4Title && item.info4Url){
-      html+='<a class="btn purple" href="'+esc(item.info4Url)+'" target="_blank">'+esc(item.info4Title)+'</a>';
+
+      html +=
+      `<a
+        class="btn purple"
+        href="${esc(item.info4Url)}"
+        target="_blank">
+        ${esc(item.info4Title)}
+      </a>`;
+
     }
 
-    html+='</div>';
+    html += `</div>`;
 
     if(item.movieTitle){
-      html+='<div class="movieTitle">'+esc(item.movieTitle)+'</div>';
+
+      html +=
+      `<div class="movieTitle">
+        ${esc(item.movieTitle)}
+      </div>`;
+
     }
 
     if(item.movieText){
-      html+='<div class="movieText">'+esc(item.movieText)+'</div>';
+
+      html +=
+      `<div class="movieText">
+        ${esc(item.movieText)}
+      </div>`;
+
     }
 
-    const yt=youtubeId(item.video);
+    if(item.videoTitle){
+
+      html +=
+      `<div class="movieTitle">
+        ${esc(item.videoTitle)}
+      </div>`;
+
+    }
+
+    if(item.videoText){
+
+      html +=
+      `<div class="movieText">
+        ${esc(item.videoText)}
+      </div>`;
+
+    }
+
+    const yt =
+      youtubeId(item.video);
+
     if(yt){
-      html+='<iframe class="video" src="https://www.youtube.com/embed/'+esc(yt)+'" allowfullscreen></iframe>';
+
+      html +=
+      `<iframe
+        class="video"
+        src="https://www.youtube.com/embed/${esc(yt)}"
+        allowfullscreen>
+      </iframe>`;
+
     }
 
-    const num=String(item.id || (index+1)).replace(/\D/g,"").padStart(3,"0");
-    const shareUrl="https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-"+num+".html";
+    const num =
+      String(item.id || (index+1))
+      .replace(/\D/g,"")
+      .padStart(3,"0");
 
-    html+='<div class="grid">';
-    html+='<button class="btn blue" onclick="shareFacebook(\''+shareUrl+'\')" type="button">Facebook</button>';
-    html+='<button class="btn green" onclick="shareLine(\''+shareUrl+'\')" type="button">LINE</button>';
-    html+='<button class="btn black" onclick="shareX(\''+shareUrl+'\')" type="button">X</button>';
-    html+='<button class="btn purple" onclick="copyUrl(\''+shareUrl+'\')" type="button">コピー</button>';
-    html+='</div>';
+    const shareUrl =
+      "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id="
+      + num;
 
-    html+='</div>';
-    list.insertAdjacentHTML("beforeend",html);
+    html +=
+    `<div class="grid">
+
+      <button
+        class="btn blue"
+        onclick="shareFacebook('${shareUrl}')"
+        type="button">
+        Facebook
+      </button>
+
+      <button
+        class="btn green"
+        onclick="shareLine('${shareUrl}')"
+        type="button">
+        LINE
+      </button>
+
+      <button
+        class="btn black"
+        onclick="shareX('${shareUrl}')"
+        type="button">
+        X
+      </button>
+
+      <button
+        class="btn purple"
+        onclick="copyUrl('${shareUrl}')"
+        type="button">
+        コピー
+      </button>
+
+    </div>`;
+
+    html += `</div>`;
+
+    list.insertAdjacentHTML(
+      "beforeend",
+      html
+    );
+
   });
+
 }
 
 function shareFacebook(url){
-  window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(url),"_blank");
+
+  window.open(
+    "https://www.facebook.com/sharer/sharer.php?u="
+    + encodeURIComponent(url),
+    "_blank"
+  );
+
 }
 
 function shareLine(url){
-  window.open("https://social-plugins.line.me/lineit/share?url="+encodeURIComponent(url),"_blank");
+
+  window.open(
+    "https://social-plugins.line.me/lineit/share?url="
+    + encodeURIComponent(url),
+    "_blank"
+  );
+
 }
 
 function shareX(url){
-  window.open("https://twitter.com/intent/tweet?url="+encodeURIComponent(url),"_blank");
+
+  window.open(
+    "https://twitter.com/intent/tweet?url="
+    + encodeURIComponent(url),
+    "_blank"
+  );
+
 }
 
 function copyUrl(url){
+
   navigator.clipboard.writeText(url);
+
   alert("URLをコピーしました");
+
 }
 
-window.handleSheet=handleSheet;
+window.handleSheet =
+handleSheet;
 
-const script=document.createElement("script");
-script.src="https://docs.google.com/spreadsheets/d/"+SHEET_ID+"/gviz/tq?sheet="+encodeURIComponent(SHEET_NAME)+"&tqx=out:json;responseHandler:handleSheet&t="+Date.now();
+const script =
+document.createElement("script");
+
+script.src =
+"https://docs.google.com/spreadsheets/d/"
++ SHEET_ID
++ "/gviz/tq?sheet="
++ encodeURIComponent(SHEET_NAME)
++ "&tqx=responseHandler:handleSheet;out:json&t="
++ Date.now();
+
 document.body.appendChild(script);
+
 </script>
+
 </body>
 </html>
