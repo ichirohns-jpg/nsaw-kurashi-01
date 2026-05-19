@@ -35,19 +35,14 @@ body{
   padding:18px;
   margin-bottom:18px;
   box-shadow:0 4px 14px rgba(0,0,0,.08);
-}
-
-.error{
-  text-align:center;
-  padding:40px;
-  font-size:22px;
-  color:#c62828;
+  line-height:1.8;
+  white-space:pre-wrap;
+  word-break:break-all;
 }
 
 .debug{
-  text-align:center;
-  padding:20px;
   font-size:20px;
+  font-weight:900;
   color:#1565c0;
 }
 
@@ -62,7 +57,7 @@ body{
 
 <div class="wrap" id="app">
 
-<div class="debug">
+<div class="card">
 読み込み中...
 </div>
 
@@ -86,7 +81,7 @@ window.handleSheet = function(json){
     let html = "";
 
     html += `
-    <div class="card">
+    <div class="card debug">
       rows件数:
       ${rows.length}
     </div>
@@ -96,21 +91,29 @@ window.handleSheet = function(json){
 
       const c = row.c || [];
 
-      const title =
-      c[2] && c[2].v
-      ? c[2].v
-      : "タイトルなし";
+      const allData =
+      JSON.stringify(
+        c.map(v =>
+          v && v.v != null
+          ? v.v
+          : ""
+        ),
+        null,
+        2
+      );
 
       html += `
+
       <div class="card">
 
-        ${index + 1}件目
+      ${index + 1}件目
 
-        <br><br>
+      <br><br>
 
-        ${title}
+      ${allData}
 
       </div>
+
       `;
     });
 
@@ -121,7 +124,7 @@ window.handleSheet = function(json){
 
     document.getElementById("app").innerHTML =
     `
-    <div class="error">
+    <div class="card">
     エラー:
     <br><br>
     ${e.message}
