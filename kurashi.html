@@ -60,16 +60,6 @@ body{
   color:#5b7084;
 }
 
-.video{
-  margin-top:24px;
-  width:100%;
-  aspect-ratio:16/9;
-  border:none;
-  border-radius:20px;
-  overflow:hidden;
-  background:#000;
-}
-
 .card{
   margin-top:18px;
   background:#ffffff;
@@ -138,17 +128,8 @@ body{
       </div>
 
       <div class="text">
-        地域情報、
-        安否情報、
-        動画情報を表示しています。
+        スプレッドシートの情報を表示しています。
       </div>
-
-      <iframe
-        class="video"
-        src="https://www.youtube.com/embed/jfKfPfyJRdk"
-        title="地域動画"
-        allowfullscreen
-      ></iframe>
 
       <a
         class="back"
@@ -177,7 +158,7 @@ const SHEET_ID =
 "13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY";
 
 const SHEET_NAME =
-"安否ログ";
+"シート1";
 
 const URL =
 "https://docs.google.com/spreadsheets/d/"
@@ -222,16 +203,16 @@ fetch(URL)
     const c =
       row.c || [];
 
-    const date =
+    const title =
       c[0]?.v || "";
 
-    const name =
+    const detail =
       c[1]?.v || "";
 
-    const status =
+    const date =
       c[2]?.v || "";
 
-    if(!name){
+    if(!title){
       return;
     }
 
@@ -244,7 +225,7 @@ fetch(URL)
     div.innerHTML =
 
       '<div class="cardTitle">'
-      + esc(name)
+      + esc(title)
       + '</div>'
 
       +
@@ -256,7 +237,7 @@ fetch(URL)
       +
 
       '<div class="cardText">'
-      + esc(status)
+      + esc(detail)
       + '</div>';
 
     list.appendChild(div);
