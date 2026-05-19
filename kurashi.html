@@ -113,7 +113,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  min-height:95px;
+  min-height:90px;
   border:none;
   border-radius:22px;
   padding:18px 14px;
@@ -147,16 +147,6 @@ body{
 
 .black{
   background:#111111;
-}
-
-.section{
-  margin-top:34px;
-}
-
-.sectionTitle{
-  font-size:28px;
-  line-height:1.5;
-  font-weight:900;
 }
 
 .loading{
@@ -218,108 +208,6 @@ body{
 
     <div class="loading">
       読み込み中...
-    </div>
-
-  </div>
-
-  <div class="section">
-
-    <div class="sectionTitle">
-      生活情報
-    </div>
-
-    <div class="grid">
-
-      <a
-        class="btn blue"
-        href="https://www.google.com/maps/search/近くのコンビニ/"
-        target="_blank"
-      >
-        コンビニ
-      </a>
-
-      <a
-        class="btn green"
-        href="https://www.google.com/maps/search/近くのトイレ/"
-        target="_blank"
-      >
-        トイレ
-      </a>
-
-      <a
-        class="btn red"
-        href="https://www.google.com/maps/search/近くの病院/"
-        target="_blank"
-      >
-        病院
-      </a>
-
-      <a
-        class="btn purple"
-        href="https://www.google.com/maps/search/近くの薬局/"
-        target="_blank"
-      >
-        薬局
-      </a>
-
-      <a
-        class="btn red"
-        href="tel:119"
-      >
-        119
-      </a>
-
-      <a
-        class="btn orange"
-        href="tel:110"
-      >
-        110
-      </a>
-
-    </div>
-
-  </div>
-
-  <div class="section">
-
-    <div class="sectionTitle">
-      SNS共有
-    </div>
-
-    <div class="grid">
-
-      <button
-        class="btn blue"
-        type="button"
-        onclick="shareFacebook()"
-      >
-        Facebook
-      </button>
-
-      <button
-        class="btn green"
-        type="button"
-        onclick="shareLine()"
-      >
-        LINE
-      </button>
-
-      <button
-        class="btn black"
-        type="button"
-        onclick="shareX()"
-      >
-        X
-      </button>
-
-      <button
-        class="btn purple"
-        type="button"
-        onclick="copyUrl()"
-      >
-        URLコピー
-      </button>
-
     </div>
 
   </div>
@@ -437,6 +325,50 @@ function buttonClass(text){
 
 }
 
+function shareButtons(url){
+
+  return `
+
+  <div class="grid">
+
+    <button
+      class="btn blue"
+      onclick="shareFacebook('${url}')"
+      type="button"
+    >
+      Facebook
+    </button>
+
+    <button
+      class="btn green"
+      onclick="shareLine('${url}')"
+      type="button"
+    >
+      LINE
+    </button>
+
+    <button
+      class="btn black"
+      onclick="shareX('${url}')"
+      type="button"
+    >
+      X
+    </button>
+
+    <button
+      class="btn purple"
+      onclick="copyUrl('${url}')"
+      type="button"
+    >
+      コピー
+    </button>
+
+  </div>
+
+  `;
+
+}
+
 function handleSheet(json){
 
   const rows =
@@ -449,7 +381,7 @@ function handleSheet(json){
 
   rows.reverse();
 
-  rows.forEach(row => {
+  rows.forEach((row,index) => {
 
     const date =
       cell(row,0);
@@ -603,6 +535,16 @@ function handleSheet(json){
 
     }
 
+    const shareUrl =
+      location.origin
+      + location.pathname
+      + "?id="
+      + index;
+
+    html += shareButtons(
+      encodeURIComponent(shareUrl)
+    );
+
     div.innerHTML =
       html;
 
@@ -612,40 +554,40 @@ function handleSheet(json){
 
 }
 
-function shareFacebook(){
+function shareFacebook(url){
 
   window.open(
     "https://www.facebook.com/sharer/sharer.php?u="
-    + encodeURIComponent(location.href),
+    + url,
     "_blank"
   );
 
 }
 
-function shareLine(){
+function shareLine(url){
 
   window.open(
     "https://social-plugins.line.me/lineit/share?url="
-    + encodeURIComponent(location.href),
+    + url,
     "_blank"
   );
 
 }
 
-function shareX(){
+function shareX(url){
 
   window.open(
     "https://twitter.com/intent/tweet?url="
-    + encodeURIComponent(location.href),
+    + url,
     "_blank"
   );
 
 }
 
-function copyUrl(){
+function copyUrl(url){
 
   navigator.clipboard.writeText(
-    location.href
+    decodeURIComponent(url)
   );
 
   alert("URLをコピーしました");
