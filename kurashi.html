@@ -102,18 +102,8 @@ body{
   background:#000;
 }
 
-.section{
-  margin-top:30px;
-}
-
-.sectionTitle{
-  font-size:28px;
-  line-height:1.5;
-  font-weight:900;
-}
-
 .grid{
-  margin-top:16px;
+  margin-top:18px;
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:14px;
@@ -123,7 +113,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  min-height:100px;
+  min-height:95px;
   border-radius:22px;
   padding:18px 14px;
   text-align:center;
@@ -152,6 +142,16 @@ body{
 
 .red{
   background:#dc2626;
+}
+
+.section{
+  margin-top:34px;
+}
+
+.sectionTitle{
+  font-size:28px;
+  line-height:1.5;
+  font-weight:900;
 }
 
 .loading{
@@ -213,78 +213,6 @@ body{
 
     <div class="loading">
       読み込み中...
-    </div>
-
-  </div>
-
-  <div class="section">
-
-    <div class="sectionTitle">
-      四市情報
-    </div>
-
-    <div class="grid">
-
-      <a
-        class="btn blue"
-        href="https://www.city.shiki.lg.jp/"
-        target="_blank"
-      >
-        志木市HP
-      </a>
-
-      <a
-        class="btn blue"
-        href="tel:0484731111"
-      >
-        志木包括
-      </a>
-
-      <a
-        class="btn green"
-        href="https://www.city.niiza.lg.jp/"
-        target="_blank"
-      >
-        新座市HP
-      </a>
-
-      <a
-        class="btn green"
-        href="tel:0484776891"
-      >
-        新座包括
-      </a>
-
-      <a
-        class="btn orange"
-        href="https://www.city.asaka.lg.jp/"
-        target="_blank"
-      >
-        朝霞市HP
-      </a>
-
-      <a
-        class="btn orange"
-        href="tel:0484631921"
-      >
-        朝霞包括
-      </a>
-
-      <a
-        class="btn purple"
-        href="https://www.city.wako.lg.jp/"
-        target="_blank"
-      >
-        和光市HP
-      </a>
-
-      <a
-        class="btn purple"
-        href="tel:0484249123"
-      >
-        和光包括
-      </a>
-
     </div>
 
   </div>
@@ -436,6 +364,30 @@ function youtubeId(url){
 
 }
 
+function buttonClass(text){
+
+  text = String(text || "");
+
+  if(text.includes("志木")){
+    return "blue";
+  }
+
+  if(text.includes("新座")){
+    return "green";
+  }
+
+  if(text.includes("朝霞")){
+    return "orange";
+  }
+
+  if(text.includes("和光")){
+    return "purple";
+  }
+
+  return "blue";
+
+}
+
 function handleSheet(json){
 
   const rows =
@@ -463,6 +415,30 @@ function handleSheet(json){
 
     const detail =
       cell(row,4);
+
+    const city1 =
+      cell(row,5);
+
+    const city1url =
+      cell(row,6);
+
+    const city2 =
+      cell(row,7);
+
+    const city2url =
+      cell(row,8);
+
+    const city3 =
+      cell(row,9);
+
+    const city3url =
+      cell(row,10);
+
+    const city4 =
+      cell(row,11);
+
+    const city4url =
+      cell(row,12);
 
     const video =
       cell(row,17);
@@ -508,6 +484,62 @@ function handleSheet(json){
       + '</div>';
 
     }
+
+    html += '<div class="grid">';
+
+    if(city1 && city1url){
+
+      html +=
+      '<a class="btn '
+      + buttonClass(city1)
+      + '" href="'
+      + esc(city1url)
+      + '" target="_blank">'
+      + esc(city1)
+      + '</a>';
+
+    }
+
+    if(city2 && city2url){
+
+      html +=
+      '<a class="btn '
+      + buttonClass(city2)
+      + '" href="'
+      + esc(city2url)
+      + '" target="_blank">'
+      + esc(city2)
+      + '</a>';
+
+    }
+
+    if(city3 && city3url){
+
+      html +=
+      '<a class="btn '
+      + buttonClass(city3)
+      + '" href="'
+      + esc(city3url)
+      + '" target="_blank">'
+      + esc(city3)
+      + '</a>';
+
+    }
+
+    if(city4 && city4url){
+
+      html +=
+      '<a class="btn '
+      + buttonClass(city4)
+      + '" href="'
+      + esc(city4url)
+      + '" target="_blank">'
+      + esc(city4)
+      + '</a>';
+
+    }
+
+    html += '</div>';
 
     const yt =
       youtubeId(video);
