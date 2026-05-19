@@ -138,14 +138,21 @@ body{
   border-radius:16px;
 }
 
+.video video{
+  width:100%;
+  border-radius:16px;
+}
+
 .sns{
   display:flex;
   gap:10px;
   margin-top:22px;
+  flex-wrap:wrap;
 }
 
 .sns button{
   flex:1;
+  min-width:120px;
   border:none;
   border-radius:14px;
   padding:14px;
@@ -176,6 +183,13 @@ body{
   font-size:20px;
 }
 
+.error{
+  text-align:center;
+  padding:60px 20px;
+  font-size:18px;
+  color:#c62828;
+}
+
 </style>
 </head>
 
@@ -201,201 +215,36 @@ const SHEET_ID =
 const SHEET_NAME =
 "NSAW暮らし情報局_データ";
 
-const params = new URLSearchParams(location.search);
+const params =
+new URLSearchParams(location.search);
 
-const targetId = params.get("id") || "";
-
-const jsonpUrl =
-"https://docs.google.com/spreadsheets/d/"
-+ SHEET_ID +
-"/gviz/tq?sheet="
-+ encodeURIComponent(SHEET_NAME)
-+ "&tqx=out:json;responseHandler=handleSheet";
-
-const script = document.createElement("script");
-
-script.src = jsonpUrl;
-
-document.body.appendChild(script);
-
-function handleSheet(json){
-
-  const rows =
-  json.table.rows || [];
-
-  let html = "";
-
-  rows.forEach(row=>{
-
-    const c = row.c || [];
-
-    const date = get(c,0);
-    const id = get(c,1);
-    const title = get(c,2);
-    const image = get(c,3);
-    const text = get(c,4);
-
-    const info1Title = get(c,5);
-    const info1Url = get(c,6);
-
-    const info2Title = get(c,7);
-    const info2Url = get(c,8);
-
-    const info3Title = get(c,9);
-    const info3Url = get(c,10);
-
-    const info4Title = get(c,11);
-    const info4Url = get(c,12);
-
-    const videoTitle = get(c,13);
-    const videoDesc = get(c,14);
-    const videoUrl = get(c,15);
-
-    const flag = get(c,16);
-
-    if(flag !== "はい") return;
-
-    if(targetId && id !== targetId) return;
-
-    const shareUrl =
-    "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id="
-    + id;
-
-    html += `
-
-    <div class="card">
-
-      <div class="date">
-        ${date}
-      </div>
-
-      <div class="title">
-        ${title}
-      </div>
-
-      ${
-        image
-        ?
-        `<img class="main-image" src="${image}">`
-        :
-        ``
-      }
-
-      <div class="text">
-        ${escapeHtml(text)}
-      </div>
-
-      <div class="buttons">
-
-        ${
-          info1Title && info1Url
-          ?
-          `<a class="city-btn shiki" href="${info1Url}" target="_blank">${info1Title}</a>`
-          :
-          ``
-        }
-
-        ${
-          info2Title && info2Url
-          ?
-          `<a class="city-btn niiza" href="${info2Url}" target="_blank">${info2Title}</a>`
-          :
-          ``
-        }
-
-        ${
-          info3Title && info3Url
-          ?
-          `<a class="city-btn asaka" href="${info3Url}" target="_blank">${info3Title}</a>`
-          :
-          ``
-        }
-
-        ${
-          info4Title && info4Url
-          ?
-          `<a class="city-btn wako" href="${info4Url}" target="_blank">${info4Title}</a>`
-          :
-          ``
-        }
-
-      </div>
-
-      ${
-        videoUrl
-        ?
-        `
-        <div class="video">
-
-          <div class="video-title">
-            ${videoTitle}
-          </div>
-
-          <div class="video-desc">
-            ${videoDesc}
-          </div>
-
-          ${buildVideo(videoUrl)}
-
-        </div>
-        `
-        :
-        ``
-      }
-
-      <div class="sns">
-
-        <button class="fb"
-        onclick="shareFacebook('${shareUrl}')">
-        Facebook
-        </button>
-
-        <button class="line"
-        onclick="shareLine('${shareUrl}')">
-        LINE
-        </button>
-
-        <button class="x"
-        onclick="shareX('${shareUrl}')">
-        X
-        </button>
-
-        <button class="copy"
-        onclick="copyUrl('${shareUrl}')">
-        URLコピー
-        </button>
-
-      </div>
-
-    </div>
-
-    `;
-  });
-
-  if(!html){
-
-    html = `
-    <div class="loading">
-    記事がありません
-    </div>
-    `;
-  }
-
-  document.getElementById("app").innerHTML =
-  html;
-}
+const targetId =
+params.get("id") || "";
 
 function get(c,i){
 
-  return c[i] && c[i].v
-  ? c[i].v
+  return c[i] && c[i].v != null
+  ? String(c[i].v)
   : "";
+}
+
+function escapeHtml(str){
+
+  return String(str)
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;");
 }
 
 function buildVideo(url){
 
-  if(url.includes("youtube.com") ||
-     url.includes("youtu.be")){
+  if(!url) return "";
+
+  if(
+    url.includes("youtube.com") ||
+    url.includes("youtu.be")
+  ){
 
     let id = "";
 
@@ -410,24 +259,19 @@ function buildVideo(url){
       id =
       url.split("youtu.be/")[1]
       .split("?")[0];
-
     }
 
     return `
     <iframe
-    src="https://www.youtube.com/embed/${id}"
-    allowfullscreen>
+      src="https://www.youtube.com/embed/${id}"
+      allowfullscreen>
     </iframe>
     `;
   }
 
   return `
-  <video controls playsinline
-  style="
-  width:100%;
-  border-radius:16px;
-  ">
-  <source src="${url}">
+  <video controls playsinline>
+    <source src="${url}">
   </video>
   `;
 }
@@ -466,14 +310,202 @@ function copyUrl(url){
   alert("URLをコピーしました");
 }
 
-function escapeHtml(str){
+window.handleSheet = function(json){
 
-  return String(str)
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;");
-}
+  try{
+
+    const rows =
+    json.table.rows || [];
+
+    let html = "";
+
+    rows.forEach(row=>{
+
+      const c = row.c || [];
+
+      const date = get(c,0);
+      const id = get(c,1);
+      const title = get(c,2);
+      const image = get(c,3);
+      const text = get(c,4);
+
+      const info1Title = get(c,5);
+      const info1Url = get(c,6);
+
+      const info2Title = get(c,7);
+      const info2Url = get(c,8);
+
+      const info3Title = get(c,9);
+      const info3Url = get(c,10);
+
+      const info4Title = get(c,11);
+      const info4Url = get(c,12);
+
+      const videoTitle = get(c,13);
+      const videoDesc = get(c,14);
+      const videoUrl = get(c,15);
+
+      const flag = get(c,16);
+
+      if(flag !== "はい") return;
+
+      if(targetId && id !== targetId) return;
+
+      const shareUrl =
+      "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id="
+      + id;
+
+      html += `
+
+      <div class="card">
+
+        <div class="date">
+          ${date}
+        </div>
+
+        <div class="title">
+          ${escapeHtml(title)}
+        </div>
+
+        ${
+          image
+          ?
+          `<img class="main-image" src="${image}">`
+          :
+          ``
+        }
+
+        <div class="text">
+          ${escapeHtml(text)}
+        </div>
+
+        <div class="buttons">
+
+          ${
+            info1Title && info1Url
+            ?
+            `<a class="city-btn shiki" href="${info1Url}" target="_blank">${escapeHtml(info1Title)}</a>`
+            :
+            ``
+          }
+
+          ${
+            info2Title && info2Url
+            ?
+            `<a class="city-btn niiza" href="${info2Url}" target="_blank">${escapeHtml(info2Title)}</a>`
+            :
+            ``
+          }
+
+          ${
+            info3Title && info3Url
+            ?
+            `<a class="city-btn asaka" href="${info3Url}" target="_blank">${escapeHtml(info3Title)}</a>`
+            :
+            ``
+          }
+
+          ${
+            info4Title && info4Url
+            ?
+            `<a class="city-btn wako" href="${info4Url}" target="_blank">${escapeHtml(info4Title)}</a>`
+            :
+            ``
+          }
+
+        </div>
+
+        ${
+          videoUrl
+          ?
+          `
+          <div class="video">
+
+            <div class="video-title">
+              ${escapeHtml(videoTitle)}
+            </div>
+
+            <div class="video-desc">
+              ${escapeHtml(videoDesc)}
+            </div>
+
+            ${buildVideo(videoUrl)}
+
+          </div>
+          `
+          :
+          ``
+        }
+
+        <div class="sns">
+
+          <button
+            class="fb"
+            onclick="shareFacebook('${shareUrl}')">
+            Facebook
+          </button>
+
+          <button
+            class="line"
+            onclick="shareLine('${shareUrl}')">
+            LINE
+          </button>
+
+          <button
+            class="x"
+            onclick="shareX('${shareUrl}')">
+            X
+          </button>
+
+          <button
+            class="copy"
+            onclick="copyUrl('${shareUrl}')">
+            URLコピー
+          </button>
+
+        </div>
+
+      </div>
+
+      `;
+    });
+
+    if(!html){
+
+      html = `
+      <div class="error">
+      表示できる記事がありません
+      </div>
+      `;
+    }
+
+    document.getElementById("app").innerHTML =
+    html;
+
+  }catch(e){
+
+    document.getElementById("app").innerHTML =
+    `
+    <div class="error">
+    読み込みエラーが発生しました
+    </div>
+    `;
+
+    console.error(e);
+  }
+};
+
+const script =
+document.createElement("script");
+
+script.src =
+"https://docs.google.com/spreadsheets/d/"
++ SHEET_ID
++ "/gviz/tq?sheet="
++ encodeURIComponent(SHEET_NAME)
++ "&tqx=out:json;responseHandler=handleSheet";
+
+document.body.appendChild(script);
 
 </script>
 
