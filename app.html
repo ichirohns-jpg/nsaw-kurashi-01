@@ -1,3 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>NSAW暮らし情報局</title>
+
+<meta name="description" content="志木・新座・朝霞・和光の暮らし情報">
+
+<meta property="og:title" content="NSAW暮らし情報局">
+<meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報">
+<meta property="og:type" content="website">
+
+<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/app.html">
+
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#eef3f8;
+  font-family:
+  "Hiragino Sans",
+  "Yu Gothic",
+  sans-serif;
+  color:#17324d;
+}
+
+.wrap{
+  max-width:760px;
+  margin:0 auto;
+  padding:16px;
+}
+
+.banner{
+  width:100%;
+  border-radius:20px;
+  display:block;
+  margin-bottom:18px;
+}
+
+.section{
+  background:#ffffff;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 4px 18px rgba(0,0,0,.08);
+}
+
+.section-title{
+  font-size:30px;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.video-wrap{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  background:#000;
+  border-radius:16px;
+  overflow:hidden;
+}
+
+.video-wrap iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:none;
+}
+
+.card{
+  background:#f7fbff;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:18px;
+}
+
+.date{
+  font-size:15px;
+  color:#607489;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.title{
+  font-size:28px;
+  line-height:1.5;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+.text{
+  font-size:20px;
+  line-height:1.9;
+  white-space:pre-wrap;
+}
+
+.thumb{
+  width:100%;
+  border-radius:14px;
+  margin-top:14px;
+}
+
+.sns{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
+}
+
+.sns a,
+.copy-btn{
+  flex:1;
+  border:none;
+  text-decoration:none;
+  text-align:center;
+  color:#fff;
+  border-radius:14px;
+  padding:16px 8px;
+  font-size:18px;
+  font-weight:900;
+}
+
+.fb{
+  background:#1877f2;
+}
+
+.line{
+  background:#06c755;
+}
+
+.x{
+  background:#000;
+}
+
+.copy-btn{
+  background:#ff7a00;
+}
+
+.loading{
+  text-align:center;
+  padding:40px 10px;
+  font-size:24px;
+  font-weight:900;
+}
+
+.error{
+  text-align:center;
+  padding:40px 10px;
+  font-size:22px;
+  font-weight:900;
+  color:#c62828;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+<img
+class="banner"
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg"
+>
+
+<div class="section">
+
+<div class="section-title">
+今日のお楽しみ動画
+</div>
+
+<div id="mainVideo">
+
+<div class="loading">
+読み込み中...
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">
+4市情報
+</div>
+
+<div id="cityNews">
+
+<div class="loading">
+読み込み中...
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">
+最新5件
+</div>
+
+<div id="latestNews">
+
+<div class="loading">
+読み込み中...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 <script>
 
 const SHEET_ID =
@@ -24,7 +252,30 @@ document.createElement('script');
 
 script.src = JSONP_URL;
 
+script.onerror = function(){
+
+showError();
+
+};
+
 document.body.appendChild(script);
+
+setTimeout(function(){
+
+const loading =
+document.querySelectorAll('.loading');
+
+loading.forEach(el => {
+
+if(el.innerHTML.includes('読み込み中')){
+
+showError();
+
+}
+
+});
+
+},8000);
 
 function handleSheet(json){
 
@@ -57,9 +308,16 @@ render(data);
 
 function render(data){
 
+const mainVideo =
+document.getElementById('mainVideo');
+
+const cityNews =
+document.getElementById('cityNews');
+
 const latestNews =
 document.getElementById('latestNews');
 
+cityNews.innerHTML = '';
 latestNews.innerHTML = '';
 
 let showData = data;
@@ -75,6 +333,36 @@ showData =
 data.slice(0,5);
 
 }
+
+const videoItem =
+data.find(x => x.youtube);
+
+if(videoItem){
+
+mainVideo.innerHTML = `
+<div class="video-wrap">
+<iframe
+src="${youtubeEmbed(videoItem.youtube)}"
+allowfullscreen
+></iframe>
+</div>
+`;
+
+}else{
+
+mainVideo.innerHTML =
+'<div class="error">動画がありません</div>';
+
+}
+
+const cityItems =
+data.filter(x => x.city);
+
+cityItems.forEach(item => {
+
+cityNews.innerHTML += buildCard(item);
+
+});
 
 showData.forEach(item => {
 
@@ -94,20 +382,18 @@ return `
 <div class="card">
 
 <div class="date">
-${item.date}
+${escapeHtml(item.date)}
 </div>
 
 <div class="title">
-${item.title}
+${escapeHtml(item.title)}
 </div>
 
 <div class="text">
-${item.text}
+${escapeHtml(item.text)}
 </div>
 
-${item.image ?
-`<img class="thumb" src="${item.image}">`
-:''}
+${buildImage(item.image)}
 
 <div class="sns">
 
@@ -146,6 +432,39 @@ URLコピー
 
 }
 
+function buildImage(url){
+
+if(!url) return '';
+
+return `
+<img
+class="thumb"
+src="${url}"
+loading="lazy"
+>
+`;
+
+}
+
+function youtubeEmbed(url){
+
+if(url.includes('watch?v=')){
+
+return url.replace('watch?v=','embed/');
+
+}
+
+if(url.includes('youtu.be/')){
+
+return 'https://www.youtube.com/embed/' +
+url.split('youtu.be/')[1];
+
+}
+
+return url;
+
+}
+
 function copyShareUrl(id){
 
 const text =
@@ -158,4 +477,31 @@ alert('URLをコピーしました');
 
 }
 
+function escapeHtml(str){
+
+return String(str)
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/"/g,'&quot;')
+.replace(/'/g,'&#39;');
+
+}
+
+function showError(){
+
+document.getElementById('mainVideo').innerHTML =
+'<div class="error">シート名を確認してください</div>';
+
+document.getElementById('cityNews').innerHTML =
+'<div class="error">シート名を確認してください</div>';
+
+document.getElementById('latestNews').innerHTML =
+'<div class="error">シート名を確認してください</div>';
+
+}
+
 </script>
+
+</body>
+</html>
