@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>安否確認｜NSAW暮らし情報局</title>
+
+<meta name="description"
+content="地域見守り・安否確認ページ">
+
+<meta property="og:title"
+content="安否確認｜NSAW暮らし情報局">
+
+<meta property="og:description"
+content="高齢者向け地域見守りページ">
+
+<meta property="og:type"
+content="website">
+
+<meta property="og:url"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/genki.html">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#eef4f8;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+color:#17324d;
+}
+
+.wrap{
+max-width:760px;
+margin:0 auto;
+padding:18px;
+}
+
+.banner{
+width:100%;
+border-radius:22px;
+display:block;
+margin-bottom:18px;
+}
+
+.section{
+background:#fff;
+border-radius:24px;
+padding:24px;
+box-shadow:0 6px 22px rgba(0,0,0,.08);
+}
+
+.title{
+font-size:36px;
+line-height:1.4;
+font-weight:900;
+text-align:center;
+margin-bottom:18px;
+}
+
+.name{
+font-size:26px;
+line-height:1.6;
+text-align:center;
+font-weight:900;
+color:#1976d2;
+margin-bottom:20px;
+}
+
+.sub{
+font-size:22px;
+line-height:1.9;
+text-align:center;
+color:#48657f;
+margin-bottom:28px;
+}
+
+.status-btn{
+display:block;
+width:100%;
+border:none;
+border-radius:20px;
+padding:26px 12px;
+font-size:30px;
+font-weight:900;
+color:#fff;
+margin-bottom:18px;
+}
+
+.green{
+background:#2e7d32;
+}
+
+.yellow{
+background:#f9a825;
+}
+
+.orange{
+background:#ef6c00;
+}
+
+.red{
+background:#c62828;
+}
+
+.tel-title{
+font-size:28px;
+font-weight:900;
+margin-top:34px;
+margin-bottom:18px;
+text-align:center;
+}
+
+.tel-btn{
+display:block;
+width:100%;
+text-decoration:none;
+color:#fff;
+border-radius:18px;
+padding:22px 12px;
+font-size:26px;
+font-weight:900;
+text-align:center;
+margin-bottom:14px;
+}
+
+.shiki{
+background:#1976d2;
+}
+
+.niiza{
+background:#2e7d32;
+}
+
+.asaka{
+background:#ef6c00;
+}
+
+.wako{
+background:#7b1fa2;
+}
+
+.note{
+margin-top:24px;
+font-size:18px;
+line-height:1.9;
+text-align:center;
+color:#607489;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+<img
+class="banner"
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
+
+<div class="section">
+
+<div class="title">
+安否確認
+</div>
+
+<div
+class="name"
+id="userNameArea">
+確認中...
+</div>
+
+<div class="sub">
+体調や困りごとを<br>
+押すだけで伝えられます。
+</div>
+
+<button
+class="status-btn green"
+onclick="sendStatus('🟢 元気です')">
+🟢 元気です
+</button>
+
+<button
+class="status-btn yellow"
+onclick="sendStatus('🟡 少し体調が悪いです')">
+🟡 少し体調が悪いです
+</button>
+
+<button
+class="status-btn orange"
+onclick="sendStatus('🟠 困っています')">
+🟠 困っています
+</button>
+
+<button
+class="status-btn red"
+onclick="sendStatus('🔴 緊急です')">
+🔴 緊急です
+</button>
+
+<div class="tel-title">
+地域包括支援センター
+</div>
+
+<a
+class="tel-btn shiki"
+href="tel:0484860003">
+📞 志木市包括へ電話
+</a>
+
+<a
+class="tel-btn niiza"
+href="tel:0484805853">
+📞 新座市包括へ電話
+</a>
+
+<a
+class="tel-btn asaka"
+href="tel:0484500855">
+📞 朝霞市包括へ電話
+</a>
+
+<a
+class="tel-btn wako"
+href="tel:0484580150">
+📞 和光市包括へ電話
+</a>
+
+<div class="note">
+緊急時は119番へ通報してください。
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const params =
+new URLSearchParams(location.search);
+
+const userId =
+params.get('id') || '未設定';
+
+const userName =
+params.get('name') || '名前未設定';
+
+document.getElementById(
+'userNameArea'
+).innerHTML =
+userName + ' さん';
+
+function sendStatus(status){
+
+const now =
+new Date();
+
+const text =
+`
+名前：${userName}
+ID：${userId}
+状態：${status}
+時刻：${now.toLocaleString('ja-JP')}
+`;
+
+fetch(
+'https://script.google.com/macros/s/■■■■■■■■■■■■■■■■■■/exec',
+{
+method:'POST',
+body:text
+}
+)
+.then(()=>{
+
+alert(
+userName + ' さん\n\n' +
+status + '\n\n送信しました'
+);
+
+})
+.catch(()=>{
+
+alert('送信失敗');
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
