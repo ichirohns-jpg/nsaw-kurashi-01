@@ -166,21 +166,20 @@ src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 
 <script>
 
-window.handleSheet =
-function(json){
+function renderTable(table){
 
 const rows =
-json.table.rows || [];
+table.rows || [];
 
 const newsArea =
 document.getElementById('newsArea');
 
 newsArea.innerHTML = '';
 
-for(let i=0;i<rows.length;i++){
+rows.forEach((row)=>{
 
 const c =
-rows[i].c || [];
+row.c || [];
 
 const id =
 c[1]?.v || '';
@@ -291,8 +290,33 @@ URLコピー
 
 `;
 
+});
+
 }
 
+window.google = {
+visualization: {
+Query: {
+setResponse: function(response) {
+
+if(response.status === 'ok'){
+
+renderTable(response.table);
+
+}else{
+
+document.getElementById(
+'newsArea'
+).innerHTML =
+'データ取得失敗';
+
+console.error(response);
+
+}
+
+}
+}
+}
 };
 
 function youtubeEmbed(url){
@@ -347,11 +371,14 @@ alert('URLをコピーしました');
 
 }
 
+const spreadsheetId =
+'13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
+
 const script =
 document.createElement('script');
 
 script.src =
-'https://docs.google.com/spreadsheets/d/13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY/gviz/tq?tqx=out:json;responseHandler=handleSheet';
+`https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:json`;
 
 document.body.appendChild(script);
 
