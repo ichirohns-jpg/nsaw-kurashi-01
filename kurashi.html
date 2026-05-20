@@ -162,6 +162,16 @@ text-align:center;
 color:#c62828;
 }
 
+.debug{
+background:#fff3cd;
+padding:12px;
+margin-bottom:12px;
+border-radius:12px;
+font-size:14px;
+line-height:1.7;
+word-break:break-all;
+}
+
 </style>
 
 </head>
@@ -186,6 +196,24 @@ src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 
 <script>
 
+function getVal(cell){
+
+    if(!cell) return '';
+
+    if(cell.v !== null &&
+       cell.v !== undefined){
+        return cell.v;
+    }
+
+    if(cell.f !== null &&
+       cell.f !== undefined){
+        return cell.f;
+    }
+
+    return '';
+
+}
+
 function youtubeEmbed(url){
 
     if(!url) return '';
@@ -193,17 +221,26 @@ function youtubeEmbed(url){
     url = String(url).trim();
 
     if(url.includes('watch?v=')){
-        const id = url.split('watch?v=')[1].split('&')[0];
+        const id =
+        url.split('watch?v=')[1]
+        .split('&')[0];
+
         return 'https://www.youtube.com/embed/' + id;
     }
 
     if(url.includes('youtu.be/')){
-        const id = url.split('youtu.be/')[1].split('?')[0];
+        const id =
+        url.split('youtu.be/')[1]
+        .split('?')[0];
+
         return 'https://www.youtube.com/embed/' + id;
     }
 
     if(url.includes('/shorts/')){
-        const id = url.split('/shorts/')[1].split('?')[0];
+        const id =
+        url.split('/shorts/')[1]
+        .split('?')[0];
+
         return 'https://www.youtube.com/embed/' + id;
     }
 
@@ -238,31 +275,49 @@ return;
 
 }
 
-rows.forEach((row)=>{
+rows.forEach((row,index)=>{
 
 const c =
 row.c || [];
 
 const id =
-c[1]?.v || '';
+getVal(c[1]);
 
 const title =
-c[2]?.v || '';
+getVal(c[2]);
 
 const image =
-c[3]?.v || '';
+getVal(c[3]);
 
 const text =
-c[4]?.v || '';
+getVal(c[4]);
 
 const videoTitle =
-c[13]?.v || '';
+getVal(c[13]);
 
 const videoDesc =
-c[14]?.v || '';
+getVal(c[14]);
 
 const videoUrl =
-c[15]?.v || '';
+getVal(c[15]);
+
+const embedUrl =
+youtubeEmbed(videoUrl);
+
+console.log(
+'--- 行番号 ---',
+index + 1
+);
+
+console.log(
+'動画URL:',
+videoUrl
+);
+
+console.log(
+'embedURL:',
+embedUrl
+);
 
 const shareUrl =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id='
@@ -271,6 +326,16 @@ const shareUrl =
 newsArea.innerHTML += `
 
 <div class="card">
+
+<div class="debug">
+
+動画URL:<br>
+${videoUrl}<br><br>
+
+embedURL:<br>
+${embedUrl}
+
+</div>
 
 <div class="title">
 ${title}
@@ -304,12 +369,12 @@ ${videoDesc}
 `
 :''}
 
-${videoUrl ?
+${embedUrl ?
 `
 <div class="video-wrap">
 
 <iframe
-src="${youtubeEmbed(videoUrl)}"
+src="${embedUrl}"
 allowfullscreen>
 </iframe>
 
@@ -359,7 +424,7 @@ URLコピー
 window.google = {
 visualization: {
 Query: {
-setResponse: function(response) {
+setResponse: function(response){
 
 if(response.status === 'ok'){
 
@@ -381,14 +446,14 @@ console.error(response);
 }
 };
 
-const id =
+const sheetId =
 '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
 
 const script =
 document.createElement('script');
 
 script.src =
-`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json`;
+`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
 
 document.body.appendChild(script);
 
