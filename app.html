@@ -94,26 +94,40 @@ body{
 
 .buttons{
   display:flex;
-  gap:10px;
+  gap:14px;
   flex-wrap:wrap;
-  margin-top:16px;
+  margin-top:24px;
 }
 
 .btn{
   flex:1;
-  min-width:120px;
+  min-width:140px;
   text-align:center;
   text-decoration:none;
   color:#fff;
-  font-size:15px;
-  font-weight:800;
-  padding:14px;
-  border-radius:14px;
+  font-size:18px;
+  font-weight:900;
+  padding:18px 14px;
+  border-radius:18px;
+  box-shadow:0 4px 10px rgba(0,0,0,.15);
+  transition:.2s;
 }
 
-.fb{background:#1877f2;}
-.line{background:#06c755;}
-.x{background:#000;}
+.btn:active{
+  transform:scale(.96);
+}
+
+.fb{
+  background:#1877f2;
+}
+
+.line{
+  background:#06c755;
+}
+
+.x{
+  background:#000;
+}
 
 .loading{
   text-align:center;
@@ -319,7 +333,7 @@ window.handleSheet = function(json){
         target="_blank"
         href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}">
 
-        Facebook
+        📘 Facebook
 
         </a>
 
@@ -327,7 +341,7 @@ window.handleSheet = function(json){
         target="_blank"
         href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}">
 
-        LINE
+        💬 LINE
 
         </a>
 
@@ -335,7 +349,7 @@ window.handleSheet = function(json){
         target="_blank"
         href="https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}">
 
-        X
+        𝕏 X
 
         </a>
 
@@ -360,7 +374,8 @@ script.src =
 + SHEET_ID
 + "/gviz/tq?sheet="
 + encodeURIComponent(SHEET_NAME)
-+ "&tqx=out:json;responseHandler:handleSheet";
++ "&tqx=out:json"
++ "&responseHandler=handleSheet";
 
 document.body.appendChild(script);
 
