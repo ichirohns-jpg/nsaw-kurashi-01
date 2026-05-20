@@ -9,6 +9,18 @@ content="width=device-width,initial-scale=1">
 
 <title>NSAW暮らし情報局</title>
 
+<meta property="og:title"
+content="NSAW暮らし情報局">
+
+<meta property="og:description"
+content="志木・新座・朝霞・和光の暮らし情報">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
+
+<meta name="twitter:card"
+content="summary_large_image">
+
 <style>
 
 body{
@@ -39,13 +51,6 @@ border-radius:20px;
 padding:18px;
 margin-bottom:18px;
 box-shadow:0 4px 18px rgba(0,0,0,.08);
-}
-
-.date{
-font-size:16px;
-font-weight:700;
-color:#607489;
-margin-bottom:8px;
 }
 
 .title{
@@ -188,9 +193,6 @@ rows.slice(0,5).forEach((r)=>{
 
 const c = r.c || [];
 
-const date =
-c[0]?.f || c[0]?.v || '';
-
 const id =
 c[1]?.v || '';
 
@@ -219,10 +221,6 @@ const shareUrl =
 newsArea.innerHTML += `
 
 <div class="card">
-
-<div class="date">
-${date}
-</div>
 
 <div class="title">
 ${title}
@@ -363,7 +361,7 @@ const script =
 document.createElement('script');
 
 script.src =
-'https://docs.google.com/spreadsheets/d/13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY/gviz/tq?sheet=NSAW暮らし情報局_データ&tqx=out:json;responseHandler=handleSheet';
+'https://docs.google.com/spreadsheets/d/13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY/gviz/tq?tqx=out:json;responseHandler=handleSheet';
 
 document.body.appendChild(script);
 
