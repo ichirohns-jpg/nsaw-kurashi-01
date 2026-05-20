@@ -158,6 +158,14 @@ body{
   font-weight:900;
 }
 
+.error{
+  text-align:center;
+  padding:40px 10px;
+  font-size:22px;
+  font-weight:900;
+  color:#c62828;
+}
+
 </style>
 
 </head>
@@ -226,8 +234,16 @@ src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg"
 const SHEET_ID =
 '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
 
+/*
+ここ超重要
+↓
+スプレッドシート下の
+「実際のタブ名」
+と完全一致させる
+*/
+
 const SHEET_NAME =
-'NSAW暮らし情報局_データ';
+'シート1';
 
 const JSONP_URL =
 'https://docs.google.com/spreadsheets/d/'
@@ -241,7 +257,43 @@ document.createElement('script');
 
 script.src = JSONP_URL;
 
+script.onerror = function(){
+
+showError();
+
+};
+
 document.body.appendChild(script);
+
+setTimeout(function(){
+
+const loading =
+document.querySelectorAll('.loading');
+
+loading.forEach(el => {
+
+if(el.innerHTML.includes('読み込み中')){
+
+showError();
+
+}
+
+});
+
+},8000);
+
+function showError(){
+
+document.getElementById('mainVideo').innerHTML =
+'<div class="error">シート名を確認してください</div>';
+
+document.getElementById('cityNews').innerHTML =
+'<div class="error">シート名を確認してください</div>';
+
+document.getElementById('latestNews').innerHTML =
+'<div class="error">シート名を確認してください</div>';
+
+}
 
 function handleSheet(json){
 
@@ -301,7 +353,7 @@ allowfullscreen
 }else{
 
 mainVideo.innerHTML = `
-<div class="loading">
+<div class="error">
 動画がありません
 </div>
 `;
