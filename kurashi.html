@@ -1,25 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>NSAW暮らし情報局</title>
 
-<meta property="og:title"
-content="NSAW暮らし情報局">
-
-<meta property="og:description"
-content="志木・新座・朝霞・和光の暮らし情報">
-
-<meta property="og:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
-
-<meta name="twitter:card"
-content="summary_large_image">
+<meta property="og:title" content="NSAW暮らし情報局">
+<meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報">
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
+<meta name="twitter:card" content="summary_large_image">
 
 <style>
 
@@ -162,13 +152,13 @@ text-align:center;
 color:#c62828;
 }
 
-.debug{
-background:#fff3cd;
-padding:12px;
-margin-bottom:12px;
-border-radius:12px;
+.debug-box{
+background:#fffde7;
+padding:10px;
+border-radius:10px;
+margin-bottom:10px;
 font-size:14px;
-line-height:1.7;
+border:1px dashed #f57f17;
 word-break:break-all;
 }
 
@@ -275,7 +265,7 @@ return;
 
 }
 
-rows.forEach((row,index)=>{
+rows.reverse().forEach((row,index)=>{
 
 const c =
 row.c || [];
@@ -292,48 +282,73 @@ getVal(c[3]);
 const text =
 getVal(c[4]);
 
+let videoUrl = '';
+
+c.forEach(cell => {
+
+const val =
+getVal(cell);
+
+if(
+typeof val === 'string' &&
+(
+val.includes('youtube.com') ||
+val.includes('youtu.be')
+)
+){
+videoUrl = val;
+}
+
+});
+
+let urlIndex =
+c.findIndex(cell => {
+
+const val =
+getVal(cell);
+
+return (
+typeof val === 'string' &&
+(
+val.includes('youtube.com') ||
+val.includes('youtu.be')
+)
+
+);
+
+});
+
 const videoTitle =
-getVal(c[13]);
+urlIndex >= 2
+? getVal(c[urlIndex - 2])
+: '';
 
 const videoDesc =
-getVal(c[14]);
-
-const videoUrl =
-getVal(c[15]);
-
-const embedUrl =
-youtubeEmbed(videoUrl);
-
-console.log(
-'--- 行番号 ---',
-index + 1
-);
-
-console.log(
-'動画URL:',
-videoUrl
-);
-
-console.log(
-'embedURL:',
-embedUrl
-);
+urlIndex >= 1
+? getVal(c[urlIndex - 1])
+: '';
 
 const shareUrl =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id='
 + id;
 
+const embedUrl =
+youtubeEmbed(videoUrl);
+
 newsArea.innerHTML += `
 
 <div class="card">
 
-<div class="debug">
+<div class="debug-box">
+
+届いた総列数:
+${c.length} 個<br><br>
 
 動画URL:<br>
-${videoUrl}<br><br>
+${videoUrl || '未検出'}<br><br>
 
 embedURL:<br>
-${embedUrl}
+${embedUrl || '変換失敗'}
 
 </div>
 
