@@ -163,7 +163,6 @@ word-break:break-all;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -211,27 +210,33 @@ function youtubeEmbed(url){
     url = String(url).trim();
 
     if(url.includes('watch?v=')){
+
         const id =
         url.split('watch?v=')[1]
         .split('&')[0];
 
         return 'https://www.youtube.com/embed/' + id;
+
     }
 
     if(url.includes('youtu.be/')){
+
         const id =
         url.split('youtu.be/')[1]
         .split('?')[0];
 
         return 'https://www.youtube.com/embed/' + id;
+
     }
 
     if(url.includes('/shorts/')){
+
         const id =
         url.split('/shorts/')[1]
         .split('?')[0];
 
         return 'https://www.youtube.com/embed/' + id;
+
     }
 
     return '';
@@ -283,38 +288,36 @@ const text =
 getVal(c[4]);
 
 let videoUrl = '';
+let urlIndex = -1;
 
-c.forEach(cell => {
+c.forEach((cell, cellIdx) => {
 
-const val =
-getVal(cell);
+    if(!cell) return;
 
-if(
-typeof val === 'string' &&
-(
-val.includes('youtube.com') ||
-val.includes('youtu.be')
-)
-){
-videoUrl = val;
-}
+    const rawData =
+    JSON.stringify(cell);
 
-});
+    if(
+        rawData.includes('youtube.com') ||
+        rawData.includes('youtu.be')
+    ){
 
-let urlIndex =
-c.findIndex(cell => {
+        const match =
+        rawData.match(
+        /https?:\/\/[^\s"'}]+/);
 
-const val =
-getVal(cell);
+        if(match){
 
-return (
-typeof val === 'string' &&
-(
-val.includes('youtube.com') ||
-val.includes('youtu.be')
-)
+            videoUrl =
+            match[0]
+            .replace(/\\/g,'');
 
-);
+            urlIndex =
+            cellIdx;
+
+        }
+
+    }
 
 });
 
