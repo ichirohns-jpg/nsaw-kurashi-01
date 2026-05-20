@@ -231,10 +231,6 @@ src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg"
 const SHEET_ID =
 '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
 
-/*
-成功していたシート名へ戻す
-*/
-
 const SHEET_NAME =
 'NSAW暮らし情報局_データ';
 
@@ -300,7 +296,8 @@ title: c[1]?.v || '',
 text: c[2]?.v || '',
 image: c[3]?.v || '',
 youtube: c[4]?.v || '',
-city: c[5]?.v || ''
+city: c[5]?.v || '',
+link: c[6]?.v || ''
 
 };
 
@@ -399,6 +396,8 @@ ${escapeHtml(item.text)}
 
 ${buildImage(item.image)}
 
+${buildLink(item.link)}
+
 <div class="sns">
 
 <a
@@ -450,7 +449,36 @@ loading="lazy"
 
 }
 
+function buildLink(url){
+
+if(!url) return '';
+
+return `
+<div style="margin-top:14px;">
+<a
+href="${url}"
+target="_blank"
+style="
+display:block;
+background:#17324d;
+color:#fff;
+text-decoration:none;
+padding:18px;
+border-radius:14px;
+font-size:20px;
+font-weight:900;
+text-align:center;
+">
+詳しく見る
+</a>
+</div>
+`;
+
+}
+
 function youtubeEmbed(url){
+
+if(!url) return '';
 
 if(url.includes('watch?v=')){
 
