@@ -6,6 +6,11 @@
 
 <title>NSAW 暮らし情報局</title>
 
+<meta property="og:title" content="NSAW 暮らし情報局">
+<meta property="og:description" content="地域ラジオと回覧板">
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
+<meta property="og:type" content="website">
+
 <style>
 
 body{
@@ -15,28 +20,64 @@ body{
   "Hiragino Sans",
   "Yu Gothic",
   sans-serif;
-  text-align:center;
+  color:#1b2b3a;
 }
 
-img{
+.header img{
   width:100%;
   display:block;
 }
 
 .wrap{
+  max-width:760px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:#fff;
+  border-radius:24px;
   padding:24px;
+  margin-bottom:22px;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+.title{
+  font-size:34px;
+  font-weight:900;
+  line-height:1.5;
+  text-align:center;
+  margin-bottom:16px;
+}
+
+.text{
+  font-size:22px;
+  line-height:1.8;
+  text-align:center;
 }
 
 .btn{
   display:block;
+  text-decoration:none;
+  text-align:center;
   background:#1e88e5;
   color:#fff;
-  text-decoration:none;
-  font-size:24px;
+  font-size:28px;
   font-weight:700;
-  padding:22px;
-  border-radius:18px;
-  margin-top:28px;
+  padding:24px;
+  border-radius:20px;
+  margin-top:22px;
+}
+
+.sub{
+  background:#43a047;
+}
+
+.footer{
+  text-align:center;
+  color:#666;
+  padding:40px 10px;
+  font-size:18px;
 }
 
 </style>
@@ -44,16 +85,50 @@ img{
 
 <body>
 
+<div class="header">
+
 <img src="top-banner.jpg">
+
+</div>
 
 <div class="wrap">
 
-<a class="btn"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html">
+<div class="card">
 
-暮らし情報を見る
+<div class="title">
+
+NSAW 暮らし情報局
+
+</div>
+
+<div class="text">
+
+高齢者が迷わず使える<br>
+地域ラジオと回覧板
+
+</div>
+
+<a class="btn"
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/app.html">
+
+地域ラジオを見る
 
 </a>
+
+<a class="btn sub"
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/app.html">
+
+回覧板を見る
+
+</a>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+今日の地域情報をやさしく届けます
 
 </div>
 
