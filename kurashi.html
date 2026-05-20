@@ -9,6 +9,18 @@ content="width=device-width,initial-scale=1">
 
 <title>NSAW暮らし情報局</title>
 
+<meta property="og:title"
+content="NSAW暮らし情報局">
+
+<meta property="og:description"
+content="志木・新座・朝霞・和光の暮らし情報">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
+
+<meta name="twitter:card"
+content="summary_large_image">
+
 <style>
 
 body{
@@ -142,6 +154,14 @@ padding:40px 10px;
 text-align:center;
 }
 
+.error{
+font-size:26px;
+font-weight:900;
+padding:40px 10px;
+text-align:center;
+color:#c62828;
+}
+
 </style>
 
 </head>
@@ -175,6 +195,15 @@ const newsArea =
 document.getElementById('newsArea');
 
 newsArea.innerHTML = '';
+
+if(rows.length === 0){
+
+newsArea.innerHTML =
+'<div class="error">データがありません</div>';
+
+return;
+
+}
 
 rows.forEach((row)=>{
 
@@ -308,7 +337,7 @@ renderTable(response.table);
 document.getElementById(
 'newsArea'
 ).innerHTML =
-'データ取得失敗';
+'<div class="error">データ取得失敗</div>';
 
 console.error(response);
 
@@ -371,14 +400,14 @@ alert('URLをコピーしました');
 
 }
 
-const spreadsheetId =
+const id =
 '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
 
 const script =
 document.createElement('script');
 
 script.src =
-`https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:json`;
+`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json`;
 
 document.body.appendChild(script);
 
