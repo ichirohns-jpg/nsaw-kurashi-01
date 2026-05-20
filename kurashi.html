@@ -72,6 +72,7 @@ font-weight:900;
 line-height:1.6;
 margin-bottom:12px;
 color:#17324d;
+margin-top:20px;
 }
 
 .video-desc{
@@ -152,16 +153,6 @@ text-align:center;
 color:#c62828;
 }
 
-.debug-box{
-background:#fffde7;
-padding:10px;
-border-radius:10px;
-margin-bottom:10px;
-font-size:14px;
-border:1px dashed #f57f17;
-word-break:break-all;
-}
-
 </style>
 </head>
 
@@ -186,293 +177,148 @@ src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 <script>
 
 function getVal(cell){
-
     if(!cell) return '';
-
-    if(cell.v !== null &&
-       cell.v !== undefined){
+    if(cell.v !== null && cell.v !== undefined){
         return cell.v;
     }
-
-    if(cell.f !== null &&
-       cell.f !== undefined){
+    if(cell.f !== null && cell.f !== undefined){
         return cell.f;
     }
-
     return '';
-
 }
 
 function youtubeEmbed(url){
-
     if(!url) return '';
-
     url = String(url).trim();
 
     if(url.includes('watch?v=')){
-
-        const id =
-        url.split('watch?v=')[1]
-        .split('&')[0];
-
+        const id = url.split('watch?v=')[1].split('&')[0];
         return 'https://www.youtube.com/embed/' + id;
-
     }
 
     if(url.includes('youtu.be/')){
-
-        const id =
-        url.split('youtu.be/')[1]
-        .split('?')[0];
-
+        const id = url.split('youtu.be/')[1].split('?')[0];
         return 'https://www.youtube.com/embed/' + id;
-
     }
 
     if(url.includes('/shorts/')){
-
-        const id =
-        url.split('/shorts/')[1]
-        .split('?')[0];
-
+        const id = url.split('/shorts/')[1].split('?')[0];
         return 'https://www.youtube.com/embed/' + id;
-
     }
 
     return '';
-
 }
 
 function copyUrl(url){
-
-navigator.clipboard.writeText(url);
-
-alert('URLをコピーしました');
-
+    navigator.clipboard.writeText(url);
+    alert('URLをコピーしました');
 }
 
 function renderTable(table){
+    const rows = table.rows || [];
+    const newsArea = document.getElementById('newsArea');
+    newsArea.innerHTML = '';
 
-const rows =
-table.rows || [];
-
-const newsArea =
-document.getElementById('newsArea');
-
-newsArea.innerHTML = '';
-
-if(rows.length === 0){
-
-newsArea.innerHTML =
-'<div class="error">データがありません</div>';
-
-return;
-
-}
-
-rows.reverse().forEach((row,index)=>{
-
-const c =
-row.c || [];
-
-const id =
-getVal(c[1]);
-
-const title =
-getVal(c[2]);
-
-const image =
-getVal(c[3]);
-
-const text =
-getVal(c[4]);
-
-let videoUrl = '';
-let urlIndex = -1;
-
-c.forEach((cell, cellIdx) => {
-
-    if(!cell) return;
-
-    const rawData =
-    JSON.stringify(cell);
-
-    if(
-        rawData.includes('youtube.com') ||
-        rawData.includes('youtu.be')
-    ){
-
-        const match =
-        rawData.match(
-        /https?:\/\/[^\s"'}]+/);
-
-        if(match){
-
-            videoUrl =
-            match[0]
-            .replace(/\\/g,'');
-
-            urlIndex =
-            cellIdx;
-
-        }
-
+    if(rows.length === 0){
+        newsArea.innerHTML = '<div class="error">データがありません</div>';
+        return;
     }
 
-});
+    // 新しい順に逆順ループ
+    rows.reverse().forEach((row, index)=>{
+        const c = row.c || [];
 
-const videoTitle =
-urlIndex >= 2
-? getVal(c[urlIndex - 2])
-: '';
+        // 固定データのマッピング
+        const id = getVal(c[1]);
+        const title = getVal(c[2]);
+        const image = getVal(c[3]);
+        const text = getVal(c[4]);
 
-const videoDesc =
-urlIndex >= 1
-? getVal(c[urlIndex - 1])
-: '';
+        let videoUrl = '';
+        let urlIndex = -1;
 
-const shareUrl =
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id='
-+ id;
+        // 全セルスキャンで確実に動画URLを抽出
+        c.forEach((cell, cellIdx) => {
+            if(!cell) return;
 
-const embedUrl =
-youtubeEmbed(videoUrl);
+            const rawData = JSON.stringify(cell);
 
-newsArea.innerHTML += `
+            if(rawData.includes('youtube.com') || rawData.includes('youtu.be')){
+                const cleanData = rawData.replace(/\\/g, '');
+                const match = cleanData.match(/https?:\/\/[^\s"'\}]+/);
+                if(match){
+                    videoUrl = match[0];
+                    urlIndex = cellIdx;
+                }
+            }
+        });
 
-<div class="card">
+        // 検出された動画URLの位置を基準にタイトルと説明文を取得
+        const videoTitle = urlIndex >= 2 ? getVal(c[urlIndex - 2]) : '';
+        const videoDesc = urlIndex >= 1 ? getVal(c[urlIndex - 1]) : '';
 
-<div class="debug-box">
+        const shareUrl = 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id=' + id;
+        const embedUrl = youtubeEmbed(videoUrl);
 
-届いた総列数:
-${c.length} 個<br><br>
+        // HTML出力（検証用の黄色いデバッグボックスは綺麗に削除しました）
+        newsArea.innerHTML += `
+            <div class="card">
 
-動画URL:<br>
-${videoUrl || '未検出'}<br><br>
+                <div class="title">
+                    ${title}
+                </div>
 
-embedURL:<br>
-${embedUrl || '変換失敗'}
+                ${image ? `<img class="thumb" src="${image}">` : ''}
 
-</div>
+                <div class="text">
+                    ${text}
+                </div>
 
-<div class="title">
-${title}
-</div>
+                ${videoTitle ? `<div class="video-title">${videoTitle}</div>` : ''}
+                
+                ${videoDesc ? `<div class="video-desc">${videoDesc}</div>` : ''}
 
-${image ?
-`
-<img
-class="thumb"
-src="${image}">
-`
-:''}
+                ${embedUrl ? `
+                    <div class="video-wrap">
+                        <iframe 
+                            src="${embedUrl}" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                ` : ''}
 
-<div class="text">
-${text}
-</div>
+                <div class="sns">
+                    <a class="fb" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}">Facebook</a>
+                    <a class="line" target="_blank" href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}">LINE</a>
+                    <a class="x" target="_blank" href="https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}">X</a>
+                    <button class="copy-btn" onclick="copyUrl('${shareUrl}')">URLコピー</button>
+                </div>
 
-${videoTitle ?
-`
-<div class="video-title">
-${videoTitle}
-</div>
-`
-:''}
-
-${videoDesc ?
-`
-<div class="video-desc">
-${videoDesc}
-</div>
-`
-:''}
-
-${embedUrl ?
-`
-<div class="video-wrap">
-
-<iframe
-src="${embedUrl}"
-allowfullscreen>
-</iframe>
-
-</div>
-`
-:''}
-
-<div class="sns">
-
-<a
-class="fb"
-target="_blank"
-href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}">
-Facebook
-</a>
-
-<a
-class="line"
-target="_blank"
-href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}">
-LINE
-</a>
-
-<a
-class="x"
-target="_blank"
-href="https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}">
-X
-</a>
-
-<button
-class="copy-btn"
-onclick="copyUrl('${shareUrl}')">
-URLコピー
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
+            </div>
+        `;
+    });
 }
 
+// Google JSONP ハンドラ
 window.google = {
-visualization: {
-Query: {
-setResponse: function(response){
-
-if(response.status === 'ok'){
-
-renderTable(response.table);
-
-}else{
-
-document.getElementById(
-'newsArea'
-).innerHTML =
-'<div class="error">データ取得失敗</div>';
-
-console.error(response);
-
-}
-
-}
-}
-}
+    visualization: {
+        Query: {
+            setResponse: function(response){
+                if(response.status === 'ok'){
+                    renderTable(response.table);
+                }else{
+                    document.getElementById('newsArea').innerHTML = '<div class="error">データ取得失敗</div>';
+                    console.error(response);
+                }
+            }
+        }
+    }
 };
 
-const sheetId =
-'13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
-
-const script =
-document.createElement('script');
-
-script.src =
-`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
-
+const sheetId = '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
+const script = document.createElement('script');
+script.src = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
 document.body.appendChild(script);
 
 </script>
