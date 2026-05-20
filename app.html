@@ -7,144 +7,363 @@
 <title>NSAW 暮らし情報局</title>
 
 <style>
+
 body{
   margin:0;
   background:#eef4fa;
-  font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+  font-family:
+  "Hiragino Sans",
+  "Yu Gothic",
+  sans-serif;
   color:#1b2b3a;
 }
+
 .header img{
   width:100%;
   display:block;
 }
+
 .wrap{
   max-width:760px;
   margin:auto;
-  padding:16px;
+  padding:14px;
 }
+
 .card{
   background:#fff;
-  border-radius:24px;
-  padding:22px;
-  margin-bottom:22px;
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:18px;
   box-shadow:0 4px 14px rgba(0,0,0,.08);
 }
+
+.date{
+  font-size:14px;
+  color:#666;
+  margin-bottom:8px;
+}
+
 .title{
-  font-size:30px;
+  font-size:25px;
   font-weight:900;
   line-height:1.5;
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
+
 .text{
-  font-size:20px;
+  font-size:17px;
   line-height:1.8;
   white-space:pre-wrap;
 }
+
+.mainimg{
+  width:100%;
+  border-radius:16px;
+  margin:12px 0;
+}
+
 .video iframe{
   width:100%;
   aspect-ratio:16/9;
   border:none;
-  border-radius:18px;
+  border-radius:16px;
+  margin-top:14px;
+}
+
+.citybox{
   margin-top:18px;
 }
-.btn{
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  color:white;
-  background:#1877f2;
+
+.citytitle{
   font-size:20px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.citylink{
+  display:block;
+  background:#f5f7fb;
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:10px;
+  text-decoration:none;
+  color:#1b2b3a;
+  font-size:16px;
   font-weight:700;
-  padding:16px;
-  border-radius:16px;
+}
+
+.buttons{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
   margin-top:16px;
 }
+
+.btn{
+  flex:1;
+  min-width:120px;
+  text-align:center;
+  text-decoration:none;
+  color:#fff;
+  font-size:15px;
+  font-weight:800;
+  padding:14px;
+  border-radius:14px;
+}
+
+.fb{background:#1877f2;}
+.line{background:#06c755;}
+.x{background:#000;}
+
 .loading{
   text-align:center;
-  padding:80px 20px;
-  font-size:26px;
+  padding:70px 20px;
+  font-size:24px;
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <img src="top-banner.jpg">
+
+<img src="top-banner.jpg">
+
 </div>
 
 <div class="wrap" id="app">
-  <div class="loading">読み込み中...</div>
+
+<div class="loading">
+
+読み込み中...
+
+</div>
+
 </div>
 
 <script>
-const SHEET_ID = "1Xx0a0dRqSrL6pacX7xY5jyTtiQ1Ot8E03oLmMICfI6M";
-const SHEET_NAME = "NSAW暮らし情報局_データ";
+
+const SHEET_ID =
+"1Xx0a0dRqSrL6pacX7xY5jyTtiQ1Ot8E03oLmMICfI6M";
+
+const SHEET_NAME =
+"NSAW暮らし情報局_データ";
 
 function v(c,i){
-  return c[i] && c[i].v != null ? String(c[i].v) : "";
+
+  return c[i] && c[i].v != null
+  ? String(c[i].v)
+  : "";
+
 }
 
 function youtube(url){
+
   if(!url) return "";
 
   let id = "";
 
   if(url.includes("watch?v=")){
-    id = url.split("watch?v=")[1].split("&")[0];
+
+    id =
+    url.split("watch?v=")[1]
+    .split("&")[0];
+
   }else if(url.includes("youtu.be/")){
-    id = url.split("youtu.be/")[1].split("?")[0];
+
+    id =
+    url.split("youtu.be/")[1]
+    .split("?")[0];
+
   }else if(url.includes("/shorts/")){
-    id = url.split("/shorts/")[1].split("?")[0];
+
+    id =
+    url.split("/shorts/")[1]
+    .split("?")[0];
+
   }
 
   if(!id) return "";
 
-  return `<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`;
+  return `
+  <iframe
+  src="https://www.youtube.com/embed/${id}"
+  allowfullscreen>
+  </iframe>
+  `;
 }
 
 window.handleSheet = function(json){
-  const rows = json.table.rows || [];
+
+  const rows =
+  json.table.rows || [];
+
   let html = "";
 
   rows.slice(0,5).forEach((row,index)=>{
+
     const c = row.c || [];
 
     const date = v(c,0);
-    const title = v(c,1);
-    const image = v(c,2);
-    const text = v(c,3);
-    const videoUrl = v(c,12);
+    const title = v(c,2);
+    const image = v(c,3);
+    const text = v(c,4);
+
+    const shikiTitle = v(c,5);
+    const shikiUrl = v(c,6);
+
+    const niizaTitle = v(c,7);
+    const niizaUrl = v(c,8);
+
+    const asakaTitle = v(c,9);
+    const asakaUrl = v(c,10);
+
+    const wakoTitle = v(c,11);
+    const wakoUrl = v(c,12);
+
+    const videoTitle = v(c,15);
+    const videoUrl = v(c,17);
 
     const shareUrl =
-      "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-001.html";
+    "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-001.html";
 
     html += `
-      <div class="card">
-        <div>${date}</div>
-        <div class="title">${title}</div>
-        ${image ? `<img src="${image}" style="width:100%;border-radius:18px;margin-bottom:16px;">` : ``}
-        <div class="text">${text}</div>
-        <div class="video">${youtube(videoUrl)}</div>
-        <a class="btn" target="_blank"
-        href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}">
-        Facebookでシェア
-        </a>
+
+    <div class="card">
+
+      <div class="date">
+
+      ${date}
+
       </div>
+
+      <div class="title">
+
+      ${title}
+
+      </div>
+
+      ${image ? `
+      <img class="mainimg"
+      src="${image}">
+      ` : ``}
+
+      <div class="text">
+
+      ${text}
+
+      </div>
+
+      ${videoUrl ? `
+
+      <div class="video">
+
+        <div class="citytitle">
+
+        ${videoTitle}
+
+        </div>
+
+        ${youtube(videoUrl)}
+
+      </div>
+
+      ` : ``}
+
+      <div class="citybox">
+
+        <div class="citytitle">
+
+        4市情報
+
+        </div>
+
+        ${shikiTitle ? `
+        <a class="citylink"
+        target="_blank"
+        href="${shikiUrl}">
+        志木市：${shikiTitle}
+        </a>
+        ` : ``}
+
+        ${niizaTitle ? `
+        <a class="citylink"
+        target="_blank"
+        href="${niizaUrl}">
+        新座市：${niizaTitle}
+        </a>
+        ` : ``}
+
+        ${asakaTitle ? `
+        <a class="citylink"
+        target="_blank"
+        href="${asakaUrl}">
+        朝霞市：${asakaTitle}
+        </a>
+        ` : ``}
+
+        ${wakoTitle ? `
+        <a class="citylink"
+        target="_blank"
+        href="${wakoUrl}">
+        和光市：${wakoTitle}
+        </a>
+        ` : ``}
+
+      </div>
+
+      <div class="buttons">
+
+        <a class="btn fb"
+        target="_blank"
+        href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}">
+
+        Facebook
+
+        </a>
+
+        <a class="btn line"
+        target="_blank"
+        href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}">
+
+        LINE
+
+        </a>
+
+        <a class="btn x"
+        target="_blank"
+        href="https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}">
+
+        X
+
+        </a>
+
+      </div>
+
+    </div>
+
     `;
+
   });
 
-  document.getElementById("app").innerHTML = html || "表示する記事がありません";
+  document.getElementById("app").innerHTML =
+  html;
+
 };
 
-const script = document.createElement("script");
+const script =
+document.createElement("script");
+
 script.src =
-  "https://docs.google.com/spreadsheets/d/"
-  + SHEET_ID
-  + "/gviz/tq?sheet="
-  + encodeURIComponent(SHEET_NAME)
-  + "&tqx=out:json;responseHandler:handleSheet";
+"https://docs.google.com/spreadsheets/d/"
++ SHEET_ID
++ "/gviz/tq?sheet="
++ encodeURIComponent(SHEET_NAME)
++ "&tqx=out:json;responseHandler=handleSheet";
+
 document.body.appendChild(script);
+
 </script>
 
 </body>
