@@ -23,7 +23,7 @@ content="website">
 content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html">
 
 <meta property="og:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
 
 <meta name="twitter:card"
 content="summary_large_image">
@@ -141,16 +141,19 @@ background:#7b1fa2;
 }
 
 .video-title{
-font-size:24px;
+font-size:26px;
+line-height:1.6;
 font-weight:900;
-margin-top:16px;
-margin-bottom:10px;
+margin-top:18px;
+margin-bottom:12px;
 }
 
 .video-desc{
 font-size:18px;
-line-height:1.8;
-margin-bottom:14px;
+line-height:1.9;
+margin-bottom:16px;
+color:#48657f;
+white-space:pre-wrap;
 }
 
 .video-wrap{
@@ -205,6 +208,47 @@ background:#000;
 
 .copy-btn{
 background:#ff7a00;
+}
+
+.genki-area{
+margin-top:26px;
+padding-top:22px;
+border-top:2px solid #d9e6f2;
+}
+
+.genki-title{
+font-size:28px;
+font-weight:900;
+text-align:center;
+margin-bottom:18px;
+}
+
+.genki-btn{
+display:block;
+width:100%;
+border:none;
+border-radius:18px;
+padding:22px 12px;
+font-size:26px;
+font-weight:900;
+color:#fff;
+margin-bottom:14px;
+}
+
+.green{
+background:#2e7d32;
+}
+
+.yellow{
+background:#f9a825;
+}
+
+.orange{
+background:#ef6c00;
+}
+
+.red{
+background:#c62828;
 }
 
 .loading{
@@ -322,7 +366,9 @@ document.getElementById('newsArea');
 newsArea.innerHTML = '';
 
 let showData =
-data.filter(x => String(x.showFlag) !== 'OFF');
+data.filter(x =>
+String(x.showFlag) !== 'OFF'
+);
 
 if(targetId){
 
@@ -383,13 +429,29 @@ ${escapeHtml(item.text)}
 
 <div class="city-grid">
 
-${buildCity(item.shikiTitle,item.shikiUrl,'shiki')}
+${buildCity(
+item.shikiTitle,
+item.shikiUrl,
+'shiki'
+)}
 
-${buildCity(item.niizaTitle,item.niizaUrl,'niiza')}
+${buildCity(
+item.niizaTitle,
+item.niizaUrl,
+'niiza'
+)}
 
-${buildCity(item.asakaTitle,item.asakaUrl,'asaka')}
+${buildCity(
+item.asakaTitle,
+item.asakaUrl,
+'asaka'
+)}
 
-${buildCity(item.wakoTitle,item.wakoUrl,'wako')}
+${buildCity(
+item.wakoTitle,
+item.wakoUrl,
+'wako'
+)}
 
 </div>
 
@@ -430,6 +492,34 @@ URLコピー
 
 </div>
 
+<div class="genki-area">
+
+<div class="genki-title">
+安否確認
+</div>
+
+<button
+class="genki-btn green">
+🟢 元気です
+</button>
+
+<button
+class="genki-btn yellow">
+🟡 少し体調が悪いです
+</button>
+
+<button
+class="genki-btn orange">
+🟠 困っています
+</button>
+
+<button
+class="genki-btn red">
+🔴 緊急です
+</button>
+
+</div>
+
 </div>
 
 `;
@@ -445,7 +535,7 @@ return `
 class="city-btn ${className}"
 href="${url}"
 target="_blank">
-${title}
+${escapeHtml(title)}
 </a>
 `;
 
@@ -458,11 +548,11 @@ if(!url) return '';
 return `
 
 <div class="video-title">
-${escapeHtml(title)}
+${escapeHtml(title || '')}
 </div>
 
 <div class="video-desc">
-${escapeHtml(desc)}
+${escapeHtml(desc || '')}
 </div>
 
 <div class="video-wrap">
@@ -480,23 +570,40 @@ allowfullscreen>
 
 function youtubeEmbed(url){
 
+if(!url) return '';
+
+url = String(url).trim();
+
 if(url.includes('watch?v=')){
 
-return url.replace('watch?v=','embed/');
+const id =
+url.split('watch?v=')[1]
+.split('&')[0];
+
+return
+'https://www.youtube.com/embed/' + id;
 
 }
 
 if(url.includes('youtu.be/')){
 
-return 'https://www.youtube.com/embed/' +
-url.split('youtu.be/')[1];
+const id =
+url.split('youtu.be/')[1]
+.split('?')[0];
+
+return
+'https://www.youtube.com/embed/' + id;
 
 }
 
 if(url.includes('/shorts/')){
 
-return 'https://www.youtube.com/embed/' +
-url.split('/shorts/')[1].split('?')[0];
+const id =
+url.split('/shorts/')[1]
+.split('?')[0];
+
+return
+'https://www.youtube.com/embed/' + id;
 
 }
 
