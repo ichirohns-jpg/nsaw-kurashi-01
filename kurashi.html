@@ -3,6 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
@@ -29,6 +30,7 @@ padding:16px;
 width:100%;
 border-radius:20px;
 margin-bottom:18px;
+display:block;
 }
 
 .card{
@@ -39,11 +41,19 @@ margin-bottom:18px;
 box-shadow:0 4px 18px rgba(0,0,0,.08);
 }
 
+.date{
+font-size:16px;
+font-weight:700;
+color:#607489;
+margin-bottom:8px;
+}
+
 .title{
 font-size:30px;
 font-weight:900;
 line-height:1.5;
 margin-bottom:14px;
+color:#17324d;
 }
 
 .text{
@@ -51,24 +61,30 @@ font-size:20px;
 line-height:1.9;
 margin-bottom:16px;
 white-space:pre-wrap;
+color:#17324d;
 }
 
 .thumb{
 width:100%;
 border-radius:16px;
 margin-bottom:16px;
+display:block;
 }
 
 .video-title{
 font-size:26px;
 font-weight:900;
-margin-bottom:10px;
+line-height:1.6;
+margin-bottom:12px;
+color:#17324d;
 }
 
 .video-desc{
 font-size:18px;
 line-height:1.8;
 margin-bottom:16px;
+color:#48657f;
+white-space:pre-wrap;
 }
 
 .video-wrap{
@@ -83,7 +99,8 @@ margin-bottom:16px;
 
 .video-wrap iframe{
 position:absolute;
-inset:0;
+top:0;
+left:0;
 width:100%;
 height:100%;
 border:none;
@@ -93,6 +110,7 @@ border:none;
 display:flex;
 flex-wrap:wrap;
 gap:10px;
+margin-top:16px;
 }
 
 .sns a,
@@ -124,6 +142,13 @@ background:#000;
 background:#ff7a00;
 }
 
+.loading{
+font-size:28px;
+font-weight:900;
+padding:40px 10px;
+text-align:center;
+}
+
 </style>
 
 </head>
@@ -137,7 +162,11 @@ class="banner"
 src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 
 <div id="newsArea">
+
+<div class="loading">
 読み込み中...
+</div>
+
 </div>
 
 </div>
@@ -159,6 +188,12 @@ rows.slice(0,5).forEach((r)=>{
 
 const c = r.c || [];
 
+const date =
+c[0]?.f || c[0]?.v || '';
+
+const id =
+c[1]?.v || '';
+
 const title =
 c[2]?.v || '';
 
@@ -178,18 +213,27 @@ const videoUrl =
 c[15]?.v || '';
 
 const shareUrl =
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html';
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id='
++ id;
 
 newsArea.innerHTML += `
 
 <div class="card">
+
+<div class="date">
+${date}
+</div>
 
 <div class="title">
 ${title}
 </div>
 
 ${image ?
-`<img class="thumb" src="${image}">`
+`
+<img
+class="thumb"
+src="${image}">
+`
 :''}
 
 <div class="text">
@@ -264,14 +308,6 @@ URLコピー
 
 };
 
-const script =
-document.createElement('script');
-
-script.src =
-'https://docs.google.com/spreadsheets/d/13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY/gviz/tq?tqx=out:json;responseHandler=handleSheet';
-
-document.body.appendChild(script);
-
 function youtubeEmbed(url){
 
 if(!url) return '';
@@ -322,6 +358,14 @@ navigator.clipboard.writeText(url);
 alert('URLをコピーしました');
 
 }
+
+const script =
+document.createElement('script');
+
+script.src =
+'https://docs.google.com/spreadsheets/d/13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY/gviz/tq?sheet=NSAW暮らし情報局_データ&tqx=out:json;responseHandler=handleSheet';
+
+document.body.appendChild(script);
 
 </script>
 
