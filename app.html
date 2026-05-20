@@ -231,8 +231,18 @@ src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg"
 const SHEET_ID =
 '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
 
+/*
+超重要
+↓
+ここは
+「スプレッドシート名」
+じゃない
+
+下のタブ名
+*/
+
 const SHEET_NAME =
-'シート1';
+'NSAW暮らし情報局_データ';
 
 const JSONP_URL =
 'https://docs.google.com/spreadsheets/d/'
@@ -253,6 +263,23 @@ showError();
 };
 
 document.body.appendChild(script);
+
+setTimeout(function(){
+
+const loading =
+document.querySelectorAll('.loading');
+
+loading.forEach(el => {
+
+if(el.innerHTML.includes('読み込み中')){
+
+showError();
+
+}
+
+});
+
+},8000);
 
 function handleSheet(json){
 
