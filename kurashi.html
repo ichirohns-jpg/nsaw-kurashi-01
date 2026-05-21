@@ -12,6 +12,7 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <style>
+
 body{
 margin:0;
 background:#eef4f8;
@@ -70,20 +71,12 @@ color:#17324d;
 margin:8px 0 8px 0;
 }
 
-.video-title:empty{
-margin:0 !important;
-}
-
 .video-desc{
 font-size:18px;
 line-height:1.8;
 color:#48657f;
 white-space:pre-wrap;
 margin:0 0 12px 0;
-}
-
-.video-desc:empty{
-margin:0 !important;
 }
 
 .video-wrap{
@@ -125,10 +118,21 @@ font-weight:900;
 box-sizing:border-box;
 }
 
-.fb{background:#1877f2;}
-.line{background:#06c755;}
-.x{background:#000;}
-.copy-btn{background:#ff7a00;}
+.fb{
+background:#1877f2;
+}
+
+.line{
+background:#06c755;
+}
+
+.x{
+background:#000;
+}
+
+.copy-btn{
+background:#ff7a00;
+}
 
 .loading{
 font-size:28px;
@@ -144,177 +148,313 @@ padding:40px 10px;
 text-align:center;
 color:#c62828;
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="wrap">
-  <img class="banner" src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 
-  <div id="newsArea">
-    <div class="loading">読み込み中...</div>
-  </div>
+<img
+class="banner"
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
+
+<div id="newsArea">
+
+<div class="loading">
+読み込み中...
+</div>
+
+</div>
+
 </div>
 
 <script>
+
 function getVal(cell){
-  if(!cell) return '';
 
-  if(cell.v !== null && cell.v !== undefined){
-    return cell.v;
-  }
+if(!cell) return '';
 
-  if(cell.f !== null && cell.f !== undefined){
-    return cell.f;
-  }
+if(cell.v !== null &&
+cell.v !== undefined){
+return cell.v;
+}
 
-  return '';
+if(cell.f !== null &&
+cell.f !== undefined){
+return cell.f;
+}
+
+return '';
+
 }
 
 function youtubeEmbed(url){
-  if(!url) return '';
 
-  url = String(url).trim();
+if(!url) return '';
 
-  if(url.includes('watch?v=')){
-    const id = url.split('watch?v=')[1].split('&')[0];
-    return 'https://www.youtube.com/embed/' + id;
-  }
+url = String(url).trim();
 
-  if(url.includes('youtu.be/')){
-    const id = url.split('youtu.be/')[1].split('?')[0];
-    return 'https://www.youtube.com/embed/' + id;
-  }
+if(url.includes('watch?v=')){
 
-  if(url.includes('/shorts/')){
-    const id = url.split('/shorts/')[1].split('?')[0];
-    return 'https://www.youtube.com/embed/' + id;
-  }
+const id =
+url.split('watch?v=')[1]
+.split('&')[0];
 
-  return '';
+return 'https://www.youtube.com/embed/' + id;
+
+}
+
+if(url.includes('youtu.be/')){
+
+const id =
+url.split('youtu.be/')[1]
+.split('?')[0];
+
+return 'https://www.youtube.com/embed/' + id;
+
+}
+
+if(url.includes('/shorts/')){
+
+const id =
+url.split('/shorts/')[1]
+.split('?')[0];
+
+return 'https://www.youtube.com/embed/' + id;
+
+}
+
+return '';
+
 }
 
 function copyUrl(url){
-  navigator.clipboard.writeText(url);
-  alert('URLをコピーしました');
+
+navigator.clipboard.writeText(url);
+
+alert('URLをコピーしました');
+
 }
 
 function renderTable(table){
-  const rows = table.rows || [];
-  const newsArea = document.getElementById('newsArea');
 
-  newsArea.innerHTML = '';
+const rows =
+table.rows || [];
 
-  if(rows.length === 0){
-    newsArea.innerHTML = '<div class="error">データがありません</div>';
-    return;
-  }
+const newsArea =
+document.getElementById('newsArea');
 
-  rows.reverse().forEach((row,index)=>{
-    const c = row.c || [];
+newsArea.innerHTML = '';
 
-    const id = getVal(c[1]);
-    const title = getVal(c[2]);
-    const image = getVal(c[3]);
-    const text = getVal(c[4]);
+if(rows.length === 0){
 
-    let videoUrl = '';
-    let urlIndex = -1;
+newsArea.innerHTML =
+'<div class="error">データがありません</div>';
 
-    c.forEach((cell, cellIdx) => {
-      if(!cell) return;
+return;
 
-      const rawData = JSON.stringify(cell);
+}
 
-      if(rawData.includes('youtube.com') || rawData.includes('youtu.be')){
-        const cleanData = rawData.replace(/\\/g,'');
-        const match = cleanData.match(/https?:\/\/[^\s"'\}]+/);
+rows.reverse().forEach((row,index)=>{
 
-        if(match){
-          videoUrl = match[0];
-          urlIndex = cellIdx;
-        }
-      }
-    });
+const c =
+row.c || [];
 
-    const videoTitle = urlIndex >= 2 ? getVal(c[urlIndex - 2]).trim() : '';
-    const videoDesc = urlIndex >= 1 ? getVal(c[urlIndex - 1]).trim() : '';
+const id =
+getVal(c[1]);
 
-    const shareUrl =
-      'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html?id=' + id;
+const title =
+getVal(c[2]);
 
-    const embedUrl = youtubeEmbed(videoUrl);
+const image =
+getVal(c[3]);
 
-    newsArea.innerHTML += `
-      <div class="card">
+const text =
+getVal(c[4]);
 
-        <div class="title">${title}</div>
+let videoUrl = '';
+let urlIndex = -1;
 
-        ${image ? `<img class="thumb" src="${image}">` : ''}
+c.forEach((cell, cellIdx) => {
 
-        <div class="text">${text}</div>
+if(!cell) return;
 
-        ${videoTitle ? `<div class="video-title">${videoTitle}</div>` : ''}
+const rawData =
+JSON.stringify(cell);
 
-        ${videoDesc ? `<div class="video-desc">${videoDesc}</div>` : ''}
+if(
+rawData.includes('youtube.com') ||
+rawData.includes('youtu.be')
+){
 
-        ${embedUrl ? `
-          <div class="video-wrap">
-            <iframe
-              src="${embedUrl}"
-              frameborder="0"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen>
-            </iframe>
-          </div>
-        ` : ''}
+const cleanData =
+rawData.replace(/\\/g,'');
 
-        <div class="sns">
-          <a class="fb" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}">
-            Facebook
-          </a>
+const match =
+cleanData.match(
+/https?:\/\/[^\s"'\}]+/);
 
-          <a class="x" target="_blank" href="https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}">
-            X
-          </a>
+if(match){
 
-          <a class="line" target="_blank" href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}">
-            LINE
-          </a>
+videoUrl =
+match[0];
 
-          <button class="copy-btn" onclick="copyUrl('${shareUrl}')">
-            URLコピー
-          </button>
-        </div>
+urlIndex =
+cellIdx;
 
-      </div>
-    `;
-  });
+}
+
+}
+
+});
+
+const videoTitle =
+urlIndex >= 2
+? getVal(c[urlIndex - 2]).trim()
+: '';
+
+const videoDesc =
+urlIndex >= 1
+? getVal(c[urlIndex - 1]).trim()
+: '';
+
+const shareUrl =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-' +
+String(id).padStart(3,'0') +
+'.html';
+
+const embedUrl =
+youtubeEmbed(videoUrl);
+
+newsArea.innerHTML += `
+
+<div class="card">
+
+<div class="title">
+${title}
+</div>
+
+${image ?
+`
+<img
+class="thumb"
+src="${image}">
+`
+:''}
+
+<div class="text">
+${text}
+</div>
+
+${videoTitle ?
+`
+<div class="video-title">
+${videoTitle}
+</div>
+`
+:''}
+
+${videoDesc ?
+`
+<div class="video-desc">
+${videoDesc}
+</div>
+`
+:''}
+
+${embedUrl ?
+`
+<div class="video-wrap">
+
+<iframe
+src="${embedUrl}"
+frameborder="0"
+referrerpolicy="strict-origin-when-cross-origin"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+allowfullscreen>
+</iframe>
+
+</div>
+`
+:''}
+
+<div class="sns">
+
+<a
+class="fb"
+target="_blank"
+href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}">
+Facebook
+</a>
+
+<a
+class="x"
+target="_blank"
+href="https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}">
+X
+</a>
+
+<a
+class="line"
+target="_blank"
+href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}">
+LINE
+</a>
+
+<button
+class="copy-btn"
+onclick="copyUrl('${shareUrl}')">
+URLコピー
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
 }
 
 window.google = {
-  visualization: {
-    Query: {
-      setResponse: function(response){
-        if(response.status === 'ok'){
-          renderTable(response.table);
-        }else{
-          document.getElementById('newsArea').innerHTML =
-            '<div class="error">データ取得失敗</div>';
-          console.error(response);
-        }
-      }
-    }
-  }
+visualization: {
+Query: {
+setResponse: function(response){
+
+if(response.status === 'ok'){
+
+renderTable(response.table);
+
+}else{
+
+document.getElementById(
+'newsArea'
+).innerHTML =
+'<div class="error">データ取得失敗</div>';
+
+console.error(response);
+
+}
+
+}
+}
+}
 };
 
-const sheetId = '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
+const sheetId =
+'13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
 
-const script = document.createElement('script');
-script.src = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+const script =
+document.createElement('script');
+
+script.src =
+`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+
 document.body.appendChild(script);
+
 </script>
 
 </body>
