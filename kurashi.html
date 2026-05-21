@@ -64,6 +64,26 @@ margin-bottom:16px;
 display:block;
 }
 
+.video-wrap{
+position:relative;
+width:100%;
+padding-top:56.25%;
+background:#000;
+border-radius:16px;
+overflow:hidden;
+margin-top:16px;
+margin-bottom:16px;
+}
+
+.video-wrap iframe{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+border:none;
+}
+
 .btn{
 display:block;
 width:100%;
@@ -124,7 +144,7 @@ text-align:center;
 
 <img
 class="banner"
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211600">
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211620">
 
 <div id="mainArea">
 
@@ -152,6 +172,46 @@ return cell.v;
 if(cell.f !== null &&
 cell.f !== undefined){
 return cell.f;
+}
+
+return '';
+
+}
+
+function youtubeEmbed(url){
+
+if(!url) return '';
+
+url = String(url).trim();
+
+if(url.includes('watch?v=')){
+
+const id =
+url.split('watch?v=')[1]
+.split('&')[0];
+
+return 'https://www.youtube.com/embed/' + id;
+
+}
+
+if(url.includes('youtu.be/')){
+
+const id =
+url.split('youtu.be/')[1]
+.split('?')[0];
+
+return 'https://www.youtube.com/embed/' + id;
+
+}
+
+if(url.includes('/shorts/')){
+
+const id =
+url.split('/shorts/')[1]
+.split('?')[0];
+
+return 'https://www.youtube.com/embed/' + id;
+
 }
 
 return '';
@@ -205,7 +265,41 @@ getVal(c[3]);
 const text =
 getVal(c[4]);
 
-let monthLabel = 'その他';
+let videoUrl = '';
+
+c.forEach(cell=>{
+
+if(!cell) return;
+
+const raw =
+JSON.stringify(cell);
+
+if(
+raw.includes('youtube.com') ||
+raw.includes('youtu.be')
+){
+
+const clean =
+raw.replace(/\\/g,'');
+
+const match =
+clean.match(/https?:\/\/[^\s"'\}]+/);
+
+if(match){
+
+videoUrl = match[0];
+
+}
+
+}
+
+});
+
+const embedUrl =
+youtubeEmbed(videoUrl);
+
+let monthLabel =
+'過去の記事';
 
 if(date.includes('/')){
 
@@ -236,6 +330,17 @@ ${image
 <div class="text">
 ${text}
 </div>
+
+${embedUrl
+? `
+<div class="video-wrap">
+<iframe
+src="${embedUrl}"
+allowfullscreen>
+</iframe>
+</div>
+`
+: ''}
 
 <a
 class="btn"
