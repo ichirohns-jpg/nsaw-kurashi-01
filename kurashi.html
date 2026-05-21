@@ -99,6 +99,35 @@ box-sizing:border-box;
 margin-top:12px;
 }
 
+.sns{
+display:flex;
+gap:10px;
+margin-top:16px;
+}
+
+.sns a{
+flex:1;
+text-align:center;
+padding:14px 10px;
+border-radius:14px;
+color:#fff;
+text-decoration:none;
+font-size:18px;
+font-weight:900;
+}
+
+.fb{
+background:#1877f2;
+}
+
+.line{
+background:#06c755;
+}
+
+.x{
+background:#000;
+}
+
 .loading{
 font-size:28px;
 font-weight:900;
@@ -144,7 +173,7 @@ text-align:center;
 
 <img
 class="banner"
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211820">
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211900">
 
 <div id="mainArea">
 
@@ -331,6 +360,11 @@ videoUrl = match[0];
 const embedUrl =
 youtubeEmbed(videoUrl);
 
+const shareUrl =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-' +
+String(id).padStart(3,'0') +
+'.html';
+
 let monthLabel =
 '過去の記事';
 
@@ -382,6 +416,37 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html?id=${id}">
 記事を見る
 
 </a>
+
+<div class="sns">
+
+<a
+class="fb"
+target="_blank"
+href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}">
+
+Facebook
+
+</a>
+
+<a
+class="line"
+target="_blank"
+href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}">
+
+LINE
+
+</a>
+
+<a
+class="x"
+target="_blank"
+href="https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}">
+
+X
+
+</a>
+
+</div>
 
 </div>
 
