@@ -97,6 +97,12 @@ font-size:22px;
 font-weight:900;
 box-sizing:border-box;
 margin-top:12px;
+border:none;
+cursor:pointer;
+}
+
+.copy-btn{
+background:#ff9800;
 }
 
 .sns{
@@ -173,7 +179,7 @@ text-align:center;
 
 <img
 class="banner"
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211900">
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605212035">
 
 <div id="mainArea">
 
@@ -244,6 +250,14 @@ return 'https://www.youtube.com/embed/' + id;
 }
 
 return '';
+
+}
+
+function copyLink(url){
+
+navigator.clipboard.writeText(url);
+
+alert('URLをコピーしました');
 
 }
 
@@ -416,6 +430,14 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html?id=${id}">
 記事を見る
 
 </a>
+
+<button
+class="btn copy-btn"
+onclick="copyLink('${shareUrl}')">
+
+URLコピー
+
+</button>
 
 <div class="sns">
 
