@@ -4,6 +4,9 @@
 
 <meta charset="UTF-8">
 
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
 <title>NSAW暮らし情報局</title>
 
 <meta property="og:title"
@@ -12,20 +15,60 @@ content="NSAW暮らし情報局">
 <meta property="og:description"
 content="志木・新座・朝霞・和光の暮らし情報">
 
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg?v=7">
+
 <meta property="og:type"
 content="website">
 
 <meta property="og:url"
 content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html">
 
-<meta property="og:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
-
 <meta name="twitter:card"
 content="summary_large_image">
 
+<meta name="twitter:title"
+content="NSAW暮らし情報局">
+
+<meta name="twitter:description"
+content="志木・新座・朝霞・和光の暮らし情報">
+
 <meta name="twitter:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg?v=7">
+
+<style>
+
+body{
+margin:0;
+background:#eef4f8;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:#17324d;
+}
+
+.box{
+text-align:center;
+padding:30px;
+}
+
+.title{
+font-size:34px;
+font-weight:900;
+margin-bottom:18px;
+}
+
+.text{
+font-size:20px;
+line-height:1.8;
+}
+
+</style>
 
 <script>
 
@@ -33,12 +76,15 @@ const params =
 new URLSearchParams(location.search);
 
 const id =
-params.get('id') || '1';
+params.get('id') || '';
 
-location.replace(
+setTimeout(()=>{
+
+location.href =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html?id='
-+ id
-);
++ id;
+
+},500);
 
 </script>
 
@@ -46,7 +92,17 @@ location.replace(
 
 <body>
 
-移動中...
+<div class="box">
+
+<div class="title">
+NSAW暮らし情報局
+</div>
+
+<div class="text">
+記事を開いています...
+</div>
+
+</div>
 
 </body>
 </html>
