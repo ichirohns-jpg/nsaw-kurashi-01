@@ -79,18 +79,38 @@ box-sizing:border-box;
 margin-top:12px;
 }
 
-.archive-title{
-font-size:34px;
-font-weight:900;
-margin:40px 0 20px;
-color:#17324d;
-text-align:center;
-}
-
 .loading{
 font-size:28px;
 font-weight:900;
 padding:40px 10px;
+text-align:center;
+}
+
+.month-box{
+background:#fff;
+border-radius:18px;
+margin-bottom:18px;
+padding:10px 16px;
+box-shadow:0 4px 18px rgba(0,0,0,.08);
+}
+
+.month-title{
+font-size:28px;
+font-weight:900;
+padding:12px 0;
+color:#17324d;
+cursor:pointer;
+}
+
+.month-inner{
+padding-top:10px;
+}
+
+.archive-main-title{
+font-size:34px;
+font-weight:900;
+margin:40px 0 20px;
+color:#17324d;
 text-align:center;
 }
 
@@ -104,7 +124,7 @@ text-align:center;
 
 <img
 class="banner"
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211540">
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211600">
 
 <div id="mainArea">
 
@@ -163,10 +183,15 @@ return;
 
 rows.reverse();
 
+const archiveMap = {};
+
 rows.forEach((row,index)=>{
 
 const c =
 row.c || [];
+
+const date =
+String(getVal(c[0]));
 
 const id =
 getVal(c[1]);
@@ -179,6 +204,22 @@ getVal(c[3]);
 
 const text =
 getVal(c[4]);
+
+let monthLabel = 'その他';
+
+if(date.includes('/')){
+
+const parts =
+date.split('/');
+
+if(parts.length >= 2){
+
+monthLabel =
+parts[1] + '月';
+
+}
+
+}
 
 const html = `
 
@@ -214,18 +255,44 @@ mainArea.innerHTML += html;
 
 }else{
 
-if(
-archiveArea.innerHTML === ''
-){
+if(!archiveMap[monthLabel]){
 
-archiveArea.innerHTML =
-'<div class="archive-title">アーカイブ</div>';
+archiveMap[monthLabel] = [];
 
 }
 
-archiveArea.innerHTML += html;
+archiveMap[monthLabel].push(html);
 
 }
+
+});
+
+if(Object.keys(archiveMap).length > 0){
+
+archiveArea.innerHTML +=
+'<div class="archive-main-title">アーカイブ</div>';
+
+}
+
+Object.keys(archiveMap)
+.reverse()
+.forEach(month=>{
+
+archiveArea.innerHTML += `
+
+<details class="month-box">
+
+<summary class="month-title">
+${month}
+</summary>
+
+<div class="month-inner">
+${archiveMap[month].join('')}
+</div>
+
+</details>
+
+`;
 
 });
 
