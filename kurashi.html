@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
 
 <title>NSAW暮らし情報局</title>
 
-<meta property="og:title" content="NSAW暮らし情報局">
-<meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報">
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg">
-<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html">
-<meta property="og:type" content="website">
+<meta property="og:title"
+content="NSAW暮らし情報局">
 
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:description"
+content="志木・新座・朝霞・和光の暮らし情報">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg">
+
+<meta property="og:url"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html">
+
+<meta property="og:type"
+content="website">
+
+<meta name="twitter:card"
+content="summary_large_image">
 
 <style>
 
@@ -54,23 +67,17 @@ line-height:1.6;
 margin-bottom:14px;
 }
 
+.date{
+font-size:15px;
+color:#666;
+margin-bottom:10px;
+}
+
 .text{
 font-size:17px;
 line-height:1.9;
 margin-bottom:18px;
-}
-
-.mainbtn{
-display:block;
-background:#2f80ed;
-color:#fff;
-text-align:center;
-padding:20px;
-border-radius:18px;
-font-size:28px;
-font-weight:700;
-text-decoration:none;
-margin-bottom:18px;
+white-space:pre-wrap;
 }
 
 .shareRow{
@@ -118,11 +125,16 @@ font-weight:700;
 margin-bottom:20px;
 }
 
+.monthBox{
+margin-bottom:20px;
+}
+
 .monthTitle{
 font-size:24px;
 font-weight:700;
-margin-top:20px;
 margin-bottom:10px;
+padding-bottom:8px;
+border-bottom:2px solid #ddd;
 }
 
 .archiveLink{
@@ -136,6 +148,7 @@ line-height:1.7;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -205,7 +218,9 @@ const title =
 c[2]?.v || '';
 
 const text =
-c[4]?.v || '';
+c[4]?.v ||
+c[5]?.v ||
+'';
 
 data.push({
 id,
@@ -233,8 +248,7 @@ document.getElementById('archive');
 
 data.reverse();
 
-let archiveHtml = '';
-let currentMonth = '';
+const monthMap = {};
 
 data.forEach((d,index)=>{
 
@@ -246,16 +260,16 @@ const shareUrl =
 id +
 '.html';
 
-const viewUrl =
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html?id=' +
-Number(d.id);
-
 const month =
 String(d.date).substring(0,7);
 
-const cardHtml = `
+const html = `
 
 <div class="card">
+
+<div class="date">
+${d.date}
+</div>
 
 <div class="title">
 ${d.title}
@@ -264,14 +278,6 @@ ${d.title}
 <div class="text">
 ${d.text}
 </div>
-
-<a
-class="mainbtn"
-href="${viewUrl}"
-target="_blank"
->
-記事を見る
-</a>
 
 <div class="shareRow">
 
@@ -329,39 +335,52 @@ alert('URLをコピーしました');
 
 if(index < 5){
 
-main.innerHTML += cardHtml;
+main.innerHTML += html;
 
 }else{
 
-if(month !== currentMonth){
+if(!monthMap[month]){
 
-archiveHtml += `
-<div class="monthTitle">
-${month}
-</div>
-`;
-
-currentMonth = month;
+monthMap[month] = [];
 
 }
 
-archiveHtml += `
+monthMap[month].push(`
 <a
 class="archiveLink"
-href="${viewUrl}"
+href="${shareUrl}"
 target="_blank"
 >
 ${d.date}
 　
 ${d.title}
 </a>
-`;
+`);
 
 }
 
 });
 
-archive.innerHTML = archiveHtml;
+Object.keys(monthMap)
+.sort()
+.reverse()
+.forEach(month=>{
+
+archive.innerHTML += `
+
+<div class="monthBox">
+
+<div class="monthTitle">
+${month}
+</div>
+
+${monthMap[month].join('')}
+
+</div>
+
+`;
+
+});
 
 }
 
