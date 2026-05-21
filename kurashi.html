@@ -144,7 +144,7 @@ text-align:center;
 
 <img
 class="banner"
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211740">
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211820">
 
 <div id="mainArea">
 
@@ -259,9 +259,16 @@ rows.filter(row=>{
 const c = row.c || [];
 
 const rowId =
-String(getVal(c[1])).trim();
+String(getVal(c[1]))
+.replace(/^0+/,'')
+.trim();
 
-return rowId === targetId;
+const target =
+String(targetId)
+.replace(/^0+/,'')
+.trim();
+
+return rowId === target;
 
 });
 
@@ -287,7 +294,9 @@ const image =
 getVal(c[3]);
 
 const text =
-getVal(c[4]);
+getVal(c[4]) ||
+getVal(c[5]) ||
+'';
 
 let videoUrl = '';
 
