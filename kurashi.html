@@ -56,7 +56,7 @@ margin-bottom:14px;
 background:#fff;
 border-radius:20px;
 padding:16px;
-margin-bottom:14px;
+margin-bottom:16px;
 box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
@@ -67,7 +67,7 @@ margin-bottom:6px;
 }
 
 .title{
-font-size:19px;
+font-size:20px;
 font-weight:700;
 line-height:1.5;
 margin-bottom:10px;
@@ -78,6 +78,32 @@ font-size:15px;
 line-height:1.8;
 margin-bottom:12px;
 white-space:pre-wrap;
+}
+
+.thumb{
+width:100%;
+border-radius:16px;
+margin-bottom:12px;
+display:block;
+}
+
+.video-wrap{
+position:relative;
+width:100%;
+padding-top:56.25%;
+background:#000;
+border-radius:16px;
+overflow:hidden;
+margin-bottom:12px;
+}
+
+.video-wrap iframe{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+border:none;
 }
 
 .shareRow{
@@ -125,10 +151,13 @@ font-weight:700;
 margin-bottom:16px;
 }
 
+.monthBox{
+margin-bottom:20px;
+}
+
 .monthTitle{
 font-size:20px;
 font-weight:700;
-margin-top:18px;
 margin-bottom:10px;
 padding-bottom:6px;
 border-bottom:2px solid #ddd;
@@ -214,16 +243,47 @@ if(!id) return;
 const title =
 c[2]?.v || '';
 
+const image =
+c[3]?.v || '';
+
 const text =
 c[4]?.v ||
 c[5]?.v ||
 '';
 
+let video = '';
+
+c.forEach(cell=>{
+
+const raw =
+JSON.stringify(cell || '');
+
+if(
+raw.includes('youtube.com') ||
+raw.includes('youtu.be')
+){
+
+const match =
+raw.match(/https?:\/\/[^"]+/);
+
+if(match){
+
+video = match[0]
+.replace(/\\/g,'');
+
+}
+
+}
+
+});
+
 data.push({
 id,
 title,
+image,
 text,
-date:rawDate
+date:rawDate,
+video
 });
 
 });
@@ -234,6 +294,38 @@ draw(data);
 }
 }
 };
+
+function youtubeEmbed(url){
+
+if(!url) return '';
+
+if(url.includes('watch?v=')){
+
+return 'https://www.youtube.com/embed/' +
+url.split('watch?v=')[1]
+.split('&')[0];
+
+}
+
+if(url.includes('youtu.be/')){
+
+return 'https://www.youtube.com/embed/' +
+url.split('youtu.be/')[1]
+.split('?')[0];
+
+}
+
+if(url.includes('/shorts/')){
+
+return 'https://www.youtube.com/embed/' +
+url.split('/shorts/')[1]
+.split('?')[0];
+
+}
+
+return '';
+
+}
 
 function draw(data){
 
@@ -257,7 +349,10 @@ const shareUrl =
 id +
 '.html';
 
-const cardHtml = `
+const embed =
+youtubeEmbed(d.video);
+
+const html = `
 
 <div class="card">
 
@@ -269,9 +364,24 @@ ${d.date}
 ${d.title}
 </div>
 
+${d.image
+? `<img class="thumb" src="${d.image}">`
+: ''}
+
 <div class="text">
 ${d.text}
 </div>
+
+${embed
+? `
+<div class="video-wrap">
+<iframe
+src="${embed}"
+allowfullscreen>
+</iframe>
+</div>
+`
+: ''}
 
 <div class="shareRow">
 
@@ -329,7 +439,7 @@ alert('URLをコピーしました');
 
 if(index < 5){
 
-main.innerHTML += cardHtml;
+main.innerHTML += html;
 
 }else{
 
@@ -365,11 +475,15 @@ Object.keys(monthMap)
 
 archive.innerHTML += `
 
+<div class="monthBox">
+
 <div class="monthTitle">
 ${month}
 </div>
 
 ${monthMap[month].join('')}
+
+</div>
 
 `;
 
