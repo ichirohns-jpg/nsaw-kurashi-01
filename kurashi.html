@@ -144,7 +144,7 @@ text-align:center;
 
 <img
 class="banner"
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211620">
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211700">
 
 <div id="mainArea">
 
@@ -223,6 +223,14 @@ function renderTable(table){
 const rows =
 table.rows || [];
 
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const targetId =
+params.get('id');
+
 const mainArea =
 document.getElementById('mainArea');
 
@@ -242,6 +250,24 @@ return;
 }
 
 rows.reverse();
+
+if(targetId){
+
+const filtered =
+rows.filter(row=>{
+
+const c = row.c || [];
+
+return String(getVal(c[1]))
+=== String(targetId);
+
+});
+
+rows.length = 0;
+
+filtered.forEach(r=>rows.push(r));
+
+}
 
 const archiveMap = {};
 
@@ -344,7 +370,7 @@ allowfullscreen>
 
 <a
 class="btn"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-${String(id).padStart(3,'0')}.html">
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html?id=${id}">
 
 記事を見る
 
@@ -353,6 +379,14 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-${String(id).padStar
 </div>
 
 `;
+
+if(targetId){
+
+mainArea.innerHTML += html;
+
+return;
+
+}
 
 if(index < 5){
 
@@ -371,6 +405,8 @@ archiveMap[monthLabel].push(html);
 }
 
 });
+
+if(!targetId){
 
 if(Object.keys(archiveMap).length > 0){
 
@@ -400,6 +436,8 @@ ${archiveMap[month].join('')}
 `;
 
 });
+
+}
 
 }
 
