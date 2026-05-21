@@ -144,7 +144,7 @@ text-align:center;
 
 <img
 class="banner"
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211700">
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=202605211740">
 
 <div id="mainArea">
 
@@ -220,7 +220,7 @@ return '';
 
 function renderTable(table){
 
-const rows =
+let rows =
 table.rows || [];
 
 const params =
@@ -253,19 +253,17 @@ rows.reverse();
 
 if(targetId){
 
-const filtered =
+rows =
 rows.filter(row=>{
 
 const c = row.c || [];
 
-return String(getVal(c[1]))
-=== String(targetId);
+const rowId =
+String(getVal(c[1])).trim();
+
+return rowId === targetId;
 
 });
-
-rows.length = 0;
-
-filtered.forEach(r=>rows.push(r));
 
 }
 
@@ -280,7 +278,7 @@ const date =
 String(getVal(c[0]));
 
 const id =
-getVal(c[1]);
+String(getVal(c[1])).trim();
 
 const title =
 getVal(c[2]);
@@ -383,7 +381,6 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html?id=${id}">
 if(targetId){
 
 mainArea.innerHTML += html;
-
 return;
 
 }
