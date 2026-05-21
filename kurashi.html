@@ -27,7 +27,7 @@ color:#1f2d3d;
 }
 
 .wrap{
-max-width:700px;
+max-width:720px;
 margin:auto;
 padding:14px;
 }
@@ -43,19 +43,19 @@ margin-bottom:18px;
 background:#fff;
 border-radius:24px;
 padding:18px;
-margin-bottom:20px;
+margin-bottom:22px;
 box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 
 .title{
-font-size:20px;
+font-size:22px;
 font-weight:700;
 line-height:1.6;
-margin-bottom:12px;
+margin-bottom:14px;
 }
 
 .text{
-font-size:16px;
+font-size:17px;
 line-height:1.9;
 margin-bottom:18px;
 }
@@ -65,9 +65,9 @@ display:block;
 background:#2f80ed;
 color:#fff;
 text-align:center;
-padding:18px;
+padding:20px;
 border-radius:18px;
-font-size:26px;
+font-size:28px;
 font-weight:700;
 text-decoration:none;
 margin-bottom:18px;
@@ -105,28 +105,34 @@ background:#666;
 }
 
 .archive{
-margin-top:30px;
+background:#fff;
+border-radius:24px;
+padding:18px;
+margin-top:28px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 
-.month{
-background:#fff;
-border-radius:18px;
-padding:14px;
-margin-bottom:12px;
+.archiveTitle{
+font-size:34px;
+font-weight:700;
+margin-bottom:20px;
 }
 
 .monthTitle{
-font-size:20px;
+font-size:24px;
 font-weight:700;
+margin-top:20px;
 margin-bottom:10px;
 }
 
 .archiveLink{
 display:block;
-padding:10px 0;
+padding:12px 0;
 text-decoration:none;
 color:#1f2d3d;
 border-bottom:1px solid #eee;
+font-size:18px;
+line-height:1.7;
 }
 
 </style>
@@ -145,29 +151,27 @@ src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg"
 
 <div class="archive">
 
-<div class="month">
-<div class="monthTitle">
+<div class="archiveTitle">
 過去の記事
 </div>
 
 <div id="archive"></div>
 
 </div>
-</div>
 
 </div>
 
 <script>
 
-const SHEET =
+const SHEET_URL =
 'https://docs.google.com/spreadsheets/d/13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY/gviz/tq?tqx=out:json';
 
-function load(){
+function loadSheet(){
 
 const s =
 document.createElement('script');
 
-s.src = SHEET;
+s.src = SHEET_URL;
 
 document.body.appendChild(s);
 
@@ -187,20 +191,27 @@ rows.forEach(r=>{
 
 const c = r.c || [];
 
+const rawDate =
+c[0]?.f ||
+c[0]?.v ||
+'';
+
+const id =
+String(c[1]?.v || '').trim();
+
+if(!id) return;
+
+const title =
+c[2]?.v || '';
+
+const text =
+c[4]?.v || '';
+
 data.push({
-
-id:
-c[1]?.v || '',
-
-title:
-c[2]?.v || '',
-
-text:
-c[4]?.v || '',
-
-date:
-c[0]?.v || ''
-
+id,
+title,
+text,
+date:rawDate
 });
 
 });
@@ -222,14 +233,27 @@ document.getElementById('archive');
 
 data.reverse();
 
-data.forEach((d,i)=>{
+let archiveHtml = '';
+let currentMonth = '';
+
+data.forEach((d,index)=>{
+
+const id =
+String(d.id).padStart(3,'0');
 
 const shareUrl =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-' +
-String(d.id).padStart(3,'0') +
+id +
 '.html';
 
-const html = `
+const viewUrl =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kurashi.html?id=' +
+Number(d.id);
+
+const month =
+String(d.date).substring(0,7);
+
+const cardHtml = `
 
 <div class="card">
 
@@ -243,7 +267,7 @@ ${d.text}
 
 <a
 class="mainbtn"
-href="${shareUrl}"
+href="${viewUrl}"
 target="_blank"
 >
 記事を見る
@@ -253,30 +277,36 @@ target="_blank"
 
 <button
 class="shareBtn fb"
-onclick="window.open(
+onclick="
+window.open(
 'https://www.facebook.com/sharer/sharer.php?u=' +
 encodeURIComponent('${shareUrl}')
-)"
+);
+"
 >
 Facebook
 </button>
 
 <button
 class="shareBtn line"
-onclick="window.open(
+onclick="
+window.open(
 'https://social-plugins.line.me/lineit/share?url=' +
 encodeURIComponent('${shareUrl}')
-)"
+);
+"
 >
 LINE
 </button>
 
 <button
 class="shareBtn x"
-onclick="window.open(
+onclick="
+window.open(
 'https://twitter.com/intent/tweet?url=' +
 encodeURIComponent('${shareUrl}')
-)"
+);
+"
 >
 X
 </button>
@@ -297,19 +327,32 @@ alert('URLをコピーしました');
 
 `;
 
-if(i < 5){
+if(index < 5){
 
-main.innerHTML += html;
+main.innerHTML += cardHtml;
 
 }else{
 
-archive.innerHTML += `
+if(month !== currentMonth){
+
+archiveHtml += `
+<div class="monthTitle">
+${month}
+</div>
+`;
+
+currentMonth = month;
+
+}
+
+archiveHtml += `
 <a
 class="archiveLink"
-href="${shareUrl}"
+href="${viewUrl}"
 target="_blank"
 >
-${d.date}　
+${d.date}
+　
 ${d.title}
 </a>
 `;
@@ -318,9 +361,11 @@ ${d.title}
 
 });
 
+archive.innerHTML = archiveHtml;
+
 }
 
-load();
+loadSheet();
 
 </script>
 
