@@ -38,8 +38,8 @@ padding:12px;
 
 .banner img{
 width:100%;
-border-radius:18px;
 display:block;
+border-radius:18px;
 margin-bottom:14px;
 }
 
@@ -249,9 +249,13 @@ allowfullscreen>
 }
 
 else if(
-txt.includes(
-'drive.google.com/file/d/'
-)
+txt.includes('drive.google.com')
+){
+
+let img = txt;
+
+if(
+txt.includes('/file/d/')
 ){
 
 const m =
@@ -259,15 +263,20 @@ txt.match(/\/d\/(.*?)\//);
 
 if(m){
 
-mediaHtml += `
-<div class="media-scroll">
-<img src="
-https://drive.google.com/thumbnail?id=${m[1]}&sz=w1200
-">
-</div>
-`;
+img =
+'https://drive.google.com/thumbnail?id='
++ m[1]
++ '&sz=w1200';
 
 }
+
+}
+
+mediaHtml += `
+<div class="media-scroll">
+<img src="${img}">
+</div>
+`;
 
 }
 
