@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NSAW暮らし情報局</title>
+
 <style>
 body{margin:0;background:#eef2f7;font-family:"Hiragino Sans","Yu Gothic",sans-serif;color:#1f2d3d}
 .wrap{max-width:720px;margin:auto;padding:12px}
@@ -25,10 +26,13 @@ body{margin:0;background:#eef2f7;font-family:"Hiragino Sans","Yu Gothic",sans-se
 .archiveLink{display:block;padding:10px 0;text-decoration:none;color:#1f2d3d;border-bottom:1px solid #eee;font-size:16px;line-height:1.6}
 </style>
 </head>
+
 <body>
 <div class="wrap">
 <img class="banner" src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg?v=1">
+
 <div id="main"></div>
+
 <div class="archive">
 <div class="archiveTitle">過去の記事</div>
 <div id="archive"></div>
@@ -45,7 +49,7 @@ function getVal(cell){
   return '';
 }
 
-function getAllText(cell){
+function getRaw(cell){
   if(!cell) return '';
   return JSON.stringify(cell).replace(/\\/g,'');
 }
@@ -59,47 +63,86 @@ function youtubeEmbed(url){
   return '';
 }
 
-function labelForUrl(url){
-  if(url.includes('city.shiki')) return '志木市の記事を見る';
-  if(url.includes('city.niiza')) return '新座市の記事を見る';
-  if(url.includes('city.asaka')) return '朝霞市の記事を見る';
-  if(url.includes('city.wako')) return '和光市の記事を見る';
-  return '詳しく見る';
+function findCol(headers, words){
+  for(let i=0;i<headers.length;i++){
+    const h=String(headers[i]||'');
+    if(words.some(w=>h.includes(w))) return i;
+  }
+  return -1;
+}
+
+function makeCityButtons(row, cols){
+  let html='';
+
+  const items=[
+    ['志木市の記事を見る', cols.shiki],
+    ['新座市の記事を見る', cols.niiza],
+    ['朝霞市の記事を見る', cols.asaka],
+    ['和光市の記事を見る', cols.wako]
+  ];
+
+  items.forEach(item=>{
+    const label=item[0];
+    const idx=item[1];
+    if(idx<0) return;
+
+    const url=getVal(row[idx]);
+    if(url && String(url).startsWith('http')){
+      html+=`<a class="linkBtn" href="${url}" target="_blank">${label}</a>`;
+    }
+  });
+
+  return html;
 }
 
 window.google={visualization:{Query:{setResponse:function(res){
   const rows=res.table.rows||[];
+  const headerCells=rows[0]?.c||[];
+
+  const headers=headerCells.map(cell=>getVal(cell));
+
+  const cols={
+    date:findCol(headers,['日付']),
+    id:findCol(headers,['記事ID','ID','番号']),
+    title:findCol(headers,['タイトル']),
+    image:findCol(headers,['画像URL','画像']),
+    text:findCol(headers,['本文','詳細','説明']),
+    shiki:findCol(headers,['志木URL','志木市URL','志木']),
+    niiza:findCol(headers,['新座URL','新座市URL','新座']),
+    asaka:findCol(headers,['朝霞URL','朝霞市URL','朝霞']),
+    wako:findCol(headers,['和光URL','和光市URL','和光'])
+  };
+
   const data=[];
 
-  rows.forEach(r=>{
-    const c=r.c||[];
-    const id=String(getVal(c[1])).trim();
-    if(!id) return;
+  for(let r=1;r<rows.length;r++){
+    const c=rows[r].c||[];
+
+    const id=String(getVal(c[cols.id])).trim();
+    if(!id) continue;
 
     let video='';
-    let links=[];
     c.forEach(cell=>{
-      const raw=getAllText(cell);
+      const raw=getRaw(cell);
       const found=raw.match(/https?:\/\/[^\s"'}]+/g)||[];
       found.forEach(url=>{
         if(url.includes('youtube.com')||url.includes('youtu.be')){
           video=url;
-        }else if(!url.includes('github.io/nsaw-kurashi-01') && !url.match(/\.(jpg|jpeg|png|webp|gif)(\?|$)/i)){
-          if(!links.includes(url)) links.push(url);
         }
       });
     });
 
     data.push({
-      date:getVal(c[0]),
+      row:c,
+      date:getVal(c[cols.date]),
       id:id,
-      title:getVal(c[2]),
-      image:getVal(c[3]),
-      text:getVal(c[4])||getVal(c[5])||'',
+      title:getVal(c[cols.title]),
+      image:getVal(c[cols.image]),
+      text:getVal(c[cols.text]),
       video:video,
-      links:links
+      cityButtons:makeCityButtons(c,cols)
     });
-  });
+  }
 
   draw(data);
 }}}};
@@ -117,7 +160,6 @@ function draw(data){
     const id=String(d.id).padStart(3,'0');
     const shareUrl='https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-'+id+'.html';
     const embed=youtubeEmbed(d.video);
-    const linkHtml=d.links.map(url=>`<a class="linkBtn" href="${url}" target="_blank">${labelForUrl(url)}</a>`).join('');
 
     const html=`
 <div class="card">
@@ -125,7 +167,7 @@ function draw(data){
 <div class="title">${d.title}</div>
 ${d.image ? `<img class="thumb" src="${d.image}">` : ''}
 <div class="text">${d.text}</div>
-${linkHtml}
+${d.cityButtons}
 ${embed ? `<div class="video-wrap"><iframe src="${embed}" allowfullscreen></iframe></div>` : ''}
 <div class="shareRow">
 <button class="shareBtn fb" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('${shareUrl}'))">Facebook</button>
