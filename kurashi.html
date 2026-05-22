@@ -6,52 +6,39 @@
 <title>NSAW暮らし情報局</title>
 
 <style>
-body{margin:0;background:#eef2f7;font-family:"Hiragino Sans","Yu Gothic",sans-serif;color:#1f2d3d}
-.wrap{max-width:720px;margin:auto;padding:12px}
-.banner{width:100%;border-radius:20px;display:block;margin-bottom:14px}
-.card{background:#fff;border-radius:20px;padding:16px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.date{font-size:14px;color:#666;margin-bottom:6px}
-.title{font-size:20px;font-weight:700;line-height:1.5;margin-bottom:10px}
-.text{font-size:15px;line-height:1.8;margin-bottom:12px;white-space:pre-wrap}
-.thumb{width:100%;border-radius:16px;margin-bottom:12px;display:block}
-.linkBtn{display:block;background:#2f80ed;color:#fff;text-align:center;text-decoration:none;border-radius:14px;padding:14px;margin:10px 0;font-size:18px;font-weight:700}
-.video-wrap{position:relative;width:100%;padding-top:56.25%;background:#000;border-radius:16px;overflow:hidden;margin-bottom:12px}
+body{margin:0;background:#eef4f8;font-family:"Hiragino Sans","Yu Gothic",sans-serif;color:#17324d}
+.wrap{max-width:760px;margin:0 auto;padding:16px}
+.banner{width:100%;border-radius:20px;display:block;margin-bottom:18px}
+.card{background:#fff;border-radius:20px;padding:18px;margin-bottom:18px;box-shadow:0 4px 18px rgba(0,0,0,.08)}
+.title{font-size:30px;font-weight:900;line-height:1.5;margin-bottom:14px}
+.text{font-size:20px;line-height:1.9;white-space:pre-wrap;margin-bottom:16px}
+.thumb{width:100%;border-radius:16px;margin-bottom:16px;display:block}
+.video-wrap{position:relative;width:100%;padding-top:56.25%;background:#000;border-radius:16px;overflow:hidden;margin-bottom:16px}
 .video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
-.shareRow{display:flex;gap:8px}
-.shareBtn{flex:1;border:none;border-radius:12px;padding:12px 0;font-size:15px;font-weight:700;color:#fff}
-.fb{background:#1877f2}.line{background:#06c755}.x{background:#000}.copy{background:#666}
-.archive{background:#fff;border-radius:20px;padding:16px;margin-top:18px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.archiveTitle{font-size:28px;font-weight:700;margin-bottom:16px}
-.monthTitle{font-size:20px;font-weight:700;margin:18px 0 10px;padding-bottom:6px;border-bottom:2px solid #ddd}
-.archiveLink{display:block;padding:10px 0;text-decoration:none;color:#1f2d3d;border-bottom:1px solid #eee;font-size:16px;line-height:1.6}
+.sns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.sns a,.copy-btn{border:none;text-decoration:none;text-align:center;color:#fff;border-radius:14px;padding:16px 10px;font-size:18px;font-weight:900;box-sizing:border-box}
+.fb{background:#1877f2}.line{background:#06c755}.x{background:#000}.copy-btn{background:#ff7a00}
+.loading{font-size:28px;font-weight:900;padding:40px 10px;text-align:center}
+.month-box{background:#fff;border-radius:18px;margin-bottom:18px;padding:10px 16px;box-shadow:0 4px 18px rgba(0,0,0,.08)}
+.month-title{font-size:28px;font-weight:900;padding:12px 0;color:#17324d;cursor:pointer}
+.month-inner{padding-top:10px}
+.archive-main-title{font-size:34px;font-weight:900;margin:40px 0 20px;text-align:center}
 </style>
 </head>
 
 <body>
 <div class="wrap">
-<img class="banner" src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg?v=1">
-
-<div id="main"></div>
-
-<div class="archive">
-<div class="archiveTitle">過去の記事</div>
-<div id="archive"></div>
-</div>
+<img class="banner" src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
+<div id="mainArea"><div class="loading">読み込み中...</div></div>
+<div id="archiveArea"></div>
 </div>
 
 <script>
-const SHEET_URL='https://docs.google.com/spreadsheets/d/13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY/gviz/tq?tqx=out:json';
-
 function getVal(cell){
   if(!cell) return '';
-  if(cell.f!==null && cell.f!==undefined) return cell.f;
-  if(cell.v!==null && cell.v!==undefined) return cell.v;
+  if(cell.v !== null && cell.v !== undefined) return cell.v;
+  if(cell.f !== null && cell.f !== undefined) return cell.f;
   return '';
-}
-
-function getRaw(cell){
-  if(!cell) return '';
-  return JSON.stringify(cell).replace(/\\/g,'');
 }
 
 function youtubeEmbed(url){
@@ -63,137 +50,15 @@ function youtubeEmbed(url){
   return '';
 }
 
-function findCol(headers, words){
-  for(let i=0;i<headers.length;i++){
-    const h=String(headers[i]||'');
-    if(words.some(w=>h.includes(w))) return i;
-  }
-  return -1;
+function copyUrl(url){
+  navigator.clipboard.writeText(url);
+  alert('URLをコピーしました');
 }
 
-function makeCityButtons(row, cols){
-  let html='';
+function renderTable(table){
+  const rows=table.rows||[];
+  const mainArea=document.getElementById('mainArea');
+  const archiveArea=document.getElementById('archiveArea');
 
-  const items=[
-    ['志木市の記事を見る', cols.shiki],
-    ['新座市の記事を見る', cols.niiza],
-    ['朝霞市の記事を見る', cols.asaka],
-    ['和光市の記事を見る', cols.wako]
-  ];
-
-  items.forEach(item=>{
-    const label=item[0];
-    const idx=item[1];
-    if(idx<0) return;
-
-    const url=getVal(row[idx]);
-    if(url && String(url).startsWith('http')){
-      html+=`<a class="linkBtn" href="${url}" target="_blank">${label}</a>`;
-    }
-  });
-
-  return html;
-}
-
-window.google={visualization:{Query:{setResponse:function(res){
-  const rows=res.table.rows||[];
-  const headerCells=rows[0]?.c||[];
-
-  const headers=headerCells.map(cell=>getVal(cell));
-
-  const cols={
-    date:findCol(headers,['日付']),
-    id:findCol(headers,['記事ID','ID','番号']),
-    title:findCol(headers,['タイトル']),
-    image:findCol(headers,['画像URL','画像']),
-    text:findCol(headers,['本文','詳細','説明']),
-    shiki:findCol(headers,['志木URL','志木市URL','志木']),
-    niiza:findCol(headers,['新座URL','新座市URL','新座']),
-    asaka:findCol(headers,['朝霞URL','朝霞市URL','朝霞']),
-    wako:findCol(headers,['和光URL','和光市URL','和光'])
-  };
-
-  const data=[];
-
-  for(let r=1;r<rows.length;r++){
-    const c=rows[r].c||[];
-
-    const id=String(getVal(c[cols.id])).trim();
-    if(!id) continue;
-
-    let video='';
-    c.forEach(cell=>{
-      const raw=getRaw(cell);
-      const found=raw.match(/https?:\/\/[^\s"'}]+/g)||[];
-      found.forEach(url=>{
-        if(url.includes('youtube.com')||url.includes('youtu.be')){
-          video=url;
-        }
-      });
-    });
-
-    data.push({
-      row:c,
-      date:getVal(c[cols.date]),
-      id:id,
-      title:getVal(c[cols.title]),
-      image:getVal(c[cols.image]),
-      text:getVal(c[cols.text]),
-      video:video,
-      cityButtons:makeCityButtons(c,cols)
-    });
-  }
-
-  draw(data);
-}}}};
-
-function draw(data){
-  const main=document.getElementById('main');
-  const archive=document.getElementById('archive');
-  main.innerHTML='';
-  archive.innerHTML='';
-  data.reverse();
-
-  const monthMap={};
-
-  data.forEach((d,index)=>{
-    const id=String(d.id).padStart(3,'0');
-    const shareUrl='https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-'+id+'.html';
-    const embed=youtubeEmbed(d.video);
-
-    const html=`
-<div class="card">
-<div class="date">${d.date}</div>
-<div class="title">${d.title}</div>
-${d.image ? `<img class="thumb" src="${d.image}">` : ''}
-<div class="text">${d.text}</div>
-${d.cityButtons}
-${embed ? `<div class="video-wrap"><iframe src="${embed}" allowfullscreen></iframe></div>` : ''}
-<div class="shareRow">
-<button class="shareBtn fb" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('${shareUrl}'))">Facebook</button>
-<button class="shareBtn line" onclick="window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent('${shareUrl}'))">LINE</button>
-<button class="shareBtn x" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent('${shareUrl}'))">X</button>
-<button class="shareBtn copy" onclick="navigator.clipboard.writeText('${shareUrl}');alert('URLをコピーしました');">コピー</button>
-</div>
-</div>`;
-
-    if(index<5){
-      main.innerHTML+=html;
-    }else{
-      const month=String(d.date).substring(0,7)||'過去の記事';
-      if(!monthMap[month]) monthMap[month]=[];
-      monthMap[month].push(`<a class="archiveLink" href="${shareUrl}" target="_blank">${d.date}　${d.title}</a>`);
-    }
-  });
-
-  Object.keys(monthMap).sort().reverse().forEach(month=>{
-    archive.innerHTML+=`<div class="monthTitle">${month}</div>${monthMap[month].join('')}`;
-  });
-}
-
-const s=document.createElement('script');
-s.src=SHEET_URL;
-document.body.appendChild(s);
-</script>
-</body>
-</html>
+  mainArea.innerHTML='';
+  archiveArea.innerHTML='
