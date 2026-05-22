@@ -16,10 +16,7 @@ content="NSAW 暮らし情報局">
 content="志木・新座・朝霞・和光の暮らし情報">
 
 <meta property="og:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg?v=50">
-
-<meta property="og:type"
-content="website">
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg?v=100">
 
 <meta name="twitter:card"
 content="summary_large_image">
@@ -152,10 +149,10 @@ background:#666;
 <div class="wrap">
 
 <div class="banner">
-<img src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=50">
+<img src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=100">
 </div>
 
-<div id="list"></div>
+<div id="detail"></div>
 
 </div>
 
@@ -167,13 +164,15 @@ const SHEET_ID =
 const SHEET_NAME =
 'NSAW暮らし情報局_データ';
 
-const params =
+const urlParams =
 new URLSearchParams(
-location.search
+window.location.search
 );
 
 const targetId =
-params.get('id');
+urlParams.get('id')
+? urlParams.get('id').trim()
+: null;
 
 const cacheBust =
 Date.now();
@@ -186,7 +185,12 @@ const url =
 + '&tqx=out:json&t='
 + cacheBust;
 
-function getCell(row,index){
+/* null安全 */
+
+function getCellValue(
+row,
+index
+){
 
 if(
 !row ||
@@ -196,85 +200,104 @@ if(
 return '';
 }
 
-const cell =
-row.c[index];
+const value =
+row.c[index].v;
 
-return String(
-cell.f ||
-cell.v ||
-''
-).trim();
+return (
+value !== null &&
+value !== undefined
+)
+? String(value).trim()
+: '';
 
 }
 
-window.google = {
-visualization:{
-Query:{
-setResponse:function(response){
+/* JSONP */
 
-console.log(
-response.table.rows
+function handleGoogleSheetsResponse(
+response
+){
+
+if(
+!targetId
+){
+console.error(
+'IDなし'
 );
+return;
+}
+
+if(
+response &&
+response.table &&
+response.table.rows
+){
 
 const rows =
-response.table.rows || [];
+response.table.rows;
 
-const list =
-document.getElementById('list');
+/* find */
 
-list.innerHTML='';
+const matchedRow =
+rows.find(row => {
 
-let targetRows =
-rows;
+if(
+!row ||
+!row.c ||
+!row.c[0]
+){
+return false;
+}
 
-/* 詳細 */
+const cellId =
+row.c[0].v !== null
+? String(row.c[0].v).trim()
+: '';
 
-if(targetId){
-
-targetRows =
-rows.filter((row,index)=>{
-
-return String(index+1)
-=== String(targetId);
+return cellId === targetId;
 
 });
 
-}
-
-/* 新しい順 */
-
-targetRows =
-targetRows.reverse();
-
-targetRows.forEach((row,index)=>{
+if(
+matchedRow
+){
 
 const date =
-getCell(row,0);
+getCellValue(
+matchedRow,
+0
+);
 
 const title =
-getCell(row,1);
+getCellValue(
+matchedRow,
+1
+);
 
 const desc =
-getCell(row,3);
+getCellValue(
+matchedRow,
+2
+);
+
+const imageUrl =
+getCellValue(
+matchedRow,
+3
+);
 
 let mediaHtml='';
-
-for(let i=0;i<row.c.length;i++){
-
-const txt =
-getCell(row,i);
-
-if(!txt) continue;
 
 /* YouTube */
 
 if(
-txt.includes('youtube.com')
+imageUrl.includes('youtube.com')
 ||
-txt.includes('youtu.be')
+imageUrl.includes('youtu.be')
 ){
 
-let y = txt;
+let y =
+imageUrl;
 
 y = y.replace(
 'watch?v=',
@@ -291,7 +314,7 @@ y = y.replace(
 '/embed/'
 );
 
-mediaHtml += `
+mediaHtml = `
 <div class="youtube">
 <iframe
 src="${y}"
@@ -302,43 +325,25 @@ allowfullscreen>
 
 }
 
-/* 画像 */
+/* Drive画像 */
 
 else if(
-
-txt.match(/\.(jpg|jpeg|png|webp)/i)
-
-||
-
-txt.includes('thumbnail')
-
-||
-
-txt.includes('drive.google.com')
-
-){
-
-let img = txt;
-
-if(
-txt.includes('/file/d/')
+imageUrl.includes('/file/d/')
 ){
 
 const m =
-txt.match(/\/d\/(.*?)\//);
+imageUrl.match(
+/\/d\/(.*?)\//
+);
 
 if(m){
 
-img =
+const img =
 'https://drive.google.com/thumbnail?id='
 + m[1]
 + '&sz=w1200';
 
-}
-
-}
-
-mediaHtml += `
+mediaHtml = `
 <div class="media">
 <img src="${img}">
 </div>
@@ -348,14 +353,23 @@ mediaHtml += `
 
 }
 
-const shareId =
-targetId
-? targetId
-: rows.length - index;
+/* 普通画像 */
+
+else if(
+imageUrl.match(/\.(jpg|jpeg|png|webp)/i)
+){
+
+mediaHtml = `
+<div class="media">
+<img src="${imageUrl}">
+</div>
+`;
+
+}
 
 const shareUrl =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-'
-+ String(shareId).padStart(3,'0')
++ String(targetId).padStart(3,'0')
 + '.html';
 
 const html = `
@@ -412,17 +426,47 @@ URLコピー
 
 `;
 
-list.insertAdjacentHTML(
-'beforeend',
-html
+document
+.getElementById('detail')
+.innerHTML = html;
+
+}else{
+
+console.error(
+'該当IDなし'
 );
 
-});
+}
 
 }
+
+}
+
+/* callback固定 */
+
+window.google = {
+visualization:{
+Query:{
+setResponse:
+handleGoogleSheetsResponse
 }
 }
 };
 
+/* script */
+
 const s =
-document.createElement('script');
+document.createElement(
+'script'
+);
+
+s.src = url;
+
+document.body.appendChild(
+s
+);
+
+</script>
+
+</body>
+</html>
