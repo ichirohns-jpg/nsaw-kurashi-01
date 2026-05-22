@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
 
 <title>NSAW 暮らし情報局</title>
 
-<meta property="og:title" content="NSAW 暮らし情報局">
-<meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報">
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
-<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/">
-<meta property="og:type" content="website">
+<meta property="og:title"
+content="NSAW 暮らし情報局">
 
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:description"
+content="志木・新座・朝霞・和光の暮らし情報">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg?v=50">
+
+<meta property="og:type"
+content="website">
+
+<meta name="twitter:card"
+content="summary_large_image">
 
 <style>
 
@@ -48,7 +58,8 @@ background:#fff;
 border-radius:18px;
 padding:14px;
 margin-bottom:16px;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
+box-shadow:
+0 4px 12px rgba(0,0,0,.08);
 }
 
 .date{
@@ -70,17 +81,14 @@ line-height:1.8;
 white-space:pre-wrap;
 }
 
-.media-scroll{
-display:flex;
-gap:10px;
-overflow-x:auto;
+.media{
 margin-top:14px;
 }
 
-.media-scroll img{
-width:220px;
+.media img{
+width:100%;
 border-radius:14px;
-flex-shrink:0;
+display:block;
 }
 
 .youtube{
@@ -136,6 +144,7 @@ background:#666;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -143,7 +152,7 @@ background:#666;
 <div class="wrap">
 
 <div class="banner">
-<img src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
+<img src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg?v=50">
 </div>
 
 <div id="list"></div>
@@ -158,61 +167,106 @@ const SHEET_ID =
 const SHEET_NAME =
 'NSAW暮らし情報局_データ';
 
+const params =
+new URLSearchParams(
+location.search
+);
+
+const targetId =
+params.get('id');
+
+const cacheBust =
+Date.now();
+
 const url =
 'https://docs.google.com/spreadsheets/d/'
-+ SHEET_ID +
-'/gviz/tq?sheet='
++ SHEET_ID
++ '/gviz/tq?sheet='
 + encodeURIComponent(SHEET_NAME)
-+ '&tqx=out:json';
++ '&tqx=out:json&t='
++ cacheBust;
+
+function getCell(row,index){
+
+if(
+!row ||
+!row.c ||
+!row.c[index]
+){
+return '';
+}
+
+const cell =
+row.c[index];
+
+return String(
+cell.f ||
+cell.v ||
+''
+).trim();
+
+}
 
 window.google = {
 visualization:{
 Query:{
-setResponse:function(res){
+setResponse:function(response){
+
+console.log(
+response.table.rows
+);
 
 const rows =
-res.table.rows || [];
+response.table.rows || [];
 
 const list =
 document.getElementById('list');
 
 list.innerHTML='';
 
-rows.reverse();
+let targetRows =
+rows;
 
-rows.slice(0,5).forEach((row,index)=>{
+/* 詳細 */
 
-const c = row.c || [];
+if(targetId){
 
-function val(i){
+targetRows =
+rows.filter((row,index)=>{
 
-return c[i] &&
-(c[i].f || c[i].v)
-? String(c[i].f || c[i].v)
-: '';
+return String(index+1)
+=== String(targetId);
+
+});
 
 }
 
-const id =
-rows.length - index;
+/* 新しい順 */
 
-const date = val(0);
-const title = val(1);
-const desc = val(3);
+targetRows =
+targetRows.reverse();
 
-let cleanDesc =
-desc.replace(/https?:\/\/\S+/g,'');
+targetRows.forEach((row,index)=>{
 
-cleanDesc =
-cleanDesc.trim();
+const date =
+getCell(row,0);
+
+const title =
+getCell(row,1);
+
+const desc =
+getCell(row,3);
 
 let mediaHtml='';
 
-for(let i=0;i<c.length;i++){
+for(let i=0;i<row.c.length;i++){
 
-const txt = val(i);
+const txt =
+getCell(row,i);
 
 if(!txt) continue;
+
+/* YouTube */
 
 if(
 txt.includes('youtube.com')
@@ -248,8 +302,20 @@ allowfullscreen>
 
 }
 
+/* 画像 */
+
 else if(
+
+txt.match(/\.(jpg|jpeg|png|webp)/i)
+
+||
+
+txt.includes('thumbnail')
+
+||
+
 txt.includes('drive.google.com')
+
 ){
 
 let img = txt;
@@ -273,30 +339,23 @@ img =
 }
 
 mediaHtml += `
-<div class="media-scroll">
+<div class="media">
 <img src="${img}">
 </div>
 `;
 
 }
 
-else if(
-txt.match(/\.(jpg|jpeg|png|webp)/i)
-){
-
-mediaHtml += `
-<div class="media-scroll">
-<img src="${txt}">
-</div>
-`;
-
 }
 
-}
+const shareId =
+targetId
+? targetId
+: rows.length - index;
 
 const shareUrl =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-'
-+ String(id).padStart(3,'0')
++ String(shareId).padStart(3,'0')
 + '.html';
 
 const html = `
@@ -312,7 +371,7 @@ ${title}
 </div>
 
 <div class="desc">
-${cleanDesc}
+${desc}
 </div>
 
 ${mediaHtml}
@@ -367,12 +426,3 @@ html
 
 const s =
 document.createElement('script');
-
-s.src = url;
-
-document.body.appendChild(s);
-
-</script>
-
-</body>
-</html>
