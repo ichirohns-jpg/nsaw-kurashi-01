@@ -2,63 +2,357 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NSAW暮らし情報局</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NSAW 暮らし情報局</title>
+
+<meta name="description" content="志木・新座・朝霞・和光の暮らし情報">
+
+<meta property="og:title" content="NSAW 暮らし情報局">
+<meta property="og:description" content="志木・新座・朝霞・和光の暮らし情報">
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
+<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/">
+<meta property="og:type" content="website">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/ogp.jpg">
 
 <style>
-body{margin:0;background:#eef4f8;font-family:"Hiragino Sans","Yu Gothic",sans-serif;color:#17324d}
-.wrap{max-width:760px;margin:0 auto;padding:16px}
-.banner{width:100%;border-radius:20px;display:block;margin-bottom:18px}
-.card{background:#fff;border-radius:20px;padding:18px;margin-bottom:18px;box-shadow:0 4px 18px rgba(0,0,0,.08)}
-.title{font-size:30px;font-weight:900;line-height:1.5;margin-bottom:14px}
-.text{font-size:20px;line-height:1.9;white-space:pre-wrap;margin-bottom:16px}
-.thumb{width:100%;border-radius:16px;margin-bottom:16px;display:block}
-.video-wrap{position:relative;width:100%;padding-top:56.25%;background:#000;border-radius:16px;overflow:hidden;margin-bottom:16px}
-.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
-.sns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-.sns a,.copy-btn{border:none;text-decoration:none;text-align:center;color:#fff;border-radius:14px;padding:16px 10px;font-size:18px;font-weight:900;box-sizing:border-box}
-.fb{background:#1877f2}.line{background:#06c755}.x{background:#000}.copy-btn{background:#ff7a00}
-.loading{font-size:28px;font-weight:900;padding:40px 10px;text-align:center}
-.month-box{background:#fff;border-radius:18px;margin-bottom:18px;padding:10px 16px;box-shadow:0 4px 18px rgba(0,0,0,.08)}
-.month-title{font-size:28px;font-weight:900;padding:12px 0;color:#17324d;cursor:pointer}
-.month-inner{padding-top:10px}
-.archive-main-title{font-size:34px;font-weight:900;margin:40px 0 20px;text-align:center}
+
+body{
+  margin:0;
+  background:#f3f6fb;
+  font-family:
+  "Hiragino Sans",
+  "Yu Gothic",
+  sans-serif;
+}
+
+.wrap{
+  max-width:700px;
+  margin:auto;
+  padding:12px;
+}
+
+.top-banner{
+  width:100%;
+  border-radius:18px;
+  display:block;
+  margin-bottom:14px;
+}
+
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.date{
+  font-size:13px;
+  color:#666;
+  margin-bottom:6px;
+}
+
+.title{
+  font-size:24px;
+  font-weight:bold;
+  line-height:1.4;
+  margin-bottom:10px;
+}
+
+.desc{
+  font-size:18px;
+  line-height:1.8;
+  white-space:pre-wrap;
+}
+
+.media-scroll{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  margin-top:12px;
+  margin-bottom:12px;
+}
+
+.media-scroll img{
+  width:240px;
+  border-radius:12px;
+}
+
+.media-scroll iframe{
+  width:320px;
+  height:180px;
+  border:none;
+  border-radius:12px;
+  background:#000;
+}
+
+.btns{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:14px;
+}
+
+.btn{
+  flex:1;
+  min-width:120px;
+  text-align:center;
+  text-decoration:none;
+  color:#fff;
+  padding:12px;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.line{
+  background:#06c755;
+}
+
+.fb{
+  background:#1877f2;
+}
+
+.x{
+  background:#000;
+}
+
+.copy{
+  background:#666;
+}
+
+.archive{
+  background:#444;
+}
+
+.loading{
+  text-align:center;
+  padding:40px;
+  font-size:20px;
+}
+
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
-<img class="banner" src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
-<div id="mainArea"><div class="loading">読み込み中...</div></div>
-<div id="archiveArea"></div>
+
+<img class="top-banner"
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top-banner.jpg">
+
+<div id="app" class="loading">
+読み込み中...
+</div>
+
 </div>
 
 <script>
-function getVal(cell){
+
+const SHEET_ID =
+'13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
+
+const SHEET_NAME =
+'NSAW暮らし情報局_データ';
+
+const APP =
+document.getElementById('app');
+
+const urlParams =
+new URLSearchParams(location.search);
+
+const articleId =
+urlParams.get('id');
+
+function loadSheet(){
+
+  window.google = {
+    visualization:{
+      Query:{
+        setResponse:function(res){
+
+          const rows =
+          res.table.rows || [];
+
+          render(rows);
+
+        }
+      }
+    }
+  };
+
+  const script =
+  document.createElement('script');
+
+  script.src =
+  'https://docs.google.com/spreadsheets/d/'
+  + SHEET_ID +
+  '/gviz/tq?sheet='
+  + encodeURIComponent(SHEET_NAME)
+  + '&tqx=out:json';
+
+  document.body.appendChild(script);
+
+}
+
+function getCell(cell){
+
   if(!cell) return '';
-  if(cell.v !== null && cell.v !== undefined) return cell.v;
-  if(cell.f !== null && cell.f !== undefined) return cell.f;
+
+  if(cell.f) return cell.f;
+
+  if(cell.v) return cell.v;
+
   return '';
+
 }
 
 function youtubeEmbed(url){
+
   if(!url) return '';
-  url=String(url).trim();
-  if(url.includes('watch?v=')) return 'https://www.youtube.com/embed/'+url.split('watch?v=')[1].split('&')[0];
-  if(url.includes('youtu.be/')) return 'https://www.youtube.com/embed/'+url.split('youtu.be/')[1].split('?')[0];
-  if(url.includes('/shorts/')) return 'https://www.youtube.com/embed/'+url.split('/shorts/')[1].split('?')[0];
-  return '';
+
+  let id='';
+
+  if(url.includes('watch?v=')){
+    id=url.split('watch?v=')[1].split('&')[0];
+  }
+
+  else if(url.includes('youtu.be/')){
+    id=url.split('youtu.be/')[1].split('?')[0];
+  }
+
+  else if(url.includes('/shorts/')){
+    id=url.split('/shorts/')[1].split('?')[0];
+  }
+
+  if(!id) return '';
+
+  return `
+  <iframe
+  src="https://www.youtube.com/embed/${id}"
+  allowfullscreen>
+  </iframe>
+  `;
+
 }
 
-function copyUrl(url){
-  navigator.clipboard.writeText(url);
-  alert('URLをコピーしました');
+function render(rows){
+
+  rows.reverse();
+
+  let html='';
+
+  let count=0;
+
+  rows.forEach((r,index)=>{
+
+    const c=r.c || [];
+
+    const id = rows.length-index;
+
+    if(articleId && articleId != id){
+      return;
+    }
+
+    if(!articleId && count >= 5){
+      return;
+    }
+
+    count++;
+
+    const date =
+    getCell(c[0]);
+
+    const title =
+    getCell(c[1]);
+
+    const desc =
+    getCell(c[3]);
+
+    let medias='';
+
+    c.forEach(cell=>{
+
+      const v =
+      String(getCell(cell));
+
+      if(v.includes('youtube.com')
+      || v.includes('youtu.be')){
+        medias += youtubeEmbed(v);
+      }
+
+      else if(
+      v.match(/\.(jpg|jpeg|png|webp)/i)
+      || v.includes('drive.google.com')){
+        medias += `
+        <img src="${v}">
+        `;
+      }
+
+    });
+
+    const shareUrl =
+    'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-'
+    + String(id).padStart(3,'0')
+    + '.html';
+
+    html += `
+    <div class="card">
+
+      <div class="date">${date}</div>
+
+      <div class="title">${title}</div>
+
+      <div class="desc">${desc}</div>
+
+      <div class="media-scroll">
+      ${medias}
+      </div>
+
+      <div class="btns">
+
+        <a class="btn line"
+        href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}"
+        target="_blank">
+        LINE
+        </a>
+
+        <a class="btn fb"
+        href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}"
+        target="_blank">
+        Facebook
+        </a>
+
+        <a class="btn x"
+        href="https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}"
+        target="_blank">
+        X
+        </a>
+
+        <a class="btn copy"
+        href="#"
+        onclick="navigator.clipboard.writeText('${shareUrl}');alert('コピーしました');return false;">
+        URLコピー
+        </a>
+
+      </div>
+
+    </div>
+    `;
+
+  });
+
+  APP.className='';
+
+  APP.innerHTML=html;
+
 }
 
-function renderTable(table){
-  const rows=table.rows||[];
-  const mainArea=document.getElementById('mainArea');
-  const archiveArea=document.getElementById('archiveArea');
+loadSheet();
 
-  mainArea.innerHTML='';
-  archiveArea.innerHTML='
+</script>
+
+</body>
+</html>
