@@ -6,7 +6,7 @@
 content="width=device-width,initial-scale=1">
 
 <title>
-NSAW 今日のAI秘書
+NSAW 今日と明日のAI秘書
 </title>
 
 <style>
@@ -25,8 +25,6 @@ body{
   "Yu Gothic",
   sans-serif;
 }
-
-/* 上 */
 
 .top{
   padding:14px;
@@ -68,8 +66,6 @@ body{
 
   line-height:1.9;
 }
-
-/* 本体 */
 
 .wrap{
   padding:16px 14px 50px;
@@ -203,9 +199,9 @@ body{
   margin-bottom:24px;
 }
 
-/* 今日 */
+/* 今日・明日 */
 
-.today-box{
+.day-box{
 
   background:#fff;
 
@@ -219,7 +215,7 @@ body{
   margin-bottom:24px;
 }
 
-.today-title{
+.day-title{
 
   font-size:30px;
 
@@ -230,7 +226,7 @@ body{
   color:#1565c0;
 }
 
-.today-item{
+.day-item{
 
   background:#f5f7fb;
 
@@ -350,11 +346,11 @@ body{
   font-size:24px;
 }
 
-.today-title{
+.day-title{
   font-size:28px;
 }
 
-.today-item{
+.day-item{
   font-size:24px;
 }
 
@@ -383,13 +379,12 @@ body{
 
     <div class="main-title">
       NSAW<br>
-      今日のAI秘書
+      今日と明日のAI秘書
     </div>
 
     <div class="sub">
-      今日の予定・ゴミの日・
-      家族予定などを、
-      AIが毎朝お知らせします。
+      今日と明日の予定・ゴミの日などを、
+      AIが毎朝まとめてお知らせします。
     </div>
 
   </div>
@@ -401,7 +396,7 @@ body{
   <div class="ai-box">
 
     <div class="ai-title">
-      今日のAI秘書
+      AI秘書
     </div>
 
     <div class="ai-text"
@@ -447,7 +442,7 @@ body{
   <button class="voice-btn"
   onclick="startVoice()">
 
-    🎤 今日の予定を話して登録
+    🎤 予定を話して登録
 
   </button>
 
@@ -459,13 +454,25 @@ body{
 
   </div>
 
-  <div class="today-box">
+  <div class="day-box">
 
-    <div class="today-title">
+    <div class="day-title">
       今日の予定
     </div>
 
     <div id="todayList">
+
+    </div>
+
+  </div>
+
+  <div class="day-box">
+
+    <div class="day-title">
+      明日の予定
+    </div>
+
+    <div id="tomorrowList">
 
     </div>
 
@@ -554,24 +561,19 @@ function parseDate(text){
 
   }
 
-  const year =
-  new Date().getFullYear();
-
   return {
 
     month:
     parseInt(match[1]),
 
     day:
-    parseInt(match[2]),
-
-    year:year
+    parseInt(match[2])
 
   };
 
 }
 
-function isToday(item){
+function isTargetDay(item,offset){
 
   const date =
   parseDate(item.text);
@@ -585,15 +587,22 @@ function isToday(item){
   const now =
   new Date();
 
+  const target =
+  new Date();
+
+  target.setDate(
+    now.getDate() + offset
+  );
+
   return (
 
-    now.getMonth()+1
+    target.getMonth()+1
     ===
     date.month
 
     &&
 
-    now.getDate()
+    target.getDate()
     ===
     date.day
 
@@ -610,10 +619,7 @@ function addSchedule(person,text){
 
     person:person,
 
-    text:text,
-
-    time:
-    new Date().toISOString()
+    text:text
 
   });
 
@@ -630,10 +636,7 @@ function renderHistory(){
 
   list.innerHTML = '';
 
-  const data =
-  getData();
-
-  data.forEach(function(item){
+  getData().forEach(function(item){
 
     const div =
     document.createElement('div');
@@ -645,9 +648,7 @@ function renderHistory(){
 
     item.person +
 
-    '<br><br>' +
-
-    '📅 ' +
+    '<br><br>📅 ' +
 
     item.text;
 
@@ -657,45 +658,33 @@ function renderHistory(){
 
 }
 
-function renderToday(){
+function renderDay(targetId,offset,gomiText){
 
   const list =
   document.getElementById(
-    'todayList'
+    targetId
   );
 
   list.innerHTML = '';
 
-  const today =
-  new Date();
+  if(gomiText){
 
-  const week =
-  today.getDay();
-
-  const gomi =
-  WEEK_GOMI[week];
-
-  if(gomi){
-
-    const div =
+    const gomi =
     document.createElement('div');
 
-    div.className =
-    'today-item';
+    gomi.className =
+    'day-item';
 
-    div.innerHTML =
-    gomi;
+    gomi.innerHTML =
+    gomiText;
 
-    list.appendChild(div);
+    list.appendChild(gomi);
 
   }
 
-  const data =
-  getData();
+  getData().forEach(function(item){
 
-  data.forEach(function(item){
-
-    if(!isToday(item)){
+    if(!isTargetDay(item,offset)){
 
       return;
 
@@ -705,15 +694,13 @@ function renderToday(){
     document.createElement('div');
 
     div.className =
-    'today-item';
+    'day-item';
 
     div.innerHTML =
 
     item.person +
 
-    '<br><br>' +
-
-    '📅 ' +
+    '<br><br>📅 ' +
 
     item.text;
 
@@ -725,35 +712,53 @@ function renderToday(){
 
 function renderAI(){
 
-  const today =
+  const now =
   new Date();
 
-  const week =
-  today.getDay();
+  const todayWeek =
+  now.getDay();
 
-  const gomi =
-  WEEK_GOMI[week];
+  const tomorrow =
+  new Date();
 
-  const data =
-  getData();
+  tomorrow.setDate(
+    now.getDate()+1
+  );
+
+  const tomorrowWeek =
+  tomorrow.getDay();
+
+  const todayGomi =
+  WEEK_GOMI[todayWeek];
+
+  const tomorrowGomi =
+  WEEK_GOMI[tomorrowWeek];
+
+  const todayData =
+  getData().filter(
+    item => isTargetDay(item,0)
+  );
+
+  const tomorrowData =
+  getData().filter(
+    item => isTargetDay(item,1)
+  );
 
   let text =
   'おはようございます。';
 
-  if(gomi){
+  if(todayGomi){
 
     text +=
-    '\n\n' + gomi + 'です。';
+    '\n\n今日は ' +
+    todayGomi + 'です。';
 
   }
-
-  const todayData =
-  data.filter(isToday);
 
   if(todayData.length > 0){
 
     text +=
-    '\n\n本日の予定があります。';
+    '\n\n今日の予定があります。';
 
     todayData.forEach(function(item){
 
@@ -771,10 +776,32 @@ function renderAI(){
 
   }
 
-  if(todayData.length === 0){
+  if(tomorrowGomi){
 
     text +=
-    '\n\n本日の予定は登録されていません。';
+    '\n\n明日は ' +
+    tomorrowGomi + 'です。';
+
+  }
+
+  if(tomorrowData.length > 0){
+
+    text +=
+    '\n\n明日の予定があります。';
+
+    tomorrowData.forEach(function(item){
+
+      text +=
+
+      '\n\n' +
+
+      item.person +
+
+      'の予定。' +
+
+      item.text;
+
+    });
 
   }
 
@@ -796,7 +823,7 @@ function startVoice(){
   ){
 
     alert(
-      'このブラウザは音声入力に対応していません'
+      '音声入力に対応していません'
     );
 
     return;
@@ -839,7 +866,28 @@ function startVoice(){
 
     renderHistory();
 
-    renderToday();
+    renderDay(
+      'todayList',
+      0,
+      WEEK_GOMI[
+        new Date().getDay()
+      ]
+    );
+
+    const tomorrow =
+    new Date();
+
+    tomorrow.setDate(
+      tomorrow.getDate()+1
+    );
+
+    renderDay(
+      'tomorrowList',
+      1,
+      WEEK_GOMI[
+        tomorrow.getDay()
+      ]
+    );
 
     renderAI();
 
@@ -865,7 +913,28 @@ function startVoice(){
 
 renderHistory();
 
-renderToday();
+renderDay(
+  'todayList',
+  0,
+  WEEK_GOMI[
+    new Date().getDay()
+  ]
+);
+
+const tomorrow =
+new Date();
+
+tomorrow.setDate(
+  tomorrow.getDate()+1
+);
+
+renderDay(
+  'tomorrowList',
+  1,
+  WEEK_GOMI[
+    tomorrow.getDay()
+  ]
+);
 
 renderAI();
 
