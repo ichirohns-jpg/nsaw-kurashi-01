@@ -6,7 +6,7 @@
 content="width=device-width,initial-scale=1">
 
 <title>
-NSAW AI予定秘書
+NSAW 家族共有AI秘書
 </title>
 
 <style>
@@ -17,9 +17,7 @@ NSAW AI予定秘書
 
 body{
   margin:0;
-
   background:#eef3f8;
-
   color:#223;
 
   font-family:
@@ -69,8 +67,6 @@ body{
   font-size:22px;
 
   line-height:1.9;
-
-  opacity:.95;
 }
 
 /* 本体 */
@@ -79,7 +75,7 @@ body{
   padding:16px 14px 50px;
 }
 
-/* AI秘書 */
+/* AI */
 
 .ai-box{
 
@@ -117,6 +113,51 @@ body{
   white-space:pre-wrap;
 }
 
+/* 選択 */
+
+.select-box{
+
+  background:#fff;
+
+  border-radius:26px;
+
+  padding:24px;
+
+  margin-bottom:24px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.12);
+}
+
+.select-title{
+
+  font-size:30px;
+
+  font-weight:900;
+
+  margin-bottom:18px;
+
+  color:#1565c0;
+}
+
+.select{
+
+  width:100%;
+
+  padding:22px;
+
+  border-radius:18px;
+
+  border:
+  2px solid #dbe3ea;
+
+  font-size:26px;
+
+  font-weight:900;
+
+  background:#fff;
+}
+
 /* 音声 */
 
 .voice-btn{
@@ -137,10 +178,10 @@ body{
 
   font-weight:900;
 
+  margin-bottom:24px;
+
   box-shadow:
   0 10px 26px rgba(0,0,0,.14);
-
-  margin-bottom:24px;
 }
 
 /* 状態 */
@@ -276,9 +317,6 @@ body{
   font-weight:900;
 
   margin-top:30px;
-
-  box-shadow:
-  0 8px 20px rgba(0,0,0,.25);
 }
 
 @media(max-width:768px){
@@ -297,6 +335,14 @@ body{
 
 .ai-text{
   font-size:24px;
+}
+
+.select-title{
+  font-size:28px;
+}
+
+.select{
+  font-size:22px;
 }
 
 .voice-btn{
@@ -340,12 +386,12 @@ body{
 
     <div class="main-title">
       NSAW<br>
-      AI予定秘書
+      家族共有AI秘書
     </div>
 
     <div class="sub">
-      病院・歯医者・ゴミの日などを、
-      AIがまとめてお知らせします。
+      家族予定・病院・ゴミの日などを、
+      AIが毎朝まとめてお知らせします。
     </div>
 
   </div>
@@ -363,13 +409,40 @@ body{
     <div class="ai-text"
     id="aiText">
 
-      おはようございます。
-
-      今日は燃えるごみの日です。
-
-      14時から病院の予定があります。
-
     </div>
+
+  </div>
+
+  <div class="select-box">
+
+    <div class="select-title">
+      誰の予定ですか？
+    </div>
+
+    <select class="select"
+    id="personSelect">
+
+      <option value="👤 自分">
+      👤 自分
+      </option>
+
+      <option value="👩 娘">
+      👩 娘
+      </option>
+
+      <option value="👨 息子">
+      👨 息子
+      </option>
+
+      <option value="👨‍⚕️ 訪問看護">
+      👨‍⚕️ 訪問看護
+      </option>
+
+      <option value="🚐 デイサービス">
+      🚐 デイサービス
+      </option>
+
+    </select>
 
   </div>
 
@@ -395,18 +468,6 @@ body{
     </div>
 
     <div id="todayList">
-
-      <div class="today-item">
-
-        🗑 燃えるごみの日
-
-      </div>
-
-      <div class="today-item">
-
-        🏥 14:00 ○○病院
-
-      </div>
 
     </div>
 
@@ -435,7 +496,24 @@ body{
 
 <script>
 
+const STORAGE_KEY =
+'nsaw_family_schedule';
+
+const WEEK_GOMI = {
+
+'0':'',
+'1':'🗑 燃えるごみの日',
+'2':'',
+'3':'🗑 資源ごみの日',
+'4':'🗑 燃えるごみの日',
+'5':'',
+'6':''
+
+};
+
 function speak(text){
+
+  speechSynthesis.cancel();
 
   const msg =
   new SpeechSynthesisUtterance(text);
@@ -446,16 +524,196 @@ function speak(text){
 
 }
 
-window.onload = function(){
+function getData(){
 
-  const text =
+  return JSON.parse(
+    localStorage.getItem(
+      STORAGE_KEY
+    ) || '[]'
+  );
+
+}
+
+function saveData(data){
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
+
+}
+
+function addSchedule(person,text){
+
+  const data =
+  getData();
+
+  data.unshift({
+
+    person:person,
+
+    text:text,
+
+    time:
+    new Date().toISOString()
+
+  });
+
+  saveData(data);
+
+}
+
+function renderHistory(){
+
+  const list =
+  document.getElementById(
+    'historyList'
+  );
+
+  list.innerHTML = '';
+
+  const data =
+  getData();
+
+  data.forEach(function(item){
+
+    const div =
+    document.createElement('div');
+
+    div.className =
+    'history-item';
+
+    div.innerHTML =
+
+    item.person +
+
+    '<br><br>' +
+
+    '📅 ' +
+
+    item.text;
+
+    list.appendChild(div);
+
+  });
+
+}
+
+function renderToday(){
+
+  const list =
+  document.getElementById(
+    'todayList'
+  );
+
+  list.innerHTML = '';
+
+  const today =
+  new Date();
+
+  const week =
+  today.getDay();
+
+  const gomi =
+  WEEK_GOMI[week];
+
+  if(gomi){
+
+    const div =
+    document.createElement('div');
+
+    div.className =
+    'today-item';
+
+    div.innerHTML =
+    gomi;
+
+    list.appendChild(div);
+
+  }
+
+  const data =
+  getData();
+
+  data.forEach(function(item){
+
+    const div =
+    document.createElement('div');
+
+    div.className =
+    'today-item';
+
+    div.innerHTML =
+
+    item.person +
+
+    '<br><br>' +
+
+    '📅 ' +
+
+    item.text;
+
+    list.appendChild(div);
+
+  });
+
+}
+
+function renderAI(){
+
+  const today =
+  new Date();
+
+  const week =
+  today.getDay();
+
+  const gomi =
+  WEEK_GOMI[week];
+
+  const data =
+  getData();
+
+  let text =
+  'おはようございます。';
+
+  if(gomi){
+
+    text +=
+    '\n\n' + gomi + 'です。';
+
+  }
+
+  if(data.length > 0){
+
+    text +=
+    '\n\n本日の予定があります。';
+
+    data.forEach(function(item){
+
+      text +=
+
+      '\n\n' +
+
+      item.person +
+
+      'の予定。' +
+
+      item.text;
+
+    });
+
+  }
+
+  text +=
+  '\n\n今日もお気をつけてお過ごしください。';
+
   document.getElementById(
     'aiText'
-  ).innerText;
+  ).innerHTML = text;
 
   speak(text);
 
-};
+}
 
 function startVoice(){
 
@@ -492,17 +750,34 @@ function startVoice(){
   function(event){
 
     const text =
-    event.results[0][0].transcript;
+    event.results[0][0]
+    .transcript;
+
+    const person =
+    document.getElementById(
+      'personSelect'
+    ).value;
+
+    addSchedule(
+      person,
+      text
+    );
+
+    renderHistory();
+
+    renderToday();
+
+    renderAI();
 
     status.innerHTML =
 
     '予定を登録しました。<br><br>' +
 
+    person +
+
+    '<br><br>' +
+
     text;
-
-    addHistory(text);
-
-    addToday(text);
 
     speak(
       '予定を登録しました'
@@ -514,45 +789,11 @@ function startVoice(){
 
 }
 
-function addHistory(text){
+renderHistory();
 
-  const list =
-  document.getElementById(
-    'historyList'
-  );
+renderToday();
 
-  const item =
-  document.createElement('div');
-
-  item.className =
-  'history-item';
-
-  item.innerHTML =
-  text;
-
-  list.prepend(item);
-
-}
-
-function addToday(text){
-
-  const list =
-  document.getElementById(
-    'todayList'
-  );
-
-  const item =
-  document.createElement('div');
-
-  item.className =
-  'today-item';
-
-  item.innerHTML =
-  '📅 ' + text;
-
-  list.prepend(item);
-
-}
+renderAI();
 
 </script>
 
