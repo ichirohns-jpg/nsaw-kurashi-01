@@ -524,6 +524,22 @@ body{
 
   </button>
 
+  <button class="big-btn"
+  style="background:#3949ab;"
+  onclick="pushGoOut()">
+
+    🚶 出発しました
+
+  </button>
+
+  <button class="big-btn"
+  style="background:#6d4c41;"
+  onclick="pushBackHome()">
+
+    🏠 帰宅しました
+
+  </button>
+
   <button class="big-btn complete"
   onclick="pushComplete()">
 
@@ -721,6 +737,70 @@ function pushKusuri(){
 
   speak(
     'お薬を確認しました。'
+  );
+
+}
+
+function pushGoOut(){
+
+  const now =
+  new Date();
+
+  const time =
+
+  now.getHours() +
+  ':' +
+  String(
+    now.getMinutes()
+  ).padStart(2,'0');
+
+  const box =
+  document.getElementById(
+    'completeBox'
+  );
+
+  box.innerHTML =
+
+  '🚶 出発確認済み<br><br>' +
+
+  '確認時刻：' +
+
+  time;
+
+  speak(
+    'お気をつけて行ってらっしゃい。'
+  );
+
+}
+
+function pushBackHome(){
+
+  const now =
+  new Date();
+
+  const time =
+
+  now.getHours() +
+  ':' +
+  String(
+    now.getMinutes()
+  ).padStart(2,'0');
+
+  const box =
+  document.getElementById(
+    'completeBox'
+  );
+
+  box.innerHTML =
+
+  '🏠 帰宅確認済み<br><br>' +
+
+  '確認時刻：' +
+
+  time;
+
+  speak(
+    'お帰りなさい。'
   );
 
 }
