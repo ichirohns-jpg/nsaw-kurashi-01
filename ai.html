@@ -71,81 +71,151 @@ body{
   opacity:.95;
 }
 
-/* メニュー */
+/* メイン */
 
 .wrap{
   padding:16px 14px 50px;
 }
 
-.card{
+/* マイク */
 
-  display:block;
+.mic-btn{
 
-  text-decoration:none;
+  width:100%;
 
-  background:#fff;
+  border:none;
 
-  border-radius:26px;
+  background:#2e7d32;
 
-  padding:24px;
+  color:#fff;
 
-  margin-bottom:22px;
+  border-radius:28px;
 
-  box-shadow:
-  0 8px 24px rgba(0,0,0,.12);
+  padding:28px 20px;
 
-  border:
-  2px solid #d6e0da;
-}
-
-.card-title{
-
-  font-size:34px;
+  font-size:38px;
 
   font-weight:900;
 
-  margin-bottom:12px;
+  box-shadow:
+  0 10px 26px rgba(0,0,0,.15);
+
+  margin-bottom:24px;
+}
+
+/* 状態 */
+
+.status{
+
+  background:#fff;
+
+  border-radius:24px;
+
+  padding:22px;
+
+  font-size:30px;
+
+  font-weight:900;
+
+  line-height:1.8;
+
+  color:#1b5e20;
+
+  box-shadow:
+  0 8px 22px rgba(0,0,0,.12);
+
+  margin-bottom:24px;
+
+  min-height:120px;
+}
+
+/* 文字表示 */
+
+.result{
+
+  background:#fff;
+
+  border-radius:24px;
+
+  padding:24px;
+
+  box-shadow:
+  0 8px 22px rgba(0,0,0,.12);
+
+  margin-bottom:24px;
+}
+
+.result-title{
+
+  font-size:30px;
+
+  font-weight:900;
+
+  margin-bottom:16px;
 
   color:#1b5e20;
 }
 
-.card-desc{
+.result-text{
+
+  font-size:28px;
+
+  line-height:1.9;
+
+  color:#33443f;
+
+  white-space:pre-wrap;
+}
+
+/* 例 */
+
+.sample{
+
+  background:#fff;
+
+  border-radius:24px;
+
+  padding:24px;
+
+  box-shadow:
+  0 8px 22px rgba(0,0,0,.12);
+}
+
+.sample-title{
+
+  font-size:30px;
+
+  font-weight:900;
+
+  margin-bottom:18px;
+
+  color:#1b5e20;
+}
+
+.sample-btn{
+
+  width:100%;
+
+  border:none;
+
+  background:#f3f7f4;
+
+  border-radius:18px;
+
+  padding:20px;
+
+  margin-bottom:14px;
+
+  text-align:left;
 
   font-size:24px;
 
-  line-height:1.8;
+  font-weight:800;
 
   color:#33443f;
 }
 
-/* 色 */
-
-.green{
-  border-left:
-  12px solid #2e7d32;
-}
-
-.orange{
-  border-left:
-  12px solid #ef6c00;
-}
-
-.red{
-  border-left:
-  12px solid #c62828;
-}
-
-.blue{
-  border-left:
-  12px solid #1976d2;
-}
-
-.purple{
-  border-left:
-  12px solid #7b1fa2;
-}
-
-/* ボタン */
+/* 戻る */
 
 .home-btn{
 
@@ -185,11 +255,27 @@ body{
   font-size:20px;
 }
 
-.card-title{
-  font-size:30px;
+.mic-btn{
+  font-size:32px;
 }
 
-.card-desc{
+.status{
+  font-size:26px;
+}
+
+.result-title{
+  font-size:28px;
+}
+
+.result-text{
+  font-size:24px;
+}
+
+.sample-title{
+  font-size:28px;
+}
+
+.sample-btn{
   font-size:22px;
 }
 
@@ -215,9 +301,8 @@ body{
 
     <div class="sub">
       暮らし・介護・ごみ・
-      手続き・空き家・見守りなどを、
-      AIで分かりやすく案内する
-      地域相談DXです。
+      手続き・空き家などを、
+      AIで分かりやすく案内します。
     </div>
 
   </div>
@@ -226,68 +311,57 @@ body{
 
 <div class="wrap">
 
-  <div class="card green">
+  <button class="mic-btn"
+  onclick="startVoice()">
 
-    <div class="card-title">
-      ▶ 介護・高齢者相談
+    🎤 音声で相談する
+
+  </button>
+
+  <div class="status"
+  id="status">
+
+    ボタンを押して
+    話してください
+
+  </div>
+
+  <div class="result">
+
+    <div class="result-title">
+      音声認識結果
     </div>
 
-    <div class="card-desc">
-      介護保険・地域包括支援センター・
-      見守り・高齢者支援など。
+    <div class="result-text"
+    id="result">
+
+      ここに音声が文字で表示されます
+
     </div>
 
   </div>
 
-  <div class="card orange">
+  <div class="sample">
 
-    <div class="card-title">
-      ▶ ごみ・暮らし相談
+    <div class="sample-title">
+      よくある相談
     </div>
 
-    <div class="card-desc">
-      ごみ出し・粗大ごみ・
-      生活の困りごと案内。
-    </div>
+    <button class="sample-btn">
+      ごみの出し方を知りたい
+    </button>
 
-  </div>
+    <button class="sample-btn">
+      介護保険について知りたい
+    </button>
 
-  <div class="card red">
+    <button class="sample-btn">
+      空き家の相談をしたい
+    </button>
 
-    <div class="card-title">
-      ▶ 空き家・住まい相談
-    </div>
-
-    <div class="card-desc">
-      空き家・相続・住まい管理・
-      地域見守り相談。
-    </div>
-
-  </div>
-
-  <div class="card blue">
-
-    <div class="card-title">
-      ▶ 手続き・行政相談
-    </div>
-
-    <div class="card-desc">
-      住民票・保険・年金・
-      市役所手続き案内。
-    </div>
-
-  </div>
-
-  <div class="card purple">
-
-    <div class="card-title">
-      ▶ 緊急・生活相談
-    </div>
-
-    <div class="card-desc">
-      生活困窮・病院・
-      緊急時相談窓口。
-    </div>
+    <button class="sample-btn">
+      病院を探したい
+    </button>
 
   </div>
 
@@ -299,6 +373,76 @@ body{
   </a>
 
 </div>
+
+<script>
+
+function startVoice(){
+
+  if(
+    !('webkitSpeechRecognition' in window)
+  ){
+
+    alert(
+      'このブラウザは音声入力に対応していません'
+    );
+
+    return;
+
+  }
+
+  const recognition =
+  new webkitSpeechRecognition();
+
+  recognition.lang = 'ja-JP';
+
+  recognition.interimResults = true;
+
+  recognition.continuous = false;
+
+  const status =
+  document.getElementById('status');
+
+  const result =
+  document.getElementById('result');
+
+  status.innerHTML =
+  '🎤 聞いています…';
+
+  result.innerHTML = '';
+
+  recognition.onresult =
+  function(event){
+
+    let text = '';
+
+    for(
+      let i = 0;
+      i < event.results.length;
+      i++
+    ){
+
+      text +=
+      event.results[i][0].transcript;
+
+    }
+
+    result.innerHTML = text;
+
+  };
+
+  recognition.onend =
+  function(){
+
+    status.innerHTML =
+    '相談内容を確認しています…';
+
+  };
+
+  recognition.start();
+
+}
+
+</script>
 
 </body>
 </html>
