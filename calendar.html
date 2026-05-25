@@ -6,7 +6,7 @@
 content="width=device-width,initial-scale=1">
 
 <title>
-NSAW 家族共有AI秘書
+NSAW 今日のAI秘書
 </title>
 
 <style>
@@ -179,9 +179,6 @@ body{
   font-weight:900;
 
   margin-bottom:24px;
-
-  box-shadow:
-  0 10px 26px rgba(0,0,0,.14);
 }
 
 /* 状態 */
@@ -386,12 +383,13 @@ body{
 
     <div class="main-title">
       NSAW<br>
-      家族共有AI秘書
+      今日のAI秘書
     </div>
 
     <div class="sub">
-      家族予定・病院・ゴミの日などを、
-      AIが毎朝まとめてお知らせします。
+      今日の予定・ゴミの日・
+      家族予定などを、
+      AIが毎朝お知らせします。
     </div>
 
   </div>
@@ -449,7 +447,7 @@ body{
   <button class="voice-btn"
   onclick="startVoice()">
 
-    🎤 予定を話して登録する
+    🎤 今日の予定を話して登録
 
   </button>
 
@@ -497,7 +495,7 @@ body{
 <script>
 
 const STORAGE_KEY =
-'nsaw_family_schedule';
+'nsaw_today_schedule';
 
 const WEEK_GOMI = {
 
@@ -539,6 +537,66 @@ function saveData(data){
   localStorage.setItem(
     STORAGE_KEY,
     JSON.stringify(data)
+  );
+
+}
+
+function parseDate(text){
+
+  const match =
+  text.match(
+    /(\d+)月(\d+)/
+  );
+
+  if(!match){
+
+    return null;
+
+  }
+
+  const year =
+  new Date().getFullYear();
+
+  return {
+
+    month:
+    parseInt(match[1]),
+
+    day:
+    parseInt(match[2]),
+
+    year:year
+
+  };
+
+}
+
+function isToday(item){
+
+  const date =
+  parseDate(item.text);
+
+  if(!date){
+
+    return false;
+
+  }
+
+  const now =
+  new Date();
+
+  return (
+
+    now.getMonth()+1
+    ===
+    date.month
+
+    &&
+
+    now.getDate()
+    ===
+    date.day
+
   );
 
 }
@@ -637,6 +695,12 @@ function renderToday(){
 
   data.forEach(function(item){
 
+    if(!isToday(item)){
+
+      return;
+
+    }
+
     const div =
     document.createElement('div');
 
@@ -683,12 +747,15 @@ function renderAI(){
 
   }
 
-  if(data.length > 0){
+  const todayData =
+  data.filter(isToday);
+
+  if(todayData.length > 0){
 
     text +=
     '\n\n本日の予定があります。';
 
-    data.forEach(function(item){
+    todayData.forEach(function(item){
 
       text +=
 
@@ -701,6 +768,13 @@ function renderAI(){
       item.text;
 
     });
+
+  }
+
+  if(todayData.length === 0){
+
+    text +=
+    '\n\n本日の予定は登録されていません。';
 
   }
 
