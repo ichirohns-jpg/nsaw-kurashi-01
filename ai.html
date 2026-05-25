@@ -71,7 +71,7 @@ body{
   opacity:.95;
 }
 
-/* メイン */
+/* 本体 */
 
 .wrap{
   padding:16px 14px 50px;
@@ -129,7 +129,7 @@ body{
   min-height:120px;
 }
 
-/* 文字表示 */
+/* 結果 */
 
 .result{
 
@@ -167,9 +167,9 @@ body{
   white-space:pre-wrap;
 }
 
-/* 例 */
+/* AI返答 */
 
-.sample{
+.ai-box{
 
   background:#fff;
 
@@ -179,40 +179,30 @@ body{
 
   box-shadow:
   0 8px 22px rgba(0,0,0,.12);
+
+  margin-bottom:24px;
 }
 
-.sample-title{
+.ai-title{
 
   font-size:30px;
 
   font-weight:900;
 
-  margin-bottom:18px;
+  margin-bottom:16px;
 
   color:#1b5e20;
 }
 
-.sample-btn{
+.ai-text{
 
-  width:100%;
+  font-size:28px;
 
-  border:none;
-
-  background:#f3f7f4;
-
-  border-radius:18px;
-
-  padding:20px;
-
-  margin-bottom:14px;
-
-  text-align:left;
-
-  font-size:24px;
-
-  font-weight:800;
+  line-height:1.9;
 
   color:#33443f;
+
+  white-space:pre-wrap;
 }
 
 /* 戻る */
@@ -271,12 +261,12 @@ body{
   font-size:24px;
 }
 
-.sample-title{
+.ai-title{
   font-size:28px;
 }
 
-.sample-btn{
-  font-size:22px;
+.ai-text{
+  font-size:24px;
 }
 
 .home-btn{
@@ -341,27 +331,18 @@ body{
 
   </div>
 
-  <div class="sample">
+  <div class="ai-box">
 
-    <div class="sample-title">
-      よくある相談
+    <div class="ai-title">
+      AI回答
     </div>
 
-    <button class="sample-btn">
-      ごみの出し方を知りたい
-    </button>
+    <div class="ai-text"
+    id="aiResult">
 
-    <button class="sample-btn">
-      介護保険について知りたい
-    </button>
+      AIが相談内容を確認します
 
-    <button class="sample-btn">
-      空き家の相談をしたい
-    </button>
-
-    <button class="sample-btn">
-      病院を探したい
-    </button>
+    </div>
 
   </div>
 
@@ -405,10 +386,16 @@ function startVoice(){
   const result =
   document.getElementById('result');
 
+  const aiResult =
+  document.getElementById('aiResult');
+
   status.innerHTML =
   '🎤 聞いています…';
 
   result.innerHTML = '';
+
+  aiResult.innerHTML =
+  '相談内容を確認しています…';
 
   recognition.onresult =
   function(event){
@@ -436,9 +423,57 @@ function startVoice(){
     status.innerHTML =
     '相談内容を確認しています…';
 
+    const text =
+    result.innerHTML;
+
+    setTimeout(function(){
+
+      aiResult.innerHTML =
+      getAnswer(text);
+
+    },1200);
+
   };
 
   recognition.start();
+
+}
+
+function getAnswer(text){
+
+  if(
+    text.includes('ごみ')
+  ){
+
+    return 'ごみの出し方についてですね。\n\n地域のごみ収集日をご確認ください。';
+
+  }
+
+  if(
+    text.includes('介護')
+  ){
+
+    return '介護についてですね。\n\n地域包括支援センターへ相談できます。';
+
+  }
+
+  if(
+    text.includes('病院')
+  ){
+
+    return '病院を探したいのですね。\n\n地域マップDXもご利用ください。';
+
+  }
+
+  if(
+    text.includes('空き家')
+  ){
+
+    return '空き家についてですね。\n\n住まい・相続・管理の相談ができます。';
+
+  }
+
+  return '相談内容を確認しました。\n\n地域相談窓口をご案内します。';
 
 }
 
