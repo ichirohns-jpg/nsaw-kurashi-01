@@ -1,54 +1,68 @@
 <script>
 
-/* あと何時間DX */
+/* 持ち物DX */
 
-function parseHour(text){
+function getDefaultItems(text){
 
-  const match =
-  text.match(
-    /(\d+)\s*時/
-  );
+  if(
+    text.includes('病院')
+  ){
 
-  if(!match){
-
-    return null;
+    return [
+      '保険証',
+      'お薬手帳',
+      '診察券'
+    ];
 
   }
 
-  return parseInt(match[1]);
+  if(
+    text.includes('歯医者')
+  ){
+
+    return [
+      '保険証',
+      '診察券'
+    ];
+
+  }
+
+  if(
+    text.includes('デイ')
+  ){
+
+    return [
+      '連絡帳',
+      '飲み物',
+      '薬'
+    ];
+
+  }
+
+  return [];
 
 }
 
-function getRemainingText(hour){
+function addSchedule(person,text){
 
-  if(hour === null){
+  const data =
+  getData();
 
-    return '';
+  data.unshift({
 
-  }
+    person:person,
 
-  const now =
-  new Date();
+    text:text,
 
-  const currentHour =
-  now.getHours();
+    hour:
+    parseHour(text),
 
-  const diff =
-  hour - currentHour;
+    items:
+    getDefaultItems(text)
 
-  if(diff <= 0){
+  });
 
-    return '⏰ まもなく予定の時間です';
-
-  }
-
-  if(diff === 1){
-
-    return '⏰ あと1時間';
-
-  }
-
-  return '⏰ あと' + diff + '時間';
+  saveData(data);
 
 }
 
@@ -98,7 +112,7 @@ function renderDay(targetId,offset,gomiText){
       item.hour
     );
 
-    div.innerHTML =
+    let html =
 
     item.person +
 
@@ -109,6 +123,25 @@ function renderDay(targetId,offset,gomiText){
     '<br><br>' +
 
     remain;
+
+    if(
+      item.items &&
+      item.items.length > 0
+    ){
+
+      html +=
+      '<br><br>👜 持ち物';
+
+      item.items.forEach(function(i){
+
+        html +=
+        '<br>・' + i;
+
+      });
+
+    }
+
+    div.innerHTML = html;
 
     list.appendChild(div);
 
@@ -190,6 +223,26 @@ function renderAI(){
       '。' +
 
       remain;
+
+      if(
+        item.items &&
+        item.items.length > 0
+      ){
+
+        text +=
+        '\n持ち物は、';
+
+        item.items.forEach(function(i){
+
+          text +=
+          i + '、';
+
+        });
+
+        text +=
+        'です。';
+
+      }
 
     });
 
