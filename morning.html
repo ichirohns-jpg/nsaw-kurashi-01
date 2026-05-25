@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+NSAW 朝3分DX
+</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#eef3f8;
+  font-family:
+  "Hiragino Sans",
+  "Yu Gothic",
+  sans-serif;
+  color:#223;
+}
+
+.top{
+  padding:14px;
+}
+
+.top-box{
+
+  background:
+  linear-gradient(
+    135deg,
+    #1565c0,
+    #0d47a1
+  );
+
+  border-radius:28px;
+
+  padding:30px 24px;
+
+  color:#fff;
+
+  box-shadow:
+  0 12px 30px rgba(0,0,0,.18);
+}
+
+.main-title{
+
+  font-size:42px;
+
+  font-weight:900;
+
+  line-height:1.4;
+}
+
+.sub{
+
+  margin-top:16px;
+
+  font-size:22px;
+
+  line-height:1.9;
+}
+
+.wrap{
+  padding:16px 14px 60px;
+}
+
+/* AI */
+
+.ai-box{
+
+  background:#fff;
+
+  border-radius:26px;
+
+  padding:26px;
+
+  margin-bottom:24px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.12);
+}
+
+.ai-title{
+
+  font-size:32px;
+
+  font-weight:900;
+
+  color:#1565c0;
+
+  margin-bottom:18px;
+}
+
+.ai-text{
+
+  font-size:28px;
+
+  line-height:2;
+
+  white-space:pre-wrap;
+}
+
+/* 今日 */
+
+.today-box{
+
+  background:#fff;
+
+  border-radius:26px;
+
+  padding:24px;
+
+  margin-bottom:24px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.12);
+}
+
+.today-title{
+
+  font-size:30px;
+
+  font-weight:900;
+
+  color:#1565c0;
+
+  margin-bottom:18px;
+}
+
+.today-item{
+
+  background:#f5f7fb;
+
+  border-radius:18px;
+
+  padding:20px;
+
+  margin-bottom:16px;
+
+  font-size:28px;
+
+  line-height:1.9;
+
+  border-left:
+  8px solid #1976d2;
+}
+
+/* ボタン */
+
+.big-btn{
+
+  width:100%;
+
+  border:none;
+
+  border-radius:28px;
+
+  padding:34px 20px;
+
+  font-size:34px;
+
+  font-weight:900;
+
+  color:#fff;
+
+  margin-bottom:22px;
+
+  box-shadow:
+  0 10px 26px rgba(0,0,0,.18);
+}
+
+.genki{
+  background:#43a047;
+}
+
+.kusuri{
+  background:#1565c0;
+}
+
+.complete{
+  background:#ef6c00;
+}
+
+/* 完了 */
+
+.complete-box{
+
+  background:#fff3e0;
+
+  border:
+  4px solid #ef6c00;
+
+  border-radius:28px;
+
+  padding:28px;
+
+  font-size:30px;
+
+  line-height:2;
+
+  text-align:center;
+
+  font-weight:900;
+
+  display:none;
+
+  margin-top:24px;
+}
+
+.home-btn{
+
+  display:block;
+
+  text-align:center;
+
+  background:#1976d2;
+
+  color:#fff;
+
+  text-decoration:none;
+
+  padding:24px;
+
+  border-radius:24px;
+
+  font-size:28px;
+
+  font-weight:900;
+
+  margin-top:34px;
+}
+
+@media(max-width:768px){
+
+.main-title{
+  font-size:36px;
+}
+
+.sub{
+  font-size:20px;
+}
+
+.ai-title{
+  font-size:28px;
+}
+
+.ai-text{
+  font-size:24px;
+}
+
+.today-title{
+  font-size:28px;
+}
+
+.today-item{
+  font-size:24px;
+}
+
+.big-btn{
+  font-size:28px;
+}
+
+.complete-box{
+  font-size:26px;
+}
+
+.home-btn{
+  font-size:24px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top">
+
+  <div class="top-box">
+
+    <div class="main-title">
+      NSAW<br>
+      朝3分DX
+    </div>
+
+    <div class="sub">
+      今日の予定やゴミの日を、
+      AIが朝にまとめてお知らせします。
+    </div>
+
+  </div>
+
+</div>
+
+<div class="wrap">
+
+  <div class="ai-box">
+
+    <div class="ai-title">
+      今日のAI秘書
+    </div>
+
+    <div class="ai-text"
+    id="aiText">
+
+    </div>
+
+  </div>
+
+  <div class="today-box">
+
+    <div class="today-title">
+      今日の予定
+    </div>
+
+    <div class="today-item">
+      🗑 燃えるごみの日
+    </div>
+
+    <div class="today-item">
+      🏥 14時 病院
+    </div>
+
+    <div class="today-item">
+      👜 保険証・お薬手帳
+    </div>
+
+  </div>
+
+  <button class="big-btn genki"
+  onclick="pushGenki()">
+
+    😊 今日も元気です
+
+  </button>
+
+  <button class="big-btn kusuri"
+  onclick="pushKusuri()">
+
+    💊 薬を飲みました
+
+  </button>
+
+  <button class="big-btn complete"
+  onclick="pushComplete()">
+
+    ✅ 朝の確認を完了
+
+  </button>
+
+  <div class="complete-box"
+  id="completeBox">
+
+    ✅ 今日の朝の確認が完了しました
+
+  </div>
+
+  <a class="home-btn"
+  href="index.html">
+
+    ← トップへ戻る
+
+  </a>
+
+</div>
+
+<script>
+
+function speak(text){
+
+  speechSynthesis.cancel();
+
+  const msg =
+  new SpeechSynthesisUtterance(text);
+
+  msg.lang = 'ja-JP';
+
+  speechSynthesis.speak(msg);
+
+}
+
+window.onload = function(){
+
+  const text =
+
+`おはようございます。
+
+今日は燃えるごみの日です。
+
+14時から病院があります。
+
+保険証と
+お薬手帳をお忘れなく。
+
+今日もお気をつけて
+お過ごしください。`;
+
+  document.getElementById(
+    'aiText'
+  ).innerHTML = text;
+
+  speak(text);
+
+};
+
+function pushGenki(){
+
+  speak(
+    '確認しました。今日もお気をつけてお過ごしください。'
+  );
+
+}
+
+function pushKusuri(){
+
+  speak(
+    'お薬を確認しました。'
+  );
+
+}
+
+function pushComplete(){
+
+  document.getElementById(
+    'completeBox'
+  ).style.display = 'block';
+
+  speak(
+    '今日の朝の確認が完了しました。'
+  );
+
+}
+
+</script>
+
+</body>
+</html>
