@@ -173,6 +173,8 @@ body{
 
   box-shadow:
   0 10px 26px rgba(0,0,0,.18);
+
+  cursor:pointer;
 }
 
 .genki{
@@ -405,6 +407,65 @@ body{
       💬 誰かと話したい
 
     </button>
+
+  </div>
+
+  <button class="big-btn"
+  style="background:#d32f2f;"
+  onclick="openEmergencyMenu()">
+
+    🚨 緊急です
+
+  </button>
+
+  <div
+  id="emergencyMenu"
+  style="
+  display:none;
+  margin-top:20px;
+  ">
+
+    <a
+    class="big-btn"
+    style="
+    background:#c2185b;
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    "
+    href="tel:09012345678">
+
+      📞 家族へ電話
+
+    </a>
+
+    <a
+    class="big-btn"
+    style="
+    background:#1565c0;
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    "
+    href="tel:0480000000">
+
+      📞 地域包括支援センターへ電話
+
+    </a>
+
+    <a
+    class="big-btn"
+    style="
+    background:#e53935;
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    "
+    href="tel:119">
+
+      🚑 119へ電話
+
+    </a>
 
   </div>
 
@@ -664,6 +725,33 @@ function careSelect(text){
     'とのことですね。必要に応じて地域包括支援センターへ相談できます。'
 
   );
+
+}
+
+function openEmergencyMenu(){
+
+  const menu =
+  document.getElementById(
+    'emergencyMenu'
+  );
+
+  if(
+    menu.style.display === 'block'
+  ){
+
+    menu.style.display =
+    'none';
+
+  }else{
+
+    menu.style.display =
+    'block';
+
+    speak(
+      '緊急連絡メニューを開きました。'
+    );
+
+  }
 
 }
 
