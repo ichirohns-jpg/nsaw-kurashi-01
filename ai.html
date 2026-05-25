@@ -129,45 +129,25 @@ body{
   min-height:120px;
 }
 
-/* 結果 */
+/* 会話 */
 
-.result{
+.chat-wrap{
+  margin-top:20px;
+}
 
-  background:#fff;
+.user-box{
+
+  background:#dff3e4;
 
   border-radius:24px;
 
-  padding:24px;
+  padding:22px;
+
+  margin-bottom:18px;
 
   box-shadow:
-  0 8px 22px rgba(0,0,0,.12);
-
-  margin-bottom:24px;
+  0 6px 18px rgba(0,0,0,.08);
 }
-
-.result-title{
-
-  font-size:30px;
-
-  font-weight:900;
-
-  margin-bottom:16px;
-
-  color:#1b5e20;
-}
-
-.result-text{
-
-  font-size:28px;
-
-  line-height:1.9;
-
-  color:#33443f;
-
-  white-space:pre-wrap;
-}
-
-/* AI返答 */
 
 .ai-box{
 
@@ -175,26 +155,32 @@ body{
 
   border-radius:24px;
 
-  padding:24px;
+  padding:22px;
+
+  margin-bottom:28px;
 
   box-shadow:
   0 8px 22px rgba(0,0,0,.12);
-
-  margin-bottom:24px;
 }
 
-.ai-title{
+.chat-title{
 
-  font-size:30px;
+  font-size:24px;
 
   font-weight:900;
 
-  margin-bottom:16px;
+  margin-bottom:12px;
+}
 
+.user-title{
   color:#1b5e20;
 }
 
-.ai-text{
+.ai-title{
+  color:#1976d2;
+}
+
+.chat-text{
 
   font-size:28px;
 
@@ -203,8 +189,6 @@ body{
   color:#33443f;
 
   white-space:pre-wrap;
-
-  min-height:180px;
 }
 
 /* 戻る */
@@ -255,19 +239,11 @@ body{
   font-size:26px;
 }
 
-.result-title{
-  font-size:28px;
+.chat-title{
+  font-size:22px;
 }
 
-.result-text{
-  font-size:24px;
-}
-
-.ai-title{
-  font-size:28px;
-}
-
-.ai-text{
+.chat-text{
   font-size:24px;
 }
 
@@ -318,33 +294,8 @@ body{
 
   </div>
 
-  <div class="result">
-
-    <div class="result-title">
-      音声認識結果
-    </div>
-
-    <div class="result-text"
-    id="result">
-
-      ここに音声が文字で表示されます
-
-    </div>
-
-  </div>
-
-  <div class="ai-box">
-
-    <div class="ai-title">
-      AI回答
-    </div>
-
-    <div class="ai-text"
-    id="aiResult">
-
-      AIが相談内容を確認します
-
-    </div>
+  <div class="chat-wrap"
+  id="chatWrap">
 
   </div>
 
@@ -385,19 +336,10 @@ function startVoice(){
   const status =
   document.getElementById('status');
 
-  const result =
-  document.getElementById('result');
-
-  const aiResult =
-  document.getElementById('aiResult');
-
   status.innerHTML =
   '🎤 聞いています…';
 
-  result.innerHTML = '';
-
-  aiResult.innerHTML =
-  '相談内容を確認しています…';
+  let liveText = '';
 
   recognition.onresult =
   function(event){
@@ -415,7 +357,10 @@ function startVoice(){
 
     }
 
-    result.innerHTML = text;
+    liveText = text;
+
+    status.innerHTML =
+    '🎤 ' + text;
 
   };
 
@@ -425,21 +370,64 @@ function startVoice(){
     status.innerHTML =
     '相談内容を確認しています…';
 
-    const text =
-    result.innerHTML;
+    const answer =
+    getAnswer(liveText);
 
-    setTimeout(function(){
-
-      typeWriter(
-        getAnswer(text),
-        'aiResult'
-      );
-
-    },1200);
+    addChat(
+      liveText,
+      answer
+    );
 
   };
 
   recognition.start();
+
+}
+
+function addChat(userText,aiText){
+
+  const wrap =
+  document.getElementById('chatWrap');
+
+  const userBox =
+  document.createElement('div');
+
+  userBox.className =
+  'user-box';
+
+  userBox.innerHTML =
+
+  '<div class="chat-title user-title">相談内容</div>' +
+
+  '<div class="chat-text">' +
+  userText +
+  '</div>';
+
+  wrap.prepend(userBox);
+
+  const aiBox =
+  document.createElement('div');
+
+  aiBox.className =
+  'ai-box';
+
+  const aiId =
+  'ai-' + Date.now();
+
+  aiBox.innerHTML =
+
+  '<div class="chat-title ai-title">AI回答</div>' +
+
+  '<div class="chat-text" id="' +
+  aiId +
+  '"></div>';
+
+  wrap.prepend(aiBox);
+
+  typeWriter(
+    aiText,
+    aiId
+  );
 
 }
 
