@@ -113,6 +113,57 @@ body{
   background:#1976d2;
 }
 
+/* 服薬 */
+
+.medicine-box{
+
+  background:#fff;
+
+  border-radius:26px;
+
+  padding:24px;
+
+  margin-top:20px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.12);
+}
+
+.medicine-title{
+
+  font-size:30px;
+
+  font-weight:900;
+
+  margin-bottom:20px;
+
+  color:#bf360c;
+}
+
+.medicine-btn{
+
+  width:100%;
+
+  border:none;
+
+  background:#f5f5f5;
+
+  border-radius:22px;
+
+  padding:24px;
+
+  margin-bottom:18px;
+
+  font-size:30px;
+
+  font-weight:900;
+
+  color:#333;
+
+  border:
+  2px solid #e0e0e0;
+}
+
 /* 状態 */
 
 .status{
@@ -123,7 +174,7 @@ body{
 
   padding:26px;
 
-  margin-top:10px;
+  margin-top:24px;
 
   box-shadow:
   0 8px 24px rgba(0,0,0,.12);
@@ -153,9 +204,9 @@ body{
   white-space:pre-wrap;
 }
 
-/* 説明 */
+/* 履歴 */
 
-.info{
+.history{
 
   background:#fff;
 
@@ -169,24 +220,35 @@ body{
   0 8px 24px rgba(0,0,0,.12);
 }
 
-.info-title{
+.history-title{
 
   font-size:30px;
 
   font-weight:900;
 
-  margin-bottom:16px;
+  margin-bottom:20px;
 
   color:#bf360c;
 }
 
-.info-text{
+.history-item{
+
+  background:#f7f7f7;
+
+  border-radius:18px;
+
+  padding:18px;
+
+  margin-bottom:16px;
 
   font-size:24px;
 
-  line-height:1.9;
+  line-height:1.8;
 
   color:#444;
+
+  border-left:
+  8px solid #ef6c00;
 }
 
 /* 戻る */
@@ -233,6 +295,14 @@ body{
   font-size:32px;
 }
 
+.medicine-title{
+  font-size:28px;
+}
+
+.medicine-btn{
+  font-size:24px;
+}
+
 .status-title{
   font-size:28px;
 }
@@ -241,11 +311,11 @@ body{
   font-size:24px;
 }
 
-.info-title{
+.history-title{
   font-size:28px;
 }
 
-.info-text{
+.history-item{
   font-size:22px;
 }
 
@@ -270,8 +340,8 @@ body{
     </div>
 
     <div class="sub">
-      元気確認・安否確認・
-      地域見守り・緊急連絡などを、
+      元気確認・服薬確認・
+      見守り履歴などを、
       高齢者にも使いやすくまとめた
       見守りDXです。
     </div>
@@ -303,6 +373,35 @@ body{
 
   </button>
 
+  <div class="medicine-box">
+
+    <div class="medicine-title">
+      💊 服薬確認
+    </div>
+
+    <button class="medicine-btn"
+    onclick="medicine('朝の薬')">
+
+      💊 朝の薬を飲みました
+
+    </button>
+
+    <button class="medicine-btn"
+    onclick="medicine('昼の薬')">
+
+      💊 昼の薬を飲みました
+
+    </button>
+
+    <button class="medicine-btn"
+    onclick="medicine('夜の薬')">
+
+      💊 夜の薬を飲みました
+
+    </button>
+
+  </div>
+
   <div class="status">
 
     <div class="status-title">
@@ -319,21 +418,14 @@ body{
 
   </div>
 
-  <div class="info">
+  <div class="history">
 
-    <div class="info-title">
-      見守りDXについて
+    <div class="history-title">
+      履歴
     </div>
 
-    <div class="info-text">
-      地域で安心して暮らせるよう、
-      元気確認・相談・安否確認を
-      まとめていくページです。<br><br>
+    <div id="historyList">
 
-      今後、
-      家族通知・Googleカレンダー連携・
-      地域包括支援センター連携などを
-      追加予定です。
     </div>
 
   </div>
@@ -349,6 +441,46 @@ body{
 
 <script>
 
+function addHistory(text){
+
+  const list =
+  document.getElementById(
+    'historyList'
+  );
+
+  const item =
+  document.createElement('div');
+
+  item.className =
+  'history-item';
+
+  const now =
+  new Date();
+
+  const time =
+  now.getFullYear() +
+  '/' +
+  (now.getMonth()+1) +
+  '/' +
+  now.getDate() +
+  ' ' +
+  now.getHours() +
+  ':' +
+  String(now.getMinutes())
+  .padStart(2,'0');
+
+  item.innerHTML =
+
+  time +
+
+  '<br><br>' +
+
+  text;
+
+  list.prepend(item);
+
+}
+
 function genki(){
 
   document.getElementById(
@@ -358,6 +490,10 @@ function genki(){
   '本日の元気確認を受け付けました。<br><br>' +
 
   'ありがとうございます。';
+
+  addHistory(
+    '元気確認済み'
+  );
 
 }
 
@@ -371,6 +507,10 @@ function helpMe(){
 
   '必要に応じて、地域包括支援センターや家族連携を行います。';
 
+  addHistory(
+    '助けてください通知'
+  );
+
 }
 
 function houkatsu(){
@@ -382,6 +522,28 @@ function houkatsu(){
   '地域包括支援センター情報を表示します。<br><br>' +
 
   '高齢者相談・介護相談・見守り相談などに対応します。';
+
+  addHistory(
+    '地域包括支援センター確認'
+  );
+
+}
+
+function medicine(type){
+
+  document.getElementById(
+    'statusText'
+  ).innerHTML =
+
+  type +
+
+  ' を確認しました。<br><br>' +
+
+  'ありがとうございます。';
+
+  addHistory(
+    type + ' 確認済み'
+  );
 
 }
 
