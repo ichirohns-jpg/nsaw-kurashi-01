@@ -71,13 +71,15 @@ body{
   opacity:.95;
 }
 
-/* メニュー */
+/* 本体 */
 
 .wrap{
   padding:16px 14px 50px;
 }
 
-.card{
+/* ボタン */
+
+.map-btn{
 
   display:block;
 
@@ -85,11 +87,11 @@ body{
 
   background:#fff;
 
-  border-radius:26px;
+  border-radius:28px;
 
-  padding:24px;
+  padding:26px;
 
-  margin-bottom:22px;
+  margin-bottom:24px;
 
   box-shadow:
   0 8px 24px rgba(0,0,0,.12);
@@ -98,7 +100,7 @@ body{
   2px solid #d7dfeb;
 }
 
-.card-title{
+.map-title{
 
   font-size:34px;
 
@@ -109,7 +111,7 @@ body{
   color:#1a237e;
 }
 
-.card-desc{
+.map-desc{
 
   font-size:24px;
 
@@ -185,11 +187,11 @@ body{
   font-size:20px;
 }
 
-.card-title{
+.map-title{
   font-size:30px;
 }
 
-.card-desc{
+.map-desc{
   font-size:22px;
 }
 
@@ -226,70 +228,95 @@ body{
 
 <div class="wrap">
 
-  <div class="card blue">
+  <a class="map-btn blue"
+  target="_blank"
+  href="https://www.google.com/maps/search/?api=1&query=病院">
 
-    <div class="card-title">
+    <div class="map-title">
       ▶ 病院・クリニック
     </div>
 
-    <div class="card-desc">
-      地域の病院・内科・
-      整形外科・歯科など。
+    <div class="map-desc">
+      近くの病院・クリニックを
+      Googleマップで探します。
     </div>
 
-  </div>
+  </a>
 
-  <div class="card green">
+  <a class="map-btn green"
+  target="_blank"
+  href="https://www.google.com/maps/search/?api=1&query=薬局">
 
-    <div class="card-title">
+    <div class="map-title">
       ▶ 薬局・ドラッグストア
     </div>
 
-    <div class="card-desc">
-      薬局・処方箋受付・
-      日用品店舗など。
+    <div class="map-desc">
+      薬局・ドラッグストアを
+      Googleマップで探します。
     </div>
 
-  </div>
+  </a>
 
-  <div class="card orange">
+  <a class="map-btn orange"
+  target="_blank"
+  href="https://www.google.com/maps/search/?api=1&query=コンビニ">
 
-    <div class="card-title">
+    <div class="map-title">
       ▶ コンビニ・スーパー
     </div>
 
-    <div class="card-desc">
-      近所の買い物・
-      生活施設案内。
+    <div class="map-desc">
+      近くのコンビニ・スーパーを
+      Googleマップで探します。
     </div>
 
-  </div>
+  </a>
 
-  <div class="card red">
+  <a class="map-btn red"
+  target="_blank"
+  href="https://www.google.com/maps/search/?api=1&query=避難所">
 
-    <div class="card-title">
+    <div class="map-title">
       ▶ 避難所・防災
     </div>
 
-    <div class="card-desc">
-      避難所・災害時情報・
-      防災関連施設。
+    <div class="map-desc">
+      避難所・防災関連施設を
+      Googleマップで探します。
     </div>
 
-  </div>
+  </a>
 
-  <div class="card purple">
+  <a class="map-btn purple"
+  target="_blank"
+  href="https://www.google.com/maps/search/?api=1&query=地域包括支援センター">
 
-    <div class="card-title">
+    <div class="map-title">
       ▶ 地域包括支援センター
     </div>
 
-    <div class="card-desc">
-      高齢者相談・介護相談・
-      地域見守り窓口。
+    <div class="map-desc">
+      高齢者相談・介護相談窓口を
+      Googleマップで探します。
     </div>
 
-  </div>
+  </a>
+
+  <a class="map-btn blue"
+  target="_blank"
+  href="https://www.google.com/maps/search/?api=1&query=公衆トイレ">
+
+    <div class="map-title">
+      ▶ 公衆トイレ
+    </div>
+
+    <div class="map-desc">
+      近くの公衆トイレを
+      Googleマップで探します。
+    </div>
+
+  </a>
 
   <a class="home-btn"
   href="index.html">
