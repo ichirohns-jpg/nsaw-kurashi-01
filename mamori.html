@@ -71,23 +71,19 @@ body{
   opacity:.95;
 }
 
-/* ボタン */
+/* 本体 */
 
 .wrap{
   padding:16px 14px 50px;
 }
 
+/* ボタン */
+
 .big-btn{
 
-  display:block;
+  width:100%;
 
-  text-decoration:none;
-
-  text-align:center;
-
-  background:#fff;
-
-  color:#bf360c;
+  border:none;
 
   border-radius:28px;
 
@@ -99,27 +95,65 @@ body{
 
   font-weight:900;
 
+  color:#fff;
+
   box-shadow:
   0 10px 26px rgba(0,0,0,.12);
-
-  border:
-  3px solid #ffd3b5;
 }
 
-.big-btn.red{
-  background:#d32f2f;
-  color:#fff;
-}
-
-.big-btn.green{
+.green{
   background:#2e7d32;
-  color:#fff;
 }
 
-.big-btn.blue{
-  background:#1976d2;
-  color:#fff;
+.red{
+  background:#d32f2f;
 }
+
+.blue{
+  background:#1976d2;
+}
+
+/* 状態 */
+
+.status{
+
+  background:#fff;
+
+  border-radius:26px;
+
+  padding:26px;
+
+  margin-top:10px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.12);
+
+  min-height:180px;
+}
+
+.status-title{
+
+  font-size:32px;
+
+  font-weight:900;
+
+  margin-bottom:18px;
+
+  color:#bf360c;
+}
+
+.status-text{
+
+  font-size:28px;
+
+  line-height:1.9;
+
+  color:#444;
+
+  white-space:pre-wrap;
+}
+
+/* 説明 */
 
 .info{
 
@@ -129,7 +163,7 @@ body{
 
   padding:24px;
 
-  margin-top:10px;
+  margin-top:24px;
 
   box-shadow:
   0 8px 24px rgba(0,0,0,.12);
@@ -137,7 +171,7 @@ body{
 
 .info-title{
 
-  font-size:32px;
+  font-size:30px;
 
   font-weight:900;
 
@@ -199,6 +233,14 @@ body{
   font-size:32px;
 }
 
+.status-title{
+  font-size:28px;
+}
+
+.status-text{
+  font-size:24px;
+}
+
 .info-title{
   font-size:28px;
 }
@@ -228,10 +270,10 @@ body{
     </div>
 
     <div class="sub">
-      元気ですボタン・安否確認・
+      元気確認・安否確認・
       地域見守り・緊急連絡などを、
       高齢者にも使いやすくまとめた
-      地域見守りDXです。
+      見守りDXです。
     </div>
 
   </div>
@@ -240,42 +282,57 @@ body{
 
 <div class="wrap">
 
-  <a class="big-btn green"
-  href="#">
+  <button class="big-btn green"
+  onclick="genki()">
 
     元気です
 
-  </a>
+  </button>
 
-  <a class="big-btn red"
-  href="#">
+  <button class="big-btn red"
+  onclick="helpMe()">
 
     助けてください
 
-  </a>
+  </button>
 
-  <a class="big-btn blue"
-  href="#">
+  <button class="big-btn blue"
+  onclick="houkatsu()">
 
     地域包括支援センター
 
-  </a>
+  </button>
+
+  <div class="status">
+
+    <div class="status-title">
+      見守り状況
+    </div>
+
+    <div class="status-text"
+    id="statusText">
+
+      ボタンを押すと、
+      ここに状況が表示されます。
+
+    </div>
+
+  </div>
 
   <div class="info">
 
     <div class="info-title">
-      見守りについて
+      見守りDXについて
     </div>
 
     <div class="info-text">
       地域で安心して暮らせるよう、
-      見守り・相談・安否確認を
+      元気確認・相談・安否確認を
       まとめていくページです。<br><br>
 
       今後、
-      元気ですボタンや、
-      家族連携機能、
-      緊急時通知などを
+      家族通知・Googleカレンダー連携・
+      地域包括支援センター連携などを
       追加予定です。
     </div>
 
@@ -289,6 +346,46 @@ body{
   </a>
 
 </div>
+
+<script>
+
+function genki(){
+
+  document.getElementById(
+    'statusText'
+  ).innerHTML =
+
+  '本日の元気確認を受け付けました。<br><br>' +
+
+  'ありがとうございます。';
+
+}
+
+function helpMe(){
+
+  document.getElementById(
+    'statusText'
+  ).innerHTML =
+
+  '地域見守りへ連絡準備をしています。<br><br>' +
+
+  '必要に応じて、地域包括支援センターや家族連携を行います。';
+
+}
+
+function houkatsu(){
+
+  document.getElementById(
+    'statusText'
+  ).innerHTML =
+
+  '地域包括支援センター情報を表示します。<br><br>' +
+
+  '高齢者相談・介護相談・見守り相談などに対応します。';
+
+}
+
+</script>
 
 </body>
 </html>
