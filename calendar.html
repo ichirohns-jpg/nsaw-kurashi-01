@@ -1,504 +1,3 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
-<title>
-NSAW 今日と明日のAI秘書
-</title>
-
-<style>
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  background:#eef3f8;
-  color:#223;
-
-  font-family:
-  "Hiragino Sans",
-  "Yu Gothic",
-  sans-serif;
-}
-
-.top{
-  padding:14px;
-}
-
-.top-box{
-
-  background:
-  linear-gradient(
-    135deg,
-    #1565c0,
-    #0d47a1
-  );
-
-  border-radius:28px;
-
-  padding:28px 22px;
-
-  color:#fff;
-
-  box-shadow:
-  0 12px 30px rgba(0,0,0,.18);
-}
-
-.main-title{
-
-  font-size:42px;
-
-  line-height:1.3;
-
-  font-weight:900;
-}
-
-.sub{
-
-  margin-top:14px;
-
-  font-size:22px;
-
-  line-height:1.9;
-}
-
-.wrap{
-  padding:16px 14px 50px;
-}
-
-/* AI */
-
-.ai-box{
-
-  background:#fff;
-
-  border-radius:26px;
-
-  padding:26px;
-
-  margin-bottom:24px;
-
-  box-shadow:
-  0 8px 24px rgba(0,0,0,.12);
-}
-
-.ai-title{
-
-  font-size:32px;
-
-  font-weight:900;
-
-  margin-bottom:18px;
-
-  color:#0d47a1;
-}
-
-.ai-text{
-
-  font-size:28px;
-
-  line-height:2;
-
-  color:#333;
-
-  white-space:pre-wrap;
-}
-
-/* 選択 */
-
-.select-box{
-
-  background:#fff;
-
-  border-radius:26px;
-
-  padding:24px;
-
-  margin-bottom:24px;
-
-  box-shadow:
-  0 8px 24px rgba(0,0,0,.12);
-}
-
-.select-title{
-
-  font-size:30px;
-
-  font-weight:900;
-
-  margin-bottom:18px;
-
-  color:#1565c0;
-}
-
-.select{
-
-  width:100%;
-
-  padding:22px;
-
-  border-radius:18px;
-
-  border:
-  2px solid #dbe3ea;
-
-  font-size:26px;
-
-  font-weight:900;
-
-  background:#fff;
-}
-
-/* 音声 */
-
-.voice-btn{
-
-  width:100%;
-
-  border:none;
-
-  background:#1976d2;
-
-  color:#fff;
-
-  border-radius:28px;
-
-  padding:30px 20px;
-
-  font-size:36px;
-
-  font-weight:900;
-
-  margin-bottom:24px;
-}
-
-/* 状態 */
-
-.status{
-
-  background:#fff;
-
-  border-radius:24px;
-
-  padding:22px;
-
-  font-size:28px;
-
-  line-height:1.9;
-
-  color:#333;
-
-  box-shadow:
-  0 8px 22px rgba(0,0,0,.12);
-
-  margin-bottom:24px;
-}
-
-/* 今日・明日 */
-
-.day-box{
-
-  background:#fff;
-
-  border-radius:26px;
-
-  padding:24px;
-
-  box-shadow:
-  0 8px 24px rgba(0,0,0,.12);
-
-  margin-bottom:24px;
-}
-
-.day-title{
-
-  font-size:30px;
-
-  font-weight:900;
-
-  margin-bottom:18px;
-
-  color:#1565c0;
-}
-
-.day-item{
-
-  background:#f5f7fb;
-
-  border-radius:18px;
-
-  padding:20px;
-
-  margin-bottom:16px;
-
-  font-size:28px;
-
-  line-height:1.9;
-
-  border-left:
-  8px solid #1976d2;
-}
-
-/* 履歴 */
-
-.history{
-
-  background:#fff;
-
-  border-radius:26px;
-
-  padding:24px;
-
-  box-shadow:
-  0 8px 24px rgba(0,0,0,.12);
-}
-
-.history-title{
-
-  font-size:30px;
-
-  font-weight:900;
-
-  margin-bottom:20px;
-
-  color:#1565c0;
-}
-
-.history-item{
-
-  background:#f5f7fb;
-
-  border-radius:18px;
-
-  padding:18px;
-
-  margin-bottom:16px;
-
-  font-size:24px;
-
-  line-height:1.8;
-
-  border-left:
-  8px solid #42a5f5;
-}
-
-/* 戻る */
-
-.home-btn{
-
-  display:block;
-
-  text-align:center;
-
-  background:#1976d2;
-
-  color:#fff;
-
-  text-decoration:none;
-
-  padding:22px;
-
-  border-radius:24px;
-
-  font-size:28px;
-
-  font-weight:900;
-
-  margin-top:30px;
-}
-
-@media(max-width:768px){
-
-.main-title{
-  font-size:36px;
-}
-
-.sub{
-  font-size:20px;
-}
-
-.ai-title{
-  font-size:28px;
-}
-
-.ai-text{
-  font-size:24px;
-}
-
-.select-title{
-  font-size:28px;
-}
-
-.select{
-  font-size:22px;
-}
-
-.voice-btn{
-  font-size:30px;
-}
-
-.status{
-  font-size:24px;
-}
-
-.day-title{
-  font-size:28px;
-}
-
-.day-item{
-  font-size:24px;
-}
-
-.history-title{
-  font-size:28px;
-}
-
-.history-item{
-  font-size:22px;
-}
-
-.home-btn{
-  font-size:24px;
-}
-
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="top">
-
-  <div class="top-box">
-
-    <div class="main-title">
-      NSAW<br>
-      今日と明日のAI秘書
-    </div>
-
-    <div class="sub">
-      今日と明日の予定・ゴミの日などを、
-      AIが毎朝まとめてお知らせします。
-    </div>
-
-  </div>
-
-</div>
-
-<div class="wrap">
-
-  <div class="ai-box">
-
-    <div class="ai-title">
-      AI秘書
-    </div>
-
-    <div class="ai-text"
-    id="aiText">
-
-    </div>
-
-  </div>
-
-  <div class="select-box">
-
-    <div class="select-title">
-      誰の予定ですか？
-    </div>
-
-    <select class="select"
-    id="personSelect">
-
-      <option value="👤 自分">
-      👤 自分
-      </option>
-
-      <option value="👩 娘">
-      👩 娘
-      </option>
-
-      <option value="👨 息子">
-      👨 息子
-      </option>
-
-      <option value="👨‍⚕️ 訪問看護">
-      👨‍⚕️ 訪問看護
-      </option>
-
-      <option value="🚐 デイサービス">
-      🚐 デイサービス
-      </option>
-
-    </select>
-
-  </div>
-
-  <button class="voice-btn"
-  onclick="startVoice()">
-
-    🎤 予定を話して登録
-
-  </button>
-
-  <div class="status"
-  id="status">
-
-    例：
-    「5月28日 14時 歯医者」
-
-  </div>
-
-  <div class="day-box">
-
-    <div class="day-title">
-      今日の予定
-    </div>
-
-    <div id="todayList">
-
-    </div>
-
-  </div>
-
-  <div class="day-box">
-
-    <div class="day-title">
-      明日の予定
-    </div>
-
-    <div id="tomorrowList">
-
-    </div>
-
-  </div>
-
-  <div class="history">
-
-    <div class="history-title">
-      予定履歴
-    </div>
-
-    <div id="historyList">
-
-    </div>
-
-  </div>
-
-  <a class="home-btn"
-  href="index.html">
-
-    ← トップへ戻る
-
-  </a>
-
-</div>
-
 <script>
 
 const STORAGE_KEY =
@@ -573,6 +72,25 @@ function parseDate(text){
 
 }
 
+/* 時間解析 */
+
+function parseHour(text){
+
+  const match =
+  text.match(
+    /(\d+)\s*時/
+  );
+
+  if(!match){
+
+    return 99;
+
+  }
+
+  return parseInt(match[1]);
+
+}
+
 function isTargetDay(item,offset){
 
   const date =
@@ -619,7 +137,10 @@ function addSchedule(person,text){
 
     person:person,
 
-    text:text
+    text:text,
+
+    hour:
+    parseHour(text)
 
   });
 
@@ -682,13 +203,16 @@ function renderDay(targetId,offset,gomiText){
 
   }
 
-  getData().forEach(function(item){
+  const items =
+  getData()
+  .filter(
+    item => isTargetDay(item,offset)
+  )
+  .sort(
+    (a,b) => a.hour - b.hour
+  );
 
-    if(!isTargetDay(item,offset)){
-
-      return;
-
-    }
+  items.forEach(function(item){
 
     const div =
     document.createElement('div');
@@ -735,13 +259,21 @@ function renderAI(){
   WEEK_GOMI[tomorrowWeek];
 
   const todayData =
-  getData().filter(
+  getData()
+  .filter(
     item => isTargetDay(item,0)
+  )
+  .sort(
+    (a,b)=>a.hour-b.hour
   );
 
   const tomorrowData =
-  getData().filter(
+  getData()
+  .filter(
     item => isTargetDay(item,1)
+  )
+  .sort(
+    (a,b)=>a.hour-b.hour
   );
 
   let text =
@@ -758,17 +290,13 @@ function renderAI(){
   if(todayData.length > 0){
 
     text +=
-    '\n\n今日の予定があります。';
+    '\n\n今日の予定です。';
 
     todayData.forEach(function(item){
 
       text +=
 
       '\n\n' +
-
-      item.person +
-
-      'の予定。' +
 
       item.text;
 
@@ -787,17 +315,13 @@ function renderAI(){
   if(tomorrowData.length > 0){
 
     text +=
-    '\n\n明日の予定があります。';
+    '\n\n明日の予定です。';
 
     tomorrowData.forEach(function(item){
 
       text +=
 
       '\n\n' +
-
-      item.person +
-
-      'の予定。' +
 
       item.text;
 
@@ -939,6 +463,3 @@ renderDay(
 renderAI();
 
 </script>
-
-</body>
-</html>
