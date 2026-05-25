@@ -77,6 +77,53 @@ body{
   padding:16px 14px 50px;
 }
 
+/* 地域 */
+
+.select-box{
+
+  background:#fff;
+
+  border-radius:24px;
+
+  padding:24px;
+
+  margin-bottom:24px;
+
+  box-shadow:
+  0 8px 22px rgba(0,0,0,.12);
+}
+
+.select-title{
+
+  font-size:30px;
+
+  font-weight:900;
+
+  margin-bottom:18px;
+
+  color:#1b5e20;
+}
+
+.select{
+
+  width:100%;
+
+  padding:22px;
+
+  border-radius:18px;
+
+  border:
+  2px solid #dbe6de;
+
+  font-size:26px;
+
+  font-weight:900;
+
+  margin-bottom:18px;
+
+  background:#fff;
+}
+
 /* マイク */
 
 .mic-btn{
@@ -210,7 +257,7 @@ body{
 
   padding:22px;
 
-  margin-bottom:28px;
+  margin-bottom:18px;
 
   box-shadow:
   0 8px 22px rgba(0,0,0,.12);
@@ -244,6 +291,65 @@ body{
   white-space:pre-wrap;
 }
 
+/* 包括 */
+
+.houkatsu{
+
+  background:#fff3e0;
+
+  border-radius:24px;
+
+  padding:22px;
+
+  margin-bottom:28px;
+
+  border:
+  3px solid #ffb74d;
+}
+
+.houkatsu-title{
+
+  font-size:28px;
+
+  font-weight:900;
+
+  margin-bottom:14px;
+
+  color:#e65100;
+}
+
+.houkatsu-text{
+
+  font-size:26px;
+
+  line-height:1.8;
+
+  color:#5d4037;
+}
+
+.tel-btn{
+
+  display:block;
+
+  text-decoration:none;
+
+  background:#d32f2f;
+
+  color:#fff;
+
+  text-align:center;
+
+  padding:22px;
+
+  border-radius:20px;
+
+  margin-top:18px;
+
+  font-size:30px;
+
+  font-weight:900;
+}
+
 /* 戻る */
 
 .home-btn{
@@ -272,8 +378,6 @@ body{
   0 8px 20px rgba(0,0,0,.25);
 }
 
-/* スマホ */
-
 @media(max-width:768px){
 
 .main-title{
@@ -282,6 +386,14 @@ body{
 
 .sub{
   font-size:20px;
+}
+
+.select-title{
+  font-size:28px;
+}
+
+.select{
+  font-size:22px;
 }
 
 .mic-btn{
@@ -300,15 +412,19 @@ body{
   font-size:24px;
 }
 
-.chat-title{
-  font-size:22px;
-}
-
 .chat-text{
   font-size:24px;
 }
 
-.home-btn{
+.houkatsu-title{
+  font-size:24px;
+}
+
+.houkatsu-text{
+  font-size:22px;
+}
+
+.tel-btn{
   font-size:24px;
 }
 
@@ -329,9 +445,9 @@ body{
     </div>
 
     <div class="sub">
-      暮らし・介護・ごみ・
-      手続き・空き家などを、
-      AIで分かりやすく案内します。
+      地域包括支援センターと連携し、
+      高齢者にも使いやすい
+      AI相談DXを目指しています。
     </div>
 
   </div>
@@ -339,6 +455,41 @@ body{
 </div>
 
 <div class="wrap">
+
+  <div class="select-box">
+
+    <div class="select-title">
+      お住まいの地域
+    </div>
+
+    <select class="select"
+    id="citySelect"
+    onchange="changeArea()">
+
+      <option value="志木市">
+      志木市
+      </option>
+
+      <option value="新座市">
+      新座市
+      </option>
+
+      <option value="朝霞市">
+      朝霞市
+      </option>
+
+      <option value="和光市">
+      和光市
+      </option>
+
+    </select>
+
+    <select class="select"
+    id="areaSelect">
+
+    </select>
+
+  </div>
 
   <button class="mic-btn"
   onclick="startVoice()">
@@ -362,13 +513,6 @@ body{
     </div>
 
     <button class="quick-btn"
-    onclick="quickAsk('ごみ')">
-
-      ▶ ごみの相談
-
-    </button>
-
-    <button class="quick-btn"
     onclick="quickAsk('介護')">
 
       ▶ 介護の相談
@@ -386,13 +530,6 @@ body{
     onclick="quickAsk('空き家')">
 
       ▶ 空き家の相談
-
-    </button>
-
-    <button class="quick-btn"
-    onclick="quickAsk('手続き')">
-
-      ▶ 市役所の手続き
 
     </button>
 
@@ -414,212 +551,336 @@ body{
 
 <script>
 
+const DATA = {
+
+'志木市':{
+
+'本町':{
+name:'高齢者あんしん相談センター ブロン',
+tel:'048-486-0003'
+},
+
+'柏町':{
+name:'高齢者あんしん相談センター 柏の杜',
+tel:'048-486-5199'
+},
+
+'館・幸町':{
+name:'高齢者あんしん相談センター 館・幸町',
+tel:'048-485-5610'
+},
+
+'宗岡':{
+name:'高齢者あんしん相談センター せせらぎ',
+tel:'048-485-2113'
+}
+
+},
+
+'新座市':{
+
+'東北':{
+name:'新座市東部第一地域包括支援センター',
+tel:'048-480-5853'
+},
+
+'栗原':{
+name:'新座市東部第二地域包括支援センター',
+tel:'048-480-7808'
+}
+
+},
+
+'朝霞市':{
+
+'北朝霞':{
+name:'地域包括支援センター モーニングパーク',
+tel:'048-450-0855'
+},
+
+'本町':{
+name:'あさか中央地域包括支援センター',
+tel:'048-423-2761'
+}
+
+},
+
+'和光市':{
+
+'丸山台':{
+name:'和光市中央地域包括支援センター',
+tel:'048-450-0472'
+},
+
+'白子':{
+name:'和光市南地域包括支援センター',
+tel:'048-452-7600'
+}
+
+}
+
+};
+
+function changeArea(){
+
+const city =
+document.getElementById(
+'citySelect'
+).value;
+
+const areaSelect =
+document.getElementById(
+'areaSelect'
+);
+
+areaSelect.innerHTML = '';
+
+Object.keys(DATA[city])
+.forEach(function(area){
+
+const option =
+document.createElement('option');
+
+option.value = area;
+
+option.textContent = area;
+
+areaSelect.appendChild(option);
+
+});
+
+}
+
+changeArea();
+
 function quickAsk(word){
 
-  document.getElementById(
-    'status'
-  ).innerHTML =
+document.getElementById(
+'status'
+).innerHTML =
 
-  '相談内容を確認しています…';
+'相談内容を確認しています…';
 
-  addChat(
-    word,
-    getAnswer(word)
-  );
+addChat(
+word,
+getAnswer(word)
+);
 
 }
 
 function startVoice(){
 
-  if(
-    !('webkitSpeechRecognition' in window)
-  ){
+if(
+!('webkitSpeechRecognition' in window)
+){
 
-    alert(
-      'このブラウザは音声入力に対応していません'
-    );
+alert(
+'このブラウザは音声入力に対応していません'
+);
 
-    return;
+return;
 
-  }
+}
 
-  const recognition =
-  new webkitSpeechRecognition();
+const recognition =
+new webkitSpeechRecognition();
 
-  recognition.lang = 'ja-JP';
+recognition.lang = 'ja-JP';
 
-  recognition.interimResults = true;
+recognition.interimResults = true;
 
-  recognition.continuous = false;
+recognition.continuous = false;
 
-  const status =
-  document.getElementById('status');
+const status =
+document.getElementById('status');
 
-  status.innerHTML =
-  '🎤 聞いています…';
+status.innerHTML =
+'🎤 聞いています…';
 
-  let liveText = '';
+let liveText = '';
 
-  recognition.onresult =
-  function(event){
+recognition.onresult =
+function(event){
 
-    let text = '';
+let text = '';
 
-    for(
-      let i = 0;
-      i < event.results.length;
-      i++
-    ){
+for(
+let i = 0;
+i < event.results.length;
+i++
+){
 
-      text +=
-      event.results[i][0].transcript;
+text +=
+event.results[i][0].transcript;
 
-    }
+}
 
-    liveText = text;
+liveText = text;
 
-    status.innerHTML =
-    '🎤 ' + text;
+status.innerHTML =
+'🎤 ' + text;
 
-  };
+};
 
-  recognition.onend =
-  function(){
+recognition.onend =
+function(){
 
-    status.innerHTML =
-    '相談内容を確認しています…';
+status.innerHTML =
+'相談内容を確認しています…';
 
-    const answer =
-    getAnswer(liveText);
+addChat(
+liveText,
+getAnswer(liveText)
+);
 
-    addChat(
-      liveText,
-      answer
-    );
+};
 
-  };
-
-  recognition.start();
+recognition.start();
 
 }
 
 function addChat(userText,aiText){
 
-  const wrap =
-  document.getElementById('chatWrap');
+const wrap =
+document.getElementById('chatWrap');
 
-  const userBox =
-  document.createElement('div');
+const userBox =
+document.createElement('div');
 
-  userBox.className =
-  'user-box';
+userBox.className =
+'user-box';
 
-  userBox.innerHTML =
+userBox.innerHTML =
 
-  '<div class="chat-title user-title">相談内容</div>' +
+'<div class="chat-title user-title">相談内容</div>' +
 
-  '<div class="chat-text">' +
-  userText +
-  '</div>';
+'<div class="chat-text">' +
+userText +
+'</div>';
 
-  wrap.prepend(userBox);
+wrap.prepend(userBox);
 
-  const aiBox =
-  document.createElement('div');
+const aiBox =
+document.createElement('div');
 
-  aiBox.className =
-  'ai-box';
+aiBox.className =
+'ai-box';
 
-  const aiId =
-  'ai-' + Date.now();
+const aiId =
+'ai-' + Date.now();
 
-  aiBox.innerHTML =
+aiBox.innerHTML =
 
-  '<div class="chat-title ai-title">AI回答</div>' +
+'<div class="chat-title ai-title">AI回答</div>' +
 
-  '<div class="chat-text" id="' +
-  aiId +
-  '"></div>';
+'<div class="chat-text" id="' +
+aiId +
+'"></div>';
 
-  wrap.prepend(aiBox);
+wrap.prepend(aiBox);
 
-  typeWriter(
-    aiText,
-    aiId
-  );
+typeWriter(
+aiText,
+aiId
+);
+
+const city =
+document.getElementById(
+'citySelect'
+).value;
+
+const area =
+document.getElementById(
+'areaSelect'
+).value;
+
+const info =
+DATA[city][area];
+
+const houkatsu =
+document.createElement('div');
+
+houkatsu.className =
+'houkatsu';
+
+houkatsu.innerHTML =
+
+'<div class="houkatsu-title">地域包括支援センター</div>' +
+
+'<div class="houkatsu-text">' +
+
+info.name +
+
+'<br><br>' +
+
+info.tel +
+
+'</div>' +
+
+'<a class="tel-btn" href="tel:' +
+
+info.tel +
+
+'">📞 いますぐ電話する</a>';
+
+wrap.prepend(houkatsu);
 
 }
 
 function getAnswer(text){
 
-  if(
-    text.includes('ごみ')
-  ){
+if(
+text.includes('介護')
+){
 
-    return 'ごみの出し方についてですね。\n\n地域のごみ収集日をご確認ください。';
+return '介護についてですね。\n\n地域包括支援センターへ相談できます。';
 
-  }
+}
 
-  if(
-    text.includes('介護')
-  ){
+if(
+text.includes('病院')
+){
 
-    return '介護についてですね。\n\n地域包括支援センターへ相談できます。';
+return '病院を探したいのですね。\n\n地域マップDXもご利用ください。';
 
-  }
+}
 
-  if(
-    text.includes('病院')
-  ){
+if(
+text.includes('空き家')
+){
 
-    return '病院を探したいのですね。\n\n地域マップDXもご利用ください。';
+return '空き家についてですね。\n\n住まい・相続・管理の相談ができます。';
 
-  }
+}
 
-  if(
-    text.includes('空き家')
-  ){
-
-    return '空き家についてですね。\n\n住まい・相続・管理の相談ができます。';
-
-  }
-
-  if(
-    text.includes('手続き')
-  ){
-
-    return '市役所の手続きについてですね。\n\n住民票・保険・年金などを案内できます。';
-
-  }
-
-  return '相談内容を確認しました。\n\n地域相談窓口をご案内します。';
+return '相談内容を確認しました。\n\n地域相談窓口をご案内します。';
 
 }
 
 function typeWriter(text,elementId){
 
-  const el =
-  document.getElementById(elementId);
+const el =
+document.getElementById(elementId);
 
-  el.innerHTML = '';
+el.innerHTML = '';
 
-  let i = 0;
+let i = 0;
 
-  const timer =
-  setInterval(function(){
+const timer =
+setInterval(function(){
 
-    el.innerHTML +=
-    text.charAt(i);
+el.innerHTML +=
+text.charAt(i);
 
-    i++;
+i++;
 
-    if(i >= text.length){
+if(i >= text.length){
 
-      clearInterval(timer);
+clearInterval(timer);
 
-    }
+}
 
-  },40);
+},40);
 
 }
 
