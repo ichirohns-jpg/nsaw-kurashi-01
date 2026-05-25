@@ -24,7 +24,7 @@
 
 body{
   margin:0;
-  background:#e7edf3;
+  background:#dde6ef;
   font-family:
   "Hiragino Sans",
   "Yu Gothic",
@@ -40,22 +40,33 @@ body{
 
 .top-box{
   background:
-  linear-gradient(135deg,#0f4c81,#16385b);
-  border-radius:26px;
+  linear-gradient(
+    135deg,
+    #0f4c81,
+    #16385b
+  );
+
+  border-radius:28px;
+
   padding:24px;
+
   color:#fff;
-  box-shadow:0 10px 28px rgba(0,0,0,.18);
+
+  box-shadow:
+  0 12px 30px rgba(0,0,0,.18);
 }
 
 .main-title{
-  font-size:42px;
+  font-size:44px;
   font-weight:900;
   line-height:1.3;
+  text-shadow:
+  0 3px 6px rgba(0,0,0,.25);
 }
 
 .sub-title{
-  margin-top:10px;
-  font-size:21px;
+  margin-top:12px;
+  font-size:22px;
   line-height:1.8;
   opacity:.95;
 }
@@ -64,8 +75,8 @@ body{
 
 .city-row{
   display:flex;
-  gap:10px;
-  margin-top:22px;
+  gap:12px;
+  margin-top:24px;
   flex-wrap:wrap;
 }
 
@@ -77,8 +88,10 @@ body{
   font-size:24px;
   font-weight:900;
   text-align:center;
-  padding:18px 10px;
-  border-radius:18px;
+  padding:20px 10px;
+  border-radius:20px;
+  box-shadow:
+  0 6px 16px rgba(0,0,0,.18);
 }
 
 .shiki{
@@ -97,18 +110,53 @@ body{
   background:#c62828;
 }
 
-/* 記事 */
+/* コンテナ */
 
 .container{
   padding:0 12px 40px;
 }
 
+/* カード */
+
 .card{
-  background:#fff;
-  border-radius:26px;
-  margin-bottom:24px;
+  background:#ffffff;
+  border-radius:28px;
+  margin-bottom:28px;
   overflow:hidden;
-  box-shadow:0 8px 22px rgba(0,0,0,.12);
+
+  box-shadow:
+  0 10px 26px rgba(0,0,0,.12);
+
+  border:
+  2px solid #d7e1ea;
+}
+
+/* テレビ帯 */
+
+.news-band{
+  background:
+  linear-gradient(
+    90deg,
+    #d32f2f,
+    #ff7043
+  );
+
+  color:#fff;
+
+  font-size:24px;
+
+  font-weight:900;
+
+  padding:14px 18px;
+
+  border-radius:14px;
+
+  margin-bottom:18px;
+
+  letter-spacing:.05em;
+
+  box-shadow:
+  0 4px 12px rgba(0,0,0,.15);
 }
 
 .card-image{
@@ -165,16 +213,16 @@ body{
 /* 動画 */
 
 .video-wrap{
-  margin-top:20px;
+  margin-top:22px;
   background:#000;
-  border-radius:22px;
+  border-radius:24px;
   padding:14px;
   border:4px solid #d32f2f;
 }
 
 .video-head{
   color:#fff;
-  font-size:25px;
+  font-size:26px;
   font-weight:900;
   margin-bottom:12px;
 }
@@ -198,35 +246,22 @@ body{
   margin-top:30px;
 }
 
-.month-title{
-  background:#17324d;
-  color:#fff;
-  padding:18px;
-  border-radius:20px;
-  font-size:30px;
-  font-weight:900;
-}
-
-.month-count{
-  color:#ffd54f;
-}
-
-.month-content{
-  margin-top:12px;
-}
-
-/* ボタン */
-
 .toggle-btn{
   width:100%;
   border:none;
-  background:#fff;
-  border-radius:18px;
-  padding:18px;
+  background:#17324d;
+  color:#fff;
+  border-radius:20px;
+  padding:20px;
   margin-top:10px;
-  font-size:24px;
+  font-size:28px;
   font-weight:900;
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  box-shadow:
+  0 6px 16px rgba(0,0,0,.15);
+}
+
+.month-content{
+  margin-top:14px;
 }
 
 /* スマホ */
@@ -276,20 +311,24 @@ body{
 
     <div class="city-row">
 
-      <a class="city-btn shiki" href="#">
-        志木市
+      <a class="city-btn shiki" target="_blank"
+      href="https://www.city.shiki.lg.jp/">
+      志木市
       </a>
 
-      <a class="city-btn niiza" href="#">
-        新座市
+      <a class="city-btn niiza" target="_blank"
+      href="https://www.city.niiza.lg.jp/">
+      新座市
       </a>
 
-      <a class="city-btn asaka" href="#">
-        朝霞市
+      <a class="city-btn asaka" target="_blank"
+      href="https://www.city.asaka.lg.jp/">
+      朝霞市
       </a>
 
-      <a class="city-btn wako" href="#">
-        和光市
+      <a class="city-btn wako" target="_blank"
+      href="https://www.city.wako.lg.jp/">
+      和光市
       </a>
 
     </div>
@@ -303,301 +342,6 @@ body{
 読み込み中...
 
 </div>
-
-<script>
-
-const SHEET_ID =
-'13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
-
-const URL =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?tqx=out:json';
-
-function loadSheet(){
-
-  const script =
-  document.createElement('script');
-
-  script.src = URL;
-
-  document.body.appendChild(script);
-
-}
-
-window.google = {
-  visualization:{
-    Query:{
-      setResponse:function(res){
-
-        renderData(res);
-
-      }
-    }
-  }
-};
-
-function getCell(row,index){
-
-  if(
-    !row.c[index]
-  ) return '';
-
-  return row.c[index].f ||
-         row.c[index].v ||
-         '';
-
-}
-
-function renderData(res){
-
-  const rows =
-  res.table.rows;
-
-  const app =
-  document.getElementById('app');
-
-  app.innerHTML = '';
-
-  const latest =
-  rows.slice(0,5);
-
-  latest.forEach(row=>{
-
-    app.innerHTML +=
-    buildCard(row);
-
-  });
-
-  const months = {};
-
-  rows.slice(5).forEach(row=>{
-
-    const month =
-    getCell(row,22);
-
-    if(!months[month]){
-      months[month] = [];
-    }
-
-    months[month].push(row);
-
-  });
-
-  Object.keys(months).forEach(month=>{
-
-    const section =
-    document.createElement('div');
-
-    section.className =
-    'month-section';
-
-    const btn =
-    document.createElement('button');
-
-    btn.className =
-    'toggle-btn';
-
-    btn.innerHTML =
-    month +
-    ' の記事 (' +
-    months[month].length +
-    '件)';
-
-    const content =
-    document.createElement('div');
-
-    content.className =
-    'month-content';
-
-    content.style.display =
-    'none';
-
-    months[month].forEach(row=>{
-
-      content.innerHTML +=
-      buildCard(row);
-
-    });
-
-    btn.onclick = ()=>{
-
-      content.style.display =
-      content.style.display ===
-      'none'
-      ? 'block'
-      : 'none';
-
-    };
-
-    section.appendChild(btn);
-
-    section.appendChild(content);
-
-    app.appendChild(section);
-
-  });
-
-}
-
-function buildCard(row){
-
-  const date =
-  getCell(row,0);
-
-  const title =
-  getCell(row,2);
-
-  const image =
-  getCell(row,3);
-
-  const desc =
-  getCell(row,4);
-
-  const media =
-  getCell(row,17);
-
-  const videoTitle =
-  getCell(row,15);
-
-  let html =
-  '<div class="card">';
-
-  if(image){
-
-    html +=
-    '<img class="card-image" src="' +
-    image +
-    '">';
-
-  }
-
-  html +=
-  '<div class="card-body">';
-
-  html +=
-  '<div class="date">' +
-  date +
-  '</div>';
-
-  html +=
-  '<div class="title">' +
-  title +
-  '</div>';
-
-  html +=
-  '<div class="desc">' +
-  desc +
-  '</div>';
-
-  html +=
-  '<div class="links">';
-
-  const linkIndexes = [
-    [5,6],
-    [7,8],
-    [9,10],
-    [11,12],
-    [13,14]
-  ];
-
-  linkIndexes.forEach(pair=>{
-
-    const t =
-    getCell(row,pair[0]);
-
-    const u =
-    getCell(row,pair[1]);
-
-    if(t && u){
-
-      html +=
-      '<a class="link-btn" target="_blank" href="' +
-      u +
-      '">' +
-      t +
-      '</a>';
-
-    }
-
-  });
-
-  html +=
-  '</div>';
-
-  if(media){
-
-    let embed = '';
-
-    if(
-      media.includes('youtube.com') ||
-      media.includes('youtu.be')
-    ){
-
-      let id = '';
-
-      if(media.includes('watch?v=')){
-
-        id =
-        media.split('watch?v=')[1]
-        .split('&')[0];
-
-      }else if(
-        media.includes('youtu.be/')
-      ){
-
-        id =
-        media.split('youtu.be/')[1]
-        .split('?')[0];
-
-      }
-
-      embed =
-      '<iframe height="315" src="https://www.youtube.com/embed/' +
-      id +
-      '" frameborder="0" allowfullscreen></iframe>';
-
-    }else{
-
-      embed =
-      '<video controls src="' +
-      media +
-      '"></video>';
-
-    }
-
-    html +=
-    '<div class="video-wrap">';
-
-    html +=
-    '<div class="video-head">▶ 地域テレビ</div>';
-
-    html +=
-    '<div class="video-title">' +
-    videoTitle +
-    '</div>';
-
-    html +=
-    embed;
-
-    html +=
-    '</div>';
-
-  }
-
-  html +=
-  '</div>';
-
-  html +=
-  '</div>';
-
-  return html;
-
-}
-
-loadSheet();
-
-</script>
 
 </body>
 </html>
