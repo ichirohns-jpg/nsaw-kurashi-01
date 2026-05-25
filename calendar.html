@@ -1,78 +1,6 @@
 <script>
 
-const STORAGE_KEY =
-'nsaw_today_schedule';
-
-const WEEK_GOMI = {
-
-'0':'',
-'1':'🗑 燃えるごみの日',
-'2':'',
-'3':'🗑 資源ごみの日',
-'4':'🗑 燃えるごみの日',
-'5':'',
-'6':''
-
-};
-
-function speak(text){
-
-  speechSynthesis.cancel();
-
-  const msg =
-  new SpeechSynthesisUtterance(text);
-
-  msg.lang = 'ja-JP';
-
-  speechSynthesis.speak(msg);
-
-}
-
-function getData(){
-
-  return JSON.parse(
-    localStorage.getItem(
-      STORAGE_KEY
-    ) || '[]'
-  );
-
-}
-
-function saveData(data){
-
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(data)
-  );
-
-}
-
-function parseDate(text){
-
-  const match =
-  text.match(
-    /(\d+)月(\d+)/
-  );
-
-  if(!match){
-
-    return null;
-
-  }
-
-  return {
-
-    month:
-    parseInt(match[1]),
-
-    day:
-    parseInt(match[2])
-
-  };
-
-}
-
-/* 時間解析 */
+/* あと何時間DX */
 
 function parseHour(text){
 
@@ -83,7 +11,7 @@ function parseHour(text){
 
   if(!match){
 
-    return 99;
+    return null;
 
   }
 
@@ -91,91 +19,36 @@ function parseHour(text){
 
 }
 
-function isTargetDay(item,offset){
+function getRemainingText(hour){
 
-  const date =
-  parseDate(item.text);
+  if(hour === null){
 
-  if(!date){
-
-    return false;
+    return '';
 
   }
 
   const now =
   new Date();
 
-  const target =
-  new Date();
+  const currentHour =
+  now.getHours();
 
-  target.setDate(
-    now.getDate() + offset
-  );
+  const diff =
+  hour - currentHour;
 
-  return (
+  if(diff <= 0){
 
-    target.getMonth()+1
-    ===
-    date.month
+    return '⏰ まもなく予定の時間です';
 
-    &&
+  }
 
-    target.getDate()
-    ===
-    date.day
+  if(diff === 1){
 
-  );
+    return '⏰ あと1時間';
 
-}
+  }
 
-function addSchedule(person,text){
-
-  const data =
-  getData();
-
-  data.unshift({
-
-    person:person,
-
-    text:text,
-
-    hour:
-    parseHour(text)
-
-  });
-
-  saveData(data);
-
-}
-
-function renderHistory(){
-
-  const list =
-  document.getElementById(
-    'historyList'
-  );
-
-  list.innerHTML = '';
-
-  getData().forEach(function(item){
-
-    const div =
-    document.createElement('div');
-
-    div.className =
-    'history-item';
-
-    div.innerHTML =
-
-    item.person +
-
-    '<br><br>📅 ' +
-
-    item.text;
-
-    list.appendChild(div);
-
-  });
+  return '⏰ あと' + diff + '時間';
 
 }
 
@@ -220,13 +93,22 @@ function renderDay(targetId,offset,gomiText){
     div.className =
     'day-item';
 
+    const remain =
+    getRemainingText(
+      item.hour
+    );
+
     div.innerHTML =
 
     item.person +
 
     '<br><br>📅 ' +
 
-    item.text;
+    item.text +
+
+    '<br><br>' +
+
+    remain;
 
     list.appendChild(div);
 
@@ -294,11 +176,20 @@ function renderAI(){
 
     todayData.forEach(function(item){
 
+      const remain =
+      getRemainingText(
+        item.hour
+      );
+
       text +=
 
       '\n\n' +
 
-      item.text;
+      item.text +
+
+      '。' +
+
+      remain;
 
     });
 
@@ -315,7 +206,7 @@ function renderAI(){
   if(tomorrowData.length > 0){
 
     text +=
-    '\n\n明日の予定です。';
+    '\n\n明日の予定があります。';
 
     tomorrowData.forEach(function(item){
 
@@ -339,127 +230,5 @@ function renderAI(){
   speak(text);
 
 }
-
-function startVoice(){
-
-  if(
-    !('webkitSpeechRecognition' in window)
-  ){
-
-    alert(
-      '音声入力に対応していません'
-    );
-
-    return;
-
-  }
-
-  const recognition =
-  new webkitSpeechRecognition();
-
-  recognition.lang = 'ja-JP';
-
-  recognition.interimResults = false;
-
-  recognition.continuous = false;
-
-  const status =
-  document.getElementById(
-    'status'
-  );
-
-  status.innerHTML =
-  '🎤 聞いています…';
-
-  recognition.onresult =
-  function(event){
-
-    const text =
-    event.results[0][0]
-    .transcript;
-
-    const person =
-    document.getElementById(
-      'personSelect'
-    ).value;
-
-    addSchedule(
-      person,
-      text
-    );
-
-    renderHistory();
-
-    renderDay(
-      'todayList',
-      0,
-      WEEK_GOMI[
-        new Date().getDay()
-      ]
-    );
-
-    const tomorrow =
-    new Date();
-
-    tomorrow.setDate(
-      tomorrow.getDate()+1
-    );
-
-    renderDay(
-      'tomorrowList',
-      1,
-      WEEK_GOMI[
-        tomorrow.getDay()
-      ]
-    );
-
-    renderAI();
-
-    status.innerHTML =
-
-    '予定を登録しました。<br><br>' +
-
-    person +
-
-    '<br><br>' +
-
-    text;
-
-    speak(
-      '予定を登録しました'
-    );
-
-  };
-
-  recognition.start();
-
-}
-
-renderHistory();
-
-renderDay(
-  'todayList',
-  0,
-  WEEK_GOMI[
-    new Date().getDay()
-  ]
-);
-
-const tomorrow =
-new Date();
-
-tomorrow.setDate(
-  tomorrow.getDate()+1
-);
-
-renderDay(
-  'tomorrowList',
-  1,
-  WEEK_GOMI[
-    tomorrow.getDay()
-  ]
-);
-
-renderAI();
 
 </script>
