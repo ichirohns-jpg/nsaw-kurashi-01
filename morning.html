@@ -343,6 +343,71 @@ body{
 
   </button>
 
+  <button class="big-btn"
+  style="background:#00897b;"
+  onclick="openCareMenu()">
+
+    💬 気になることがあります
+
+  </button>
+
+  <div
+  id="careMenu"
+  style="
+  display:none;
+  margin-top:20px;
+  ">
+
+    <button class="big-btn"
+    style="background:#5e35b1;"
+    onclick="careSelect('体調が気になる')">
+
+      😓 体調が気になる
+
+    </button>
+
+    <button class="big-btn"
+    style="background:#6d4c41;"
+    onclick="careSelect('暮らしが気になる')">
+
+      🏠 暮らしが気になる
+
+    </button>
+
+    <button class="big-btn"
+    style="background:#ef6c00;"
+    onclick="careSelect('食事が心配')">
+
+      🍱 食事が心配
+
+    </button>
+
+    <button class="big-btn"
+    style="background:#1565c0;"
+    onclick="careSelect('薬が不安')">
+
+      💊 薬が不安
+
+    </button>
+
+    <button class="big-btn"
+    style="background:#00897b;"
+    onclick="careSelect('外出が不安')">
+
+      🚶 外出が不安
+
+    </button>
+
+    <button class="big-btn"
+    style="background:#c2185b;"
+    onclick="careSelect('誰かと話したい')">
+
+      💬 誰かと話したい
+
+    </button>
+
+  </div>
+
   <button class="big-btn kusuri"
   onclick="pushKusuri()">
 
@@ -501,6 +566,30 @@ function pushGenki(){
 
 function pushKusuri(){
 
+  const box =
+  document.getElementById(
+    'completeBox'
+  );
+
+  const now =
+  new Date();
+
+  const time =
+
+  now.getHours() +
+  ':' +
+  String(
+    now.getMinutes()
+  ).padStart(2,'0');
+
+  box.innerHTML =
+
+  '💊 朝のお薬確認済み<br><br>' +
+
+  '確認時刻：' +
+
+  time;
+
   speak(
     'お薬を確認しました。'
   );
@@ -520,6 +609,60 @@ function pushComplete(){
 
   speak(
     '今日の朝の確認が完了しました。'
+  );
+
+}
+
+function openCareMenu(){
+
+  const menu =
+  document.getElementById(
+    'careMenu'
+  );
+
+  if(
+    menu.style.display === 'block'
+  ){
+
+    menu.style.display =
+    'none';
+
+  }else{
+
+    menu.style.display =
+    'block';
+
+  }
+
+}
+
+function careSelect(text){
+
+  const box =
+  document.getElementById(
+    'completeBox'
+  );
+
+  box.innerHTML =
+
+  '💬 「' +
+
+  text +
+
+  '」を確認しました。<br><br>' +
+
+  '必要に応じて、<br>' +
+
+  '地域包括支援センターへ<br>' +
+
+  '相談できます。';
+
+  speak(
+
+    text +
+
+    'とのことですね。必要に応じて地域包括支援センターへ相談できます。'
+
   );
 
 }
