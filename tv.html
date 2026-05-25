@@ -69,10 +69,115 @@ body{
   opacity:.92;
 }
 
+/* 速報帯 */
+
+.breaking{
+
+  margin-top:22px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #d32f2f,
+    #ff7043
+  );
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+  padding:14px 0;
+
+  box-shadow:
+  0 6px 16px rgba(0,0,0,.3);
+}
+
+.breaking-inner{
+
+  white-space:nowrap;
+
+  display:inline-block;
+
+  font-size:24px;
+
+  font-weight:900;
+
+  color:#fff;
+
+  padding-left:100%;
+
+  animation:
+  scrollNews 25s linear infinite;
+}
+
+@keyframes scrollNews{
+
+  0%{
+    transform:translateX(0);
+  }
+
+  100%{
+    transform:translateX(-100%);
+  }
+
+}
+
+/* おすすめ */
+
+.pickup{
+
+  margin:18px 14px;
+
+  background:#1a222b;
+
+  border-radius:26px;
+
+  padding:24px;
+
+  box-shadow:
+  0 10px 26px rgba(0,0,0,.35);
+
+  border:
+  2px solid #303b47;
+}
+
+.pickup-title{
+
+  font-size:32px;
+
+  font-weight:900;
+
+  margin-bottom:18px;
+}
+
+.pickup-link{
+
+  display:block;
+
+  text-decoration:none;
+
+  background:#2a3440;
+
+  border-radius:18px;
+
+  padding:18px;
+
+  margin-bottom:14px;
+
+  font-size:24px;
+
+  font-weight:800;
+
+  color:#fff;
+
+  border:
+  2px solid #3b4653;
+}
+
 /* 動画 */
 
 .wrap{
-  padding:16px 14px 50px;
+  padding:6px 14px 50px;
 }
 
 .video-card{
@@ -141,7 +246,7 @@ body{
   color:#d7e1ea;
 }
 
-/* ボタン */
+/* 戻る */
 
 .home-btn{
 
@@ -181,6 +286,18 @@ body{
   font-size:20px;
 }
 
+.breaking-inner{
+  font-size:20px;
+}
+
+.pickup-title{
+  font-size:28px;
+}
+
+.pickup-link{
+  font-size:22px;
+}
+
 .video-title{
   font-size:28px;
 }
@@ -216,7 +333,49 @@ body{
       地域テレビDX
     </div>
 
+    <div class="breaking">
+
+      <div class="breaking-inner">
+
+        ▶ 地域テレビ更新中　
+        ▶ 病院待ち時間向け動画追加　
+        ▶ 暮らし動画更新　
+        ▶ 地域情報動画公開中　
+
+      </div>
+
+    </div>
+
   </div>
+
+</div>
+
+<div class="pickup">
+
+  <div class="pickup-title">
+    今日のおすすめ
+  </div>
+
+  <a class="pickup-link"
+  href="#">
+
+    ▶ 今日の地域暮らし動画
+
+  </a>
+
+  <a class="pickup-link"
+  href="#">
+
+    ▶ 病院待ち時間向け動画
+
+  </a>
+
+  <a class="pickup-link"
+  href="#">
+
+    ▶ 地域音楽テレビ
+
+  </a>
 
 </div>
 
