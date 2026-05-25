@@ -1,44 +1,15 @@
 <script>
 
-/* 出発支援DX */
+/* 出発忘れ防止DX */
 
-function getLeaveTime(hour){
-
-  if(hour === null){
-
-    return '';
-
-  }
-
-  let leaveHour =
-  hour;
-
-  let leaveMinute =
-  30;
-
-  if(leaveMinute < 0){
-
-    leaveMinute += 60;
-
-    leaveHour -= 1;
-
-  }
-
-  return (
-    leaveHour +
-    '時' +
-    String(leaveMinute)
-    .padStart(2,'0') +
-    '分ごろ出発'
-  );
-
-}
-
-function getRemainingText(hour){
+function getAlertLevel(hour){
 
   if(hour === null){
 
-    return '';
+    return {
+      className:'',
+      text:''
+    };
 
   }
 
@@ -53,17 +24,35 @@ function getRemainingText(hour){
 
   if(diff <= 0){
 
-    return '⏰ まもなく予定の時間です';
+    return {
+
+      className:'alert-red',
+
+      text:'🔴 出発しましょう'
+
+    };
 
   }
 
   if(diff === 1){
 
-    return '⏰ あと1時間';
+    return {
+
+      className:'alert-orange',
+
+      text:'🟠 あと1時間です'
+
+    };
 
   }
 
-  return '⏰ あと' + diff + '時間';
+  return {
+
+    className:'alert-blue',
+
+    text:'🔵 まだ余裕があります'
+
+  };
 
 }
 
@@ -105,8 +94,14 @@ function renderDay(targetId,offset,gomiText){
     const div =
     document.createElement('div');
 
+    const alert =
+    getAlertLevel(
+      item.hour
+    );
+
     div.className =
-    'day-item';
+    'day-item ' +
+    alert.className;
 
     const remain =
     getRemainingText(
@@ -137,6 +132,16 @@ function renderDay(targetId,offset,gomiText){
       '<br><br>🚶 ' +
 
       leave;
+
+    }
+
+    if(alert.text){
+
+      html +=
+
+      '<br><br>' +
+
+      alert.text;
 
     }
 
@@ -235,6 +240,11 @@ function renderAI(){
         item.hour
       );
 
+      const alert =
+      getAlertLevel(
+        item.hour
+      );
+
       text +=
 
       '\n\n' +
@@ -254,6 +264,16 @@ function renderAI(){
         leave +
 
         'です。';
+
+      }
+
+      if(alert.text){
+
+        text +=
+
+        '\n' +
+
+        alert.text;
 
       }
 
@@ -316,5 +336,60 @@ function renderAI(){
   speak(text);
 
 }
+
+/* 色 */
+
+const style =
+document.createElement('style');
+
+style.innerHTML = `
+
+.alert-blue{
+
+border-left:
+8px solid #42a5f5;
+
+}
+
+.alert-orange{
+
+border-left:
+8px solid #ff9800;
+
+background:#fff3e0;
+
+}
+
+.alert-red{
+
+border-left:
+8px solid #e53935;
+
+background:#ffebee;
+
+animation:
+blink 1s infinite;
+
+}
+
+@keyframes blink{
+
+0%{
+opacity:1;
+}
+
+50%{
+opacity:.6;
+}
+
+100%{
+opacity:1;
+}
+
+}
+
+`;
+
+document.head.appendChild(style);
 
 </script>
