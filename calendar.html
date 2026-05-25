@@ -1,68 +1,69 @@
 <script>
 
-/* 持ち物DX */
+/* 出発支援DX */
 
-function getDefaultItems(text){
+function getLeaveTime(hour){
 
-  if(
-    text.includes('病院')
-  ){
+  if(hour === null){
 
-    return [
-      '保険証',
-      'お薬手帳',
-      '診察券'
-    ];
+    return '';
 
   }
 
-  if(
-    text.includes('歯医者')
-  ){
+  let leaveHour =
+  hour;
 
-    return [
-      '保険証',
-      '診察券'
-    ];
+  let leaveMinute =
+  30;
 
-  }
+  if(leaveMinute < 0){
 
-  if(
-    text.includes('デイ')
-  ){
+    leaveMinute += 60;
 
-    return [
-      '連絡帳',
-      '飲み物',
-      '薬'
-    ];
+    leaveHour -= 1;
 
   }
 
-  return [];
+  return (
+    leaveHour +
+    '時' +
+    String(leaveMinute)
+    .padStart(2,'0') +
+    '分ごろ出発'
+  );
 
 }
 
-function addSchedule(person,text){
+function getRemainingText(hour){
 
-  const data =
-  getData();
+  if(hour === null){
 
-  data.unshift({
+    return '';
 
-    person:person,
+  }
 
-    text:text,
+  const now =
+  new Date();
 
-    hour:
-    parseHour(text),
+  const currentHour =
+  now.getHours();
 
-    items:
-    getDefaultItems(text)
+  const diff =
+  hour - currentHour;
 
-  });
+  if(diff <= 0){
 
-  saveData(data);
+    return '⏰ まもなく予定の時間です';
+
+  }
+
+  if(diff === 1){
+
+    return '⏰ あと1時間';
+
+  }
+
+  return '⏰ あと' + diff + '時間';
 
 }
 
@@ -112,6 +113,11 @@ function renderDay(targetId,offset,gomiText){
       item.hour
     );
 
+    const leave =
+    getLeaveTime(
+      item.hour
+    );
+
     let html =
 
     item.person +
@@ -123,6 +129,16 @@ function renderDay(targetId,offset,gomiText){
     '<br><br>' +
 
     remain;
+
+    if(leave){
+
+      html +=
+
+      '<br><br>🚶 ' +
+
+      leave;
+
+    }
 
     if(
       item.items &&
@@ -214,6 +230,11 @@ function renderAI(){
         item.hour
       );
 
+      const leave =
+      getLeaveTime(
+        item.hour
+      );
+
       text +=
 
       '\n\n' +
@@ -223,6 +244,18 @@ function renderAI(){
       '。' +
 
       remain;
+
+      if(leave){
+
+        text +=
+
+        '\n' +
+
+        leave +
+
+        'です。';
+
+      }
 
       if(
         item.items &&
