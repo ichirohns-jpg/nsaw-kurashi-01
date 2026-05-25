@@ -129,6 +129,59 @@ body{
   min-height:120px;
 }
 
+/* 押すだけ相談 */
+
+.quick-box{
+
+  background:#fff;
+
+  border-radius:24px;
+
+  padding:24px;
+
+  box-shadow:
+  0 8px 22px rgba(0,0,0,.12);
+
+  margin-bottom:24px;
+}
+
+.quick-title{
+
+  font-size:30px;
+
+  font-weight:900;
+
+  margin-bottom:18px;
+
+  color:#1b5e20;
+}
+
+.quick-btn{
+
+  width:100%;
+
+  border:none;
+
+  background:#f3f7f4;
+
+  border-radius:18px;
+
+  padding:22px;
+
+  margin-bottom:16px;
+
+  text-align:left;
+
+  font-size:28px;
+
+  font-weight:900;
+
+  color:#33443f;
+
+  border:
+  2px solid #dbe6de;
+}
+
 /* 会話 */
 
 .chat-wrap{
@@ -239,6 +292,14 @@ body{
   font-size:26px;
 }
 
+.quick-title{
+  font-size:28px;
+}
+
+.quick-btn{
+  font-size:24px;
+}
+
 .chat-title{
   font-size:22px;
 }
@@ -294,6 +355,49 @@ body{
 
   </div>
 
+  <div class="quick-box">
+
+    <div class="quick-title">
+      押すだけ相談
+    </div>
+
+    <button class="quick-btn"
+    onclick="quickAsk('ごみ')">
+
+      ▶ ごみの相談
+
+    </button>
+
+    <button class="quick-btn"
+    onclick="quickAsk('介護')">
+
+      ▶ 介護の相談
+
+    </button>
+
+    <button class="quick-btn"
+    onclick="quickAsk('病院')">
+
+      ▶ 病院を探したい
+
+    </button>
+
+    <button class="quick-btn"
+    onclick="quickAsk('空き家')">
+
+      ▶ 空き家の相談
+
+    </button>
+
+    <button class="quick-btn"
+    onclick="quickAsk('手続き')">
+
+      ▶ 市役所の手続き
+
+    </button>
+
+  </div>
+
   <div class="chat-wrap"
   id="chatWrap">
 
@@ -309,6 +413,21 @@ body{
 </div>
 
 <script>
+
+function quickAsk(word){
+
+  document.getElementById(
+    'status'
+  ).innerHTML =
+
+  '相談内容を確認しています…';
+
+  addChat(
+    word,
+    getAnswer(word)
+  );
+
+}
 
 function startVoice(){
 
@@ -462,6 +581,14 @@ function getAnswer(text){
   ){
 
     return '空き家についてですね。\n\n住まい・相続・管理の相談ができます。';
+
+  }
+
+  if(
+    text.includes('手続き')
+  ){
+
+    return '市役所の手続きについてですね。\n\n住民票・保険・年金などを案内できます。';
 
   }
 
