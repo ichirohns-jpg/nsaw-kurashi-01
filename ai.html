@@ -203,6 +203,8 @@ body{
   color:#33443f;
 
   white-space:pre-wrap;
+
+  min-height:180px;
 }
 
 /* 戻る */
@@ -428,8 +430,10 @@ function startVoice(){
 
     setTimeout(function(){
 
-      aiResult.innerHTML =
-      getAnswer(text);
+      typeWriter(
+        getAnswer(text),
+        'aiResult'
+      );
 
     },1200);
 
@@ -474,6 +478,33 @@ function getAnswer(text){
   }
 
   return '相談内容を確認しました。\n\n地域相談窓口をご案内します。';
+
+}
+
+function typeWriter(text,elementId){
+
+  const el =
+  document.getElementById(elementId);
+
+  el.innerHTML = '';
+
+  let i = 0;
+
+  const timer =
+  setInterval(function(){
+
+    el.innerHTML +=
+    text.charAt(i);
+
+    i++;
+
+    if(i >= text.length){
+
+      clearInterval(timer);
+
+    }
+
+  },40);
 
 }
 
