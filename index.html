@@ -73,6 +73,55 @@ body{
   opacity:.95;
 }
 
+/* 市ボタン */
+
+.city-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:24px;
+}
+
+.city-btn{
+
+  flex:1;
+
+  min-width:120px;
+
+  text-decoration:none;
+
+  color:#fff;
+
+  text-align:center;
+
+  padding:20px 10px;
+
+  border-radius:20px;
+
+  font-size:24px;
+
+  font-weight:900;
+
+  box-shadow:
+  0 6px 16px rgba(0,0,0,.18);
+}
+
+.shiki{
+  background:#1976d2;
+}
+
+.niiza{
+  background:#2e7d32;
+}
+
+.asaka{
+  background:#ef6c00;
+}
+
+.wako{
+  background:#c62828;
+}
+
 /* ボタン */
 
 .menu{
@@ -206,6 +255,34 @@ body{
       地域ポータルDX
     </div>
 
+    <div class="city-row">
+
+      <a class="city-btn shiki"
+      target="_blank"
+      href="https://www.city.shiki.lg.jp/">
+      志木市
+      </a>
+
+      <a class="city-btn niiza"
+      target="_blank"
+      href="https://www.city.niiza.lg.jp/">
+      新座市
+      </a>
+
+      <a class="city-btn asaka"
+      target="_blank"
+      href="https://www.city.asaka.lg.jp/">
+      朝霞市
+      </a>
+
+      <a class="city-btn wako"
+      target="_blank"
+      href="https://www.city.wako.lg.jp/">
+      和光市
+      </a>
+
+    </div>
+
   </div>
 
 </div>
@@ -227,7 +304,7 @@ body{
   </a>
 
   <a class="card red"
-  href="#">
+  href="tv.html">
 
     <div class="card-title">
       ▶ 地域テレビ
