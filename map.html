@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+NSAW 地域マップDX
+</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#e5ebf5;
+  color:#243445;
+
+  font-family:
+  "Hiragino Sans",
+  "Yu Gothic",
+  sans-serif;
+}
+
+/* 上 */
+
+.top{
+  padding:14px;
+}
+
+.top-box{
+
+  background:
+  linear-gradient(
+    135deg,
+    #3949ab,
+    #1a237e
+  );
+
+  border-radius:28px;
+
+  padding:28px 22px;
+
+  color:#fff;
+
+  box-shadow:
+  0 12px 30px rgba(0,0,0,.18);
+}
+
+.main-title{
+
+  font-size:42px;
+
+  line-height:1.3;
+
+  font-weight:900;
+}
+
+.sub{
+
+  margin-top:14px;
+
+  font-size:22px;
+
+  line-height:1.9;
+
+  opacity:.95;
+}
+
+/* メニュー */
+
+.wrap{
+  padding:16px 14px 50px;
+}
+
+.card{
+
+  display:block;
+
+  text-decoration:none;
+
+  background:#fff;
+
+  border-radius:26px;
+
+  padding:24px;
+
+  margin-bottom:22px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.12);
+
+  border:
+  2px solid #d7dfeb;
+}
+
+.card-title{
+
+  font-size:34px;
+
+  font-weight:900;
+
+  margin-bottom:12px;
+
+  color:#1a237e;
+}
+
+.card-desc{
+
+  font-size:24px;
+
+  line-height:1.8;
+
+  color:#3b4a5a;
+}
+
+/* 色 */
+
+.blue{
+  border-left:
+  12px solid #1976d2;
+}
+
+.green{
+  border-left:
+  12px solid #2e7d32;
+}
+
+.red{
+  border-left:
+  12px solid #d32f2f;
+}
+
+.orange{
+  border-left:
+  12px solid #ef6c00;
+}
+
+.purple{
+  border-left:
+  12px solid #7b1fa2;
+}
+
+/* 戻る */
+
+.home-btn{
+
+  display:block;
+
+  text-align:center;
+
+  background:#1976d2;
+
+  color:#fff;
+
+  text-decoration:none;
+
+  padding:22px;
+
+  border-radius:24px;
+
+  font-size:28px;
+
+  font-weight:900;
+
+  margin-top:30px;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,.25);
+}
+
+/* スマホ */
+
+@media(max-width:768px){
+
+.main-title{
+  font-size:36px;
+}
+
+.sub{
+  font-size:20px;
+}
+
+.card-title{
+  font-size:30px;
+}
+
+.card-desc{
+  font-size:22px;
+}
+
+.home-btn{
+  font-size:24px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top">
+
+  <div class="top-box">
+
+    <div class="main-title">
+      NSAW<br>
+      地域マップDX
+    </div>
+
+    <div class="sub">
+      病院・薬局・コンビニ・
+      避難所・地域包括支援センターなどを、
+      高齢者にも見やすくまとめた
+      地域マップDXです。
+    </div>
+
+  </div>
+
+</div>
+
+<div class="wrap">
+
+  <div class="card blue">
+
+    <div class="card-title">
+      ▶ 病院・クリニック
+    </div>
+
+    <div class="card-desc">
+      地域の病院・内科・
+      整形外科・歯科など。
+    </div>
+
+  </div>
+
+  <div class="card green">
+
+    <div class="card-title">
+      ▶ 薬局・ドラッグストア
+    </div>
+
+    <div class="card-desc">
+      薬局・処方箋受付・
+      日用品店舗など。
+    </div>
+
+  </div>
+
+  <div class="card orange">
+
+    <div class="card-title">
+      ▶ コンビニ・スーパー
+    </div>
+
+    <div class="card-desc">
+      近所の買い物・
+      生活施設案内。
+    </div>
+
+  </div>
+
+  <div class="card red">
+
+    <div class="card-title">
+      ▶ 避難所・防災
+    </div>
+
+    <div class="card-desc">
+      避難所・災害時情報・
+      防災関連施設。
+    </div>
+
+  </div>
+
+  <div class="card purple">
+
+    <div class="card-title">
+      ▶ 地域包括支援センター
+    </div>
+
+    <div class="card-desc">
+      高齢者相談・介護相談・
+      地域見守り窓口。
+    </div>
+
+  </div>
+
+  <a class="home-btn"
+  href="index.html">
+
+    ← トップへ戻る
+
+  </a>
+
+</div>
+
+</body>
+</html>
