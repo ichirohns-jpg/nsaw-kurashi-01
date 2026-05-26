@@ -24,7 +24,7 @@ button{
   border:none;
   border-radius:20px;
   color:white;
-  font-size:36px;
+  font-size:34px;
   font-weight:900;
 }
 
@@ -36,6 +36,21 @@ button{
   background:#d32f2f;
 }
 
+#loading{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.5);
+  color:white;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  font-size:30px;
+  z-index:9999;
+}
+
 </style>
 </head>
 
@@ -45,7 +60,7 @@ button{
 
 <button
 class="genki"
-onclick="sendData('正常')">
+onclick="sendData('正常','😊 元気です')">
 
 😊 元気です
 
@@ -53,33 +68,50 @@ onclick="sendData('正常')">
 
 <button
 class="kinkyu"
-onclick="sendData('緊急')">
+onclick="sendData('緊急','🚨 緊急です')">
 
 🚨 緊急です
 
 </button>
+
+<div id="loading">
+
+送信中...
+
+</div>
 
 <script>
 
 const GAS_URL =
 'https://script.google.com/macros/s/AKfycbwcvgu0Qae7mUwNnaWr-XtqkGT8MZCqPKZfaq5RO1waW9_Cy2i5wWCklFIhouqBPF8W/exec';
 
-async function sendData(status){
+async function sendData(status,content){
+
+  const loading =
+  document.getElementById('loading');
+
+  loading.style.display =
+  'flex';
 
   try{
 
+    const response =
     await fetch(GAS_URL,{
 
       method:'POST',
-
-      mode:'cors',
 
       headers:{
         'Content-Type':'text/plain'
       },
 
       body:JSON.stringify({
-        status:status
+
+        name:'山口さん',
+
+        status:status,
+
+        content:content
+
       }),
 
       keepalive:true
@@ -90,9 +122,14 @@ async function sendData(status){
 
   }catch(error){
 
-    alert('通信失敗');
+    alert('通信エラー');
 
     console.log(error);
+
+  }finally{
+
+    loading.style.display =
+    'none';
 
   }
 
