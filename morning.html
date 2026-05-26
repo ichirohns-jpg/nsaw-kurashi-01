@@ -6,6 +6,7 @@
 <title>今日の安心</title>
 
 <style>
+
 body{
   margin:0;
   background:#eef3f8;
@@ -37,7 +38,8 @@ body{
   padding:18px;
 }
 
-.main-card,.qr-card{
+.main-card,
+.qr-card{
   background:white;
   border-radius:30px;
   padding:28px;
@@ -76,11 +78,25 @@ body{
   font-weight:900;
 }
 
-.green{background:#43a047}
-.blue{background:#1565c0}
-.red{background:#d32f2f}
-.yellow{background:#f9a825}
-.gray{background:#546e7a}
+.green{
+  background:#43a047;
+}
+
+.blue{
+  background:#1565c0;
+}
+
+.red{
+  background:#d32f2f;
+}
+
+.yellow{
+  background:#f9a825;
+}
+
+.gray{
+  background:#546e7a;
+}
 
 .sub-buttons{
   display:grid;
@@ -144,14 +160,20 @@ body{
   color:#777;
   background:#fafafa;
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="top">
-  <div class="logo">今日の安心</div>
+
+  <div class="logo">
+    今日の安心
+  </div>
+
   <div class="date" id="todayDate"></div>
+
 </div>
 
 <div class="wrap">
@@ -259,6 +281,14 @@ body{
     onclick="location.href='https://ichirohns-jpg.github.io/nsaw-kurashi-01/drama.html'">
 
     📺 ドラマ
+
+    </button>
+
+    <button
+    class="big-button blue"
+    onclick="location.href='https://ichirohns-jpg.github.io/nsaw-kurashi-01/map.html'">
+
+    🗺️ 行き先案内
 
     </button>
 
