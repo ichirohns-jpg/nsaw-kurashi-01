@@ -4,51 +4,99 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>見守り確認</title>
+<title>今日の見守り</title>
 
 <style>
 
 body{
+  margin:0;
   background:#eef3f8;
   font-family:sans-serif;
-  text-align:center;
-  padding:40px;
+  color:#222;
+}
+
+.top{
+  background:linear-gradient(135deg,#1976d2,#0d47a1);
+  color:white;
+  padding:28px 20px 34px;
+  border-bottom-left-radius:30px;
+  border-bottom-right-radius:30px;
+  box-shadow:0 6px 18px rgba(0,0,0,.2);
+}
+
+.logo{
+  font-size:42px;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.date{
+  font-size:28px;
+  font-weight:900;
+  line-height:1.8;
+}
+
+.wrap{
+  padding:18px;
+}
+
+.card{
+  background:white;
+  border-radius:26px;
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.schedule-title{
+  font-size:26px;
+  font-weight:900;
+  margin-bottom:12px;
+  color:#1565c0;
+}
+
+.schedule-item{
+  font-size:34px;
+  font-weight:900;
+  line-height:1.5;
 }
 
 button{
-  width:90%;
-  max-width:420px;
-  padding:30px;
-  margin:20px auto;
-  display:block;
+  width:100%;
   border:none;
-  border-radius:20px;
+  border-radius:22px;
+  padding:26px;
+  margin-bottom:18px;
   color:white;
   font-size:34px;
   font-weight:900;
 }
 
-.genki{
+.green{
   background:#43a047;
 }
 
-.kinkyu{
+.yellow{
+  background:#f9a825;
+}
+
+.red{
   background:#d32f2f;
 }
 
-#loading{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,.5);
-  color:white;
-  display:none;
-  justify-content:center;
-  align-items:center;
+.blue{
+  background:#1565c0;
+}
+
+.gray{
+  background:#546e7a;
+}
+
+#result{
+  text-align:center;
   font-size:30px;
-  z-index:9999;
+  font-weight:900;
+  margin-top:20px;
 }
 
 </style>
@@ -56,27 +104,71 @@ button{
 
 <body>
 
-<h1>見守り確認</h1>
+<div class="top">
 
-<button
-class="genki"
-onclick="sendData('正常','😊 元気です')">
+  <div class="logo">
+    今日の見守り
+  </div>
 
-😊 元気です
+  <div class="date" id="todayDate"></div>
 
-</button>
+</div>
 
-<button
-class="kinkyu"
-onclick="sendData('緊急','🚨 緊急です')">
+<div class="wrap">
 
-🚨 緊急です
+  <div class="card">
 
-</button>
+    <div class="schedule-title">
+      📅 今日の予定
+    </div>
 
-<div id="loading">
+    <div class="schedule-item" id="todaySchedule">
+      14:30 病院
+    </div>
 
-送信中...
+  </div>
+
+  <button
+  class="green"
+  onclick="sendData('正常','😊 元気です')">
+
+  😊 元気です
+
+  </button>
+
+  <button
+  class="yellow"
+  onclick="sendData('注意','🟡 ちょっと困っています')">
+
+  🟡 ちょっと困っています
+
+  </button>
+
+  <button
+  class="blue"
+  onclick="sendData('薬','💊 薬を飲みました')">
+
+  💊 薬を飲みました
+
+  </button>
+
+  <button
+  class="gray"
+  onclick="sendData('帰宅','🏠 帰宅しました')">
+
+  🏠 帰宅しました
+
+  </button>
+
+  <button
+  class="red"
+  onclick="emergencyAction()">
+
+  🚨 緊急です
+
+  </button>
+
+  <div id="result"></div>
 
 </div>
 
@@ -85,17 +177,33 @@ onclick="sendData('緊急','🚨 緊急です')">
 const GAS_URL =
 'https://script.google.com/macros/s/AKfycbwcvgu0Qae7mUwNnaWr-XtqkGT8MZCqPKZfaq5RO1waW9_Cy2i5wWCklFIhouqBPF8W/exec';
 
+function showToday(){
+
+  const now =
+  new Date();
+
+  const week = [
+    '日曜日',
+    '月曜日',
+    '火曜日',
+    '水曜日',
+    '木曜日',
+    '金曜日',
+    '土曜日'
+  ];
+
+  document.getElementById('todayDate').innerHTML =
+    now.getFullYear() + '年 ' +
+    (now.getMonth()+1) + '月 ' +
+    now.getDate() + '日 ' +
+    week[now.getDay()];
+
+}
+
 async function sendData(status,content){
-
-  const loading =
-  document.getElementById('loading');
-
-  loading.style.display =
-  'flex';
 
   try{
 
-    const response =
     await fetch(GAS_URL,{
 
       method:'POST',
@@ -118,7 +226,8 @@ async function sendData(status,content){
 
     });
 
-    alert('送信しました');
+    document.getElementById('result').innerHTML =
+    '送信しました';
 
   }catch(error){
 
@@ -126,14 +235,27 @@ async function sendData(status,content){
 
     console.log(error);
 
-  }finally{
+  }
 
-    loading.style.display =
-    'none';
+}
+
+async function emergencyAction(){
+
+  await sendData(
+    '緊急',
+    '🚨 緊急です'
+  );
+
+  if(confirm('家族へ電話しますか？')){
+
+    location.href =
+    'tel:09012345678';
 
   }
 
 }
+
+showToday();
 
 </script>
 
