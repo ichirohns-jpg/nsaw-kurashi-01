@@ -2,204 +2,100 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-NSAW 地域マップDX
-</title>
+<title>どこへ行きますか？</title>
 
 <style>
 
-*{
-  box-sizing:border-box;
-}
-
 body{
   margin:0;
-  background:#e5ebf5;
-  color:#243445;
-
-  font-family:
-  "Hiragino Sans",
-  "Yu Gothic",
-  sans-serif;
+  background:#eef3f8;
+  font-family:sans-serif;
+  color:#222;
 }
-
-/* 上 */
 
 .top{
-  padding:14px;
+  background:linear-gradient(135deg,#1976d2,#0d47a1);
+  color:white;
+  padding:34px 20px 40px;
+  border-bottom-left-radius:34px;
+  border-bottom-right-radius:34px;
+  text-align:center;
 }
 
-.top-box{
-
-  background:
-  linear-gradient(
-    135deg,
-    #3949ab,
-    #1a237e
-  );
-
-  border-radius:28px;
-
-  padding:28px 22px;
-
-  color:#fff;
-
-  box-shadow:
-  0 12px 30px rgba(0,0,0,.18);
-}
-
-.main-title{
-
+.title{
   font-size:42px;
-
-  line-height:1.3;
-
   font-weight:900;
+  line-height:1.5;
 }
-
-.sub{
-
-  margin-top:14px;
-
-  font-size:22px;
-
-  line-height:1.9;
-
-  opacity:.95;
-}
-
-/* 本体 */
 
 .wrap{
-  padding:16px 14px 50px;
+  padding:18px;
 }
 
-/* ボタン */
-
-.map-btn{
-
-  display:block;
-
-  text-decoration:none;
-
-  background:#fff;
-
-  border-radius:28px;
-
-  padding:26px;
-
+.card{
+  background:white;
+  border-radius:30px;
+  padding:28px;
   margin-bottom:24px;
-
-  box-shadow:
-  0 8px 24px rgba(0,0,0,.12);
-
-  border:
-  2px solid #d7dfeb;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+  text-align:center;
 }
 
-.map-title{
-
-  font-size:34px;
-
+.big-button{
+  width:100%;
+  border:none;
+  border-radius:30px;
+  padding:38px;
+  margin-bottom:24px;
+  color:white;
+  font-size:42px;
   font-weight:900;
-
-  margin-bottom:12px;
-
-  color:#1a237e;
 }
-
-.map-desc{
-
-  font-size:24px;
-
-  line-height:1.8;
-
-  color:#3b4a5a;
-}
-
-/* 色 */
 
 .blue{
-  border-left:
-  12px solid #1976d2;
+  background:#1565c0;
 }
 
 .green{
-  border-left:
-  12px solid #2e7d32;
+  background:#43a047;
 }
 
-.red{
-  border-left:
-  12px solid #d32f2f;
-}
-
-.orange{
-  border-left:
-  12px solid #ef6c00;
-}
-
-.purple{
-  border-left:
-  12px solid #7b1fa2;
-}
-
-/* 戻る */
-
-.home-btn{
-
-  display:block;
-
-  text-align:center;
-
-  background:#1976d2;
-
-  color:#fff;
-
-  text-decoration:none;
-
-  padding:22px;
-
-  border-radius:24px;
-
-  font-size:28px;
-
+.result{
+  font-size:38px;
   font-weight:900;
-
-  margin-top:30px;
-
-  box-shadow:
-  0 8px 20px rgba(0,0,0,.25);
-}
-
-/* スマホ */
-
-@media(max-width:768px){
-
-.main-title{
-  font-size:36px;
+  line-height:1.6;
+  margin-top:14px;
 }
 
 .sub{
-  font-size:20px;
-}
-
-.map-title{
-  font-size:30px;
-}
-
-.map-desc{
-  font-size:22px;
-}
-
-.home-btn{
   font-size:24px;
+  color:#666;
+  margin-top:18px;
+  line-height:1.7;
 }
 
+.quick{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:24px;
 }
+
+.quick button{
+  border:none;
+  border-radius:22px;
+  padding:24px;
+  color:white;
+  font-size:26px;
+  font-weight:900;
+}
+
+.red{background:#d32f2f}
+.orange{background:#fb8c00}
+.teal{background:#00897b}
+.gray{background:#546e7a}
 
 </style>
 </head>
@@ -208,124 +104,151 @@ body{
 
 <div class="top">
 
-  <div class="top-box">
-
-    <div class="main-title">
-      NSAW<br>
-      地域マップDX
-    </div>
-
-    <div class="sub">
-      病院・薬局・コンビニ・
-      避難所・地域包括支援センターなどを、
-      高齢者にも見やすくまとめた
-      地域マップDXです。
-    </div>
-
+  <div class="title">
+    どこへ行きますか？
   </div>
 
 </div>
 
 <div class="wrap">
 
-  <a class="map-btn blue"
-  target="_blank"
-  href="https://www.google.com/maps/search/?api=1&query=病院">
+  <div class="card">
 
-    <div class="map-title">
-      ▶ 病院・クリニック
+    <button
+    class="big-button blue"
+    onclick="startVoice()">
+
+    🎤 話してください
+
+    </button>
+
+    <div
+    class="result"
+    id="result">
+
+    行きたい場所を話してください
+
     </div>
 
-    <div class="map-desc">
-      近くの病院・クリニックを
-      Googleマップで探します。
+    <div class="sub">
+
+      例：<br>
+      「近くの薬局」<br>
+      「志木駅」<br>
+      「病院」
+
     </div>
 
-  </a>
+    <div class="quick">
 
-  <a class="map-btn green"
-  target="_blank"
-  href="https://www.google.com/maps/search/?api=1&query=薬局">
+      <button
+      class="red"
+      onclick="quickMap('近くの病院')">
 
-    <div class="map-title">
-      ▶ 薬局・ドラッグストア
+      🏥 病院
+
+      </button>
+
+      <button
+      class="orange"
+      onclick="quickMap('近くの薬局')">
+
+      💊 薬局
+
+      </button>
+
+      <button
+      class="teal"
+      onclick="quickMap('近くのコンビニ')">
+
+      🏪 コンビニ
+
+      </button>
+
+      <button
+      class="gray"
+      onclick="quickMap('近くのトイレ')">
+
+      🚻 トイレ
+
+      </button>
+
     </div>
 
-    <div class="map-desc">
-      薬局・ドラッグストアを
-      Googleマップで探します。
-    </div>
+  </div>
 
-  </a>
+  <button
+  id="goButton"
+  class="big-button green"
+  style="display:none"
+  onclick="goMap()">
 
-  <a class="map-btn orange"
-  target="_blank"
-  href="https://www.google.com/maps/search/?api=1&query=コンビニ">
+  🚶 ご案内します
 
-    <div class="map-title">
-      ▶ コンビニ・スーパー
-    </div>
-
-    <div class="map-desc">
-      近くのコンビニ・スーパーを
-      Googleマップで探します。
-    </div>
-
-  </a>
-
-  <a class="map-btn red"
-  target="_blank"
-  href="https://www.google.com/maps/search/?api=1&query=避難所">
-
-    <div class="map-title">
-      ▶ 避難所・防災
-    </div>
-
-    <div class="map-desc">
-      避難所・防災関連施設を
-      Googleマップで探します。
-    </div>
-
-  </a>
-
-  <a class="map-btn purple"
-  target="_blank"
-  href="https://www.google.com/maps/search/?api=1&query=地域包括支援センター">
-
-    <div class="map-title">
-      ▶ 地域包括支援センター
-    </div>
-
-    <div class="map-desc">
-      高齢者相談・介護相談窓口を
-      Googleマップで探します。
-    </div>
-
-  </a>
-
-  <a class="map-btn blue"
-  target="_blank"
-  href="https://www.google.com/maps/search/?api=1&query=公衆トイレ">
-
-    <div class="map-title">
-      ▶ 公衆トイレ
-    </div>
-
-    <div class="map-desc">
-      近くの公衆トイレを
-      Googleマップで探します。
-    </div>
-
-  </a>
-
-  <a class="home-btn"
-  href="index.html">
-
-    ← トップへ戻る
-
-  </a>
+  </button>
 
 </div>
+
+<script>
+
+let destination = '';
+
+function startVoice(){
+
+  const recognition =
+  new webkitSpeechRecognition();
+
+  recognition.lang =
+  'ja-JP';
+
+  recognition.start();
+
+  recognition.onresult =
+  function(event){
+
+    destination =
+    event.results[0][0].transcript;
+
+    document.getElementById(
+      'result'
+    ).innerHTML =
+
+      '「' +
+      destination +
+      '」へご案内します';
+
+    document.getElementById(
+      'goButton'
+    ).style.display =
+    'block';
+
+  };
+
+}
+
+function goMap(){
+
+  const url =
+  'https://www.google.com/maps/search/?api=1&query=' +
+  encodeURIComponent(destination);
+
+  location.href =
+  url;
+
+}
+
+function quickMap(word){
+
+  const url =
+  'https://www.google.com/maps/search/?api=1&query=' +
+  encodeURIComponent(word);
+
+  location.href =
+  url;
+
+}
+
+</script>
 
 </body>
 </html>
