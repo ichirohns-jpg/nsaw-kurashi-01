@@ -2,119 +2,38 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>朝3分DX</title>
+<title>見守り確認</title>
 
 <style>
 
-*{
-  box-sizing:border-box;
-}
-
 body{
-  margin:0;
   background:#eef3f8;
-  font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+  font-family:sans-serif;
+  text-align:center;
+  padding:40px;
 }
 
-.top{
-  padding:14px;
-}
-
-.top-box{
-  background:linear-gradient(135deg,#1565c0,#0d47a1);
-  border-radius:28px;
-  padding:30px 24px;
-  color:#fff;
-}
-
-.main-title{
-  font-size:42px;
-  font-weight:900;
-}
-
-.today-date{
-  margin-top:18px;
-  font-size:34px;
-  font-weight:900;
-}
-
-.sub{
-  margin-top:18px;
-  font-size:22px;
-  line-height:1.8;
-}
-
-.wrap{
-  padding:16px 14px 80px;
-}
-
-.box{
-  background:#fff;
-  border-radius:28px;
-  padding:24px;
-  margin-bottom:24px;
-}
-
-.title{
-  font-size:32px;
-  font-weight:900;
-  color:#1565c0;
-  margin-bottom:18px;
-}
-
-.item{
-  background:#f5f7fb;
-  border-radius:18px;
-  padding:20px;
-  margin-bottom:16px;
-  border-left:8px solid #1976d2;
-  font-size:28px;
-  line-height:1.9;
-}
-
-.big-btn{
-  width:100%;
+button{
+  width:90%;
+  max-width:420px;
+  padding:30px;
+  margin:20px auto;
+  display:block;
   border:none;
-  border-radius:30px;
-  padding:36px 20px;
-  margin-bottom:22px;
-  color:#fff;
+  border-radius:20px;
+  color:white;
   font-size:36px;
   font-weight:900;
 }
 
-.green{
+.genki{
   background:#43a047;
 }
 
-.orange{
-  background:#ef6c00;
-}
-
-.red{
+.kinkyu{
   background:#d32f2f;
-}
-
-.blue{
-  background:#1565c0;
-}
-
-.brown{
-  background:#6d4c41;
-}
-
-.result{
-  background:#fff3e0;
-  border:4px solid #ef6c00;
-  border-radius:28px;
-  padding:28px;
-  font-size:30px;
-  line-height:2;
-  font-weight:900;
-  text-align:center;
-  margin-top:20px;
 }
 
 </style>
@@ -122,395 +41,60 @@ body{
 
 <body>
 
-<div class="top">
+<h1>見守り確認</h1>
 
-  <div class="top-box">
+<button
+class="genki"
+onclick="sendData('正常')">
 
-    <div class="main-title">
-      朝3分DX
-    </div>
+😊 元気です
 
-    <div class="today-date" id="todayDate">
-    </div>
+</button>
 
-    <div class="sub">
-      今日の予定・天気・体調確認を、
-      毎朝わかりやすく確認できます。
-    </div>
+<button
+class="kinkyu"
+onclick="sendData('緊急')">
 
-  </div>
+🚨 緊急です
 
-</div>
-
-<div class="wrap">
-
-  <div class="box">
-
-    <div class="title">
-      今日のAI秘書
-    </div>
-
-    <div id="aiBox"></div>
-
-  </div>
-
-  <div class="box">
-
-    <div class="title">
-      今日の予定
-    </div>
-
-    <div id="planBox"></div>
-
-  </div>
-
-  <div class="box">
-
-    <div class="title">
-      今日の天気
-    </div>
-
-    <div id="weatherBox"></div>
-
-  </div>
-
-  <button class="big-btn green" onclick="pushGenki()">
-    😊 元気です
-  </button>
-
-  <button class="big-btn orange" onclick="pushCare()">
-    💬 気になることがあります
-  </button>
-
-  <button class="big-btn red" onclick="pushEmergency()">
-    🚨 緊急です
-  </button>
-
-  <button class="big-btn blue" onclick="pushMedicine()">
-    💊 薬を飲みました
-  </button>
-
-  <button class="big-btn brown" onclick="pushHome()">
-    🏠 帰宅しました
-  </button>
-
-  <div class="result" id="resultBox">
-    今日の確認はまだありません
-  </div>
-
-</div>
+</button>
 
 <script>
 
-const SHEET_ID =
-'13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
-
 const GAS_URL =
-'https://script.google.com/macros/s/AKfycbywe3RelSNuDf8L2VuDqnQRU42abz5Ys6O8qmDYFqGL-3NNTS_akv7LGXeApCAAsS9U/exec';
+'https://script.google.com/macros/s/AKfycbwcvgu0Qae7mUwNnaWr-XtqkGT8MZCqPKZfaq5RO1waW9_Cy2i5wWCklFIhouqBPF8W/exec';
 
-function showToday(){
+async function sendData(status){
 
-  const now =
-  new Date();
+  try{
 
-  const week = [
-    '日曜日',
-    '月曜日',
-    '火曜日',
-    '水曜日',
-    '木曜日',
-    '金曜日',
-    '土曜日'
-  ];
+    await fetch(GAS_URL,{
 
-  document.getElementById('todayDate').innerHTML =
-    now.getFullYear() + '年' +
-    (now.getMonth()+1) + '月' +
-    now.getDate() + '日 ' +
-    week[now.getDay()];
+      method:'POST',
 
-}
+      mode:'cors',
 
-function speakNow(text){
+      headers:{
+        'Content-Type':'text/plain'
+      },
 
-  speechSynthesis.cancel();
+      body:JSON.stringify({
+        status:status
+      }),
 
-  const msg =
-  new SpeechSynthesisUtterance(text);
+      keepalive:true
 
-  msg.lang =
-  'ja-JP';
+    });
 
-  speechSynthesis.speak(msg);
+    alert('送信しました');
 
-}
+  }catch(error){
 
-function setResult(text){
+    alert('通信失敗');
 
-  document.getElementById('resultBox').innerHTML =
-    text +
-    '<br><br>' +
-    new Date().toLocaleTimeString();
+    console.log(error);
 
-}
-
-function addItem(target,text){
-
-  const div =
-  document.createElement('div');
-
-  div.className =
-  'item';
-
-  div.innerHTML =
-  text;
-
-  div.onclick =
-  function(){
-
-    const plain =
-    text.replace(/<br>/g,'。');
-
-    setResult(plain);
-
-    speakNow(plain);
-
-  };
-
-  document
-  .getElementById(target)
-  .appendChild(div);
-
-}
-
-function saveLog(name,status,content){
-
-  const url =
-    GAS_URL +
-    '?name=' + encodeURIComponent(name) +
-    '&status=' + encodeURIComponent(status) +
-    '&content=' + encodeURIComponent(content) +
-    '&time=' + Date.now();
-
-  fetch(url)
-  .then(r => r.text())
-  .then(data => console.log(data))
-  .catch(err => console.log(err));
-
-}
-
-function handleMorning(response){
-
-  const rows =
-  response.table.rows;
-
-  if(!rows.length)return;
-
-  const row =
-  rows[0];
-
-  addItem(
-    'aiBox',
-    row.c[1]?.v || ''
-  );
-
-  addItem(
-    'weatherBox',
-    '☀ 今日の天気は ' +
-    (row.c[2]?.v || '') +
-    ' です'
-  );
-
-  addItem(
-    'weatherBox',
-    '👕 ' +
-    (row.c[3]?.v || '')
-  );
-
-  addItem(
-    'weatherBox',
-    '⚠ ' +
-    (row.c[4]?.v || '')
-  );
-
-}
-
-function handlePlans(response){
-
-  const rows =
-  response.table.rows;
-
-  rows.forEach(function(r){
-
-    const time =
-      r.c[1]?.f ||
-      r.c[1]?.v ||
-      '';
-
-    const plan =
-      r.c[3]?.v || '';
-
-    const item =
-      r.c[4]?.v || '';
-
-    addItem(
-      'planBox',
-      '🕒 ' + time +
-      '<br>📌 ' + plan +
-      '<br>👜 ' + item
-    );
-
-  });
-
-}
-
-window.onload =
-function(){
-
-  showToday();
-
-  loadMorning();
-
-  setTimeout(
-    loadPlans,
-    500
-  );
-
-};
-
-function loadMorning(){
-
-  const script =
-  document.createElement('script');
-
-  window.google = {
-    visualization:{
-      Query:{
-        setResponse:
-        handleMorning
-      }
-    }
-  };
-
-  script.src =
-    'https://docs.google.com/spreadsheets/d/' +
-    SHEET_ID +
-    '/gviz/tq?sheet=朝DX&tqx=out:json';
-
-  document.body.appendChild(script);
-
-}
-
-function loadPlans(){
-
-  const script =
-  document.createElement('script');
-
-  window.google = {
-    visualization:{
-      Query:{
-        setResponse:
-        handlePlans
-      }
-    }
-  };
-
-  script.src =
-    'https://docs.google.com/spreadsheets/d/' +
-    SHEET_ID +
-    '/gviz/tq?sheet=予定&tqx=out:json';
-
-  document.body.appendChild(script);
-
-}
-
-function pushGenki(){
-
-  setResult(
-    '😊 元気確認を記録しました'
-  );
-
-  speakNow(
-    '元気確認を記録しました'
-  );
-
-  saveLog(
-    '山口さん',
-    '正常',
-    '元気です'
-  );
-
-}
-
-function pushCare(){
-
-  setResult(
-    '💬 気になる状態を記録しました'
-  );
-
-  speakNow(
-    '気になる状態を記録しました'
-  );
-
-  saveLog(
-    '山口さん',
-    '注意',
-    '気になる'
-  );
-
-}
-
-function pushEmergency(){
-
-  setResult(
-    '🚨 緊急確認を記録しました'
-  );
-
-  speakNow(
-    '緊急確認を記録しました'
-  );
-
-  saveLog(
-    '山口さん',
-    '緊急',
-    '緊急です'
-  );
-
-}
-
-function pushMedicine(){
-
-  setResult(
-    '💊 服薬確認を記録しました'
-  );
-
-  speakNow(
-    '服薬確認を記録しました'
-  );
-
-  saveLog(
-    '山口さん',
-    '服薬',
-    '服薬確認'
-  );
-
-}
-
-function pushHome(){
-
-  setResult(
-    '🏠 帰宅確認を記録しました'
-  );
-
-  speakNow(
-    '帰宅確認を記録しました'
-  );
-
-  saveLog(
-    '山口さん',
-    '帰宅',
-    '帰宅しました'
-  );
+  }
 
 }
 
