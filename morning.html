@@ -3,120 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>今日の安心</title>
 
 <style>
-body{
-  margin:0;
-  background:#eef3f8;
-  font-family:sans-serif;
-  color:#222;
-}
-
-.top{
-  background:linear-gradient(135deg,#1976d2,#0d47a1);
-  color:white;
-  padding:30px 20px 36px;
-  border-bottom-left-radius:34px;
-  border-bottom-right-radius:34px;
-  box-shadow:0 6px 18px rgba(0,0,0,.2);
-}
-
-.logo{
-  font-size:38px;
-  font-weight:900;
-  margin-bottom:18px;
-}
-
-.date{
-  font-size:26px;
-  font-weight:900;
-  line-height:1.6;
-}
-
-.wrap{
-  padding:18px;
-}
-
-.main-card{
-  background:white;
-  border-radius:30px;
-  padding:28px;
-  margin-bottom:24px;
-  box-shadow:0 6px 18px rgba(0,0,0,.12);
-  text-align:center;
-}
-
-.schedule-title{
-  font-size:24px;
-  color:#1565c0;
-  font-weight:900;
-  margin-bottom:14px;
-}
-
-.schedule-time{
-  font-size:48px;
-  font-weight:900;
-  line-height:1.3;
-}
-
-.schedule-sub{
-  font-size:24px;
-  color:#666;
-  margin-top:10px;
-}
-
-.big-button{
-  width:100%;
-  border:none;
-  border-radius:28px;
-  padding:34px;
-  margin-bottom:22px;
-  color:white;
-  font-size:40px;
-  font-weight:900;
-}
-
-.green{background:#43a047}
-.blue{background:#1565c0}
-.red{background:#d32f2f}
-.yellow{background:#f9a825}
-.gray{background:#546e7a}
-
-.sub-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin-top:8px;
-}
-
-.small-button{
-  border:none;
-  border-radius:22px;
-  padding:22px;
-  color:white;
-  font-size:24px;
-  font-weight:900;
-}
-
-.result{
-  text-align:center;
-  font-size:30px;
-  font-weight:900;
-  margin-top:18px;
-}
-
-.checked{
-  opacity:.5;
-  box-shadow:
-  0 0 0 6px #ffffff,
-  0 0 0 12px #00c853;
-}
-
-.hidden{
-  display:none;
-}
+body{margin:0;background:#eef3f8;font-family:sans-serif;color:#222}
+.top{background:linear-gradient(135deg,#1976d2,#0d47a1);color:white;padding:30px 20px 36px;border-bottom-left-radius:34px;border-bottom-right-radius:34px}
+.logo{font-size:38px;font-weight:900;margin-bottom:18px}
+.date{font-size:26px;font-weight:900;line-height:1.6}
+.wrap{padding:18px}
+.main-card,.qr-card{background:white;border-radius:30px;padding:28px;margin-bottom:24px;box-shadow:0 6px 18px rgba(0,0,0,.12);text-align:center}
+.schedule-title{font-size:24px;color:#1565c0;font-weight:900;margin-bottom:14px}
+.schedule-time{font-size:48px;font-weight:900;line-height:1.3}
+.schedule-sub{font-size:24px;color:#666;margin-top:10px}
+.big-button{width:100%;border:none;border-radius:28px;padding:34px;margin-bottom:22px;color:white;font-size:40px;font-weight:900}
+.green{background:#43a047}.blue{background:#1565c0}.red{background:#d32f2f}.yellow{background:#f9a825}.gray{background:#546e7a}
+.sub-buttons{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+.small-button{border:none;border-radius:22px;padding:22px;color:white;font-size:24px;font-weight:900}
+.result{text-align:center;font-size:30px;font-weight:900;margin-top:18px}
+.checked{opacity:.5;box-shadow:0 0 0 6px #fff,0 0 0 12px #00c853}
+.hidden{display:none}
+.qr-title{font-size:28px;font-weight:900;color:#1565c0;margin-bottom:12px}
+.qr-text{font-size:22px;line-height:1.7;color:#444;margin-bottom:18px}
+.qr-box{width:220px;height:220px;margin:0 auto;border:6px dashed #bbb;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#777;background:#fafafa}
 </style>
 </head>
 
@@ -129,65 +37,39 @@ body{
 
 <div class="wrap">
 
-  <div id="scheduleCard" class="main-card">
+  <div class="main-card">
     <div class="schedule-title">📅 今日の予定</div>
-
-    <div class="schedule-time" id="scheduleText">
-      今日は予定ありません
-    </div>
-
-    <div class="schedule-sub" id="scheduleSub">
-      今日はゆっくりお過ごしください
-    </div>
+    <div class="schedule-time" id="scheduleText">今日は予定ありません</div>
+    <div class="schedule-sub" id="scheduleSub">今日はゆっくりお過ごしください</div>
   </div>
 
-  <button
-  id="btn-hospital"
-  class="big-button blue hidden"
-  onclick="sendData('btn-hospital','外出','🏥 病院へ出発しました')">
+  <button id="btn-hospital" class="big-button blue hidden" onclick="sendData('btn-hospital','外出','🏥 病院へ出発しました')">
     🏥 出発しました
   </button>
 
-  <button
-  id="btn-genki"
-  class="big-button green"
-  onclick="sendData('btn-genki','正常','😊 元気です')">
+  <button id="btn-genki" class="big-button green" onclick="sendData('btn-genki','正常','😊 元気です')">
     😊 元気です
   </button>
 
   <div class="sub-buttons">
-
-    <button
-    id="btn-help"
-    class="small-button yellow"
-    onclick="sendData('btn-help','注意','🟡 困っています')">
-      🟡 困っています
-    </button>
-
-    <button
-    id="btn-medicine"
-    class="small-button blue"
-    onclick="sendData('btn-medicine','薬','💊 薬を飲みました')">
-      💊 薬
-    </button>
-
-    <button
-    id="btn-home"
-    class="small-button gray"
-    onclick="sendData('btn-home','帰宅','🏠 帰宅しました')">
-      🏠 帰宅
-    </button>
-
-    <button
-    id="btn-emergency"
-    class="small-button red"
-    onclick="emergencyAction()">
-      🚨 緊急
-    </button>
-
+    <button id="btn-help" class="small-button yellow" onclick="sendData('btn-help','注意','🟡 困っています')">🟡 困っています</button>
+    <button id="btn-medicine" class="small-button blue" onclick="sendData('btn-medicine','薬','💊 薬を飲みました')">💊 薬</button>
+    <button id="btn-home" class="small-button gray" onclick="sendData('btn-home','帰宅','🏠 帰宅しました')">🏠 帰宅</button>
+    <button id="btn-emergency" class="small-button red" onclick="emergencyAction()">🚨 緊急</button>
   </div>
 
   <div class="result" id="result"></div>
+
+  <div class="qr-card">
+    <div class="qr-title">ご家族・支援者の方へ</div>
+    <div class="qr-text">
+      このQRコードを読み取ると、<br>
+      見守り状況を確認できます。
+    </div>
+    <div class="qr-box">
+      QR<br>ここに入れる
+    </div>
+  </div>
 
 </div>
 
@@ -198,26 +80,11 @@ const GAS_URL =
 function showToday(){
   const now = new Date();
   const week = ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'];
-
   document.getElementById('todayDate').innerHTML =
     now.getFullYear() + '年 ' +
     (now.getMonth()+1) + '月 ' +
     now.getDate() + '日 ' +
     week[now.getDay()];
-}
-
-function setTodaySchedule(){
-  const hasSchedule = false;
-
-  if(hasSchedule){
-    document.getElementById('scheduleText').innerHTML =
-      '14:30 病院';
-
-    document.getElementById('scheduleSub').innerHTML =
-      '外出される時に押してください';
-
-    document.getElementById('btn-hospital').classList.remove('hidden');
-  }
 }
 
 function clearChecks(){
@@ -230,12 +97,9 @@ function clearChecks(){
 function restoreLastButton(){
   const lastButton = localStorage.getItem('lastButton');
   if(!lastButton)return;
-
   const btn = document.getElementById(lastButton);
   if(!btn)return;
-
   btn.classList.add('checked');
-
   if(!btn.innerHTML.includes('✅')){
     btn.innerHTML = btn.innerHTML + ' ✅';
   }
@@ -245,9 +109,7 @@ async function sendData(buttonId,status,content){
   try{
     await fetch(GAS_URL,{
       method:'POST',
-      headers:{
-        'Content-Type':'text/plain'
-      },
+      headers:{'Content-Type':'text/plain'},
       body:JSON.stringify({
         name:'山口さん',
         status:status,
@@ -257,35 +119,27 @@ async function sendData(buttonId,status,content){
     });
 
     clearChecks();
-
     const btn = document.getElementById(buttonId);
     btn.classList.add('checked');
-
     if(!btn.innerHTML.includes('✅')){
       btn.innerHTML = btn.innerHTML + ' ✅';
     }
-
     localStorage.setItem('lastButton',buttonId);
-
-    document.getElementById('result').innerHTML =
-      '送信しました';
+    document.getElementById('result').innerHTML = '送信しました';
 
   }catch(error){
     alert('通信エラー');
-    console.log(error);
   }
 }
 
 async function emergencyAction(){
   await sendData('btn-emergency','緊急','🚨 緊急です');
-
   if(confirm('家族へ電話しますか？')){
     location.href = 'tel:09012345678';
   }
 }
 
 showToday();
-setTodaySchedule();
 restoreLastButton();
 </script>
 
