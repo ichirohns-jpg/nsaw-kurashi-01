@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>朝3分DX</title>
+<title>今日の見守り確認</title>
 
 <style>
 
@@ -141,13 +141,13 @@ body{
 <div class="top">
 
   <div class="logo">
-    朝3分DX
+    今日の見守り確認
   </div>
 
   <div class="date" id="todayDate"></div>
 
   <div class="sub">
-    今日の見守り状況を確認できます
+    ご家族の見守り状況を確認できます
   </div>
 
 </div>
@@ -161,7 +161,7 @@ body{
   </button>
 
   <a class="share"
-  href="https://line.me/R/msg/text/?朝3分DX%0Ahttps://ichirohns-jpg.github.io/nsaw-kurashi-01/family.html">
+  href="https://line.me/R/msg/text/?今日の見守り確認%0Ahttps://ichirohns-jpg.github.io/nsaw-kurashi-01/family.html">
 
   LINEで共有
 
@@ -258,9 +258,19 @@ function handleData(response){
     latest.c[3]?.v ||
     '';
 
+  const voiceText =
+  latestContent
+  .replace('😊','')
+  .replace('🚨','')
+  .replace('💊','')
+  .replace('🏥','')
+  .replace('🚌','')
+  .replace('🏠','')
+  .trim();
+
   latestMessage =
   '最新の見守り状況をお伝えします。' +
-  latestContent +
+  voiceText +
   '。確認時間は ' +
   latestTime +
   'です。';
