@@ -3,17 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NSAW 朝3分DX</title>
+<title>朝3分DX</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
   background:#eef3f8;
   font-family:"Hiragino Sans","Yu Gothic",sans-serif;
   color:#223;
 }
-.top{padding:14px}
+
+.top{
+  padding:14px;
+}
+
 .top-box{
   background:linear-gradient(135deg,#1565c0,#0d47a1);
   border-radius:28px;
@@ -21,29 +28,39 @@ body{
   color:#fff;
   box-shadow:0 12px 30px rgba(0,0,0,.18);
 }
-.main-title{font-size:42px;font-weight:900;line-height:1.4}
-.sub{margin-top:16px;font-size:22px;line-height:1.9}
-.wrap{padding:16px 14px 60px}
 
-.ai-box,.today-box{
+.main-title{
+  font-size:42px;
+  font-weight:900;
+  line-height:1.4;
+}
+
+.sub{
+  margin-top:16px;
+  font-size:22px;
+  line-height:1.9;
+}
+
+.wrap{
+  padding:16px 14px 60px;
+}
+
+.box{
   background:#fff;
   border-radius:26px;
   padding:24px;
   margin-bottom:24px;
   box-shadow:0 8px 24px rgba(0,0,0,.12);
 }
-.ai-title,.today-title{
+
+.title{
   font-size:30px;
   font-weight:900;
   color:#1565c0;
   margin-bottom:18px;
 }
-.ai-text{
-  font-size:28px;
-  line-height:2;
-  white-space:pre-wrap;
-}
-.today-item{
+
+.item{
   background:#f5f7fb;
   border-radius:18px;
   padding:20px;
@@ -52,6 +69,7 @@ body{
   line-height:1.9;
   border-left:8px solid #1976d2;
 }
+
 .big-btn{
   width:100%;
   border:none;
@@ -63,10 +81,28 @@ body{
   margin-bottom:22px;
   box-shadow:0 10px 26px rgba(0,0,0,.18);
 }
-.genki{background:#43a047}
-.kusuri{background:#1565c0}
-.complete{background:#ef6c00}
-.complete-box{
+
+.green{
+  background:#43a047;
+}
+
+.orange{
+  background:#ef6c00;
+}
+
+.red{
+  background:#d32f2f;
+}
+
+.blue{
+  background:#1565c0;
+}
+
+.brown{
+  background:#6d4c41;
+}
+
+.result{
   background:#fff3e0;
   border:4px solid #ef6c00;
   border-radius:28px;
@@ -77,6 +113,7 @@ body{
   font-weight:900;
   margin-top:24px;
 }
+
 .home-btn{
   display:block;
   text-align:center;
@@ -89,14 +126,37 @@ body{
   font-weight:900;
   margin-top:34px;
 }
+
 @media(max-width:768px){
-  .main-title{font-size:36px}
-  .sub{font-size:20px}
-  .ai-title,.today-title{font-size:28px}
-  .ai-text,.today-item{font-size:24px}
-  .big-btn{font-size:28px}
-  .complete-box{font-size:26px}
-  .home-btn{font-size:24px}
+
+.main-title{
+  font-size:36px;
+}
+
+.sub{
+  font-size:20px;
+}
+
+.title{
+  font-size:28px;
+}
+
+.item{
+  font-size:24px;
+}
+
+.big-btn{
+  font-size:28px;
+}
+
+.result{
+  font-size:26px;
+}
+
+.home-btn{
+  font-size:24px;
+}
+
 }
 </style>
 </head>
@@ -105,183 +165,215 @@ body{
 
 <div class="top">
   <div class="top-box">
-    <div class="main-title">NSAW<br>朝3分DX</div>
-    <div class="sub">今日の予定やゴミの日を、AIが朝にまとめてお知らせします。</div>
+    <div class="main-title">
+      朝3分DX
+    </div>
+
+    <div class="sub">
+      今日の予定・ゴミ・天気・見守りを、
+      毎朝わかりやすく確認できます。
+    </div>
   </div>
 </div>
 
 <div class="wrap">
 
-  <div class="ai-box">
-    <div class="ai-title">今日のAI秘書</div>
-    <div class="ai-text" id="aiText"></div>
+  <div class="box">
+    <div class="title">今日のAI秘書</div>
+
+    <div id="aiBox"></div>
   </div>
 
-  <div class="today-box">
-    <div class="today-title">今日の予定</div>
-    <div class="today-item">🗑 燃えるごみの日</div>
-    <div class="today-item">🏥 14時 病院</div>
-    <div class="today-item">👜 保険証・お薬手帳</div>
+  <div class="box">
+    <div class="title">今日の予定</div>
+
+    <div id="planBox"></div>
   </div>
 
-  <div class="today-box">
-    <div class="today-title">☀ 今日の天気</div>
-    <div class="today-item">☀ 今日は晴れです</div>
-    <div class="today-item">🌡 最高気温 27℃</div>
-    <div class="today-item">👕 洗濯物は外に干せそうです</div>
-    <div class="today-item">💧 水分補給を忘れずに</div>
+  <div class="box">
+    <div class="title">今日の天気</div>
+
+    <div id="weatherBox"></div>
   </div>
 
-  <div class="today-box">
-    <div class="today-title">📋 今日やること</div>
-    <div class="today-item">⬜ 燃えるごみを出す</div>
-    <div class="today-item">⬜ お薬を飲む</div>
-    <div class="today-item">⬜ 14時 病院へ行く</div>
-    <div class="today-item">⬜ 洗濯物を確認する</div>
+  <button class="big-btn green" onclick="pushGenki()">
+    😊 元気です
+  </button>
+
+  <button class="big-btn orange" onclick="pushCare()">
+    💬 気になることがあります
+  </button>
+
+  <button class="big-btn red" onclick="pushEmergency()">
+    🚨 緊急です
+  </button>
+
+  <button class="big-btn blue" onclick="pushMedicine()">
+    💊 薬を飲みました
+  </button>
+
+  <button class="big-btn brown" onclick="pushHome()">
+    🏠 帰宅しました
+  </button>
+
+  <div class="result" id="resultBox">
+    今日の確認はまだありません
   </div>
 
-  <div class="today-box">
-    <div class="today-title">👜 今日の持ち物</div>
-    <div class="today-item">☑ 保険証</div>
-    <div class="today-item">☑ お薬手帳</div>
-    <div class="today-item">☑ 診察券</div>
-    <div class="today-item">☑ 財布</div>
-  </div>
-
-  <button class="big-btn genki" onclick="pushGenki()">😊 今日も元気です</button>
-
-  <button class="big-btn" style="background:#00897b;" onclick="openCareMenu()">💬 気になることがあります</button>
-
-  <div id="careMenu" style="display:none;margin-top:20px;">
-    <button class="big-btn" style="background:#5e35b1;" onclick="careSelect('体調が気になる')">😓 体調が気になる</button>
-    <button class="big-btn" style="background:#6d4c41;" onclick="careSelect('暮らしが気になる')">🏠 暮らしが気になる</button>
-    <button class="big-btn" style="background:#ef6c00;" onclick="careSelect('食事が心配')">🍱 食事が心配</button>
-    <button class="big-btn" style="background:#1565c0;" onclick="careSelect('薬が不安')">💊 薬が不安</button>
-    <button class="big-btn" style="background:#00897b;" onclick="careSelect('外出が不安')">🚶 外出が不安</button>
-    <button class="big-btn" style="background:#c2185b;" onclick="careSelect('誰かと話したい')">💬 誰かと話したい</button>
-  </div>
-
-  <button class="big-btn" style="background:#d32f2f;" onclick="openEmergencyMenu()">🚨 緊急です</button>
-
-  <div id="emergencyMenu" style="display:none;margin-top:20px;">
-    <a class="big-btn" style="background:#c2185b;display:block;text-decoration:none;text-align:center;" href="tel:09012345678">📞 家族へ電話</a>
-    <a class="big-btn" style="background:#1565c0;display:block;text-decoration:none;text-align:center;" href="tel:0480000000">📞 地域包括支援センターへ電話</a>
-    <a class="big-btn" style="background:#e53935;display:block;text-decoration:none;text-align:center;" href="tel:119">🚑 119へ電話</a>
-  </div>
-
-  <button class="big-btn kusuri" onclick="pushKusuri()">💊 薬を飲みました</button>
-  <button class="big-btn" style="background:#3949ab;" onclick="pushGoOut()">🚶 出発しました</button>
-  <button class="big-btn" style="background:#6d4c41;" onclick="pushBackHome()">🏠 帰宅しました</button>
-  <button class="big-btn complete" onclick="pushComplete()">✅ 朝の確認を完了</button>
-
-  <div class="complete-box" id="completeBox"></div>
-
-  <a class="home-btn" href="tv.html">📺 地域テレビを見る</a>
-  <a class="home-btn" href="index.html">← トップへ戻る</a>
+  <a class="home-btn" href="index.html">
+    ← トップへ戻る
+  </a>
 
 </div>
 
 <script>
-const GENKI_KEY='nsaw_genki_check';
 
-function speak(text){
-  speechSynthesis.cancel();
-  const msg=new SpeechSynthesisUtterance(text);
-  msg.lang='ja-JP';
-  speechSynthesis.speak(msg);
+const SHEET_ID = '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
+
+function addItem(target,text){
+
+  const div = document.createElement('div');
+
+  div.className = 'item';
+
+  div.innerHTML = text;
+
+  document.getElementById(target).appendChild(div);
+
 }
 
-window.onload=function(){
-  checkTodayStatus();
+window.onload = function(){
 
-  const text =
-`おはようございます。
+  loadMorningDX();
 
-今日は燃えるごみの日です。
+  loadPlans();
 
-14時から病院があります。
-
-保険証、診察券、お薬手帳、財布をお忘れなく。
-
-今日は晴れです。
-
-洗濯物は外に干せそうです。
-
-今日やることは、ゴミ出し、お薬、病院、洗濯です。
-
-水分補給も忘れずに。
-
-今日もお気をつけてお過ごしください。`;
-
-  document.getElementById('aiText').innerHTML=text;
-  speak(text);
 };
 
-function todayKey(){
-  const d=new Date();
-  return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+function loadMorningDX(){
+
+  const url =
+  'https://docs.google.com/spreadsheets/d/' +
+  SHEET_ID +
+  '/gviz/tq?sheet=朝DX&tqx=out:json&callback=handleMorning';
+
+  const script = document.createElement('script');
+
+  script.src = url;
+
+  document.body.appendChild(script);
+
 }
 
-function nowTime(){
-  const d=new Date();
-  return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+function loadPlans(){
+
+  const url =
+  'https://docs.google.com/spreadsheets/d/' +
+  SHEET_ID +
+  '/gviz/tq?sheet=予定&tqx=out:json&callback=handlePlans';
+
+  const script = document.createElement('script');
+
+  script.src = url;
+
+  document.body.appendChild(script);
+
 }
 
-function checkTodayStatus(){
-  const saved=localStorage.getItem(GENKI_KEY);
-  const box=document.getElementById('completeBox');
-  box.innerHTML = saved===todayKey()
-    ? '✅ 今日の元気確認済み'
-    : '⚠ 今日の元気確認はまだです';
+function handleMorning(json){
+
+  const rows = json.table.rows;
+
+  if(!rows || rows.length === 0)return;
+
+  const row = rows[0];
+
+  const message =
+    row.c[1] ? row.c[1].v : '';
+
+  const weather =
+    row.c[2] ? row.c[2].v : '';
+
+  const wash =
+    row.c[3] ? row.c[3].v : '';
+
+  const notice =
+    row.c[4] ? row.c[4].v : '';
+
+  addItem('aiBox',message);
+
+  addItem('weatherBox','☀ ' + weather);
+
+  addItem('weatherBox','👕 ' + wash);
+
+  addItem('weatherBox','⚠ ' + notice);
+
+}
+
+function handlePlans(json){
+
+  const rows = json.table.rows;
+
+  rows.forEach(function(r){
+
+    const time =
+      r.c[1] ? r.c[1].v : '';
+
+    const plan =
+      r.c[3] ? r.c[3].v : '';
+
+    const item =
+      r.c[4] ? r.c[4].v : '';
+
+    addItem(
+      'planBox',
+      '🕒 ' + time + '<br>' +
+      '📌 ' + plan + '<br>' +
+      '👜 ' + item
+    );
+
+  });
+
+}
+
+function setResult(text){
+
+  document.getElementById('resultBox').innerHTML =
+    text + '<br><br>' +
+    new Date().toLocaleTimeString();
+
 }
 
 function pushGenki(){
-  localStorage.setItem(GENKI_KEY,todayKey());
-  document.getElementById('completeBox').innerHTML =
-    '✅ 今日の元気確認済み<br><br>確認時刻：'+nowTime();
-  speak('今日も元気確認を送信しました。');
+
+  setResult('😊 元気確認を記録しました');
+
 }
 
-function pushKusuri(){
-  document.getElementById('completeBox').innerHTML =
-    '💊 朝のお薬確認済み<br><br>確認時刻：'+nowTime();
-  speak('お薬を確認しました。');
+function pushCare(){
+
+  setResult('💬 気になる状態を記録しました');
+
 }
 
-function pushGoOut(){
-  document.getElementById('completeBox').innerHTML =
-    '🚶 出発確認済み<br><br>確認時刻：'+nowTime();
-  speak('お気をつけて行ってらっしゃい。');
+function pushEmergency(){
+
+  setResult('🚨 緊急確認を記録しました');
+
 }
 
-function pushBackHome(){
-  document.getElementById('completeBox').innerHTML =
-    '🏠 帰宅確認済み<br><br>確認時刻：'+nowTime();
-  speak('お帰りなさい。');
+function pushMedicine(){
+
+  setResult('💊 服薬確認を記録しました');
+
 }
 
-function pushComplete(){
-  document.getElementById('completeBox').innerHTML =
-    '✅ 今日の朝の確認が完了しました';
-  speak('今日の朝の確認が完了しました。');
+function pushHome(){
+
+  setResult('🏠 帰宅確認を記録しました');
+
 }
 
-function openCareMenu(){
-  const menu=document.getElementById('careMenu');
-  menu.style.display = menu.style.display==='block' ? 'none' : 'block';
-}
-
-function careSelect(text){
-  document.getElementById('completeBox').innerHTML =
-    '💬「'+text+'」を確認しました。<br><br>必要に応じて、地域包括支援センターへ相談できます。';
-  speak(text+'とのことですね。必要に応じて地域包括支援センターへ相談できます。');
-}
-
-function openEmergencyMenu(){
-  const menu=document.getElementById('emergencyMenu');
-  menu.style.display = menu.style.display==='block' ? 'none' : 'block';
-  if(menu.style.display==='block') speak('緊急連絡メニューを開きました。');
-}
 </script>
 
 </body>
