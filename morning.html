@@ -37,8 +37,15 @@ body{
   line-height:1.4;
 }
 
+.today-date{
+  margin-top:20px;
+  font-size:34px;
+  font-weight:900;
+  line-height:1.8;
+}
+
 .sub{
-  margin-top:14px;
+  margin-top:18px;
   font-size:22px;
   line-height:1.8;
 }
@@ -122,6 +129,10 @@ body{
   font-size:36px;
 }
 
+.today-date{
+  font-size:30px;
+}
+
 .sub{
   font-size:20px;
 }
@@ -155,6 +166,9 @@ body{
 
     <div class="main-title">
       朝3分DX
+    </div>
+
+    <div class="today-date" id="todayDate">
     </div>
 
     <div class="sub">
@@ -228,6 +242,31 @@ body{
 
 const SHEET_ID =
 '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
+
+function showToday(){
+
+  const now = new Date();
+
+  const week = [
+    '日曜日',
+    '月曜日',
+    '火曜日',
+    '水曜日',
+    '木曜日',
+    '金曜日',
+    '土曜日'
+  ];
+
+  const text =
+    now.getFullYear() + '年' +
+    (now.getMonth()+1) + '月' +
+    now.getDate() + '日 ' +
+    week[now.getDay()];
+
+  document.getElementById('todayDate').innerHTML =
+    text;
+
+}
 
 function speakNow(text){
 
@@ -367,6 +406,8 @@ function handlePlans(response){
 }
 
 window.onload = function(){
+
+  showToday();
 
   loadMorning();
 
