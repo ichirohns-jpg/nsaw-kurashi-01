@@ -123,38 +123,6 @@ body{
   margin-top:20px;
 }
 
-@media(max-width:768px){
-
-.main-title{
-  font-size:36px;
-}
-
-.today-date{
-  font-size:30px;
-}
-
-.sub{
-  font-size:20px;
-}
-
-.title{
-  font-size:28px;
-}
-
-.item{
-  font-size:24px;
-}
-
-.big-btn{
-  font-size:30px;
-}
-
-.result{
-  font-size:26px;
-}
-
-}
-
 </style>
 </head>
 
@@ -348,6 +316,17 @@ function speakWeather(){
 
 }
 
+function saveLog(type,content,name,status){
+
+  console.log(
+    type,
+    content,
+    name,
+    status
+  );
+
+}
+
 function handleMorning(response){
 
   const rows =
@@ -503,6 +482,13 @@ function pushGenki(){
     '元気確認を記録しました'
   );
 
+  saveLog(
+    '見守り',
+    '元気です',
+    '山口さん',
+    '正常'
+  );
+
 }
 
 function pushCare(){
@@ -513,6 +499,13 @@ function pushCare(){
 
   speakNow(
     '気になる状態を記録しました'
+  );
+
+  saveLog(
+    '見守り',
+    '気になる',
+    '山口さん',
+    '注意'
   );
 
 }
@@ -527,6 +520,13 @@ function pushEmergency(){
     '緊急確認を記録しました'
   );
 
+  saveLog(
+    '緊急',
+    '緊急です',
+    '山口さん',
+    '緊急'
+  );
+
 }
 
 function pushMedicine(){
@@ -539,6 +539,13 @@ function pushMedicine(){
     '服薬確認を記録しました'
   );
 
+  saveLog(
+    '服薬',
+    '服薬確認',
+    '山口さん',
+    '確認済み'
+  );
+
 }
 
 function pushHome(){
@@ -549,6 +556,13 @@ function pushHome(){
 
   speakNow(
     '帰宅確認を記録しました'
+  );
+
+  saveLog(
+    '帰宅',
+    '帰宅しました',
+    '山口さん',
+    '帰宅'
   );
 
 }
