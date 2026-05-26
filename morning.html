@@ -7,7 +7,6 @@
 <title>今日の安心</title>
 
 <style>
-
 body{
   margin:0;
   background:#eef3f8;
@@ -79,17 +78,11 @@ body{
   font-weight:900;
 }
 
-.green{
-  background:#43a047;
-}
-
-.blue{
-  background:#1565c0;
-}
-
-.red{
-  background:#d32f2f;
-}
+.green{background:#43a047}
+.blue{background:#1565c0}
+.red{background:#d32f2f}
+.yellow{background:#f9a825}
+.gray{background:#546e7a}
 
 .sub-buttons{
   display:grid;
@@ -105,14 +98,6 @@ body{
   color:white;
   font-size:24px;
   font-weight:900;
-}
-
-.yellow{
-  background:#f9a825;
-}
-
-.gray{
-  background:#546e7a;
 }
 
 .result{
@@ -132,74 +117,42 @@ body{
 .hidden{
   display:none;
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="top">
-
-  <div class="logo">
-    今日の安心
-  </div>
-
+  <div class="logo">今日の安心</div>
   <div class="date" id="todayDate"></div>
-
 </div>
 
 <div class="wrap">
 
-  <div
-  id="scheduleCard"
-  class="main-card">
+  <div id="scheduleCard" class="main-card">
+    <div class="schedule-title">📅 今日の予定</div>
 
-    <div class="schedule-title">
-      📅 今日の予定
+    <div class="schedule-time" id="scheduleText">
+      今日は予定ありません
     </div>
 
-    <div
-    class="schedule-time"
-    id="scheduleText">
-
-    今日は予定ありません
-
+    <div class="schedule-sub" id="scheduleSub">
+      今日はゆっくりお過ごしください
     </div>
-
-    <div
-    class="schedule-sub"
-    id="scheduleSub">
-
-    今日も元気にお過ごしください
-
-    </div>
-
   </div>
 
   <button
   id="btn-hospital"
   class="big-button blue hidden"
-  onclick="sendData(
-    'btn-hospital',
-    '外出',
-    '🏥 病院へ出発しました'
-  )">
-
-  🏥 出発しました
-
+  onclick="sendData('btn-hospital','外出','🏥 病院へ出発しました')">
+    🏥 出発しました
   </button>
 
   <button
   id="btn-genki"
   class="big-button green"
-  onclick="sendData(
-    'btn-genki',
-    '正常',
-    '😊 元気です'
-  )">
-
-  😊 元気です
-
+  onclick="sendData('btn-genki','正常','😊 元気です')">
+    😊 元気です
   </button>
 
   <div class="sub-buttons">
@@ -207,235 +160,133 @@ body{
     <button
     id="btn-help"
     class="small-button yellow"
-    onclick="sendData(
-      'btn-help',
-      '注意',
-      '🟡 困っています'
-    )">
-
-    🟡 困っています
-
+    onclick="sendData('btn-help','注意','🟡 困っています')">
+      🟡 困っています
     </button>
 
     <button
     id="btn-medicine"
     class="small-button blue"
-    onclick="sendData(
-      'btn-medicine',
-      '薬',
-      '💊 薬を飲みました'
-    )">
-
-    💊 薬
-
+    onclick="sendData('btn-medicine','薬','💊 薬を飲みました')">
+      💊 薬
     </button>
 
     <button
     id="btn-home"
     class="small-button gray"
-    onclick="sendData(
-      'btn-home',
-      '帰宅',
-      '🏠 帰宅しました'
-    )">
-
-    🏠 帰宅
-
+    onclick="sendData('btn-home','帰宅','🏠 帰宅しました')">
+      🏠 帰宅
     </button>
 
     <button
     id="btn-emergency"
     class="small-button red"
     onclick="emergencyAction()">
-
-    🚨 緊急
-
+      🚨 緊急
     </button>
 
   </div>
 
-  <div
-  class="result"
-  id="result"></div>
+  <div class="result" id="result"></div>
 
 </div>
 
 <script>
-
 const GAS_URL =
 'https://script.google.com/macros/s/AKfycbwcvgu0Qae7mUwNnaWr-XtqkGT8MZCqPKZfaq5RO1waW9_Cy2i5wWCklFIhouqBPF8W/exec';
 
 function showToday(){
-
-  const now =
-  new Date();
-
-  const week = [
-    '日曜日',
-    '月曜日',
-    '火曜日',
-    '水曜日',
-    '木曜日',
-    '金曜日',
-    '土曜日'
-  ];
+  const now = new Date();
+  const week = ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'];
 
   document.getElementById('todayDate').innerHTML =
     now.getFullYear() + '年 ' +
     (now.getMonth()+1) + '月 ' +
     now.getDate() + '日 ' +
     week[now.getDay()];
-
 }
 
 function setTodaySchedule(){
-
   const hasSchedule = false;
 
   if(hasSchedule){
+    document.getElementById('scheduleText').innerHTML =
+      '14:30 病院';
 
-    document.getElementById(
-    'scheduleText').innerHTML =
-    '14:30 病院';
+    document.getElementById('scheduleSub').innerHTML =
+      '外出される時に押してください';
 
-    document.getElementById(
-    'scheduleSub').innerHTML =
-    '出かける時に押してください';
-
-    document.getElementById(
-    'btn-hospital'
-    ).classList.remove('hidden');
-
+    document.getElementById('btn-hospital').classList.remove('hidden');
   }
-
 }
 
 function clearChecks(){
-
-  document
-  .querySelectorAll('button')
-  .forEach(btn=>{
-
+  document.querySelectorAll('button').forEach(btn=>{
     btn.classList.remove('checked');
-
-    btn.innerHTML =
-    btn.innerHTML
-    .replace(' ✅','');
-
+    btn.innerHTML = btn.innerHTML.replace(' ✅','');
   });
-
 }
 
 function restoreLastButton(){
-
-  const lastButton =
-  localStorage.getItem(
-    'lastButton'
-  );
-
+  const lastButton = localStorage.getItem('lastButton');
   if(!lastButton)return;
 
-  const btn =
-  document.getElementById(lastButton);
-
+  const btn = document.getElementById(lastButton);
   if(!btn)return;
 
   btn.classList.add('checked');
 
   if(!btn.innerHTML.includes('✅')){
-
-    btn.innerHTML =
-    btn.innerHTML + ' ✅';
-
+    btn.innerHTML = btn.innerHTML + ' ✅';
   }
-
 }
 
-async function sendData(
-  buttonId,
-  status,
-  content
-){
-
+async function sendData(buttonId,status,content){
   try{
-
     await fetch(GAS_URL,{
-
       method:'POST',
-
       headers:{
         'Content-Type':'text/plain'
       },
-
       body:JSON.stringify({
-
         name:'山口さん',
-
         status:status,
-
         content:content
-
       }),
-
       keepalive:true
-
     });
 
     clearChecks();
 
-    const btn =
-    document.getElementById(buttonId);
-
+    const btn = document.getElementById(buttonId);
     btn.classList.add('checked');
 
     if(!btn.innerHTML.includes('✅')){
-
-      btn.innerHTML =
-      btn.innerHTML + ' ✅';
-
+      btn.innerHTML = btn.innerHTML + ' ✅';
     }
 
-    localStorage.setItem(
-      'lastButton',
-      buttonId
-    );
+    localStorage.setItem('lastButton',buttonId);
 
     document.getElementById('result').innerHTML =
-    '送信しました';
+      '送信しました';
 
   }catch(error){
-
     alert('通信エラー');
-
     console.log(error);
-
   }
-
 }
 
 async function emergencyAction(){
-
-  await sendData(
-    'btn-emergency',
-    '緊急',
-    '🚨 緊急です'
-  );
+  await sendData('btn-emergency','緊急','🚨 緊急です');
 
   if(confirm('家族へ電話しますか？')){
-
-    location.href =
-    'tel:09012345678';
-
+    location.href = 'tel:09012345678';
   }
-
 }
 
 showToday();
-
 setTodaySchedule();
-
 restoreLastButton();
-
 </script>
 
 </body>
