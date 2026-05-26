@@ -123,10 +123,14 @@ body{
 }
 
 .checked{
+  opacity:.5;
   box-shadow:
   0 0 0 6px #ffffff,
   0 0 0 12px #00c853;
-  transform:scale(1.02);
+}
+
+.hidden{
+  display:none;
 }
 
 </style>
@@ -146,29 +150,39 @@ body{
 
 <div class="wrap">
 
-  <div class="main-card">
+  <div
+  id="scheduleCard"
+  class="main-card">
 
     <div class="schedule-title">
       📅 今日の予定
     </div>
 
-    <div class="schedule-time">
-      14:30 病院
+    <div
+    class="schedule-time"
+    id="scheduleText">
+
+    今日は予定ありません
+
     </div>
 
-    <div class="schedule-sub">
-      出かける時にボタンを押してください
+    <div
+    class="schedule-sub"
+    id="scheduleSub">
+
+    今日も元気にお過ごしください
+
     </div>
 
   </div>
 
   <button
   id="btn-hospital"
-  class="big-button blue"
+  class="big-button blue hidden"
   onclick="sendData(
     'btn-hospital',
     '外出',
-    '🏥 出発しました'
+    '🏥 病院へ出発しました'
   )">
 
   🏥 出発しました
@@ -240,7 +254,9 @@ body{
 
   </div>
 
-  <div class="result" id="result"></div>
+  <div
+  class="result"
+  id="result"></div>
 
 </div>
 
@@ -269,6 +285,28 @@ function showToday(){
     (now.getMonth()+1) + '月 ' +
     now.getDate() + '日 ' +
     week[now.getDay()];
+
+}
+
+function setTodaySchedule(){
+
+  const hasSchedule = false;
+
+  if(hasSchedule){
+
+    document.getElementById(
+    'scheduleText').innerHTML =
+    '14:30 病院';
+
+    document.getElementById(
+    'scheduleSub').innerHTML =
+    '出かける時に押してください';
+
+    document.getElementById(
+    'btn-hospital'
+    ).classList.remove('hidden');
+
+  }
 
 }
 
@@ -321,8 +359,12 @@ async function sendData(
 
     btn.classList.add('checked');
 
-    btn.innerHTML =
-    btn.innerHTML + ' ✅';
+    if(!btn.innerHTML.includes('✅')){
+
+      btn.innerHTML =
+      btn.innerHTML + ' ✅';
+
+    }
 
     document.getElementById('result').innerHTML =
     '送信しました';
@@ -355,6 +397,8 @@ async function emergencyAction(){
 }
 
 showToday();
+
+setTodaySchedule();
 
 </script>
 
