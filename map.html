@@ -3,251 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>どこへ行きますか？</title>
 
 <style>
-
-body{
-  margin:0;
-  background:#eef3f8;
-  font-family:sans-serif;
-  color:#222;
-}
-
-.top{
-  background:linear-gradient(135deg,#1976d2,#0d47a1);
-  color:white;
-  padding:34px 20px 40px;
-  border-bottom-left-radius:34px;
-  border-bottom-right-radius:34px;
-  text-align:center;
-}
-
-.title{
-  font-size:42px;
-  font-weight:900;
-  line-height:1.5;
-}
-
-.wrap{
-  padding:18px;
-}
-
-.card{
-  background:white;
-  border-radius:30px;
-  padding:28px;
-  margin-bottom:24px;
-  box-shadow:0 6px 18px rgba(0,0,0,.12);
-  text-align:center;
-}
-
-.big-button{
-  width:100%;
-  border:none;
-  border-radius:30px;
-  padding:38px;
-  margin-bottom:24px;
-  color:white;
-  font-size:42px;
-  font-weight:900;
-}
-
-.blue{
-  background:#1565c0;
-}
-
-.green{
-  background:#43a047;
-}
-
-.result{
-  font-size:38px;
-  font-weight:900;
-  line-height:1.6;
-  margin-top:14px;
-}
-
-.sub{
-  font-size:24px;
-  color:#666;
-  margin-top:18px;
-  line-height:1.7;
-}
-
-.quick{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin-top:24px;
-}
-
-.quick button{
-  border:none;
-  border-radius:22px;
-  padding:24px;
-  color:white;
-  font-size:26px;
-  font-weight:900;
-}
-
-.red{background:#d32f2f}
-.orange{background:#fb8c00}
-.teal{background:#00897b}
-.gray{background:#546e7a}
-
+body{margin:0;background:#eef3f8;font-family:sans-serif;color:#222}
+.top{background:linear-gradient(135deg,#1976d2,#0d47a1);color:white;padding:34px 20px 40px;border-bottom-left-radius:34px;border-bottom-right-radius:34px;text-align:center}
+.title{font-size:42px;font-weight:900}
+.wrap{padding:18px}
+.card{background:white;border-radius:30px;padding:28px;margin-bottom:24px;box-shadow:0 6px 18px rgba(0,0,0,.12);text-align:center}
+label{display:block;font-size:28px;font-weight:900;margin-bottom:14px}
+input{width:100%;box-sizing:border-box;font-size:32px;padding:22px;border-radius:20px;border:3px solid #ccc;margin-bottom:20px}
+.big-button{width:100%;border:none;border-radius:30px;padding:34px;margin-bottom:20px;color:white;font-size:36px;font-weight:900}
+.blue{background:#1565c0}.green{background:#43a047}
+.sub{font-size:24px;color:#666;line-height:1.7}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.quick button{border:none;border-radius:22px;padding:24px;color:white;font-size:26px;font-weight:900}
+.red{background:#d32f2f}.orange{background:#fb8c00}.teal{background:#00897b}.gray{background:#546e7a}
 </style>
 </head>
 
 <body>
 
 <div class="top">
-
-  <div class="title">
-    どこへ行きますか？
-  </div>
-
+  <div class="title">どこへ行きますか？</div>
 </div>
 
 <div class="wrap">
 
   <div class="card">
 
-    <button
-    class="big-button blue"
-    onclick="startVoice()">
+    <label>行きたい場所を入れてください</label>
 
-    🎤 話してください
+    <input id="destination" placeholder="例：近くの薬局">
 
+    <button class="big-button green" onclick="goMap()">
+      🚶 案内します
     </button>
 
-    <div
-    class="result"
-    id="result">
-
-    行きたい場所を話してください
-
-    </div>
-
     <div class="sub">
-
-      例：<br>
-      「近くの薬局」<br>
-      「志木駅」<br>
-      「病院」
-
+      入力欄を押して、iPhoneキーボードの<br>
+      🎤マイクで話して入力できます。
     </div>
 
     <div class="quick">
-
-      <button
-      class="red"
-      onclick="quickMap('近くの病院')">
-
-      🏥 病院
-
-      </button>
-
-      <button
-      class="orange"
-      onclick="quickMap('近くの薬局')">
-
-      💊 薬局
-
-      </button>
-
-      <button
-      class="teal"
-      onclick="quickMap('近くのコンビニ')">
-
-      🏪 コンビニ
-
-      </button>
-
-      <button
-      class="gray"
-      onclick="quickMap('近くのトイレ')">
-
-      🚻 トイレ
-
-      </button>
-
+      <button class="red" onclick="quickMap('近くの病院')">🏥 病院</button>
+      <button class="orange" onclick="quickMap('近くの薬局')">💊 薬局</button>
+      <button class="teal" onclick="quickMap('近くのコンビニ')">🏪 コンビニ</button>
+      <button class="gray" onclick="quickMap('近くのトイレ')">🚻 トイレ</button>
     </div>
 
   </div>
 
-  <button
-  id="goButton"
-  class="big-button green"
-  style="display:none"
-  onclick="goMap()">
-
-  🚶 ご案内します
-
-  </button>
-
 </div>
 
 <script>
-
-let destination = '';
-
-function startVoice(){
-
-  const recognition =
-  new webkitSpeechRecognition();
-
-  recognition.lang =
-  'ja-JP';
-
-  recognition.start();
-
-  recognition.onresult =
-  function(event){
-
-    destination =
-    event.results[0][0].transcript;
-
-    document.getElementById(
-      'result'
-    ).innerHTML =
-
-      '「' +
-      destination +
-      '」へご案内します';
-
-    document.getElementById(
-      'goButton'
-    ).style.display =
-    'block';
-
-  };
-
-}
-
 function goMap(){
+  const destination = document.getElementById('destination').value.trim();
 
-  const url =
-  'https://www.google.com/maps/search/?api=1&query=' +
-  encodeURIComponent(destination);
+  if(!destination){
+    alert('行きたい場所を入れてください');
+    return;
+  }
 
   location.href =
-  url;
-
+    'https://www.google.com/maps/search/?api=1&query=' +
+    encodeURIComponent(destination);
 }
 
 function quickMap(word){
-
-  const url =
-  'https://www.google.com/maps/search/?api=1&query=' +
-  encodeURIComponent(word);
-
   location.href =
-  url;
-
+    'https://www.google.com/maps/search/?api=1&query=' +
+    encodeURIComponent(word);
 }
-
 </script>
 
 </body>
