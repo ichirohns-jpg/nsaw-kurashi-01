@@ -318,7 +318,36 @@ function clearChecks(){
 
     btn.classList.remove('checked');
 
+    btn.innerHTML =
+    btn.innerHTML
+    .replace(' ✅','');
+
   });
+
+}
+
+function restoreLastButton(){
+
+  const lastButton =
+  localStorage.getItem(
+    'lastButton'
+  );
+
+  if(!lastButton)return;
+
+  const btn =
+  document.getElementById(lastButton);
+
+  if(!btn)return;
+
+  btn.classList.add('checked');
+
+  if(!btn.innerHTML.includes('✅')){
+
+    btn.innerHTML =
+    btn.innerHTML + ' ✅';
+
+  }
 
 }
 
@@ -366,6 +395,11 @@ async function sendData(
 
     }
 
+    localStorage.setItem(
+      'lastButton',
+      buttonId
+    );
+
     document.getElementById('result').innerHTML =
     '送信しました';
 
@@ -399,6 +433,8 @@ async function emergencyAction(){
 showToday();
 
 setTodaySchedule();
+
+restoreLastButton();
 
 </script>
 
