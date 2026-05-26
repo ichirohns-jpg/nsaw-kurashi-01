@@ -16,7 +16,6 @@ body{
   margin:0;
   background:#eef3f8;
   font-family:"Hiragino Sans","Yu Gothic",sans-serif;
-  color:#222;
 }
 
 .top{
@@ -28,7 +27,6 @@ body{
   border-radius:28px;
   padding:30px 24px;
   color:#fff;
-  box-shadow:0 10px 28px rgba(0,0,0,.18);
 }
 
 .main-title{
@@ -40,7 +38,6 @@ body{
   margin-top:18px;
   font-size:34px;
   font-weight:900;
-  line-height:1.8;
 }
 
 .sub{
@@ -58,7 +55,6 @@ body{
   border-radius:28px;
   padding:24px;
   margin-bottom:24px;
-  box-shadow:0 8px 24px rgba(0,0,0,.12);
 }
 
 .title{
@@ -210,11 +206,12 @@ const SHEET_ID =
 '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
 
 const GAS_URL =
-'https://script.google.com/macros/s/AKfycbyZL39CdvZBXWiCG8nHsK5oUOIXHPjlj4HVHfWkR3LZLdO45QOGpTHDOOgPKqGYn_kj/exec';
+'https://script.google.com/macros/s/AKfycbywe3RelSNuDf8L2VuDqnQRU42abz5Ys6O8qmDYFqGL-3NNTS_akv7LGXeApCAAsS9U/exec';
 
 function showToday(){
 
-  const now = new Date();
+  const now =
+  new Date();
 
   const week = [
     '日曜日',
@@ -236,12 +233,13 @@ function showToday(){
 
 function speakNow(text){
 
+  speechSynthesis.cancel();
+
   const msg =
   new SpeechSynthesisUtterance(text);
 
-  msg.lang = 'ja-JP';
-
-  speechSynthesis.cancel();
+  msg.lang =
+  'ja-JP';
 
   speechSynthesis.speak(msg);
 
@@ -256,51 +254,48 @@ function setResult(text){
 
 }
 
-function saveLog(name,status,content){
-
-  fetch(GAS_URL,{
-
-    method:'POST',
-
-    body:JSON.stringify({
-
-      name:name,
-      status:status,
-      content:content
-
-    })
-
-  });
-
-}
-
 function addItem(target,text){
 
   const div =
   document.createElement('div');
 
-  div.className = 'item';
+  div.className =
+  'item';
 
-  div.innerHTML = text;
+  div.innerHTML =
+  text;
 
-  div.onclick = function(){
+  div.onclick =
+  function(){
 
     const plain =
     text.replace(/<br>/g,'。');
 
-    setResult(
-      plain
-    );
+    setResult(plain);
 
-    speakNow(
-      plain
-    );
+    speakNow(plain);
 
   };
 
   document
   .getElementById(target)
   .appendChild(div);
+
+}
+
+function saveLog(name,status,content){
+
+  const url =
+    GAS_URL +
+    '?name=' + encodeURIComponent(name) +
+    '&status=' + encodeURIComponent(status) +
+    '&content=' + encodeURIComponent(content) +
+    '&time=' + Date.now();
+
+  fetch(url)
+  .then(r => r.text())
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
 
 }
 
@@ -311,7 +306,8 @@ function handleMorning(response){
 
   if(!rows.length)return;
 
-  const row = rows[0];
+  const row =
+  rows[0];
 
   addItem(
     'aiBox',
@@ -368,13 +364,17 @@ function handlePlans(response){
 
 }
 
-window.onload = function(){
+window.onload =
+function(){
 
   showToday();
 
   loadMorning();
 
-  setTimeout(loadPlans,500);
+  setTimeout(
+    loadPlans,
+    500
+  );
 
 };
 
@@ -386,15 +386,16 @@ function loadMorning(){
   window.google = {
     visualization:{
       Query:{
-        setResponse:handleMorning
+        setResponse:
+        handleMorning
       }
     }
   };
 
   script.src =
-  'https://docs.google.com/spreadsheets/d/' +
-  SHEET_ID +
-  '/gviz/tq?sheet=朝DX&tqx=out:json';
+    'https://docs.google.com/spreadsheets/d/' +
+    SHEET_ID +
+    '/gviz/tq?sheet=朝DX&tqx=out:json';
 
   document.body.appendChild(script);
 
@@ -408,15 +409,16 @@ function loadPlans(){
   window.google = {
     visualization:{
       Query:{
-        setResponse:handlePlans
+        setResponse:
+        handlePlans
       }
     }
   };
 
   script.src =
-  'https://docs.google.com/spreadsheets/d/' +
-  SHEET_ID +
-  '/gviz/tq?sheet=予定&tqx=out:json';
+    'https://docs.google.com/spreadsheets/d/' +
+    SHEET_ID +
+    '/gviz/tq?sheet=予定&tqx=out:json';
 
   document.body.appendChild(script);
 
