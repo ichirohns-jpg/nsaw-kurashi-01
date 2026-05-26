@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>家族見守り確認</title>
+
+<style>
+
+body{
+  margin:0;
+  background:#eef3f8;
+  font-family:sans-serif;
+  padding:20px;
+}
+
+.title{
+  font-size:38px;
+  font-weight:900;
+  margin-bottom:20px;
+}
+
+.card{
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.time{
+  font-size:22px;
+  color:#666;
+  margin-bottom:10px;
+}
+
+.status{
+  font-size:34px;
+  font-weight:900;
+}
+
+.normal{
+  color:#43a047;
+}
+
+.alert{
+  color:#d32f2f;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="title">
+
+家族見守り確認
+
+</div>
+
+<div id="list"></div>
+
+<script>
+
+const SHEET_ID =
+'13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
+
+function handleData(response){
+
+  const rows =
+  response.table.rows;
+
+  const list =
+  document.getElementById('list');
+
+  list.innerHTML = '';
+
+  rows.reverse();
+
+  rows.forEach(function(r){
+
+    const time =
+      r.c[0]?.f ||
+      r.c[0]?.v ||
+      '';
+
+    const status =
+      r.c[2]?.v ||
+      '';
+
+    const content =
+      r.c[3]?.v ||
+      '';
+
+    const card =
+    document.createElement('div');
+
+    card.className =
+    'card';
+
+    const cls =
+      status === '緊急'
+      ? 'alert'
+      : 'normal';
+
+    card.innerHTML =
+
+      '<div class="time">' +
+      time +
+      '</div>' +
+
+      '<div class="status ' + cls + '">' +
+      content +
+      '</div>';
+
+    list.appendChild(card);
+
+  });
+
+}
+
+window.google = {
+  visualization:{
+    Query:{
+      setResponse:handleData
+    }
+  }
+};
+
+const script =
+document.createElement('script');
+
+script.src =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=見守り記録&tqx=out:json';
+
+document.body.appendChild(script);
+
+</script>
+
+</body>
+</html>
