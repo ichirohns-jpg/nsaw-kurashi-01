@@ -34,11 +34,10 @@ body{
 .main-title{
   font-size:42px;
   font-weight:900;
-  line-height:1.4;
 }
 
 .today-date{
-  margin-top:20px;
+  margin-top:18px;
   font-size:34px;
   font-weight:900;
   line-height:1.8;
@@ -88,7 +87,6 @@ body{
   color:#fff;
   font-size:36px;
   font-weight:900;
-  box-shadow:0 10px 28px rgba(0,0,0,.18);
 }
 
 .green{
@@ -176,14 +174,6 @@ body{
       今日の天気
     </div>
 
-    <button
-    class="big-btn blue"
-    onclick="speakWeather()">
-
-      ☀ 今日の天気を読む
-
-    </button>
-
     <div id="weatherBox"></div>
 
   </div>
@@ -236,25 +226,22 @@ function showToday(){
     '土曜日'
   ];
 
-  const text =
+  document.getElementById('todayDate').innerHTML =
     now.getFullYear() + '年' +
     (now.getMonth()+1) + '月' +
     now.getDate() + '日 ' +
     week[now.getDay()];
 
-  document.getElementById('todayDate').innerHTML =
-    text;
-
 }
 
 function speakNow(text){
-
-  speechSynthesis.cancel();
 
   const msg =
   new SpeechSynthesisUtterance(text);
 
   msg.lang = 'ja-JP';
+
+  speechSynthesis.cancel();
 
   speechSynthesis.speak(msg);
 
@@ -263,9 +250,27 @@ function speakNow(text){
 function setResult(text){
 
   document.getElementById('resultBox').innerHTML =
-  text +
-  '<br><br>' +
-  new Date().toLocaleTimeString();
+    text +
+    '<br><br>' +
+    new Date().toLocaleTimeString();
+
+}
+
+function saveLog(name,status,content){
+
+  fetch(GAS_URL,{
+
+    method:'POST',
+
+    body:JSON.stringify({
+
+      name:name,
+      status:status,
+      content:content
+
+    })
+
+  });
 
 }
 
@@ -278,77 +283,24 @@ function addItem(target,text){
 
   div.innerHTML = text;
 
-  div.addEventListener('click',function(){
+  div.onclick = function(){
 
     const plain =
-    text
-    .replace(/<br>/g,'。')
-    .replace(/🕒/g,'')
-    .replace(/📌/g,'')
-    .replace(/👜/g,'')
-    .replace(/☀/g,'')
-    .replace(/👕/g,'')
-    .replace(/⚠/g,'');
+    text.replace(/<br>/g,'。');
 
     setResult(
-      plain +
-      '<br><br>確認しました'
+      plain
     );
 
-    speakNow(plain);
+    speakNow(
+      plain
+    );
 
-  });
+  };
 
   document
   .getElementById(target)
   .appendChild(div);
-
-}
-
-function speakWeather(){
-
-  const box =
-  document.getElementById('weatherBox');
-
-  const text =
-  box.innerText;
-
-  setResult(text);
-
-  speakNow(text);
-
-}
-
-function saveLog(type,content,name,status){
-
-  fetch(GAS_URL,{
-
-    method:'POST',
-
-    body:JSON.stringify({
-
-      type:type,
-
-      content:content,
-
-      name:name,
-
-      status:status
-
-    })
-
-  })
-  .then(r => r.text())
-  .then(data => {
-
-    console.log(data);
-
-  })
-  .catch(err => {
-
-    console.log(err);
-
-  });
 
 }
 
@@ -357,40 +309,32 @@ function handleMorning(response){
   const rows =
   response.table.rows;
 
-  if(!rows || rows.length === 0)return;
+  if(!rows.length)return;
 
   const row = rows[0];
 
-  const ai =
-  row.c[1] ? row.c[1].v : '';
-
-  const weather =
-  row.c[2] ? row.c[2].v : '';
-
-  const wash =
-  row.c[3] ? row.c[3].v : '';
-
-  const notice =
-  row.c[4] ? row.c[4].v : '';
-
   addItem(
     'aiBox',
-    ai
+    row.c[1]?.v || ''
   );
 
   addItem(
     'weatherBox',
-    '☀ 今日の天気は ' + weather + ' です'
+    '☀ 今日の天気は ' +
+    (row.c[2]?.v || '') +
+    ' です'
   );
 
   addItem(
     'weatherBox',
-    '👕 ' + wash
+    '👕 ' +
+    (row.c[3]?.v || '')
   );
 
   addItem(
     'weatherBox',
-    '⚠ ' + notice
+    '⚠ ' +
+    (row.c[4]?.v || '')
   );
 
 }
@@ -402,29 +346,22 @@ function handlePlans(response){
 
   rows.forEach(function(r){
 
-    let time = '';
-
-    if(r.c[1] && r.c[1].f){
-
-      time = r.c[1].f;
-
-    }else if(r.c[1] && r.c[1].v){
-
-      time = r.c[1].v;
-
-    }
+    const time =
+      r.c[1]?.f ||
+      r.c[1]?.v ||
+      '';
 
     const plan =
-    r.c[3] ? r.c[3].v : '';
+      r.c[3]?.v || '';
 
     const item =
-    r.c[4] ? r.c[4].v : '';
+      r.c[4]?.v || '';
 
     addItem(
       'planBox',
-      '🕒 ' + time + '<br>' +
-      '📌 ' + plan + '<br>' +
-      '👜 ' + item
+      '🕒 ' + time +
+      '<br>📌 ' + plan +
+      '<br>👜 ' + item
     );
 
   });
@@ -437,11 +374,7 @@ window.onload = function(){
 
   loadMorning();
 
-  setTimeout(function(){
-
-    loadPlans();
-
-  },500);
+  setTimeout(loadPlans,500);
 
 };
 
@@ -453,11 +386,7 @@ function loadMorning(){
   window.google = {
     visualization:{
       Query:{
-        setResponse:function(response){
-
-          handleMorning(response);
-
-        }
+        setResponse:handleMorning
       }
     }
   };
@@ -479,11 +408,7 @@ function loadPlans(){
   window.google = {
     visualization:{
       Query:{
-        setResponse:function(response){
-
-          handlePlans(response);
-
-        }
+        setResponse:handlePlans
       }
     }
   };
@@ -508,10 +433,9 @@ function pushGenki(){
   );
 
   saveLog(
-    '見守り',
-    '元気です',
     '山口さん',
-    '正常'
+    '正常',
+    '元気です'
   );
 
 }
@@ -519,7 +443,7 @@ function pushGenki(){
 function pushCare(){
 
   setResult(
-    '気になる状態を記録しました'
+    '💬 気になる状態を記録しました'
   );
 
   speakNow(
@@ -527,10 +451,9 @@ function pushCare(){
   );
 
   saveLog(
-    '見守り',
-    '気になる',
     '山口さん',
-    '注意'
+    '注意',
+    '気になる'
   );
 
 }
@@ -538,7 +461,7 @@ function pushCare(){
 function pushEmergency(){
 
   setResult(
-    '緊急確認を記録しました'
+    '🚨 緊急確認を記録しました'
   );
 
   speakNow(
@@ -546,10 +469,9 @@ function pushEmergency(){
   );
 
   saveLog(
-    '緊急',
-    '緊急です',
     '山口さん',
-    '緊急'
+    '緊急',
+    '緊急です'
   );
 
 }
@@ -557,7 +479,7 @@ function pushEmergency(){
 function pushMedicine(){
 
   setResult(
-    '服薬確認を記録しました'
+    '💊 服薬確認を記録しました'
   );
 
   speakNow(
@@ -565,10 +487,9 @@ function pushMedicine(){
   );
 
   saveLog(
-    '服薬',
-    '服薬確認',
     '山口さん',
-    '確認済み'
+    '服薬',
+    '服薬確認'
   );
 
 }
@@ -576,7 +497,7 @@ function pushMedicine(){
 function pushHome(){
 
   setResult(
-    '帰宅確認を記録しました'
+    '🏠 帰宅確認を記録しました'
   );
 
   speakNow(
@@ -584,10 +505,9 @@ function pushHome(){
   );
 
   saveLog(
-    '帰宅',
-    '帰宅しました',
     '山口さん',
-    '帰宅'
+    '帰宅',
+    '帰宅しました'
   );
 
 }
