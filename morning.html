@@ -44,21 +44,21 @@ body{
   background:white;
   border-radius:26px;
   padding:24px;
-  margin-bottom:20px;
+  margin-bottom:22px;
   box-shadow:0 4px 12px rgba(0,0,0,.1);
 }
 
 .schedule-title{
   font-size:26px;
   font-weight:900;
-  margin-bottom:12px;
+  margin-bottom:14px;
   color:#1565c0;
 }
 
 .schedule-item{
   font-size:34px;
   font-weight:900;
-  line-height:1.5;
+  line-height:1.6;
 }
 
 button{
@@ -122,11 +122,19 @@ button{
       📅 今日の予定
     </div>
 
-    <div class="schedule-item" id="todaySchedule">
+    <div class="schedule-item">
       14:30 病院
     </div>
 
   </div>
+
+  <button
+  class="blue"
+  onclick="sendData('外出','🏥 病院へ出発しました')">
+
+  🏥 病院へ出発しました
+
+  </button>
 
   <button
   class="green"
