@@ -175,7 +175,7 @@ body{
     </div>
 
     <div class="sub">
-      今日の予定・ゴミ・天気・体調確認を、
+      今日の予定・天気・体調確認を、
       毎朝わかりやすく確認できます。
     </div>
 
@@ -274,7 +274,8 @@ function setResult(text){
 
 function addItem(target,text){
 
-  const div = document.createElement('div');
+  const div =
+  document.createElement('div');
 
   div.className = 'item';
 
@@ -308,48 +309,71 @@ function addItem(target,text){
 
 function handleMorning(response){
 
-  const rows = response.table.rows;
+  const rows =
+  response.table.rows;
 
   if(!rows || rows.length === 0)return;
 
   const row = rows[0];
 
   const ai =
-    row.c[1] ? row.c[1].v : '';
+  row.c[1] ? row.c[1].v : '';
 
   const weather =
-    row.c[2] ? row.c[2].v : '';
+  row.c[2] ? row.c[2].v : '';
 
   const wash =
-    row.c[3] ? row.c[3].v : '';
+  row.c[3] ? row.c[3].v : '';
 
   const notice =
-    row.c[4] ? row.c[4].v : '';
+  row.c[4] ? row.c[4].v : '';
 
-  addItem('aiBox',ai);
+  addItem(
+    'aiBox',
+    ai
+  );
 
-  addItem('weatherBox','☀ ' + weather);
+  addItem(
+    'weatherBox',
+    '☀ ' + weather
+  );
 
-  addItem('weatherBox','👕 ' + wash);
+  addItem(
+    'weatherBox',
+    '👕 ' + wash
+  );
 
-  addItem('weatherBox','⚠ ' + notice);
+  addItem(
+    'weatherBox',
+    '⚠ ' + notice
+  );
 
 }
 
 function handlePlans(response){
 
-  const rows = response.table.rows;
+  const rows =
+  response.table.rows;
 
   rows.forEach(function(r){
 
-    const time =
-      r.c[1] ? r.c[1].v : '';
+    let time = '';
+
+    if(r.c[1] && r.c[1].f){
+
+      time = r.c[1].f;
+
+    }else if(r.c[1] && r.c[1].v){
+
+      time = r.c[1].v;
+
+    }
 
     const plan =
-      r.c[3] ? r.c[3].v : '';
+    r.c[3] ? r.c[3].v : '';
 
     const item =
-      r.c[4] ? r.c[4].v : '';
+    r.c[4] ? r.c[4].v : '';
 
     addItem(
       'planBox',
@@ -366,7 +390,11 @@ window.onload = function(){
 
   loadMorning();
 
-  loadPlans();
+  setTimeout(function(){
+
+    loadPlans();
+
+  },500);
 
 };
 
