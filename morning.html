@@ -208,6 +208,14 @@ body{
       今日の天気
     </div>
 
+    <button
+    class="big-btn blue"
+    onclick="speakWeather()">
+
+      ☀ 今日の天気を読む
+
+    </button>
+
     <div id="weatherBox"></div>
 
   </div>
@@ -323,6 +331,20 @@ function addItem(target,text){
   document
   .getElementById(target)
   .appendChild(div);
+
+}
+
+function speakWeather(){
+
+  const box =
+  document.getElementById('weatherBox');
+
+  const text =
+  box.innerText;
+
+  setResult(text);
+
+  speakNow(text);
 
 }
 
