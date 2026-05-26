@@ -239,10 +239,6 @@ body{
     今日の確認はまだありません
   </div>
 
-  <a class="home-btn" href="index.html">
-    ← トップへ戻る
-  </a>
-
 </div>
 
 <script>
@@ -250,25 +246,33 @@ body{
 const SHEET_ID =
 '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
 
-function speak(text){
+function speakNow(text){
 
-  speechSynthesis.cancel();
+  try{
 
-  const msg =
-  new SpeechSynthesisUtterance(text);
+    speechSynthesis.cancel();
 
-  msg.lang = 'ja-JP';
+    const msg =
+    new SpeechSynthesisUtterance(text);
 
-  speechSynthesis.speak(msg);
+    msg.lang = 'ja-JP';
+
+    speechSynthesis.speak(msg);
+
+  }catch(e){
+
+    console.log(e);
+
+  }
 
 }
 
 function setResult(text){
 
   document.getElementById('resultBox').innerHTML =
-    text +
-    '<br><br>' +
-    new Date().toLocaleTimeString();
+  text +
+  '<br><br>' +
+  new Date().toLocaleTimeString();
 
 }
 
@@ -281,25 +285,26 @@ function addItem(target,text){
 
   div.innerHTML = text;
 
-  div.onclick = function(){
+  div.addEventListener('click',function(){
+
+    const plain =
+    text
+    .replace(/<br>/g,'。')
+    .replace(/🕒/g,'')
+    .replace(/📌/g,'')
+    .replace(/👜/g,'')
+    .replace(/☀/g,'')
+    .replace(/👕/g,'')
+    .replace(/⚠/g,'');
 
     setResult(
-      text +
+      plain +
       '<br><br>確認しました'
     );
 
-    speak(
-      text
-      .replace(/<br>/g,'。')
-      .replace(/🕒/g,'')
-      .replace(/📌/g,'')
-      .replace(/👜/g,'')
-      .replace(/☀/g,'')
-      .replace(/👕/g,'')
-      .replace(/⚠/g,'')
-    );
+    speakNow(plain);
 
-  };
+  });
 
   document
   .getElementById(target)
@@ -456,7 +461,7 @@ function pushGenki(){
     '😊 元気確認を記録しました'
   );
 
-  speak(
+  speakNow(
     '元気確認を記録しました'
   );
 
@@ -465,10 +470,10 @@ function pushGenki(){
 function pushCare(){
 
   setResult(
-    '💬 気になる状態を記録しました'
+    '気になる状態を記録しました'
   );
 
-  speak(
+  speakNow(
     '気になる状態を記録しました'
   );
 
@@ -477,10 +482,10 @@ function pushCare(){
 function pushEmergency(){
 
   setResult(
-    '🚨 緊急確認を記録しました'
+    '緊急確認を記録しました'
   );
 
-  speak(
+  speakNow(
     '緊急確認を記録しました'
   );
 
@@ -489,10 +494,10 @@ function pushEmergency(){
 function pushMedicine(){
 
   setResult(
-    '💊 服薬確認を記録しました'
+    '服薬確認を記録しました'
   );
 
-  speak(
+  speakNow(
     '服薬確認を記録しました'
   );
 
@@ -501,10 +506,10 @@ function pushMedicine(){
 function pushHome(){
 
   setResult(
-    '🏠 帰宅確認を記録しました'
+    '帰宅確認を記録しました'
   );
 
-  speak(
+  speakNow(
     '帰宅確認を記録しました'
   );
 
