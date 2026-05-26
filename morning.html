@@ -247,7 +247,30 @@ body{
 
 <script>
 
-const SHEET_ID = '13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
+const SHEET_ID =
+'13qavSy8Thod2S_UWtHf0C7s-IDVcpYYEMvRNPHpabjY';
+
+function speak(text){
+
+  speechSynthesis.cancel();
+
+  const msg =
+  new SpeechSynthesisUtterance(text);
+
+  msg.lang = 'ja-JP';
+
+  speechSynthesis.speak(msg);
+
+}
+
+function setResult(text){
+
+  document.getElementById('resultBox').innerHTML =
+    text +
+    '<br><br>' +
+    new Date().toLocaleTimeString();
+
+}
 
 function addItem(target,text){
 
@@ -257,7 +280,29 @@ function addItem(target,text){
 
   div.innerHTML = text;
 
-  document.getElementById(target).appendChild(div);
+  div.onclick = function(){
+
+    setResult(
+      text +
+      '<br><br>確認しました'
+    );
+
+    speak(
+      text
+      .replace(/<br>/g,'。')
+      .replace(/🕒/g,'')
+      .replace(/📌/g,'')
+      .replace(/👜/g,'')
+      .replace(/☀/g,'')
+      .replace(/👕/g,'')
+      .replace(/⚠/g,'')
+    );
+
+  };
+
+  document
+  .getElementById(target)
+  .appendChild(div);
 
 }
 
@@ -327,12 +372,8 @@ window.onload = function(){
 
 function loadMorning(){
 
-  const script = document.createElement('script');
-
-  script.src =
-  'https://docs.google.com/spreadsheets/d/' +
-  SHEET_ID +
-  '/gviz/tq?sheet=朝DX&tqx=out:json';
+  const script =
+  document.createElement('script');
 
   window.google = {
     visualization:{
@@ -346,18 +387,19 @@ function loadMorning(){
     }
   };
 
+  script.src =
+  'https://docs.google.com/spreadsheets/d/' +
+  SHEET_ID +
+  '/gviz/tq?sheet=朝DX&tqx=out:json';
+
   document.body.appendChild(script);
 
 }
 
 function loadPlans(){
 
-  const script = document.createElement('script');
-
-  script.src =
-  'https://docs.google.com/spreadsheets/d/' +
-  SHEET_ID +
-  '/gviz/tq?sheet=予定&tqx=out:json';
+  const script =
+  document.createElement('script');
 
   window.google = {
     visualization:{
@@ -371,45 +413,72 @@ function loadPlans(){
     }
   };
 
+  script.src =
+  'https://docs.google.com/spreadsheets/d/' +
+  SHEET_ID +
+  '/gviz/tq?sheet=予定&tqx=out:json';
+
   document.body.appendChild(script);
-
-}
-
-function setResult(text){
-
-  document.getElementById('resultBox').innerHTML =
-    text + '<br><br>' +
-    new Date().toLocaleTimeString();
 
 }
 
 function pushGenki(){
 
-  setResult('😊 元気確認を記録しました');
+  setResult(
+    '😊 元気確認を記録しました'
+  );
+
+  speak(
+    '元気確認を記録しました'
+  );
 
 }
 
 function pushCare(){
 
-  setResult('💬 気になる状態を記録しました');
+  setResult(
+    '💬 気になる状態を記録しました'
+  );
+
+  speak(
+    '気になる状態を記録しました'
+  );
 
 }
 
 function pushEmergency(){
 
-  setResult('🚨 緊急確認を記録しました');
+  setResult(
+    '🚨 緊急確認を記録しました'
+  );
+
+  speak(
+    '緊急確認を記録しました'
+  );
 
 }
 
 function pushMedicine(){
 
-  setResult('💊 服薬確認を記録しました');
+  setResult(
+    '💊 服薬確認を記録しました'
+  );
+
+  speak(
+    '服薬確認を記録しました'
+  );
 
 }
 
 function pushHome(){
 
-  setResult('🏠 帰宅確認を記録しました');
+  setResult(
+    '🏠 帰宅確認を記録しました'
+  );
+
+  speak(
+    '帰宅確認を記録しました'
+  );
 
 }
 
