@@ -7,25 +7,54 @@
 <title>家族見守り確認</title>
 
 <style>
-
 body{
   margin:0;
   background:#eef3f8;
   font-family:sans-serif;
-  padding:20px;
+  padding:18px;
+  color:#222;
 }
 
 .title{
-  font-size:38px;
+  font-size:36px;
   font-weight:900;
-  margin-bottom:20px;
+  margin-bottom:18px;
+  text-align:center;
+}
+
+.current{
+  background:#ffffff;
+  border-radius:28px;
+  padding:28px;
+  margin-bottom:24px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+  text-align:center;
+}
+
+.current-label{
+  font-size:24px;
+  color:#666;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+.current-status{
+  font-size:42px;
+  font-weight:900;
+  line-height:1.5;
+}
+
+.current-time{
+  font-size:24px;
+  color:#666;
+  margin-top:12px;
 }
 
 .card{
   background:white;
-  border-radius:20px;
-  padding:20px;
-  margin-bottom:18px;
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:16px;
   box-shadow:0 4px 12px rgba(0,0,0,.1);
 }
 
@@ -36,28 +65,45 @@ body{
 }
 
 .status{
-  font-size:34px;
+  font-size:32px;
   font-weight:900;
+  line-height:1.5;
 }
 
 .normal{
-  color:#43a047;
+  color:#2e7d32;
 }
 
 .alert{
   color:#d32f2f;
 }
 
+.share{
+  display:block;
+  text-align:center;
+  background:#06c755;
+  color:white;
+  text-decoration:none;
+  font-size:28px;
+  font-weight:900;
+  padding:22px;
+  border-radius:22px;
+  margin:20px 0;
+}
 </style>
 </head>
 
 <body>
 
 <div class="title">
-
 家族見守り確認
-
 </div>
+
+<div id="currentStatus"></div>
+
+<a class="share" href="https://line.me/R/msg/text/?家族見守り確認%0Ahttps://ichirohns-jpg.github.io/nsaw-kurashi-01/family.html">
+LINEで共有
+</a>
 
 <div id="list"></div>
 
@@ -76,7 +122,49 @@ function handleData(response){
 
   list.innerHTML = '';
 
+  if(!rows || rows.length === 0){
+
+    document.getElementById('currentStatus').innerHTML =
+    '<div class="current"><div class="current-status">まだ記録がありません</div></div>';
+
+    return;
+
+  }
+
   rows.reverse();
+
+  const latest =
+  rows[0];
+
+  const latestTime =
+    latest.c[0]?.f ||
+    latest.c[0]?.v ||
+    '';
+
+  const latestStatus =
+    latest.c[2]?.v ||
+    '';
+
+  const latestContent =
+    latest.c[3]?.v ||
+    '';
+
+  const latestClass =
+  latestStatus === '緊急'
+  ? 'alert'
+  : 'normal';
+
+  document.getElementById('currentStatus').innerHTML =
+
+    '<div class="current">' +
+      '<div class="current-label">現在の状態</div>' +
+      '<div class="current-status ' + latestClass + '">' +
+        latestContent +
+      '</div>' +
+      '<div class="current-time">' +
+        latestTime +
+      '</div>' +
+    '</div>';
 
   rows.forEach(function(r){
 
@@ -93,16 +181,16 @@ function handleData(response){
       r.c[3]?.v ||
       '';
 
+    const cls =
+      status === '緊急'
+      ? 'alert'
+      : 'normal';
+
     const card =
     document.createElement('div');
 
     card.className =
     'card';
-
-    const cls =
-      status === '緊急'
-      ? 'alert'
-      : 'normal';
 
     card.innerHTML =
 
