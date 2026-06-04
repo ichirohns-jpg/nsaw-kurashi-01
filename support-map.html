@@ -362,6 +362,30 @@ const chargeURL =
 'https://www.google.com/maps/search/?api=1&query=' +
 lat + ',' + lng + '+充電';
 
+const drugURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+ドラッグストア';
+
+const cleanURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+清掃';
+
+const keyURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+鍵屋';
+
+const waterURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+水道';
+
+const electricURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+電気';
+
+const gasLifeURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+ガス';
+
 marker.bindPopup(`
 
 <div class="popup">
@@ -632,6 +656,48 @@ style="background:#00838f;"
 target="_blank"
 href="${chargeURL}">
 🔌 充電
+</a>
+
+<a class="btn"
+style="background:#2e7d32;"
+target="_blank"
+href="${drugURL}">
+🏪 ドラッグストア
+</a>
+
+<a class="btn"
+style="background:#546e7a;"
+target="_blank"
+href="${cleanURL}">
+🧹 清掃業者
+</a>
+
+<a class="btn"
+style="background:#6d4c41;"
+target="_blank"
+href="${keyURL}">
+🔑 鍵屋
+</a>
+
+<a class="btn"
+style="background:#0277bd;"
+target="_blank"
+href="${waterURL}">
+🚰 水道
+</a>
+
+<a class="btn"
+style="background:#f9a825;"
+target="_blank"
+href="${electricURL}">
+⚡ 電気
+</a>
+
+<a class="btn"
+style="background:#ef6c00;"
+target="_blank"
+href="${gasLifeURL}">
+🔥 ガス
 </a>
 
 </div>
