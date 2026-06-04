@@ -13,7 +13,7 @@ content="width=device-width,initial-scale=1">
 content="NSAW 4市瓦版">
 
 <meta property="og:description"
-content="志木・新座・朝霞・和光の地域情報を毎日更新予定">
+content="志木・新座・朝霞・和光の地域情報">
 
 <meta property="og:type"
 content="website">
@@ -109,23 +109,14 @@ margin-bottom:10px;
 }
 
 .category{
-
 display:inline-block;
-
 background:#1565c0;
-
 color:white;
-
 padding:6px 12px;
-
 border-radius:10px;
-
 font-size:14px;
-
 font-weight:900;
-
 margin-bottom:14px;
-
 }
 
 .cardTitle{
@@ -141,51 +132,17 @@ line-height:1.9;
 color:#506070;
 }
 
-.cityBtns{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-top:20px;
-}
-
-.cityBtn{
+.videoBtn{
+display:block;
+background:#d32f2f;
+color:white;
 text-decoration:none;
-color:white;
-padding:12px 16px;
-border-radius:14px;
-font-size:18px;
-font-weight:900;
-display:inline-block;
-}
-
-.shareBtns{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-top:20px;
-}
-
-.shareBtn{
-flex:1;
-text-align:center;
-text-decoration:none;
-color:white;
-padding:14px;
-border-radius:14px;
-font-weight:900;
-font-size:18px;
-}
-
-.copyBtn{
-width:100%;
-border:none;
-background:#455a64;
-color:white;
 padding:16px;
 border-radius:16px;
+text-align:center;
 font-size:18px;
 font-weight:900;
-margin-top:14px;
+margin-top:18px;
 }
 
 .footerMenu{
@@ -210,28 +167,11 @@ box-shadow:
 0 4px 12px rgba(0,0,0,.2);
 }
 
-@media(max-width:768px){
-
-.title{
-font-size:28px;
-}
-
-.sub{
-font-size:18px;
-}
-
-.cardTitle{
-font-size:24px;
-}
-
-.cardText{
-font-size:18px;
-}
-
-.shareBtn{
-font-size:16px;
-}
-
+.loading{
+text-align:center;
+font-size:22px;
+font-weight:900;
+padding:40px;
 }
 
 </style>
@@ -265,348 +205,13 @@ class="backBtn">
 
 <div class="wrap">
 
-<div style="
-background:#1565c0;
-color:white;
-padding:20px;
-border-radius:22px;
-margin-bottom:24px;
-box-shadow:0 6px 18px rgba(0,0,0,.15);
-">
+<div id="newsArea">
 
-<div style="
-font-size:30px;
-font-weight:900;
-margin-bottom:10px;
-">
+<div class="loading">
 
-📰 NSAW 4市瓦版
+読み込み中...
 
 </div>
-
-<div style="
-font-size:20px;
-line-height:1.8;
-">
-
-志木・新座・朝霞・和光の
-地域情報を毎日更新予定
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img
-src="img/shiki.jpg"
-class="articleImage">
-
-<div class="date">
-2026年6月
-</div>
-
-<div class="category">
-志木市ニュース
-</div>
-
-<div class="cardTitle">
-
-志木・新座・朝霞・和光
-4市DX準備スタート
-
-</div>
-
-<div class="cardText">
-
-4市瓦版、
-地域ラジオ、
-支援者マップを中心に、
-
-地域DXの試験運用を
-開始しました。
-
-月曜朝より、
-4市情報の更新を
-順次開始予定です。
-
-</div>
-
-<div class="cityBtns">
-
-<a
-class="cityBtn"
-style="background:#8e24aa;"
-href="#">
-
-志木市
-
-</a>
-
-<a
-class="cityBtn"
-style="background:#00897b;"
-href="#">
-
-新座市
-
-</a>
-
-<a
-class="cityBtn"
-style="background:#ef6c00;"
-href="#">
-
-朝霞市
-
-</a>
-
-<a
-class="cityBtn"
-style="background:#3949ab;"
-href="#">
-
-和光市
-
-</a>
-
-</div>
-
-<div class="shareBtns">
-
-<a
-class="shareBtn"
-style="background:#1877f2;"
-target="_blank"
-href="https://www.facebook.com/sharer/sharer.php?u=https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html">
-
-Facebook
-
-</a>
-
-<a
-class="shareBtn"
-style="background:#06c755;"
-target="_blank"
-href="https://social-plugins.line.me/lineit/share?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html">
-
-LINE
-
-</a>
-
-<a
-class="shareBtn"
-style="background:#000000;"
-target="_blank"
-href="https://twitter.com/intent/tweet?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html&text=NSAW 4市瓦版">
-
-X
-
-</a>
-
-</div>
-
-<button
-class="copyBtn"
-onclick="copyURL()">
-
-🔗 URLコピー
-
-</button>
-
-</div>
-
-<div class="card">
-
-<img
-src="img/radio.jpg"
-class="articleImage">
-
-<div class="date">
-2026年6月
-</div>
-
-<div class="category"
-style="background:#00897b;">
-地域ラジオ
-</div>
-
-<div class="cardTitle">
-
-地域ラジオ 月曜朝スタート予定
-
-</div>
-
-<div class="cardText">
-
-毎朝3分、
-志木・新座・朝霞・和光の
-地域情報を配信予定です。
-
-CapCut AI音声による
-試験運用を開始予定。
-
-</div>
-
-<div class="cityBtns">
-
-<a
-class="cityBtn"
-style="background:#00897b;"
-href="radio.html">
-
-地域ラジオ
-
-</a>
-
-<a
-class="cityBtn"
-style="background:#1565c0;"
-href="index.html">
-
-トップ
-
-</a>
-
-</div>
-
-<div class="shareBtns">
-
-<a
-class="shareBtn"
-style="background:#1877f2;"
-target="_blank"
-href="https://www.facebook.com/sharer/sharer.php?u=https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html">
-
-Facebook
-
-</a>
-
-<a
-class="shareBtn"
-style="background:#06c755;"
-target="_blank"
-href="https://social-plugins.line.me/lineit/share?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html">
-
-LINE
-
-</a>
-
-<a
-class="shareBtn"
-style="background:#000000;"
-target="_blank"
-href="https://twitter.com/intent/tweet?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html&text=NSAW 地域ラジオ">
-
-X
-
-</a>
-
-</div>
-
-<button
-class="copyBtn"
-onclick="copyRadioURL()">
-
-🔗 この記事URLコピー
-
-</button>
-
-</div>
-
-<div class="card">
-
-<img
-src="img/map.jpg"
-class="articleImage">
-
-<div class="date">
-2026年6月
-</div>
-
-<div class="category"
-style="background:#d32f2f;">
-支援マップ
-</div>
-
-<div class="cardTitle">
-
-支援者マップ 更新中
-
-</div>
-
-<div class="cardText">
-
-現在地、
-SOS、
-地域支援情報を確認できる
-支援者マップを試験運用中です。
-
-</div>
-
-<div class="cityBtns">
-
-<a
-class="cityBtn"
-style="background:#d32f2f;"
-href="support-map.html">
-
-支援マップ
-
-</a>
-
-<a
-class="cityBtn"
-style="background:#1565c0;"
-href="index.html">
-
-トップ
-
-</a>
-
-</div>
-
-<div class="shareBtns">
-
-<a
-class="shareBtn"
-style="background:#1877f2;"
-target="_blank"
-href="https://www.facebook.com/sharer/sharer.php?u=https://ichirohns-jpg.github.io/nsaw-kurashi-01/support-map.html">
-
-Facebook
-
-</a>
-
-<a
-class="shareBtn"
-style="background:#06c755;"
-target="_blank"
-href="https://social-plugins.line.me/lineit/share?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/support-map.html">
-
-LINE
-
-</a>
-
-<a
-class="shareBtn"
-style="background:#000000;"
-target="_blank"
-href="https://twitter.com/intent/tweet?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/support-map.html&text=NSAW 支援者マップ">
-
-X
-
-</a>
-
-</div>
-
-<button
-class="copyBtn"
-onclick="copyMapURL()">
-
-🔗 この記事URLコピー
-
-</button>
 
 </div>
 
@@ -651,35 +256,97 @@ border:3px solid white;
 
 <script>
 
-function copyURL(){
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-navigator.clipboard.writeText(
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html'
+const SHEET_NAME =
+'シート1';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json';
+
+fetch(url)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(
+text.substr(47).slice(0,-2)
 );
 
-alert("瓦版URLをコピーしました");
+const rows =
+json.table.rows;
 
-}
+let html = '';
 
-function copyRadioURL(){
+rows.forEach(r=>{
 
-navigator.clipboard.writeText(
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html'
-);
+const date =
+r.c[0] ? r.c[0].v : '';
 
-alert("地域ラジオURLをコピーしました");
+const title =
+r.c[1] ? r.c[1].v : '';
 
-}
+const image =
+r.c[2] ? r.c[2].v : '';
 
-function copyMapURL(){
+const desc =
+r.c[3] ? r.c[3].v : '';
 
-navigator.clipboard.writeText(
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/support-map.html'
-);
+const video =
+r.c[4] ? r.c[4].v : '';
 
-alert("支援者マップURLをコピーしました");
+const category =
+r.c[5] ? r.c[5].v : '';
 
-}
+html += `
+
+<div class="card">
+
+<img
+src="${image}"
+class="articleImage">
+
+<div class="date">
+${date}
+</div>
+
+<div class="category">
+${category}
+</div>
+
+<div class="cardTitle">
+${title}
+</div>
+
+<div class="cardText">
+${desc}
+</div>
+
+<a
+class="videoBtn"
+href="${video}"
+target="_blank">
+
+▶ 動画を見る
+
+</a>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+'newsArea'
+).innerHTML = html;
+
+});
 
 </script>
 
