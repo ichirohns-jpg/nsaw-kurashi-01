@@ -136,8 +136,29 @@ const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
 const map =
-L.map('map')
-.setView([35.8257,139.5755],13);
+L.map('map');
+
+navigator.geolocation.getCurrentPosition(
+
+(pos)=>{
+
+const lat =
+pos.coords.latitude;
+
+const lng =
+pos.coords.longitude;
+
+map.setView([lat,lng],14);
+
+},
+
+()=>{
+
+map.setView([35.8257,139.5755],13);
+
+}
+
+);
 
 L.tileLayer(
 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
