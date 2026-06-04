@@ -199,17 +199,51 @@ color = 'red';
 
 }
 
+let radius = 14;
+
+if(status.includes('助け')){
+
+radius = 22;
+
+}
+
 const marker =
 L.circleMarker(
 [lat,lng],
 {
-radius:14,
+radius:radius,
 color:color,
 fillColor:color,
 fillOpacity:0.9
 }
 )
 .addTo(map);
+
+if(status.includes('助け')){
+
+let flash = true;
+
+setInterval(()=>{
+
+if(flash){
+
+marker.setStyle({
+fillOpacity:0.2
+});
+
+}else{
+
+marker.setStyle({
+fillOpacity:0.95
+});
+
+}
+
+flash = !flash;
+
+},500);
+
+}
 
 const userURL =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/mamori.html?id=' +
