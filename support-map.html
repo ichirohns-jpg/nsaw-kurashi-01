@@ -327,6 +327,22 @@ const busURL =
 'https://www.google.com/maps/search/?api=1&query=' +
 lat + ',' + lng + '+バス停';
 
+const cafeURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+カフェ';
+
+const foodShopURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+飲食店';
+
+const bankURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+銀行';
+
+const postURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+郵便局';
+
 marker.bindPopup(`
 
 <div class="popup">
@@ -539,6 +555,46 @@ target="_blank"
 href="${busURL}">
 
 🚌 バス停
+
+</a>
+
+<a
+class="btn"
+style="background:#6d4c41;"
+target="_blank"
+href="${cafeURL}">
+
+☕ カフェ
+
+</a>
+
+<a
+class="btn"
+style="background:#ef6c00;"
+target="_blank"
+href="${foodShopURL}">
+
+🍜 飲食店
+
+</a>
+
+<a
+class="btn"
+style="background:#1b5e20;"
+target="_blank"
+href="${bankURL}">
+
+🏦 銀行
+
+</a>
+
+<a
+class="btn"
+style="background:#ad1457;"
+target="_blank"
+href="${postURL}">
+
+📮 郵便局
 
 </a>
 
