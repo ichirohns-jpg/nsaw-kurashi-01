@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+お楽しみ動画
+</title>
+
+<meta property="og:title"
+content="NSAW お楽しみ動画">
+
+<meta property="og:description"
+content="昭和歌謡・懐かし映像・地域のお楽しみ動画">
+
+<meta property="og:type"
+content="website">
+
+<meta property="og:url"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg">
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+padding:0;
+background:#eef3f8;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+color:#17324d;
+}
+
+.top{
+padding:20px;
+background:#ffffff;
+box-shadow:
+0 4px 12px rgba(0,0,0,.12);
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.title{
+font-size:34px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.backBtn{
+display:inline-block;
+margin-top:12px;
+background:#455a64;
+color:white;
+padding:10px 16px;
+border-radius:14px;
+text-decoration:none;
+font-weight:900;
+font-size:18px;
+}
+
+.sub{
+font-size:20px;
+line-height:1.8;
+color:#607080;
+margin-top:18px;
+}
+
+.wrap{
+max-width:900px;
+margin:auto;
+padding:24px 16px 120px;
+}
+
+.card{
+background:#ffffff;
+border-radius:24px;
+padding:24px;
+margin-bottom:24px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+}
+
+.articleImage{
+width:100%;
+border-radius:18px;
+margin-bottom:18px;
+display:block;
+}
+
+.date{
+font-size:18px;
+font-weight:900;
+color:#ff9800;
+margin-bottom:10px;
+}
+
+.category{
+display:inline-block;
+background:#ff9800;
+color:white;
+padding:6px 12px;
+border-radius:10px;
+font-size:14px;
+font-weight:900;
+margin-bottom:14px;
+}
+
+.cardTitle{
+font-size:28px;
+font-weight:900;
+line-height:1.5;
+margin-bottom:16px;
+}
+
+.cardText{
+font-size:20px;
+line-height:1.9;
+color:#506070;
+}
+
+.videoBtn{
+display:block;
+background:#ff9800;
+color:white;
+text-decoration:none;
+padding:16px;
+border-radius:16px;
+text-align:center;
+font-size:18px;
+font-weight:900;
+margin-top:18px;
+}
+
+.shareBtns{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:20px;
+}
+
+.shareBtn{
+flex:1;
+text-align:center;
+text-decoration:none;
+color:white;
+padding:14px;
+border-radius:14px;
+font-weight:900;
+font-size:18px;
+}
+
+.copyBtn{
+width:100%;
+border:none;
+background:#455a64;
+color:white;
+padding:16px;
+border-radius:16px;
+font-size:18px;
+font-weight:900;
+margin-top:14px;
+}
+
+.footerMenu{
+position:fixed;
+bottom:14px;
+left:0;
+right:0;
+display:flex;
+justify-content:center;
+gap:10px;
+z-index:9999;
+}
+
+.footerBtn{
+color:white;
+padding:10px 14px;
+border-radius:16px;
+text-decoration:none;
+font-weight:900;
+font-size:16px;
+box-shadow:
+0 4px 12px rgba(0,0,0,.2);
+}
+
+.loading{
+text-align:center;
+font-size:22px;
+font-weight:900;
+padding:40px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+<div class="title">
+🎬 お楽しみ動画
+</div>
+
+<a
+href="index.html"
+class="backBtn">
+
+⬅ トップへ戻る
+
+</a>
+
+<div class="sub">
+
+昭和歌謡、
+懐かしい映像、
+地域のお楽しみ動画
+
+</div>
+
+</div>
+
+<div class="wrap">
+
+<div id="funArea">
+
+<div class="loading">
+
+読み込み中...
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footerMenu">
+
+<a href="index.html"
+class="footerBtn"
+style="
+background:#455a64;
+border:3px solid white;
+">
+
+🏠 トップ
+
+</a>
+
+<a href="kawaraban.html"
+class="footerBtn"
+style="
+background:#1565c0;
+border:3px solid white;
+">
+
+📰 瓦版
+
+</a>
+
+<a href="radio.html"
+class="footerBtn"
+style="
+background:#00897b;
+border:3px solid white;
+">
+
+📻 ラジオ
+
+</a>
+
+</div>
+
+<script>
+
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const SHEET_NAME =
+'シート1';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json';
+
+fetch(url)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(
+text.substr(47).slice(0,-2)
+);
+
+const rows =
+json.table.rows;
+
+let html = '';
+
+rows.forEach(r=>{
+
+const date =
+r.c[0] ? r.c[0].v : '';
+
+const title =
+r.c[1] ? r.c[1].v : '';
+
+const image =
+r.c[2] ? r.c[2].v : '';
+
+const desc =
+r.c[3] ? r.c[3].v : '';
+
+const video =
+r.c[4] ? r.c[4].v : '';
+
+const category =
+r.c[5] ? r.c[5].v : '';
+
+if(category !== 'お楽しみ'){
+return;
+}
+
+html += `
+
+<div class="card">
+
+<img
+src="${image}"
+class="articleImage">
+
+<div class="date">
+${date}
+</div>
+
+<div class="category">
+お楽しみ動画
+</div>
+
+<div class="cardTitle">
+${title}
+</div>
+
+<div class="cardText">
+${desc}
+</div>
+
+<a
+class="videoBtn"
+href="${video}"
+target="_blank">
+
+▶ 動画を見る
+
+</a>
+
+<div class="shareBtns">
+
+<a
+class="shareBtn"
+style="background:#1877f2;"
+target="_blank"
+href="https://www.facebook.com/sharer/sharer.php?u=${video}">
+
+Facebook
+
+</a>
+
+<a
+class="shareBtn"
+style="background:#06c755;"
+target="_blank"
+href="https://social-plugins.line.me/lineit/share?url=${video}">
+
+LINE
+
+</a>
+
+<a
+class="shareBtn"
+style="background:#000000;"
+target="_blank"
+href="https://twitter.com/intent/tweet?url=${video}&text=${title}">
+
+X
+
+</a>
+
+</div>
+
+<button
+class="copyBtn"
+onclick="copyURL('${video}')">
+
+🔗 URLコピー
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+'funArea'
+).innerHTML = html;
+
+});
+
+function copyURL(url){
+
+navigator.clipboard.writeText(
+url
+);
+
+alert("URLをコピーしました");
+
+}
+
+</script>
+
+</body>
+</html>
