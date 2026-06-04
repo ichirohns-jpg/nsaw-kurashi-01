@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>スーパー情報</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#eef3f8;
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+color:#17324d;
+}
+
+.wrap{
+max-width:720px;
+margin:auto;
+padding:18px 14px 80px;
+}
+
+.top{
+background:#fff;
+border-radius:28px;
+padding:20px;
+margin-bottom:18px;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
+text-align:center;
+}
+
+.top h1{
+margin:0;
+font-size:34px;
+}
+
+.top p{
+font-size:18px;
+color:#5d6f82;
+line-height:1.7;
+}
+
+.card{
+background:#fff;
+border-radius:24px;
+padding:18px;
+margin-bottom:16px;
+box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+.date{
+font-size:15px;
+color:#66788a;
+margin-bottom:8px;
+}
+
+.shop{
+font-size:28px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.item{
+font-size:24px;
+font-weight:900;
+color:#1976d2;
+margin-bottom:10px;
+}
+
+.price{
+font-size:30px;
+font-weight:900;
+color:#e53935;
+margin-bottom:12px;
+}
+
+.text{
+font-size:18px;
+line-height:1.8;
+margin-bottom:16px;
+}
+
+.btn{
+display:block;
+width:100%;
+background:#43a047;
+color:#fff;
+text-align:center;
+padding:16px;
+border-radius:18px;
+font-size:22px;
+font-weight:900;
+text-decoration:none;
+}
+
+.archive-title{
+font-size:26px;
+font-weight:900;
+margin:34px 0 18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="top">
+<h1>🛒 スーパー情報</h1>
+<p>
+近くのお店のお得情報をまとめています
+</p>
+</div>
+
+<div id="latest"></div>
+
+<div class="archive-title">
+📚 アーカイブ
+</div>
+
+<div id="archive"></div>
+
+</div>
+
+<script>
+
+const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=スーパー情報&tqx=out:json';
+
+fetch(url)
+.then(res => res.text())
+.then(text => {
+
+const json = JSON.parse(
+text.substring(47).slice(0,-2)
+);
+
+const rows = json.table.rows;
+
+const latest = document.getElementById('latest');
+const archive = document.getElementById('archive');
+
+rows.reverse();
+
+rows.forEach((row,index)=>{
+
+const c = row.c;
+
+const date = c[0]?.v || '';
+const city = c[1]?.v || '';
+const shop = c[2]?.v || '';
+const item = c[3]?.v || '';
+const price = c[4]?.v || '';
+const text = c[5]?.v || '';
+const link = c[6]?.v || '';
+
+const html = `
+<div class="card">
+
+<div class="date">
+${date}　${city}
+</div>
+
+<div class="shop">
+${shop}
+</div>
+
+<div class="item">
+${item}
+</div>
+
+<div class="price">
+${price}
+</div>
+
+<div class="text">
+${text}
+</div>
+
+<a class="btn" href="${link}" target="_blank">
+チラシを見る
+</a>
+
+</div>
+`;
+
+if(index < 5){
+latest.innerHTML += html;
+}else{
+archive.innerHTML += html;
+}
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
