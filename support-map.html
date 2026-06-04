@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+支援者マップ
+</title>
+
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+background:#eef3f8;
+color:#17324d;
+}
+
+.top{
+
+padding:20px;
+
+background:#ffffff;
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.12);
+
+z-index:999;
+
+position:relative;
+}
+
+.title{
+
+font-size:36px;
+
+font-weight:900;
+
+margin-bottom:10px;
+}
+
+.sub{
+
+font-size:22px;
+
+line-height:1.7;
+
+color:#607080;
+}
+
+#map{
+
+width:100%;
+
+height:calc(100vh - 140px);
+}
+
+.popup{
+
+font-size:18px;
+
+line-height:1.8;
+}
+
+.btn{
+
+display:block;
+
+text-decoration:none;
+
+background:#1976d2;
+
+color:#fff;
+
+padding:12px;
+
+border-radius:14px;
+
+text-align:center;
+
+font-weight:900;
+
+margin-top:10px;
+}
+
+@media(max-width:768px){
+
+.title{
+font-size:30px;
+}
+
+.sub{
+font-size:20px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top">
+
+<div class="title">
+🗺 支援者マップ
+</div>
+
+<div class="sub">
+
+利用者の現在地を
+一覧表示しています
+
+</div>
+
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const map = L.map('map')
+.setView([35.8257,139.5755],13);
+
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+attribution:'OpenStreetMap'
+}
+).addTo(map);
+
+fetch(
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=利用者管理&tqx=out:json'
+)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(
+text.substring(47).slice(0,-2)
+);
+
+const rows =
+json.table.rows;
+
+rows.forEach((row)=>{
+
+const c = row.c;
+
+const name =
+c[1]?.v || '';
+
+const status =
+c[10]?.v || '';
+
+const urlid =
+c[11]?.v || '';
+
+const lat =
+parseFloat(c[14]?.v || 0);
+
+const lng =
+parseFloat(c[15]?.v || 0);
+
+if(!lat || !lng) return;
+
+let color = 'green';
+
+if(status.includes('困')){
+
+color = 'orange';
+
+}
+
+if(status.includes('助け')){
+
+color = 'red';
+
+}
+
+const marker =
+L.circleMarker(
+[lat,lng],
+{
+radius:14,
+color:color,
+fillColor:color,
+fillOpacity:0.9
+}
+)
+.addTo(map);
+
+const userURL =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/mamori.html?id=' +
+urlid;
+
+marker.bindPopup(`
+
+<div class="popup">
+
+<b>${name}</b><br>
+
+状態：${status}
+
+<a
+class="btn"
+target="_blank"
+href="${userURL}">
+
+本人ページを見る
+
+</a>
+
+</div>
+
+`);
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
