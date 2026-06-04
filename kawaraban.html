@@ -6,405 +6,204 @@
 content="width=device-width,initial-scale=1">
 
 <title>
-NSAW 地域瓦版
+4市瓦版
 </title>
 
 <style>
 
 *{
-  box-sizing:border-box;
+box-sizing:border-box;
 }
 
 body{
-  margin:0;
-  background:#dde6ef;
-
-  font-family:
-  "Hiragino Sans",
-  "Yu Gothic",
-  sans-serif;
-
-  color:#1b2b39;
+margin:0;
+background:#eef3f8;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+color:#17324d;
 }
 
-/* 上 */
-
-.top-wrap{
-  padding:14px;
+.wrap{
+max-width:760px;
+margin:auto;
+padding:14px;
 }
 
-.top-box{
+.top,.card{
 
-  background:
-  linear-gradient(
-    135deg,
-    #0f4c81,
-    #16385b
-  );
+background:#fff;
 
-  border-radius:28px;
+border-radius:30px;
 
-  padding:24px;
+padding:24px;
 
-  color:#fff;
+margin-bottom:20px;
 
-  box-shadow:
-  0 12px 30px rgba(0,0,0,.18);
+box-shadow:
+0 8px 22px rgba(0,0,0,.12);
 }
 
-.main-title{
+.title{
 
-  font-size:44px;
+font-size:42px;
 
-  font-weight:900;
+font-weight:900;
 
-  line-height:1.3;
+margin-bottom:14px;
 }
 
-.sub-title{
+.sub,.desc{
 
-  margin-top:12px;
+font-size:24px;
 
-  font-size:22px;
+line-height:1.8;
 
-  line-height:1.8;
-
-  opacity:.95;
-}
-
-/* 速報帯 */
-
-.breaking{
-
-  margin-top:22px;
-
-  background:
-  linear-gradient(
-    90deg,
-    #d32f2f,
-    #ff7043
-  );
-
-  border-radius:18px;
-
-  overflow:hidden;
-
-  padding:14px 0;
-
-  box-shadow:
-  0 6px 16px rgba(0,0,0,.18);
-}
-
-.breaking-inner{
-
-  white-space:nowrap;
-
-  display:inline-block;
-
-  font-size:24px;
-
-  font-weight:900;
-
-  color:#fff;
-
-  padding-left:100%;
-
-  animation:
-  scrollNews 25s linear infinite;
-}
-
-@keyframes scrollNews{
-
-  0%{
-    transform:translateX(0);
-  }
-
-  100%{
-    transform:translateX(-100%);
-  }
-
-}
-
-/* 市 */
-
-.city-row{
-
-  display:flex;
-
-  gap:12px;
-
-  margin-top:24px;
-
-  flex-wrap:wrap;
-}
-
-.city-btn{
-
-  flex:1;
-
-  min-width:120px;
-
-  text-decoration:none;
-
-  color:#fff;
-
-  font-size:24px;
-
-  font-weight:900;
-
-  text-align:center;
-
-  padding:20px 10px;
-
-  border-radius:20px;
-
-  box-shadow:
-  0 6px 16px rgba(0,0,0,.18);
-}
-
-.shiki{
-  background:#1976d2;
-}
-
-.niiza{
-  background:#2e7d32;
-}
-
-.asaka{
-  background:#ef6c00;
-}
-
-.wako{
-  background:#c62828;
-}
-
-/* 本体 */
-
-.container{
-  padding:0 12px 40px;
-}
-
-/* カード */
-
-.card{
-
-  background:#fff;
-
-  border-radius:28px;
-
-  margin-bottom:28px;
-
-  overflow:hidden;
-
-  box-shadow:
-  0 10px 26px rgba(0,0,0,.12);
-
-  border:
-  2px solid #d7e1ea;
-}
-
-/* 帯 */
-
-.news-band{
-
-  background:
-  linear-gradient(
-    90deg,
-    #d32f2f,
-    #ff7043
-  );
-
-  color:#fff;
-
-  font-size:24px;
-
-  font-weight:900;
-
-  padding:14px 18px;
-
-  border-radius:14px;
-
-  margin-bottom:18px;
-}
-
-.card-image{
-  width:100%;
-  display:block;
-}
-
-.card-body{
-  padding:20px;
+color:#425466;
 }
 
 .date{
 
-  font-size:22px;
+font-size:20px;
 
-  font-weight:700;
+font-weight:900;
 
-  color:#607080;
+color:#607080;
 
-  margin-bottom:10px;
+margin-bottom:10px;
 }
 
-.title{
+.news-title{
 
-  font-size:35px;
+font-size:34px;
 
-  line-height:1.5;
+font-weight:900;
 
-  font-weight:900;
-
-  margin-bottom:18px;
-
-  color:#17324d;
+margin-bottom:16px;
 }
 
-.desc{
+.img{
 
-  font-size:28px;
+width:100%;
 
-  line-height:1.9;
+border-radius:22px;
 
-  color:#23313f;
-}
-
-/* リンク */
-
-.links{
-
-  margin-top:20px;
-
-  display:flex;
-
-  flex-direction:column;
-
-  gap:12px;
-}
-
-.link-btn{
-
-  display:block;
-
-  background:#f3f7fb;
-
-  border:2px solid #d6e0ea;
-
-  border-radius:18px;
-
-  padding:18px;
-
-  text-decoration:none;
-
-  color:#17324d;
-
-  font-size:24px;
-
-  font-weight:800;
-}
-
-/* 動画 */
-
-.video-wrap{
-
-  margin-top:22px;
-
-  background:#000;
-
-  border-radius:24px;
-
-  padding:14px;
-
-  border:4px solid #d32f2f;
-}
-
-.video-head{
-
-  color:#fff;
-
-  font-size:26px;
-
-  font-weight:900;
-
-  margin-bottom:12px;
-}
-
-.video-title{
-
-  color:#fff;
-
-  font-size:22px;
-
-  line-height:1.7;
-
-  margin-bottom:12px;
-}
-
-.video-wrap iframe,
-.video-wrap video{
-
-  width:100%;
-
-  border-radius:14px;
-}
-
-/* 月 */
-
-.month-section{
-  margin-top:30px;
-}
-
-.toggle-btn{
-
-  width:100%;
-
-  border:none;
-
-  background:#17324d;
-
-  color:#fff;
-
-  border-radius:20px;
-
-  padding:20px;
-
-  margin-top:10px;
-
-  font-size:28px;
-
-  font-weight:900;
-}
-
-.month-content{
-  margin-top:14px;
-}
-
-/* スマホ */
-
-@media(max-width:768px){
-
-.main-title{
-  font-size:34px;
-}
-
-.sub-title{
-  font-size:18px;
-}
-
-.breaking-inner{
-  font-size:20px;
+margin-bottom:18px;
 }
 
 .city-btn{
-  font-size:22px;
+
+display:block;
+
+text-decoration:none;
+
+background:#1976d2;
+
+color:#fff;
+
+padding:16px;
+
+border-radius:18px;
+
+font-size:24px;
+
+font-weight:900;
+
+text-align:center;
+
+margin-top:12px;
 }
+
+.share{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:12px;
+
+margin-top:20px;
+}
+
+.share-btn{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+text-decoration:none;
+
+height:60px;
+
+border-radius:18px;
+
+font-size:22px;
+
+font-weight:900;
+
+color:#fff;
+}
+
+.fb{
+background:#1877f2;
+}
+
+.line{
+background:#06c755;
+}
+
+.x{
+background:#111;
+}
+
+.copy{
+background:#ef6c00;
+}
+
+.archive-title{
+
+font-size:34px;
+
+font-weight:900;
+
+margin:40px 0 20px;
+}
+
+.footer{
+
+text-align:center;
+
+padding:24px 10px 60px;
+
+font-size:20px;
+
+color:#607080;
+}
+
+@media(max-width:768px){
 
 .title{
-  font-size:30px;
+font-size:36px;
 }
 
-.desc{
-  font-size:25px;
+.news-title{
+font-size:30px;
+}
+
+.sub,.desc{
+font-size:22px;
+}
+
+.city-btn{
+font-size:22px;
+}
+
+.share-btn{
+font-size:20px;
 }
 
 }
@@ -414,96 +213,178 @@ body{
 
 <body>
 
-<div class="top-wrap">
+<div class="wrap">
 
-  <div class="top-box">
+<div class="top">
 
-    <div class="main-title">
-      NSAW 地域瓦版
-    </div>
+<div class="title">
+📰 4市瓦版
+</div>
 
-    <div class="sub-title">
-      志木・新座・朝霞・和光の地域情報を、
-      高齢者にも見やすく届ける
-      地域テレビ型DX
-    </div>
-
-    <div class="breaking">
-
-      <div class="breaking-inner">
-
-        ▶ 熱中症に注意してください　
-        ▶ 地域テレビ更新　
-        ▶ AI相談DX公開中　
-        ▶ 志木・新座・朝霞・和光 地域情報更新中　
-
-      </div>
-
-    </div>
-
-    <div class="city-row">
-
-      <a class="city-btn shiki"
-      target="_blank"
-      href="https://www.city.shiki.lg.jp/">
-      志木市
-      </a>
-
-      <a class="city-btn niiza"
-      target="_blank"
-      href="https://www.city.niiza.lg.jp/">
-      新座市
-      </a>
-
-      <a class="city-btn asaka"
-      target="_blank"
-      href="https://www.city.asaka.lg.jp/">
-      朝霞市
-      </a>
-
-      <a class="city-btn wako"
-      target="_blank"
-      href="https://www.city.wako.lg.jp/">
-      和光市
-      </a>
-
-    </div>
-
-  </div>
+<div class="sub">
+志木・新座・朝霞・和光の
+情報を1枚の瓦版でまとめます
+</div>
 
 </div>
 
-<div class="container"
-id="app">
+<div id="latest"></div>
 
-読み込み中...
+<div class="archive-title">
+📚 アーカイブ
+</div>
+
+<div id="archive"></div>
+
+<div class="footer">
+
+NSAW 4市瓦版
+
+</div>
 
 </div>
 
 <script>
 
-document.getElementById('app')
-.innerHTML =
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-'<div class="card">' +
+const PAGE_URL =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html';
 
-'<div class="card-body">' +
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=4市瓦版&tqx=out:json';
 
-'<div class="news-band">▶ 本日の地域情報</div>' +
+fetch(url)
+.then(res=>res.text())
+.then(text=>{
 
-'<div class="date">2026年5月</div>' +
+const json=JSON.parse(
+text.substring(47).slice(0,-2)
+);
 
-'<div class="title">NSAW 地域DXポータル更新中</div>' +
+const rows=json.table.rows;
 
-'<div class="desc">' +
+rows.reverse();
 
-'地域瓦版・地域テレビ・AI相談・見守りDX・地域マップを順次強化しています。' +
+const latest=
+document.getElementById('latest');
 
-'</div>' +
+const archive=
+document.getElementById('archive');
 
-'</div>' +
+rows.forEach((row,index)=>{
 
-'</div>';
+const c=row.c;
+
+const date=c[0]?.v||'';
+const img=c[1]?.v||'';
+const title=c[2]?.v||'';
+const desc=c[3]?.v||'';
+
+const shikiTitle=c[4]?.v||'志木市';
+const shikiURL=c[5]?.v||'#';
+
+const niizaTitle=c[6]?.v||'新座市';
+const niizaURL=c[7]?.v||'#';
+
+const asakaTitle=c[8]?.v||'朝霞市';
+const asakaURL=c[9]?.v||'#';
+
+const wakoTitle=c[10]?.v||'和光市';
+const wakoURL=c[11]?.v||'#';
+
+const shareText=
+encodeURIComponent(title + ' ' + PAGE_URL);
+
+const html=`
+
+<div class="card">
+
+<div class="date">
+${date}
+</div>
+
+${img ? `<img class="img" src="${img}">` : ''}
+
+<div class="news-title">
+${title}
+</div>
+
+<div class="desc">
+${desc}
+</div>
+
+<a class="city-btn"
+href="${shikiURL}"
+target="_blank">
+志木市：${shikiTitle}
+</a>
+
+<a class="city-btn"
+href="${niizaURL}"
+target="_blank">
+新座市：${niizaTitle}
+</a>
+
+<a class="city-btn"
+href="${asakaURL}"
+target="_blank">
+朝霞市：${asakaTitle}
+</a>
+
+<a class="city-btn"
+href="${wakoURL}"
+target="_blank">
+和光市：${wakoTitle}
+</a>
+
+<div class="share">
+
+<a class="share-btn fb"
+target="_blank"
+href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(PAGE_URL)}">
+Facebook
+</a>
+
+<a class="share-btn line"
+target="_blank"
+href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(PAGE_URL)}">
+LINE
+</a>
+
+<a class="share-btn x"
+target="_blank"
+href="https://twitter.com/intent/tweet?text=${shareText}">
+X
+</a>
+
+<a class="share-btn copy"
+href="#"
+onclick="navigator.clipboard.writeText('${PAGE_URL}')">
+コピー
+</a>
+
+</div>
+
+</div>
+`;
+
+if(index<5){
+
+latest.innerHTML+=html;
+
+}else{
+
+archive.innerHTML+=html;
+
+}
+
+});
+
+});
 
 </script>
 
