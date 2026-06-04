@@ -17,6 +17,7 @@ box-sizing:border-box;
 
 body{
 margin:0;
+padding:0;
 background:#eef3f8;
 font-family:
 "Hiragino Sans",
@@ -25,297 +26,163 @@ sans-serif;
 color:#17324d;
 }
 
-.wrap{
-max-width:760px;
-margin:auto;
-padding:14px;
-}
+.top{
 
-/* 上 */
-
-.top-card{
+padding:28px 20px;
 
 background:#ffffff;
 
-border-radius:30px;
-
-padding:28px 22px;
-
 box-shadow:
-0 8px 22px rgba(0,0,0,.12);
-
-margin-bottom:18px;
-}
-
-.main-title{
-
-font-size:44px;
-
-font-weight:900;
-
-line-height:1.3;
-
-color:#17324d;
-
-margin-bottom:18px;
-}
-
-.sub{
-
-font-size:24px;
-
-line-height:1.8;
-
-color:#425466;
-}
-
-/* 更新 */
-
-.news{
-
-background:
-linear-gradient(
-90deg,
-#ef5350,
-#ff7043
-);
-
-border-radius:22px;
-
-padding:18px;
-
-margin-top:24px;
-
-font-size:26px;
-
-font-weight:900;
-
-color:#fff;
-
-box-shadow:
-0 6px 16px rgba(0,0,0,.15);
-}
-
-/* 市 */
-
-.city-grid{
-
-display:grid;
-
-grid-template-columns:
-1fr 1fr;
-
-gap:14px;
-
-margin-top:24px;
-}
-
-.city-btn{
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-text-decoration:none;
-
-height:110px;
-
-border-radius:24px;
-
-font-size:34px;
-
-font-weight:900;
-
-color:#fff;
-
-box-shadow:
-0 8px 18px rgba(0,0,0,.16);
-}
-
-.shiki{
-background:#1976d2;
-}
-
-.niiza{
-background:#2e7d32;
-}
-
-.asaka{
-background:#ef6c00;
-}
-
-.wako{
-background:#d32f2f;
-}
-
-/* おすすめ */
-
-.pickup{
-
-background:#ffffff;
-
-border-radius:28px;
-
-padding:24px;
-
-margin-bottom:20px;
-
-box-shadow:
-0 8px 22px rgba(0,0,0,.12);
-}
-
-.pick-title{
-
-font-size:34px;
-
-font-weight:900;
-
-margin-bottom:18px;
-}
-
-.pick-link{
-
-display:block;
-
-text-decoration:none;
-
-background:#f4f7fb;
-
-border-radius:20px;
-
-padding:18px;
-
-margin-bottom:14px;
-
-font-size:26px;
-
-font-weight:900;
-
-color:#17324d;
-
-border:
-2px solid #d7e0ea;
-}
-
-/* メニュー */
-
-.card{
-
-display:block;
-
-text-decoration:none;
-
-background:#ffffff;
-
-border-radius:28px;
-
-padding:24px;
-
-margin-bottom:20px;
-
-box-shadow:
-0 8px 22px rgba(0,0,0,.12);
-
-border:
-2px solid #d7e0ea;
-}
-
-.card-title{
-
-font-size:36px;
-
-font-weight:900;
-
-margin-bottom:14px;
-
-color:#17324d;
-}
-
-.card-desc{
-
-font-size:24px;
-
-line-height:1.8;
-
-color:#425466;
-}
-
-.blue{
-border-left:14px solid #1976d2;
-}
-
-.red{
-border-left:14px solid #d32f2f;
-}
-
-.green{
-border-left:14px solid #2e7d32;
-}
-
-.orange{
-border-left:14px solid #ef6c00;
-}
-
-.purple{
-border-left:14px solid #7b1fa2;
-}
-
-.brown{
-border-left:14px solid #8d6e63;
-}
-
-/* 下 */
-
-.footer{
+0 4px 14px rgba(0,0,0,.12);
 
 text-align:center;
 
-padding:24px 10px 60px;
-
-font-size:20px;
-
-line-height:1.8;
-
-color:#607080;
 }
 
-/* スマホ */
+.title{
 
-@media(max-width:768px){
-
-.main-title{
 font-size:38px;
+font-weight:900;
+
+margin-bottom:14px;
+
 }
 
 .sub{
+
 font-size:22px;
+line-height:1.8;
+color:#607080;
+
 }
 
-.news{
-font-size:23px;
+.main{
+
+padding:
+26px 18px 160px;
+
+max-width:900px;
+margin:auto;
+
 }
 
-.city-btn{
+.card{
+
+background:#ffffff;
+
+border-radius:24px;
+
+padding:24px;
+
+margin-bottom:24px;
+
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+
+}
+
+.cardTitle{
+
 font-size:30px;
-height:100px;
+font-weight:900;
+
+margin-bottom:12px;
+
 }
 
-.pick-title{
+.cardText{
+
+font-size:20px;
+line-height:1.9;
+
+color:#506070;
+
+}
+
+.btn{
+
+display:block;
+
+text-decoration:none;
+
+color:#fff;
+
+padding:18px;
+
+border-radius:18px;
+
+text-align:center;
+
+font-size:24px;
+font-weight:900;
+
+margin-top:18px;
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.15);
+
+}
+
+.footerMenu{
+
+position:fixed;
+
+bottom:20px;
+left:50%;
+
+transform:translateX(-50%);
+
+display:flex;
+
+gap:12px;
+
+z-index:9999;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+.footerBtn{
+
+color:white;
+
+padding:14px 18px;
+
+border-radius:16px;
+
+text-decoration:none;
+
+font-weight:900;
+
+font-size:18px;
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.2);
+
+}
+
+@media(max-width:768px){
+
+.title{
 font-size:30px;
 }
 
-.pick-link{
-font-size:23px;
+.sub{
+font-size:19px;
 }
 
-.card-title{
-font-size:32px;
+.cardTitle{
+font-size:26px;
 }
 
-.card-desc{
-font-size:22px;
+.cardText{
+font-size:18px;
+}
+
+.btn{
+font-size:21px;
 }
 
 }
@@ -325,175 +192,143 @@ font-size:22px;
 
 <body>
 
-<div class="wrap">
+<div class="top">
 
-<div class="top-card">
-
-<div class="main-title">
-NSAW<br>
-地域DXポータル
+<div class="title">
+🌏 NSAW 地域DXポータル
 </div>
 
 <div class="sub">
+
 志木・新座・朝霞・和光の
-地域情報・地域テレビ・AI相談・
-見守り・地域マップを、
-高齢者にも見やすくまとめた
-地域ポータルDX
-</div>
-
-<div class="news">
-▶ 本日の地域情報を更新しました
-</div>
-
-<div class="city-grid">
-
-<a class="city-btn shiki"
-target="_blank"
-href="https://www.city.shiki.lg.jp/">
-志木市
-</a>
-
-<a class="city-btn niiza"
-target="_blank"
-href="https://www.city.niiza.lg.jp/">
-新座市
-</a>
-
-<a class="city-btn asaka"
-target="_blank"
-href="https://www.city.asaka.lg.jp/">
-朝霞市
-</a>
-
-<a class="city-btn wako"
-target="_blank"
-href="https://www.city.wako.lg.jp/">
-和光市
-</a>
+地域情報と支援をつなぐ
+試験運用中の地域DXページです
 
 </div>
 
 </div>
 
-<div class="pickup">
+<div class="main">
 
-<div class="pick-title">
-今日のおすすめ
+<div class="card">
+
+<div class="cardTitle">
+📰 4市瓦版
 </div>
 
-<a class="pick-link"
-href="kawaraban.html">
-▶ 最新の地域瓦版を見る
-</a>
+<div class="cardText">
 
-<a class="pick-link"
-href="tv.html">
-▶ 地域テレビを見る
-</a>
-
-<a class="pick-link"
-href="super.html">
-▶ スーパー情報を見る
-</a>
-
-<a class="pick-link"
-href="ai.html">
-▶ AI相談を使う
-</a>
+4市の今日の情報を、
+1枚の瓦版としてまとめています。
 
 </div>
 
-<a class="card blue"
+<a
+class="btn"
+style="background:#1565c0;"
 href="kawaraban.html">
 
-<div class="card-title">
-▶ 地域瓦版
-</div>
-
-<div class="card-desc">
-地域情報・イベント・行政情報を
-見やすく表示します。
-</div>
+4市瓦版を見る
 
 </a>
 
-<a class="card red"
-href="tv.html">
-
-<div class="card-title">
-▶ 地域テレビ
 </div>
 
-<div class="card-desc">
-地域動画や暮らし情報を
-テレビ感覚で見られます。
+<div class="card">
+
+<div class="cardTitle">
+📻 地域ラジオ
 </div>
+
+<div class="cardText">
+
+毎朝3分、
+地域の情報をラジオ形式で配信予定。
+
+</div>
+
+<a
+class="btn"
+style="background:#00897b;"
+href="radio.html">
+
+地域ラジオへ
 
 </a>
 
-<a class="card brown"
-href="super.html">
-
-<div class="card-title">
-▶ スーパー情報
 </div>
 
-<div class="card-desc">
-スーパー特売・チラシ・
-お得な買い物情報をまとめます。
+<div class="card">
+
+<div class="cardTitle">
+🗺 支援者マップ
 </div>
+
+<div class="cardText">
+
+見守り・SOS・行政支援を
+地図上で確認できる
+地域支援マップです。
+
+</div>
+
+<a
+class="btn"
+style="background:#d32f2f;"
+href="support-map.html">
+
+支援者マップへ
 
 </a>
 
-<a class="card green"
-href="ai.html">
-
-<div class="card-title">
-▶ AI相談
 </div>
 
-<div class="card-desc">
-暮らし・介護・ごみ・手続きを
-AIが案内します。
+<div class="card">
+
+<div class="cardTitle">
+🚧 試験運用中
 </div>
+
+<div class="cardText">
+
+このページは、
+作りながら更新している
+地域DX試験版です。
+
+少しずつ改善・追加を
+進めています。
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footerMenu">
+
+<a href="kawaraban.html"
+class="footerBtn"
+style="background:#1565c0;">
+
+📰 瓦版
 
 </a>
 
-<a class="card orange"
-href="mamori.html">
+<a href="radio.html"
+class="footerBtn"
+style="background:#00897b;">
 
-<div class="card-title">
-▶ 見守りDX
-</div>
-
-<div class="card-desc">
-元気ですボタンなど、
-地域見守り機能をまとめます。
-</div>
+📻 ラジオ
 
 </a>
 
-<a class="card purple"
-href="map.html">
+<a href="support-map.html"
+class="footerBtn"
+style="background:#d32f2f;">
 
-<div class="card-title">
-▶ 地域マップ
-</div>
-
-<div class="card-desc">
-病院・コンビニ・
-地域施設を確認できます。
-</div>
+🗺 支援
 
 </a>
-
-<div class="footer">
-
-NSAW 地域DXポータル<br>
-志木・新座・朝霞・和光
-
-</div>
 
 </div>
 
