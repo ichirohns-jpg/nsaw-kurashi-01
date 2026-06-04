@@ -75,9 +75,6 @@ margin-bottom:20px;
 
 box-shadow:
 0 8px 22px rgba(0,0,0,.12);
-
-border-left:
-14px solid #1976d2;
 }
 
 .name{
@@ -102,11 +99,11 @@ margin-bottom:14px;
 
 .status{
 
-font-size:26px;
+font-size:28px;
 
 font-weight:900;
 
-margin-bottom:14px;
+margin-bottom:18px;
 }
 
 .info{
@@ -282,12 +279,38 @@ c[18]?.v || '';
 const night =
 c[19]?.v || '';
 
+const meal =
+c[20]?.v || '';
+
+const sleep =
+c[21]?.v || '';
+
+const condition =
+c[22]?.v || '';
+
 const memo =
 c[23]?.v || '';
 
+let color = '#43a047';
+
+if(status.includes('困')){
+
+color = '#ef6c00';
+
+}
+
+if(status.includes('助け')){
+
+color = '#d32f2f';
+
+}
+
 const html = `
 
-<div class="card">
+<div class="card"
+style="
+border-left:14px solid ${color};
+">
 
 <div class="name">
 ${name}
@@ -307,6 +330,9 @@ ${city} ${area} ${chome}
 💊 朝薬：${morning}<br>
 💊 昼薬：${noon}<br>
 💊 夜薬：${night}<br>
+🍚 食事：${meal}<br>
+😴 睡眠：${sleep}<br>
+🩺 体調：${condition}<br>
 ⚠ 要注意：${memo}
 
 </div>
