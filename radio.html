@@ -122,25 +122,22 @@ color:#1976d2;
 margin-bottom:20px;
 }
 
-.btn{
+.player{
 
-display:block;
+margin-top:20px;
+}
 
-text-decoration:none;
+.player iframe{
 
-background:#d32f2f;
+width:100%;
 
-color:#fff;
+height:260px;
 
-text-align:center;
-
-padding:18px;
+border:none;
 
 border-radius:20px;
 
-font-size:26px;
-
-font-weight:900;
+background:#000;
 }
 
 .archive-title{
@@ -184,8 +181,8 @@ font-size:30px;
 font-size:22px;
 }
 
-.btn{
-font-size:24px;
+.player iframe{
+height:220px;
 }
 
 }
@@ -273,6 +270,11 @@ c[3]?.v || '';
 const hash =
 c[4]?.v || '';
 
+const embed =
+youtube
+.replace('watch?v=','embed/')
+.replace('youtu.be/','youtube.com/embed/');
+
 const html = `
 
 <div class="card">
@@ -293,13 +295,14 @@ ${desc}
 ${hash}
 </div>
 
-<a class="btn"
-href="${youtube}"
-target="_blank">
+<div class="player">
 
-YouTubeで聞く
+<iframe
+src="${embed}"
+allowfullscreen>
+</iframe>
 
-</a>
+</div>
 
 </div>
 
