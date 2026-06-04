@@ -9,6 +9,14 @@ content="width=device-width,initial-scale=1">
 地域マップ
 </title>
 
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<script
+src="https://unpkg.com/leaflet/dist/leaflet.js">
+</script>
+
 <style>
 
 *{
@@ -61,6 +69,18 @@ font-size:24px;
 line-height:1.8;
 
 color:#425466;
+}
+
+#map{
+
+height:420px;
+
+border-radius:28px;
+
+margin-bottom:20px;
+
+box-shadow:
+0 8px 22px rgba(0,0,0,.12);
 }
 
 .card{
@@ -123,15 +143,15 @@ color:#fff;
 
 text-align:center;
 
-padding:20px;
+padding:18px;
 
-border-radius:22px;
+border-radius:20px;
 
-font-size:28px;
+font-size:26px;
 
 font-weight:900;
 
-margin-top:16px;
+margin-top:14px;
 }
 
 .footer{
@@ -145,21 +165,6 @@ font-size:20px;
 line-height:1.8;
 
 color:#607080;
-}
-
-.loading{
-
-background:#fff3cd;
-
-padding:18px;
-
-border-radius:20px;
-
-font-size:24px;
-
-font-weight:900;
-
-margin-bottom:20px;
 }
 
 @media(max-width:768px){
@@ -181,11 +186,11 @@ font-size:22px;
 }
 
 .btn{
-font-size:24px;
+font-size:22px;
 }
 
-.loading{
-font-size:22px;
+#map{
+height:360px;
 }
 
 }
@@ -206,17 +211,12 @@ font-size:22px;
 <div class="sub">
 病院・薬局・スーパー・
 避難所などを、
-押すだけで案内します
+見やすく案内します
 </div>
 
 </div>
 
-<div class="loading"
-id="loading">
-
-現在地を確認しています…
-
-</div>
+<div id="map"></div>
 
 <div id="list"></div>
 
@@ -238,48 +238,38 @@ const url =
 SHEET_ID +
 '/gviz/tq?sheet=地域施設&tqx=out:json';
 
-let userLat = null;
-let userLng = null;
+const map = L.map('map').setView(
+[35.82,139.57],
+13
+);
+
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+attribution:'OpenStreetMap'
+}
+).addTo(map);
 
 navigator.geolocation.getCurrentPosition(
 
 (position)=>{
 
-userLat =
+const lat =
 position.coords.latitude;
 
-userLng =
+const lng =
 position.coords.longitude;
 
-document.getElementById('loading')
-.style.display = 'none';
+map.setView([lat,lng],15);
 
-loadData();
-
-},
-
-()=>{
-
-document.getElementById('loading')
-.innerHTML =
-'位置情報が取得できませんでした';
-
-loadData();
+L.marker([lat,lng])
+.addTo(map)
+.bindPopup('現在地')
+.openPopup();
 
 }
 
 );
-
-function distance(lat1,lng1,lat2,lng2){
-
-const dx = lat1 - lat2;
-const dy = lng1 - lng2;
-
-return Math.sqrt(dx*dx + dy*dy);
-
-}
-
-function loadData(){
 
 fetch(url)
 .then(res => res.text())
@@ -293,8 +283,6 @@ const rows = json.table.rows;
 
 const list =
 document.getElementById('list');
-
-const data = [];
 
 rows.forEach((row)=>{
 
@@ -324,73 +312,34 @@ c[6]?.v || '';
 const note =
 c[7]?.v || '';
 
-let dist = 999999;
-
-if(userLat && userLng){
-
-dist =
-distance(
-userLat,
-userLng,
-lat,
-lng
+L.marker([lat,lng])
+.addTo(map)
+.bindPopup(
+'<b>' + name + '</b><br>' +
+kind
 );
-
-}
-
-data.push({
-
-kind,
-city,
-name,
-address,
-lat,
-lng,
-link,
-note,
-dist
-
-});
-
-});
-
-data.sort((a,b)=>a.dist-b.dist);
-
-data.forEach((item)=>{
-
-const googleURL =
-'https://www.google.com/maps/dir/?api=1&destination=' +
-item.lat + ',' + item.lng;
 
 const html = `
 
 <div class="card">
 
 <div class="kind">
-${item.kind}　${item.city}
+${kind}　${city}
 </div>
 
 <div class="name">
-${item.name}
+${name}
 </div>
 
 <div class="address">
-${item.address}<br>
-${item.note}
+${address}<br>
+${note}
 </div>
 
-<a class="btn"
-href="${googleURL}"
-target="_blank">
-
-ここへ行く
-
-</a>
-
-${item.link ? `
+${link ? `
 
 <a class="btn"
-href="${item.link}"
+href="${link}"
 target="_blank">
 
 公式ページ
@@ -408,8 +357,6 @@ list.innerHTML += html;
 });
 
 });
-
-}
 
 </script>
 
