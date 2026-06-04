@@ -2,79 +2,415 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>どこへ行きますか？</title>
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+地域マップ
+</title>
 
 <style>
-body{margin:0;background:#eef3f8;font-family:sans-serif;color:#222}
-.top{background:linear-gradient(135deg,#1976d2,#0d47a1);color:white;padding:34px 20px 40px;border-bottom-left-radius:34px;border-bottom-right-radius:34px;text-align:center}
-.title{font-size:42px;font-weight:900}
-.wrap{padding:18px}
-.card{background:white;border-radius:30px;padding:28px;margin-bottom:24px;box-shadow:0 6px 18px rgba(0,0,0,.12);text-align:center}
-label{display:block;font-size:28px;font-weight:900;margin-bottom:14px}
-input{width:100%;box-sizing:border-box;font-size:32px;padding:22px;border-radius:20px;border:3px solid #ccc;margin-bottom:20px}
-.big-button{width:100%;border:none;border-radius:30px;padding:34px;margin-bottom:20px;color:white;font-size:36px;font-weight:900}
-.blue{background:#1565c0}.green{background:#43a047}
-.sub{font-size:24px;color:#666;line-height:1.7}
-.quick{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
-.quick button{border:none;border-radius:22px;padding:24px;color:white;font-size:26px;font-weight:900}
-.red{background:#d32f2f}.orange{background:#fb8c00}.teal{background:#00897b}.gray{background:#546e7a}
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#eef3f8;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+color:#17324d;
+}
+
+.wrap{
+max-width:760px;
+margin:auto;
+padding:14px;
+}
+
+.top{
+
+background:#ffffff;
+
+border-radius:30px;
+
+padding:28px 22px;
+
+box-shadow:
+0 8px 22px rgba(0,0,0,.12);
+
+margin-bottom:20px;
+}
+
+.title{
+
+font-size:42px;
+
+font-weight:900;
+
+margin-bottom:14px;
+}
+
+.sub{
+
+font-size:24px;
+
+line-height:1.8;
+
+color:#425466;
+}
+
+.card{
+
+background:#ffffff;
+
+border-radius:28px;
+
+padding:24px;
+
+margin-bottom:20px;
+
+box-shadow:
+0 8px 22px rgba(0,0,0,.12);
+
+border-left:
+14px solid #1976d2;
+}
+
+.kind{
+
+font-size:22px;
+
+font-weight:900;
+
+color:#1976d2;
+
+margin-bottom:10px;
+}
+
+.name{
+
+font-size:34px;
+
+font-weight:900;
+
+margin-bottom:16px;
+}
+
+.address{
+
+font-size:24px;
+
+line-height:1.8;
+
+margin-bottom:20px;
+
+color:#425466;
+}
+
+.btn{
+
+display:block;
+
+text-decoration:none;
+
+background:#1976d2;
+
+color:#fff;
+
+text-align:center;
+
+padding:20px;
+
+border-radius:22px;
+
+font-size:28px;
+
+font-weight:900;
+
+margin-top:16px;
+}
+
+.footer{
+
+text-align:center;
+
+padding:24px 10px 60px;
+
+font-size:20px;
+
+line-height:1.8;
+
+color:#607080;
+}
+
+.loading{
+
+background:#fff3cd;
+
+padding:18px;
+
+border-radius:20px;
+
+font-size:24px;
+
+font-weight:900;
+
+margin-bottom:20px;
+}
+
+@media(max-width:768px){
+
+.title{
+font-size:36px;
+}
+
+.sub{
+font-size:22px;
+}
+
+.name{
+font-size:30px;
+}
+
+.address{
+font-size:22px;
+}
+
+.btn{
+font-size:24px;
+}
+
+.loading{
+font-size:22px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="top">
-  <div class="title">どこへ行きますか？</div>
-</div>
-
 <div class="wrap">
 
-  <div class="card">
+<div class="top">
 
-    <label>行きたい場所を入れてください</label>
+<div class="title">
+🗺 地域マップ
+</div>
 
-    <input id="destination" placeholder="例：近くの薬局">
+<div class="sub">
+病院・薬局・スーパー・
+避難所などを、
+押すだけで案内します
+</div>
 
-    <button class="big-button green" onclick="goMap()">
-      🚶 案内します
-    </button>
+</div>
 
-    <div class="sub">
-      入力欄を押して、iPhoneキーボードの<br>
-      🎤マイクで話して入力できます。
-    </div>
+<div class="loading"
+id="loading">
 
-    <div class="quick">
-      <button class="red" onclick="quickMap('近くの病院')">🏥 病院</button>
-      <button class="orange" onclick="quickMap('近くの薬局')">💊 薬局</button>
-      <button class="teal" onclick="quickMap('近くのコンビニ')">🏪 コンビニ</button>
-      <button class="gray" onclick="quickMap('近くのトイレ')">🚻 トイレ</button>
-    </div>
+現在地を確認しています…
 
-  </div>
+</div>
+
+<div id="list"></div>
+
+<div class="footer">
+
+NSAW 地域マップ
+
+</div>
 
 </div>
 
 <script>
-function goMap(){
-  const destination = document.getElementById('destination').value.trim();
 
-  if(!destination){
-    alert('行きたい場所を入れてください');
-    return;
-  }
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-  location.href =
-    'https://www.google.com/maps/search/?api=1&query=' +
-    encodeURIComponent(destination);
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=地域施設&tqx=out:json';
+
+let userLat = null;
+let userLng = null;
+
+navigator.geolocation.getCurrentPosition(
+
+(position)=>{
+
+userLat =
+position.coords.latitude;
+
+userLng =
+position.coords.longitude;
+
+document.getElementById('loading')
+.style.display = 'none';
+
+loadData();
+
+},
+
+()=>{
+
+document.getElementById('loading')
+.innerHTML =
+'位置情報が取得できませんでした';
+
+loadData();
+
 }
 
-function quickMap(word){
-  location.href =
-    'https://www.google.com/maps/search/?api=1&query=' +
-    encodeURIComponent(word);
+);
+
+function distance(lat1,lng1,lat2,lng2){
+
+const dx = lat1 - lat2;
+const dy = lng1 - lng2;
+
+return Math.sqrt(dx*dx + dy*dy);
+
 }
+
+function loadData(){
+
+fetch(url)
+.then(res => res.text())
+.then(text => {
+
+const json = JSON.parse(
+text.substring(47).slice(0,-2)
+);
+
+const rows = json.table.rows;
+
+const list =
+document.getElementById('list');
+
+const data = [];
+
+rows.forEach((row)=>{
+
+const c = row.c;
+
+const kind =
+c[0]?.v || '';
+
+const city =
+c[1]?.v || '';
+
+const name =
+c[2]?.v || '';
+
+const address =
+c[3]?.v || '';
+
+const lat =
+parseFloat(c[4]?.v || 0);
+
+const lng =
+parseFloat(c[5]?.v || 0);
+
+const link =
+c[6]?.v || '';
+
+const note =
+c[7]?.v || '';
+
+let dist = 999999;
+
+if(userLat && userLng){
+
+dist =
+distance(
+userLat,
+userLng,
+lat,
+lng
+);
+
+}
+
+data.push({
+
+kind,
+city,
+name,
+address,
+lat,
+lng,
+link,
+note,
+dist
+
+});
+
+});
+
+data.sort((a,b)=>a.dist-b.dist);
+
+data.forEach((item)=>{
+
+const googleURL =
+'https://www.google.com/maps/dir/?api=1&destination=' +
+item.lat + ',' + item.lng;
+
+const html = `
+
+<div class="card">
+
+<div class="kind">
+${item.kind}　${item.city}
+</div>
+
+<div class="name">
+${item.name}
+</div>
+
+<div class="address">
+${item.address}<br>
+${item.note}
+</div>
+
+<a class="btn"
+href="${googleURL}"
+target="_blank">
+
+ここへ行く
+
+</a>
+
+${item.link ? `
+
+<a class="btn"
+href="${item.link}"
+target="_blank">
+
+公式ページ
+
+</a>
+
+` : ''}
+
+</div>
+
+`;
+
+list.innerHTML += html;
+
+});
+
+});
+
+}
+
 </script>
 
 </body>
