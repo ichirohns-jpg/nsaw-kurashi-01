@@ -2,9 +2,12 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
 
-<title>スーパー情報</title>
+<title>
+スーパー情報
+</title>
 
 <style>
 
@@ -15,93 +18,195 @@ box-sizing:border-box;
 body{
 margin:0;
 background:#eef3f8;
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
 color:#17324d;
 }
 
 .wrap{
-max-width:720px;
+max-width:760px;
 margin:auto;
-padding:18px 14px 80px;
+padding:14px;
 }
 
 .top{
-background:#fff;
-border-radius:28px;
-padding:20px;
-margin-bottom:18px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
-text-align:center;
+
+background:#ffffff;
+
+border-radius:30px;
+
+padding:28px 22px;
+
+box-shadow:
+0 8px 22px rgba(0,0,0,.12);
+
+margin-bottom:20px;
 }
 
-.top h1{
-margin:0;
-font-size:34px;
+.title{
+
+font-size:42px;
+
+font-weight:900;
+
+margin-bottom:14px;
 }
 
-.top p{
-font-size:18px;
-color:#5d6f82;
-line-height:1.7;
+.sub{
+
+font-size:24px;
+
+line-height:1.8;
+
+color:#425466;
 }
 
 .card{
-background:#fff;
-border-radius:24px;
-padding:18px;
-margin-bottom:16px;
-box-shadow:0 4px 14px rgba(0,0,0,.08);
+
+background:#ffffff;
+
+border-radius:28px;
+
+padding:24px;
+
+margin-bottom:20px;
+
+box-shadow:
+0 8px 22px rgba(0,0,0,.12);
+
+border-left:
+14px solid #8d6e63;
 }
 
 .date{
-font-size:15px;
-color:#66788a;
-margin-bottom:8px;
+
+font-size:20px;
+
+font-weight:900;
+
+color:#607080;
+
+margin-bottom:10px;
 }
 
 .shop{
-font-size:28px;
+
+font-size:34px;
+
 font-weight:900;
-margin-bottom:10px;
+
+margin-bottom:14px;
 }
 
 .item{
-font-size:24px;
-font-weight:900;
-color:#1976d2;
-margin-bottom:10px;
-}
 
-.price{
-font-size:30px;
+font-size:28px;
+
 font-weight:900;
-color:#e53935;
+
+color:#d32f2f;
+
 margin-bottom:12px;
 }
 
-.text{
-font-size:18px;
-line-height:1.8;
+.price{
+
+font-size:36px;
+
+font-weight:900;
+
+color:#ef6c00;
+
 margin-bottom:16px;
 }
 
+.desc{
+
+font-size:24px;
+
+line-height:1.8;
+
+margin-bottom:20px;
+
+color:#425466;
+}
+
 .btn{
+
 display:block;
-width:100%;
-background:#43a047;
-color:#fff;
-text-align:center;
-padding:16px;
-border-radius:18px;
-font-size:22px;
-font-weight:900;
+
 text-decoration:none;
+
+background:#43a047;
+
+color:#fff;
+
+text-align:center;
+
+padding:18px;
+
+border-radius:20px;
+
+font-size:26px;
+
+font-weight:900;
 }
 
 .archive-title{
-font-size:26px;
+
+font-size:34px;
+
 font-weight:900;
-margin:34px 0 18px;
+
+margin:
+40px 0 20px;
+}
+
+.footer{
+
+text-align:center;
+
+padding:24px 10px 60px;
+
+font-size:20px;
+
+line-height:1.8;
+
+color:#607080;
+}
+
+@media(max-width:768px){
+
+.title{
+font-size:36px;
+}
+
+.sub{
+font-size:22px;
+}
+
+.shop{
+font-size:30px;
+}
+
+.item{
+font-size:26px;
+}
+
+.price{
+font-size:32px;
+}
+
+.desc{
+font-size:22px;
+}
+
+.btn{
+font-size:24px;
+}
+
 }
 
 </style>
@@ -112,10 +217,16 @@ margin:34px 0 18px;
 <div class="wrap">
 
 <div class="top">
-<h1>🛒 スーパー情報</h1>
-<p>
-近くのお店のお得情報をまとめています
-</p>
+
+<div class="title">
+🛒 スーパー情報
+</div>
+
+<div class="sub">
+4市周辺のスーパー特売・
+チラシ・お得情報をまとめています
+</div>
+
 </div>
 
 <div id="latest"></div>
@@ -126,11 +237,18 @@ margin:34px 0 18px;
 
 <div id="archive"></div>
 
+<div class="footer">
+
+NSAW スーパー情報
+
+</div>
+
 </div>
 
 <script>
 
-const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
 const url =
 'https://docs.google.com/spreadsheets/d/' +
@@ -147,24 +265,41 @@ text.substring(47).slice(0,-2)
 
 const rows = json.table.rows;
 
-const latest = document.getElementById('latest');
-const archive = document.getElementById('archive');
-
 rows.reverse();
+
+const latest =
+document.getElementById('latest');
+
+const archive =
+document.getElementById('archive');
 
 rows.forEach((row,index)=>{
 
 const c = row.c;
 
-const date = c[0]?.v || '';
-const city = c[1]?.v || '';
-const shop = c[2]?.v || '';
-const item = c[3]?.v || '';
-const price = c[4]?.v || '';
-const text = c[5]?.v || '';
-const link = c[6]?.v || '';
+const date =
+c[0]?.v || '';
+
+const city =
+c[1]?.v || '';
+
+const shop =
+c[2]?.v || '';
+
+const item =
+c[3]?.v || '';
+
+const price =
+c[4]?.v || '';
+
+const desc =
+c[5]?.v || '';
+
+const link =
+c[6]?.v || '';
 
 const html = `
+
 <div class="card">
 
 <div class="date">
@@ -183,21 +318,30 @@ ${item}
 ${price}
 </div>
 
-<div class="text">
-${text}
+<div class="desc">
+${desc}
 </div>
 
-<a class="btn" href="${link}" target="_blank">
+<a class="btn"
+href="${link}"
+target="_blank">
+
 チラシを見る
+
 </a>
 
 </div>
+
 `;
 
 if(index < 5){
+
 latest.innerHTML += html;
+
 }else{
+
 archive.innerHTML += html;
+
 }
 
 });
