@@ -61,6 +61,21 @@ font-size:18px;
 line-height:1.8;
 }
 
+.groupTitle{
+
+margin-top:18px;
+padding:8px 12px;
+
+border-radius:10px;
+
+font-size:16px;
+font-weight:900;
+
+background:#dde7f3;
+color:#17324d;
+
+}
+
 .btn{
 display:block;
 text-decoration:none;
@@ -241,29 +256,9 @@ const pharmacyURL =
 'https://www.google.com/maps/search/?api=1&query=' +
 lat + ',' + lng + '+薬局';
 
-const toiletURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+トイレ';
-
 const shelterURL =
 'https://www.google.com/maps/search/?api=1&query=' +
 lat + ',' + lng + '+避難所';
-
-const foodURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+配食';
-
-const marketURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+スーパー';
-
-const storeURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+コンビニ';
-
-const gasURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+ガソリンスタンド';
 
 const careURL =
 'https://www.google.com/maps/search/?api=1&query=' +
@@ -281,58 +276,17 @@ const policeURL =
 'https://www.google.com/maps/search/?api=1&query=' +
 lat + ',' + lng + '+警察署';
 
-const bedURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+病院';
-
 const aedURL =
 'https://www.google.com/maps/search/?api=1&query=' +
 lat + ',' + lng + '+AED';
 
-const stationURL =
+const marketURL =
 'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+駅';
+lat + ',' + lng + '+スーパー';
 
-const busURL =
+const storeURL =
 'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+バス停';
-
-const cafeURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+カフェ';
-
-const foodShopURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+飲食店';
-
-const bankURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+銀行';
-
-const postURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+郵便局';
-
-const cameraURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+ライブカメラ';
-
-const rainURL =
-'https://www.google.com/search?q=雨雲レーダー';
-
-const riverURL =
-'https://www.google.com/search?q=荒川+水位';
-
-const blackoutURL =
-'https://www.google.com/search?q=停電情報';
-
-const clothesURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+衣料品店';
-
-const bathURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+銭湯';
+lat + ',' + lng + '+コンビニ';
 
 const taxiURL =
 'https://www.google.com/maps/search/?api=1&query=' +
@@ -342,78 +296,16 @@ const laundryURL =
 'https://www.google.com/maps/search/?api=1&query=' +
 lat + ',' + lng + '+コインランドリー';
 
-const mobileURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+携帯ショップ';
-
-const hotelURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+ホテル';
-
-const houseURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+不動産';
-
-const repairURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+修理';
-
-const chargeURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+充電';
-
-const drugURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+ドラッグストア';
-
-const cleanURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+清掃';
-
-const keyURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+鍵屋';
-
-const waterURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+水道';
-
-const electricURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+電気';
-
-const gasLifeURL =
-'https://www.google.com/maps/search/?api=1&query=' +
-lat + ',' + lng + '+ガス';
-
 marker.bindPopup(`
 
 <div class="popup">
 
 <b>${name}</b><br>
-
 状態：${status}
 
-<a class="btn"
-style="background:#7b1fa2;"
-target="_blank"
-href="${userURL}">
-👤 本人ページ
-</a>
-
-<a class="btn"
-style="background:#ef6c00;"
-target="_blank"
-href="${navURL}">
-🧭 現在地へ行く
-</a>
-
-<a class="btn"
-style="background:#43a047;"
-target="_blank"
-href="${homeURL}">
-🏠 自宅へ戻る
-</a>
+<div class="groupTitle">
+🚨 緊急
+</div>
 
 <a class="btn"
 style="background:#d32f2f;"
@@ -435,17 +327,10 @@ href="${hospitalURL}">
 </a>
 
 <a class="btn"
-style="background:#00897b;"
+style="background:#e53935;"
 target="_blank"
-href="${pharmacyURL}">
-💊 薬局
-</a>
-
-<a class="btn"
-style="background:#546e7a;"
-target="_blank"
-href="${toiletURL}">
-🚻 トイレ
+href="${aedURL}">
+🚑 AED
 </a>
 
 <a class="btn"
@@ -455,12 +340,34 @@ href="${shelterURL}">
 🚨 避難所
 </a>
 
+<div class="groupTitle">
+🧭 移動
+</div>
+
 <a class="btn"
-style="background:#8d6e63;"
+style="background:#ef6c00;"
 target="_blank"
-href="${foodURL}">
-🍱 配食
+href="${navURL}">
+🧭 現在地へ行く
 </a>
+
+<a class="btn"
+style="background:#43a047;"
+target="_blank"
+href="${homeURL}">
+🏠 自宅へ戻る
+</a>
+
+<a class="btn"
+style="background:#455a64;"
+target="_blank"
+href="${taxiURL}">
+🚖 タクシー
+</a>
+
+<div class="groupTitle">
+🛒 生活
+</div>
 
 <a class="btn"
 style="background:#2e7d32;"
@@ -477,11 +384,22 @@ href="${storeURL}">
 </a>
 
 <a class="btn"
-style="background:#5d4037;"
+style="background:#00897b;"
 target="_blank"
-href="${gasURL}">
-⛽ ガソリン
+href="${pharmacyURL}">
+💊 薬局
 </a>
+
+<a class="btn"
+style="background:#00897b;"
+target="_blank"
+href="${laundryURL}">
+🧺 ランドリー
+</a>
+
+<div class="groupTitle">
+🏛 行政・支援
+</div>
 
 <a class="btn"
 style="background:#6a1b9a;"
@@ -512,192 +430,10 @@ href="${policeURL}">
 </a>
 
 <a class="btn"
-style="background:#ad1457;"
+style="background:#7b1fa2;"
 target="_blank"
-href="${bedURL}">
-🛏 受診先
-</a>
-
-<a class="btn"
-style="background:#e53935;"
-target="_blank"
-href="${aedURL}">
-🚑 AED
-</a>
-
-<a class="btn"
-style="background:#3949ab;"
-target="_blank"
-href="${stationURL}">
-🚉 駅
-</a>
-
-<a class="btn"
-style="background:#00838f;"
-target="_blank"
-href="${busURL}">
-🚌 バス停
-</a>
-
-<a class="btn"
-style="background:#6d4c41;"
-target="_blank"
-href="${cafeURL}">
-☕ カフェ
-</a>
-
-<a class="btn"
-style="background:#ef6c00;"
-target="_blank"
-href="${foodShopURL}">
-🍜 飲食店
-</a>
-
-<a class="btn"
-style="background:#1b5e20;"
-target="_blank"
-href="${bankURL}">
-🏦 銀行
-</a>
-
-<a class="btn"
-style="background:#ad1457;"
-target="_blank"
-href="${postURL}">
-📮 郵便局
-</a>
-
-<a class="btn"
-style="background:#455a64;"
-target="_blank"
-href="${cameraURL}">
-📹 ライブカメラ
-</a>
-
-<a class="btn"
-style="background:#0277bd;"
-target="_blank"
-href="${rainURL}">
-🌧 雨雲
-</a>
-
-<a class="btn"
-style="background:#1565c0;"
-target="_blank"
-href="${riverURL}">
-🌊 川水位
-</a>
-
-<a class="btn"
-style="background:#616161;"
-target="_blank"
-href="${blackoutURL}">
-⚡ 停電
-</a>
-
-<a class="btn"
-style="background:#8e24aa;"
-target="_blank"
-href="${clothesURL}">
-👕 着替え
-</a>
-
-<a class="btn"
-style="background:#6a1b9a;"
-target="_blank"
-href="${bathURL}">
-🛁 銭湯
-</a>
-
-<a class="btn"
-style="background:#455a64;"
-target="_blank"
-href="${taxiURL}">
-🚖 タクシー
-</a>
-
-<a class="btn"
-style="background:#00897b;"
-target="_blank"
-href="${laundryURL}">
-🧺 ランドリー
-</a>
-
-<a class="btn"
-style="background:#1565c0;"
-target="_blank"
-href="${mobileURL}">
-🔋 携帯
-</a>
-
-<a class="btn"
-style="background:#5e35b1;"
-target="_blank"
-href="${hotelURL}">
-🛌 ホテル
-</a>
-
-<a class="btn"
-style="background:#6d4c41;"
-target="_blank"
-href="${houseURL}">
-🏠 不動産
-</a>
-
-<a class="btn"
-style="background:#455a64;"
-target="_blank"
-href="${repairURL}">
-🔧 修理屋
-</a>
-
-<a class="btn"
-style="background:#00838f;"
-target="_blank"
-href="${chargeURL}">
-🔌 充電
-</a>
-
-<a class="btn"
-style="background:#2e7d32;"
-target="_blank"
-href="${drugURL}">
-🏪 ドラッグストア
-</a>
-
-<a class="btn"
-style="background:#546e7a;"
-target="_blank"
-href="${cleanURL}">
-🧹 清掃業者
-</a>
-
-<a class="btn"
-style="background:#6d4c41;"
-target="_blank"
-href="${keyURL}">
-🔑 鍵屋
-</a>
-
-<a class="btn"
-style="background:#0277bd;"
-target="_blank"
-href="${waterURL}">
-🚰 水道
-</a>
-
-<a class="btn"
-style="background:#f9a825;"
-target="_blank"
-href="${electricURL}">
-⚡ 電気
-</a>
-
-<a class="btn"
-style="background:#ef6c00;"
-target="_blank"
-href="${gasLifeURL}">
-🔥 ガス
+href="${userURL}">
+👤 本人ページ
 </a>
 
 </div>
