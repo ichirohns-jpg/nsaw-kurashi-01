@@ -275,6 +275,10 @@ const toiletURL =
 'https://www.google.com/maps/search/?api=1&query=' +
 lat + ',' + lng + '+トイレ';
 
+const shelterURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+避難所';
+
 marker.bindPopup(`
 
 <div class="popup">
@@ -357,6 +361,16 @@ target="_blank"
 href="${toiletURL}">
 
 🚻 近くのトイレ
+
+</a>
+
+<a
+class="btn"
+style="background:#7b1fa2;"
+target="_blank"
+href="${shelterURL}">
+
+🚨 最寄り避難所
 
 </a>
 
