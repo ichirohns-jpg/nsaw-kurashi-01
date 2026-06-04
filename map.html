@@ -71,6 +71,35 @@ line-height:1.8;
 color:#425466;
 }
 
+.filter{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:12px;
+
+margin-bottom:20px;
+}
+
+.filter button{
+
+border:none;
+
+border-radius:18px;
+
+padding:18px;
+
+font-size:22px;
+
+font-weight:900;
+
+background:#1976d2;
+
+color:#fff;
+}
+
 #map{
 
 height:420px;
@@ -131,29 +160,6 @@ margin-bottom:20px;
 color:#425466;
 }
 
-.btn{
-
-display:block;
-
-text-decoration:none;
-
-background:#1976d2;
-
-color:#fff;
-
-text-align:center;
-
-padding:18px;
-
-border-radius:20px;
-
-font-size:26px;
-
-font-weight:900;
-
-margin-top:14px;
-}
-
 .footer{
 
 text-align:center;
@@ -185,8 +191,8 @@ font-size:30px;
 font-size:22px;
 }
 
-.btn{
-font-size:22px;
+.filter button{
+font-size:20px;
 }
 
 #map{
@@ -213,6 +219,34 @@ height:360px;
 避難所などを、
 見やすく案内します
 </div>
+
+</div>
+
+<div class="filter">
+
+<button onclick="showType('病院')">
+🏥 病院
+</button>
+
+<button onclick="showType('薬局')">
+💊 薬局
+</button>
+
+<button onclick="showType('スーパー')">
+🛒 スーパー
+</button>
+
+<button onclick="showType('避難所')">
+🚨 避難所
+</button>
+
+<button onclick="showType('トイレ')">
+🚻 トイレ
+</button>
+
+<button onclick="showType('全部')">
+📍 全部
+</button>
 
 </div>
 
@@ -250,6 +284,9 @@ attribution:'OpenStreetMap'
 }
 ).addTo(map);
 
+let allData = [];
+let markers = [];
+
 navigator.geolocation.getCurrentPosition(
 
 (position)=>{
@@ -281,72 +318,81 @@ text.substring(47).slice(0,-2)
 
 const rows = json.table.rows;
 
-const list =
-document.getElementById('list');
-
 rows.forEach((row)=>{
 
 const c = row.c;
 
-const kind =
-c[0]?.v || '';
+allData.push({
 
-const city =
-c[1]?.v || '';
+kind:c[0]?.v || '',
+city:c[1]?.v || '',
+name:c[2]?.v || '',
+address:c[3]?.v || '',
+lat:parseFloat(c[4]?.v || 0),
+lng:parseFloat(c[5]?.v || 0),
+link:c[6]?.v || '',
+note:c[7]?.v || ''
 
-const name =
-c[2]?.v || '';
+});
 
-const address =
-c[3]?.v || '';
+});
 
-const lat =
-parseFloat(c[4]?.v || 0);
+showType('全部');
 
-const lng =
-parseFloat(c[5]?.v || 0);
+});
 
-const link =
-c[6]?.v || '';
+function clearMarkers(){
 
-const note =
-c[7]?.v || '';
+markers.forEach(m=>map.removeLayer(m));
 
-L.marker([lat,lng])
+markers=[];
+
+}
+
+function showType(type){
+
+clearMarkers();
+
+const list =
+document.getElementById('list');
+
+list.innerHTML='';
+
+allData.forEach((item)=>{
+
+if(type !== '全部' &&
+item.kind !== type){
+
+return;
+
+}
+
+const marker =
+L.marker([item.lat,item.lng])
 .addTo(map)
 .bindPopup(
-'<b>' + name + '</b><br>' +
-kind
+'<b>' + item.name + '</b><br>' +
+item.kind
 );
+
+markers.push(marker);
 
 const html = `
 
 <div class="card">
 
 <div class="kind">
-${kind}　${city}
+${item.kind}　${item.city}
 </div>
 
 <div class="name">
-${name}
+${item.name}
 </div>
 
 <div class="address">
-${address}<br>
-${note}
+${item.address}<br>
+${item.note}
 </div>
-
-${link ? `
-
-<a class="btn"
-href="${link}"
-target="_blank">
-
-公式ページ
-
-</a>
-
-` : ''}
 
 </div>
 
@@ -356,7 +402,7 @@ list.innerHTML += html;
 
 });
 
-});
+}
 
 </script>
 
