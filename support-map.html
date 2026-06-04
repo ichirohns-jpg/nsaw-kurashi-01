@@ -116,6 +116,7 @@ font-size:20px;
 
 <br><br>
 
+🔵 あなた　
 🟢 通常　
 🟠 困りごと　
 🔴 助けて
@@ -149,6 +150,20 @@ const lng =
 pos.coords.longitude;
 
 map.setView([lat,lng],14);
+
+L.circleMarker(
+[lat,lng],
+{
+radius:12,
+color:'#1565c0',
+fillColor:'#42a5f5',
+fillOpacity:0.95
+}
+)
+
+.addTo(map)
+
+.bindPopup('🧍 あなたの現在地');
 
 },
 
