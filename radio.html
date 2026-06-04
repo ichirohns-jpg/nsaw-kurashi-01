@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+地域ラジオ
+</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#eef3f8;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+color:#17324d;
+}
+
+.wrap{
+max-width:760px;
+margin:auto;
+padding:14px;
+}
+
+.top{
+
+background:#ffffff;
+
+border-radius:30px;
+
+padding:28px 22px;
+
+box-shadow:
+0 8px 22px rgba(0,0,0,.12);
+
+margin-bottom:20px;
+}
+
+.title{
+
+font-size:42px;
+
+font-weight:900;
+
+margin-bottom:14px;
+}
+
+.sub{
+
+font-size:24px;
+
+line-height:1.8;
+
+color:#425466;
+}
+
+.card{
+
+background:#ffffff;
+
+border-radius:28px;
+
+padding:24px;
+
+margin-bottom:20px;
+
+box-shadow:
+0 8px 22px rgba(0,0,0,.12);
+
+border-left:
+14px solid #d32f2f;
+}
+
+.date{
+
+font-size:20px;
+
+font-weight:900;
+
+color:#607080;
+
+margin-bottom:10px;
+}
+
+.video-title{
+
+font-size:34px;
+
+font-weight:900;
+
+margin-bottom:18px;
+}
+
+.desc{
+
+font-size:24px;
+
+line-height:1.8;
+
+margin-bottom:20px;
+
+color:#425466;
+}
+
+.hash{
+
+font-size:20px;
+
+line-height:1.8;
+
+color:#1976d2;
+
+margin-bottom:20px;
+}
+
+.btn{
+
+display:block;
+
+text-decoration:none;
+
+background:#d32f2f;
+
+color:#fff;
+
+text-align:center;
+
+padding:18px;
+
+border-radius:20px;
+
+font-size:26px;
+
+font-weight:900;
+}
+
+.archive-title{
+
+font-size:34px;
+
+font-weight:900;
+
+margin:
+40px 0 20px;
+}
+
+.footer{
+
+text-align:center;
+
+padding:24px 10px 60px;
+
+font-size:20px;
+
+line-height:1.8;
+
+color:#607080;
+}
+
+@media(max-width:768px){
+
+.title{
+font-size:36px;
+}
+
+.sub{
+font-size:22px;
+}
+
+.video-title{
+font-size:30px;
+}
+
+.desc{
+font-size:22px;
+}
+
+.btn{
+font-size:24px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="top">
+
+<div class="title">
+📻 地域ラジオ
+</div>
+
+<div class="sub">
+4市の暮らし情報を
+ラジオ感覚で聞けます
+</div>
+
+</div>
+
+<div id="latest"></div>
+
+<div class="archive-title">
+📚 アーカイブ
+</div>
+
+<div id="archive"></div>
+
+<div class="footer">
+
+NSAW 地域ラジオ
+
+</div>
+
+</div>
+
+<script>
+
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=地域ラジオ&tqx=out:json';
+
+fetch(url)
+.then(res => res.text())
+.then(text => {
+
+const json = JSON.parse(
+text.substring(47).slice(0,-2)
+);
+
+const rows = json.table.rows;
+
+rows.reverse();
+
+const latest =
+document.getElementById('latest');
+
+const archive =
+document.getElementById('archive');
+
+rows.forEach((row,index)=>{
+
+const c = row.c;
+
+const date =
+c[0]?.v || '';
+
+const youtube =
+c[1]?.v || '';
+
+const title =
+c[2]?.v || '';
+
+const desc =
+c[3]?.v || '';
+
+const hash =
+c[4]?.v || '';
+
+const html = `
+
+<div class="card">
+
+<div class="date">
+${date}
+</div>
+
+<div class="video-title">
+${title}
+</div>
+
+<div class="desc">
+${desc}
+</div>
+
+<div class="hash">
+${hash}
+</div>
+
+<a class="btn"
+href="${youtube}"
+target="_blank">
+
+YouTubeで聞く
+
+</a>
+
+</div>
+
+`;
+
+if(index < 5){
+
+latest.innerHTML += html;
+
+}else{
+
+archive.innerHTML += html;
+
+}
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
