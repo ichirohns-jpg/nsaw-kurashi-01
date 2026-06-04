@@ -328,6 +328,8 @@ const url =
 SHEET_ID +
 '/gviz/tq?sheet=利用者管理&tqx=out:json';
 
+let playAlert = false;
+
 fetch(url)
 .then(res => res.text())
 .then(text => {
@@ -422,6 +424,8 @@ let dangerClass = '';
 if(u.status.includes('助け')){
 
 dangerClass = 'danger';
+
+playAlert = true;
 
 }
 
@@ -589,6 +593,17 @@ href="${userURL}">
 list.innerHTML += html;
 
 });
+
+if(playAlert){
+
+const audio =
+new Audio(
+'https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg'
+);
+
+audio.play();
+
+}
 
 });
 
