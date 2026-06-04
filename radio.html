@@ -17,6 +17,7 @@ box-sizing:border-box;
 
 body{
 margin:0;
+padding:0;
 background:#eef3f8;
 font-family:
 "Hiragino Sans",
@@ -25,164 +26,200 @@ sans-serif;
 color:#17324d;
 }
 
-.wrap{
-max-width:760px;
-margin:auto;
-padding:14px;
-}
-
 .top{
+
+padding:20px;
 
 background:#ffffff;
 
-border-radius:30px;
-
-padding:28px 22px;
-
 box-shadow:
-0 8px 22px rgba(0,0,0,.12);
+0 4px 12px rgba(0,0,0,.12);
 
-margin-bottom:20px;
+position:sticky;
+
+top:0;
+
+z-index:999;
+
 }
 
 .title{
 
-font-size:42px;
-
+font-size:34px;
 font-weight:900;
 
-margin-bottom:14px;
+margin-bottom:10px;
+
+}
+
+.backBtn{
+
+display:inline-block;
+
+margin-top:12px;
+
+background:#455a64;
+color:white;
+
+padding:10px 16px;
+
+border-radius:14px;
+
+text-decoration:none;
+
+font-weight:900;
+font-size:18px;
+
 }
 
 .sub{
 
-font-size:24px;
-
+font-size:20px;
 line-height:1.8;
 
-color:#425466;
+color:#607080;
+
+margin-top:18px;
+
+}
+
+.wrap{
+
+max-width:900px;
+margin:auto;
+
+padding:24px 16px 120px;
+
 }
 
 .card{
 
 background:#ffffff;
 
-border-radius:28px;
+border-radius:24px;
 
 padding:24px;
 
-margin-bottom:20px;
+margin-bottom:24px;
 
 box-shadow:
-0 8px 22px rgba(0,0,0,.12);
+0 6px 18px rgba(0,0,0,.08);
 
-border-left:
-14px solid #d32f2f;
 }
 
 .date{
 
-font-size:20px;
-
+font-size:18px;
 font-weight:900;
 
-color:#607080;
+color:#00897b;
 
 margin-bottom:10px;
+
 }
 
-.video-title{
+.cardTitle{
 
-font-size:34px;
-
+font-size:28px;
 font-weight:900;
 
-margin-bottom:18px;
+line-height:1.5;
+
+margin-bottom:16px;
+
 }
 
-.desc{
-
-font-size:24px;
-
-line-height:1.8;
-
-margin-bottom:20px;
-
-color:#425466;
-}
-
-.hash{
+.cardText{
 
 font-size:20px;
+line-height:1.9;
 
-line-height:1.8;
+color:#506070;
 
-color:#1976d2;
-
-margin-bottom:20px;
 }
 
-.player{
+.playBtn{
 
-margin-top:20px;
-}
+display:block;
 
-.player iframe{
+text-decoration:none;
 
-width:100%;
+color:white;
 
-height:260px;
+background:#00897b;
 
-border:none;
+padding:18px;
 
-border-radius:20px;
+border-radius:18px;
 
-background:#000;
-}
-
-.archive-title{
-
-font-size:34px;
-
+font-size:24px;
 font-weight:900;
-
-margin:
-40px 0 20px;
-}
-
-.footer{
 
 text-align:center;
 
-padding:24px 10px 60px;
+margin-top:20px;
 
-font-size:20px;
+box-shadow:
+0 4px 12px rgba(0,0,0,.15);
 
-line-height:1.8;
+}
 
-color:#607080;
+.footerMenu{
+
+position:fixed;
+
+bottom:20px;
+left:50%;
+
+transform:translateX(-50%);
+
+display:flex;
+
+gap:12px;
+
+z-index:9999;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+.footerBtn{
+
+color:white;
+
+padding:14px 18px;
+
+border-radius:16px;
+
+text-decoration:none;
+
+font-weight:900;
+
+font-size:18px;
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.2);
+
 }
 
 @media(max-width:768px){
 
 .title{
-font-size:36px;
+font-size:28px;
 }
 
 .sub{
-font-size:22px;
+font-size:18px;
 }
 
-.video-title{
-font-size:30px;
+.cardTitle{
+font-size:24px;
 }
 
-.desc{
-font-size:22px;
-}
-
-.player iframe{
-height:220px;
+.cardText{
+font-size:18px;
 }
 
 }
@@ -192,137 +229,95 @@ height:220px;
 
 <body>
 
-<div class="wrap">
-
 <div class="top">
 
 <div class="title">
 📻 地域ラジオ
 </div>
 
+<a
+href="index.html"
+class="backBtn">
+
+⬅ トップへ戻る
+
+</a>
+
 <div class="sub">
-4市の暮らし情報を
-ラジオ感覚で聞けます
-</div>
 
-</div>
-
-<div id="latest"></div>
-
-<div class="archive-title">
-📚 アーカイブ
-</div>
-
-<div id="archive"></div>
-
-<div class="footer">
-
-NSAW 地域ラジオ
+毎朝3分、
+4市の地域情報を
+ラジオ形式で配信予定です
 
 </div>
 
 </div>
 
-<script>
-
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-
-const url =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=地域ラジオ&tqx=out:json';
-
-fetch(url)
-.then(res => res.text())
-.then(text => {
-
-const json = JSON.parse(
-text.substring(47).slice(0,-2)
-);
-
-const rows = json.table.rows;
-
-rows.reverse();
-
-const latest =
-document.getElementById('latest');
-
-const archive =
-document.getElementById('archive');
-
-rows.forEach((row,index)=>{
-
-const c = row.c;
-
-const date =
-c[0]?.v || '';
-
-const youtube =
-c[1]?.v || '';
-
-const title =
-c[2]?.v || '';
-
-const desc =
-c[3]?.v || '';
-
-const hash =
-c[4]?.v || '';
-
-const embed =
-youtube
-.replace('watch?v=','embed/')
-.replace('youtu.be/','youtube.com/embed/');
-
-const html = `
+<div class="wrap">
 
 <div class="card">
 
 <div class="date">
-${date}
+2026年6月
 </div>
 
-<div class="video-title">
-${title}
-</div>
+<div class="cardTitle">
 
-<div class="desc">
-${desc}
-</div>
-
-<div class="hash">
-${hash}
-</div>
-
-<div class="player">
-
-<iframe
-src="${embed}"
-allowfullscreen>
-</iframe>
+NSAW 朝の地域ラジオ
+準備中
 
 </div>
 
+<div class="cardText">
+
+4市瓦版と連動しながら、
+毎朝の地域情報を
+ラジオ形式で届けます。
+
+CapCut AI音声による
+試験運用を予定しています。
+
 </div>
 
-`;
+<a
+class="playBtn"
+href="#">
 
-if(index < 5){
+▶ 地域ラジオを聴く
 
-latest.innerHTML += html;
+</a>
 
-}else{
+</div>
 
-archive.innerHTML += html;
+</div>
 
-}
+<div class="footerMenu">
 
-});
+<a href="index.html"
+class="footerBtn"
+style="background:#455a64;">
 
-});
+🏠 トップ
 
-</script>
+</a>
+
+<a href="kawaraban.html"
+class="footerBtn"
+style="background:#1565c0;">
+
+📰 瓦版
+
+</a>
+
+<a href="support-map.html"
+class="footerBtn"
+style="background:#d32f2f;">
+
+🗺 支援
+
+</a>
+
+</div>
 
 </body>
 </html>
