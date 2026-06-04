@@ -6,238 +6,236 @@
 content="width=device-width,initial-scale=1">
 
 <title>
-NSAW 地域テレビ
+地域テレビ
 </title>
 
 <style>
 
 *{
-  box-sizing:border-box;
+box-sizing:border-box;
 }
 
 body{
-  margin:0;
-  background:#eef3f8;
-  font-family:
-  "Hiragino Sans",
-  "Yu Gothic",
-  sans-serif;
-  color:#223;
+margin:0;
+background:#eef3f8;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+color:#17324d;
 }
 
-/* 上 */
+.wrap{
+max-width:760px;
+margin:auto;
+padding:14px;
+}
 
 .top{
-  padding:14px;
+
+background:#ffffff;
+
+border-radius:30px;
+
+padding:28px 22px;
+
+box-shadow:
+0 8px 22px rgba(0,0,0,.12);
+
+margin-bottom:20px;
 }
 
-.top-box{
+.title{
 
-  background:
-  linear-gradient(
-    135deg,
-    #1565c0,
-    #0d47a1
-  );
+font-size:42px;
 
-  border-radius:28px;
+font-weight:900;
 
-  padding:30px 24px;
-
-  color:#fff;
-
-  box-shadow:
-  0 12px 30px rgba(0,0,0,.18);
-}
-
-.main-title{
-
-  font-size:42px;
-
-  font-weight:900;
-
-  line-height:1.4;
+margin-bottom:14px;
 }
 
 .sub{
 
-  margin-top:16px;
+font-size:24px;
 
-  font-size:22px;
+line-height:1.8;
 
-  line-height:1.9;
+color:#425466;
 }
 
-.wrap{
-  padding:16px 14px 60px;
+.card{
+
+background:#ffffff;
+
+border-radius:28px;
+
+padding:24px;
+
+margin-bottom:20px;
+
+box-shadow:
+0 8px 22px rgba(0,0,0,.12);
+
+border-left:
+14px solid #1976d2;
 }
 
-/* 再生 */
+.date{
 
-.player-box{
+font-size:20px;
 
-  background:#fff;
+font-weight:900;
 
-  border-radius:28px;
+color:#607080;
 
-  padding:22px;
-
-  margin-bottom:28px;
-
-  box-shadow:
-  0 8px 24px rgba(0,0,0,.12);
+margin-bottom:10px;
 }
 
-.player-title{
+.video-title{
 
-  font-size:34px;
+font-size:34px;
 
-  font-weight:900;
+font-weight:900;
 
-  color:#1565c0;
-
-  margin-bottom:20px;
+margin-bottom:18px;
 }
 
-.video-wrap{
+.desc{
 
-  position:relative;
+font-size:24px;
 
-  width:100%;
+line-height:1.8;
 
-  padding-top:56.25%;
+margin-bottom:20px;
 
-  border-radius:24px;
-
-  overflow:hidden;
-
-  background:#000;
+color:#425466;
 }
 
-.video-wrap iframe{
+.hash{
 
-  position:absolute;
+font-size:20px;
 
-  top:0;
-  left:0;
+line-height:1.8;
 
-  width:100%;
-  height:100%;
+color:#1976d2;
 
-  border:none;
+margin-bottom:20px;
 }
 
-/* 大ボタン */
+.player{
 
-.big-btn{
-
-  width:100%;
-
-  border:none;
-
-  border-radius:30px;
-
-  padding:36px 20px;
-
-  font-size:36px;
-
-  font-weight:900;
-
-  color:#fff;
-
-  margin-bottom:24px;
-
-  box-shadow:
-  0 10px 26px rgba(0,0,0,.18);
+margin-top:20px;
 }
 
-.play{
-  background:#43a047;
+.player iframe{
+
+width:100%;
+
+height:260px;
+
+border:none;
+
+border-radius:20px;
+
+background:#000;
 }
 
-.drama{
-  background:#5e35b1;
+.share{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:12px;
+
+margin-top:20px;
 }
 
-.music{
-  background:#00897b;
+.share-btn{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+text-decoration:none;
+
+height:60px;
+
+border-radius:18px;
+
+font-size:22px;
+
+font-weight:900;
+
+color:#fff;
 }
 
-.jidaigeki{
-  background:#6d4c41;
+.fb{
+background:#1877f2;
 }
 
-.local{
-  background:#ef6c00;
+.line{
+background:#06c755;
 }
 
-/* 説明 */
-
-.info{
-
-  background:#fff;
-
-  border-radius:26px;
-
-  padding:26px;
-
-  font-size:28px;
-
-  line-height:2;
-
-  box-shadow:
-  0 8px 24px rgba(0,0,0,.12);
+.x{
+background:#111;
 }
 
-/* 戻る */
+.copy{
+background:#ef6c00;
+}
 
-.home-btn{
+.archive-title{
 
-  display:block;
+font-size:34px;
 
-  text-align:center;
+font-weight:900;
 
-  background:#1976d2;
+margin:
+40px 0 20px;
+}
 
-  color:#fff;
+.footer{
 
-  text-decoration:none;
+text-align:center;
 
-  padding:24px;
+padding:24px 10px 60px;
 
-  border-radius:24px;
+font-size:20px;
 
-  font-size:30px;
+line-height:1.8;
 
-  font-weight:900;
-
-  margin-top:34px;
+color:#607080;
 }
 
 @media(max-width:768px){
 
-.main-title{
-  font-size:36px;
+.title{
+font-size:36px;
 }
 
 .sub{
-  font-size:20px;
+font-size:22px;
 }
 
-.player-title{
-  font-size:30px;
+.video-title{
+font-size:30px;
 }
 
-.big-btn{
-  font-size:30px;
+.desc{
+font-size:22px;
 }
 
-.info{
-  font-size:24px;
+.player iframe{
+height:220px;
 }
 
-.home-btn{
-  font-size:26px;
+.share-btn{
+font-size:20px;
 }
 
 }
@@ -247,129 +245,169 @@ body{
 
 <body>
 
+<div class="wrap">
+
 <div class="top">
 
-  <div class="top-box">
+<div class="title">
+📺 地域テレビ
+</div>
 
-    <div class="main-title">
-      NSAW<br>
-      地域テレビ
-    </div>
-
-    <div class="sub">
-      病院の待ち時間や、
-      ちょっと休みたい時に、
-      テレビ感覚で楽しめます。
-    </div>
-
-  </div>
+<div class="sub">
+地域動画や暮らし情報を
+テレビ感覚で見られます
+</div>
 
 </div>
 
-<div class="wrap">
+<div id="latest"></div>
 
-  <button class="big-btn play"
-  onclick="playNow()">
+<div class="archive-title">
+📚 アーカイブ
+</div>
 
-    ▶ すぐ見る
+<div id="archive"></div>
 
-  </button>
+<div class="footer">
 
-  <button class="big-btn drama"
-  onclick="changeVideo(
-  'https://www.youtube.com/embed/dQw4w9WgXcQ'
-  )">
+NSAW 地域テレビ
 
-    🎬 ドラマ
-
-  </button>
-
-  <button class="big-btn music"
-  onclick="changeVideo(
-  'https://www.youtube.com/embed/jfKfPfyJRdk'
-  )">
-
-    🎵 音楽
-
-  </button>
-
-  <button class="big-btn jidaigeki"
-  onclick="changeVideo(
-  'https://www.youtube.com/embed/aqz-KE-bpKQ'
-  )">
-
-    🏯 時代劇
-
-  </button>
-
-  <button class="big-btn local"
-  onclick="changeVideo(
-  'https://www.youtube.com/embed/ScMzIvxBSi4'
-  )">
-
-    📺 地域情報
-
-  </button>
-
-  <div class="player-box">
-
-    <div class="player-title">
-      地域テレビ
-    </div>
-
-    <div class="video-wrap">
-
-      <iframe
-      id="mainVideo"
-      src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1"
-      allow="autoplay"
-      allowfullscreen>
-      </iframe>
-
-    </div>
-
-  </div>
-
-  <div class="info">
-
-    📺 操作を難しくせず、
-    押すだけでテレビ感覚で見られるようにしています。
-
-    <br><br>
-
-    病院の待ち時間や、
-    少し休みたい時に、
-    ゆっくりお楽しみください。
-
-  </div>
-
-  <a class="home-btn"
-  href="index.html">
-
-    ← トップへ戻る
-
-  </a>
+</div>
 
 </div>
 
 <script>
 
-function changeVideo(url){
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-  document.getElementById(
-    'mainVideo'
-  ).src =
-  url + '?autoplay=1';
+const PAGE_URL =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/tv.html';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=お楽しみ動画&tqx=out:json';
+
+fetch(url)
+.then(res => res.text())
+.then(text => {
+
+const json = JSON.parse(
+text.substring(47).slice(0,-2)
+);
+
+const rows = json.table.rows;
+
+rows.reverse();
+
+const latest =
+document.getElementById('latest');
+
+const archive =
+document.getElementById('archive');
+
+rows.forEach((row,index)=>{
+
+const c = row.c;
+
+const date =
+c[0]?.v || '';
+
+const youtube =
+c[1]?.v || '';
+
+const title =
+c[2]?.v || '';
+
+const desc =
+c[3]?.v || '';
+
+const hash =
+c[4]?.v || '';
+
+const embed =
+youtube
+.replace('watch?v=','embed/')
+.replace('youtu.be/','youtube.com/embed/');
+
+const shareText =
+encodeURIComponent(title + ' ' + PAGE_URL);
+
+const html = `
+
+<div class="card">
+
+<div class="date">
+${date}
+</div>
+
+<div class="video-title">
+${title}
+</div>
+
+<div class="desc">
+${desc}
+</div>
+
+<div class="hash">
+${hash}
+</div>
+
+<div class="player">
+
+<iframe
+src="${embed}"
+allowfullscreen>
+</iframe>
+
+</div>
+
+<div class="share">
+
+<a class="share-btn fb"
+target="_blank"
+href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(PAGE_URL)}">
+Facebook
+</a>
+
+<a class="share-btn line"
+target="_blank"
+href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(PAGE_URL)}">
+LINE
+</a>
+
+<a class="share-btn x"
+target="_blank"
+href="https://twitter.com/intent/tweet?text=${shareText}">
+X
+</a>
+
+<a class="share-btn copy"
+href="#"
+onclick="navigator.clipboard.writeText('${PAGE_URL}')">
+コピー
+</a>
+
+</div>
+
+</div>
+
+`;
+
+if(index < 5){
+
+latest.innerHTML += html;
+
+}else{
+
+archive.innerHTML += html;
 
 }
 
-function playNow(){
+});
 
-  changeVideo(
-    'https://www.youtube.com/embed/jfKfPfyJRdk'
-  );
-
-}
+});
 
 </script>
 
