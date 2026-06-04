@@ -6,7 +6,7 @@
 content="width=device-width,initial-scale=1">
 
 <title>
-見守りDX
+見まもりDX
 </title>
 
 <style>
@@ -26,16 +26,16 @@ color:#17324d;
 }
 
 .wrap{
-max-width:760px;
+max-width:700px;
 margin:auto;
-padding:14px;
+padding:16px;
 }
 
 .card{
 
 background:#ffffff;
 
-border-radius:30px;
+border-radius:28px;
 
 padding:24px;
 
@@ -45,117 +45,90 @@ box-shadow:
 0 8px 22px rgba(0,0,0,.12);
 }
 
-.name{
+.title{
 
 font-size:42px;
 
 font-weight:900;
 
-margin-bottom:14px;
+margin-bottom:18px;
+}
+
+.name{
+
+font-size:36px;
+
+font-weight:900;
+
+margin-bottom:10px;
 }
 
 .area{
 
 font-size:24px;
 
-font-weight:900;
-
 color:#607080;
 
-margin-bottom:20px;
+margin-bottom:18px;
 }
 
 .status{
 
-font-size:30px;
+font-size:24px;
 
 font-weight:900;
 
-color:#2e7d32;
-
-margin-bottom:24px;
+margin-bottom:18px;
 }
 
-.big-btn{
-
-display:block;
+.btn{
 
 width:100%;
 
 border:none;
 
-border-radius:26px;
+border-radius:22px;
 
-padding:28px;
+padding:26px;
 
-margin-bottom:18px;
-
-font-size:34px;
+font-size:30px;
 
 font-weight:900;
+
+margin-top:16px;
 
 color:#fff;
 }
 
-.ok{
+.green{
 background:#43a047;
 }
 
-.help{
+.orange{
 background:#ef6c00;
 }
 
-.danger{
+.red{
 background:#d32f2f;
 }
 
-.drug{
+.blue{
 background:#1976d2;
 }
 
-.info{
-
-font-size:24px;
-
-line-height:1.8;
-
-color:#425466;
+.purple{
+background:#7b1fa2;
 }
 
 .footer{
 
 text-align:center;
 
-padding:24px 10px 60px;
-
 font-size:20px;
 
-color:#607080;
-}
-
-@media(max-width:768px){
-
-.name{
-font-size:36px;
-}
-
-.area{
-font-size:22px;
-}
-
-.status{
-font-size:26px;
-}
-
-.big-btn{
-font-size:28px;
 padding:24px;
-}
 
-.info{
-font-size:22px;
-}
-
+color:#607080;
 }
 
 </style>
@@ -167,65 +140,101 @@ font-size:22px;
 
 <div class="card">
 
-<div class="name"
-id="name">
+<div class="title">
+🏠 見まもりDX
+</div>
 
-読み込み中…
+<div class="name"
+id="username">
+
+確認中...
 
 </div>
 
 <div class="area"
-id="area">
+id="userarea">
+
+確認中...
 
 </div>
 
 <div class="status"
-id="status">
+id="userstatus">
+
+😊 今日も元気です
 
 </div>
 
-<button class="big-btn ok">
+<button
+class="btn green"
+onclick="sendStatus('😊 元気です')">
 
 😊 元気です
 
 </button>
 
-<button class="big-btn help">
+<button
+class="btn blue"
+onclick="sendStatus('💊 朝の薬')">
+
+💊 朝の薬
+
+</button>
+
+<button
+class="btn blue"
+onclick="sendStatus('💊 昼の薬')">
+
+💊 昼の薬
+
+</button>
+
+<button
+class="btn blue"
+onclick="sendStatus('💊 夜の薬')">
+
+💊 夜の薬
+
+</button>
+
+<button
+class="btn orange"
+onclick="sendStatus('😓 少し困っています')">
 
 😓 少し困っています
 
 </button>
 
-<button class="big-btn danger">
+<button
+class="btn red"
+onclick="sendStatus('🚨 助けてください')">
 
 🚨 助けてください
 
 </button>
 
-<button class="big-btn drug">
+<button
+class="btn purple"
+onclick="goShelter()">
 
-💊 薬を飲みました
+🚨 避難所へ行く
 
 </button>
-
-<div class="info">
-
-このページは、
-ご本人専用の見守りページです。
-
-</div>
 
 </div>
 
 <div class="footer">
 
-NSAW 見守りDX
+NSAW 見まもりDX
 
 </div>
 
 </div>
 
 <script>
+
+const GAS_URL =
+'https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxxx/exec';
 
 const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
@@ -234,65 +243,158 @@ const params =
 new URLSearchParams(location.search);
 
 const userId =
-params.get('id');
+params.get('id') || '';
 
-const url =
+let userLat = '';
+let userLng = '';
+
+fetch(
 'https://docs.google.com/spreadsheets/d/' +
 SHEET_ID +
-'/gviz/tq?sheet=利用者管理&tqx=out:json';
+'/gviz/tq?sheet=利用者管理&tqx=out:json'
+)
+.then(res=>res.text())
+.then(text=>{
 
-fetch(url)
-.then(res => res.text())
-.then(text => {
-
-const json = JSON.parse(
+const json =
+JSON.parse(
 text.substring(47).slice(0,-2)
 );
 
-const rows = json.table.rows;
+const rows =
+json.table.rows;
 
 rows.forEach((row)=>{
 
 const c = row.c;
 
-const name =
-c[1]?.v || '';
-
-const city =
-c[2]?.v || '';
-
-const area =
-c[3]?.v || '';
-
-const chome =
-c[4]?.v || '';
-
-const status =
-c[10]?.v || '';
-
 const id =
 c[11]?.v || '';
 
-if(id === userId){
+if(id == userId){
 
-document.getElementById('name')
-.innerHTML = name;
+document
+.getElementById('username')
+.innerText =
+c[1]?.v || '';
 
-document.getElementById('area')
-.innerHTML =
-city + ' ' +
-area + ' ' +
-chome;
+document
+.getElementById('userarea')
+.innerText =
+(c[2]?.v || '') +
+' ' +
+(c[3]?.v || '');
 
-document.getElementById('status')
-.innerHTML =
-'現在状態：' + status;
+userLat =
+c[14]?.v || '';
+
+userLng =
+c[15]?.v || '';
 
 }
 
 });
 
 });
+
+function sendStatus(status){
+
+document
+.getElementById('userstatus')
+.innerText = status;
+
+fetch(GAS_URL,{
+
+method:'POST',
+
+body:JSON.stringify({
+
+id:userId,
+status:status
+
+})
+
+})
+.then(()=>{
+
+alert('送信しました');
+
+});
+
+}
+
+function goShelter(){
+
+fetch(
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=地域施設&tqx=out:json'
+)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(
+text.substring(47).slice(0,-2)
+);
+
+const rows =
+json.table.rows;
+
+let nearest = null;
+
+let minDistance = 999999;
+
+rows.forEach((row)=>{
+
+const c = row.c;
+
+const type =
+c[0]?.v || '';
+
+if(type != '避難所') return;
+
+const lat =
+parseFloat(c[4]?.v || 0);
+
+const lng =
+parseFloat(c[5]?.v || 0);
+
+const distance =
+Math.sqrt(
+Math.pow(userLat-lat,2)+
+Math.pow(userLng-lng,2)
+);
+
+if(distance < minDistance){
+
+minDistance = distance;
+
+nearest = {
+name:c[2]?.v || '',
+lat:lat,
+lng:lng
+};
+
+}
+
+});
+
+if(nearest){
+
+const url =
+'https://www.google.com/maps/dir/?api=1&destination=' +
+nearest.lat +
+',' +
+nearest.lng;
+
+location.href = url;
+
+}
+
+});
+
+}
 
 </script>
 
