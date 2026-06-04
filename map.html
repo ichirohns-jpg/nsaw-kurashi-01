@@ -102,7 +102,7 @@ color:#fff;
 
 #map{
 
-height:420px;
+height:320px;
 
 border-radius:28px;
 
@@ -171,6 +171,29 @@ margin-bottom:20px;
 color:#425466;
 }
 
+.btn{
+
+display:block;
+
+text-decoration:none;
+
+background:#1976d2;
+
+color:#fff;
+
+text-align:center;
+
+padding:18px;
+
+border-radius:20px;
+
+font-size:26px;
+
+font-weight:900;
+
+margin-top:14px;
+}
+
 .footer{
 
 text-align:center;
@@ -226,7 +249,11 @@ font-size:22px;
 }
 
 #map{
-height:360px;
+height:260px;
+}
+
+.btn{
+font-size:22px;
 }
 
 }
@@ -495,6 +522,10 @@ Math.max(
 Math.round(item.dist * 1000 / 80)
 );
 
+const navURL =
+'https://www.google.com/maps/dir/?api=1&destination=' +
+item.lat + ',' + item.lng;
+
 const html = `
 
 <div class="card">
@@ -515,6 +546,14 @@ ${item.name}
 ${item.address}<br>
 ${item.note}
 </div>
+
+<a class="btn"
+target="_blank"
+href="${navURL}">
+
+🚶 ここへ行く
+
+</a>
 
 </div>
 
