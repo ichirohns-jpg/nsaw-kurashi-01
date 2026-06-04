@@ -253,6 +253,16 @@ const navURL =
 'https://www.google.com/maps/dir/?api=1&destination=' +
 lat + ',' + lng;
 
+const homeLat =
+c[41]?.v || '';
+
+const homeLng =
+c[42]?.v || '';
+
+const homeURL =
+'https://www.google.com/maps/dir/?api=1&destination=' +
+homeLat + ',' + homeLng;
+
 marker.bindPopup(`
 
 <div class="popup">
@@ -277,6 +287,16 @@ target="_blank"
 href="${navURL}">
 
 🧭 現在地へ行く
+
+</a>
+
+<a
+class="btn"
+style="background:#43a047;"
+target="_blank"
+href="${homeURL}">
+
+🏠 自宅へ戻る
 
 </a>
 
