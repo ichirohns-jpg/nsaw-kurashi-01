@@ -9,6 +9,24 @@ content="width=device-width,initial-scale=1">
 地域ラジオ
 </title>
 
+<meta property="og:title"
+content="NSAW 地域ラジオ">
+
+<meta property="og:description"
+content="志木・新座・朝霞・和光の地域ラジオ">
+
+<meta property="og:type"
+content="website">
+
+<meta property="og:url"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/radio.jpg">
+
+<meta name="twitter:card"
+content="summary_large_image">
+
 <style>
 
 *{
@@ -27,202 +45,167 @@ color:#17324d;
 }
 
 .top{
-
 padding:20px;
-
 background:#ffffff;
-
 box-shadow:
 0 4px 12px rgba(0,0,0,.12);
-
 position:sticky;
-
 top:0;
-
 z-index:999;
-
 }
 
 .title{
-
 font-size:34px;
 font-weight:900;
-
 margin-bottom:10px;
-
 }
 
 .backBtn{
-
 display:inline-block;
-
 margin-top:12px;
-
 background:#455a64;
 color:white;
-
 padding:10px 16px;
-
 border-radius:14px;
-
 text-decoration:none;
-
 font-weight:900;
 font-size:18px;
-
 }
 
 .sub{
-
 font-size:20px;
 line-height:1.8;
-
 color:#607080;
-
 margin-top:18px;
-
 }
 
 .wrap{
-
 max-width:900px;
 margin:auto;
-
 padding:24px 16px 120px;
-
 }
 
 .card{
-
 background:#ffffff;
-
 border-radius:24px;
-
 padding:24px;
-
 margin-bottom:24px;
-
 box-shadow:
 0 6px 18px rgba(0,0,0,.08);
+}
 
+.articleImage{
+width:100%;
+border-radius:18px;
+margin-bottom:18px;
+display:block;
 }
 
 .date{
-
 font-size:18px;
 font-weight:900;
-
 color:#00897b;
-
 margin-bottom:10px;
+}
 
+.category{
+display:inline-block;
+background:#00897b;
+color:white;
+padding:6px 12px;
+border-radius:10px;
+font-size:14px;
+font-weight:900;
+margin-bottom:14px;
 }
 
 .cardTitle{
-
 font-size:28px;
 font-weight:900;
-
 line-height:1.5;
-
 margin-bottom:16px;
-
 }
 
 .cardText{
-
 font-size:20px;
 line-height:1.9;
-
 color:#506070;
-
 }
 
-.playBtn{
-
+.videoBtn{
 display:block;
-
-text-decoration:none;
-
-color:white;
-
 background:#00897b;
-
-padding:18px;
-
-border-radius:18px;
-
-font-size:24px;
-font-weight:900;
-
+color:white;
+text-decoration:none;
+padding:16px;
+border-radius:16px;
 text-align:center;
+font-size:18px;
+font-weight:900;
+margin-top:18px;
+}
 
+.shareBtns{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
 margin-top:20px;
+}
 
-box-shadow:
-0 4px 12px rgba(0,0,0,.15);
+.shareBtn{
+flex:1;
+text-align:center;
+text-decoration:none;
+color:white;
+padding:14px;
+border-radius:14px;
+font-weight:900;
+font-size:18px;
+}
 
+.copyBtn{
+width:100%;
+border:none;
+background:#455a64;
+color:white;
+padding:16px;
+border-radius:16px;
+font-size:18px;
+font-weight:900;
+margin-top:14px;
 }
 
 .footerMenu{
-
 position:fixed;
-
 bottom:14px;
-
 left:0;
 right:0;
-
 display:flex;
-
 justify-content:center;
-
 gap:10px;
-
 z-index:9999;
-
 }
 
 .footerBtn{
-
 color:white;
-
 padding:10px 14px;
-
 border-radius:16px;
-
 text-decoration:none;
-
 font-weight:900;
-
 font-size:16px;
-
 box-shadow:
 0 4px 12px rgba(0,0,0,.2);
-
 }
 
-@media(max-width:768px){
-
-.title{
-font-size:28px;
-}
-
-.sub{
-font-size:18px;
-}
-
-.cardTitle{
-font-size:24px;
-}
-
-.cardText{
-font-size:18px;
-}
-
+.loading{
+text-align:center;
+font-size:22px;
+font-weight:900;
+padding:40px;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -244,8 +227,7 @@ class="backBtn">
 <div class="sub">
 
 毎朝3分、
-4市の地域情報を
-ラジオ形式で配信予定です
+地域情報をラジオ形式で配信
 
 </div>
 
@@ -253,37 +235,13 @@ class="backBtn">
 
 <div class="wrap">
 
-<div class="card">
+<div id="radioArea">
 
-<div class="date">
-2026年6月
-</div>
+<div class="loading">
 
-<div class="cardTitle">
-
-NSAW 朝の地域ラジオ
-準備中
+読み込み中...
 
 </div>
-
-<div class="cardText">
-
-4市瓦版と連動しながら、
-毎朝の地域情報を
-ラジオ形式で届けます。
-
-CapCut AI音声による
-試験運用を予定しています。
-
-</div>
-
-<a
-class="playBtn"
-href="#">
-
-▶ 地域ラジオを聴く
-
-</a>
 
 </div>
 
@@ -325,6 +283,158 @@ border:3px solid white;
 </a>
 
 </div>
+
+<script>
+
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const SHEET_NAME =
+'シート1';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json';
+
+fetch(url)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(
+text.substr(47).slice(0,-2)
+);
+
+const rows =
+json.table.rows;
+
+let html = '';
+
+rows.forEach(r=>{
+
+const date =
+r.c[0] ? r.c[0].v : '';
+
+const title =
+r.c[1] ? r.c[1].v : '';
+
+const image =
+r.c[2] ? r.c[2].v : '';
+
+const desc =
+r.c[3] ? r.c[3].v : '';
+
+const video =
+r.c[4] ? r.c[4].v : '';
+
+const category =
+r.c[5] ? r.c[5].v : '';
+
+if(category !== 'ラジオ'){
+return;
+}
+
+html += `
+
+<div class="card">
+
+<img
+src="${image}"
+class="articleImage">
+
+<div class="date">
+${date}
+</div>
+
+<div class="category">
+地域ラジオ
+</div>
+
+<div class="cardTitle">
+${title}
+</div>
+
+<div class="cardText">
+${desc}
+</div>
+
+<a
+class="videoBtn"
+href="${video}"
+target="_blank">
+
+▶ ラジオを聞く
+
+</a>
+
+<div class="shareBtns">
+
+<a
+class="shareBtn"
+style="background:#1877f2;"
+target="_blank"
+href="https://www.facebook.com/sharer/sharer.php?u=${video}">
+
+Facebook
+
+</a>
+
+<a
+class="shareBtn"
+style="background:#06c755;"
+target="_blank"
+href="https://social-plugins.line.me/lineit/share?url=${video}">
+
+LINE
+
+</a>
+
+<a
+class="shareBtn"
+style="background:#000000;"
+target="_blank"
+href="https://twitter.com/intent/tweet?url=${video}&text=${title}">
+
+X
+
+</a>
+
+</div>
+
+<button
+class="copyBtn"
+onclick="copyURL('${video}')">
+
+🔗 URLコピー
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+'radioArea'
+).innerHTML = html;
+
+});
+
+function copyURL(url){
+
+navigator.clipboard.writeText(
+url
+);
+
+alert("URLをコピーしました");
+
+}
+
+</script>
 
 </body>
 </html>
