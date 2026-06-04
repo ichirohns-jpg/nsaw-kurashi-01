@@ -173,6 +173,10 @@ background:#06c755;
 background:#1976d2;
 }
 
+.user{
+background:#7b1fa2;
+}
+
 .footer{
 
 text-align:center;
@@ -298,6 +302,7 @@ chome:c[4]?.v || '',
 tel:c[5]?.v || '',
 line:c[6]?.v || '',
 status:status,
+urlid:c[11]?.v || '',
 last:c[13]?.v || '',
 lat:c[14]?.v || '',
 lng:c[15]?.v || '',
@@ -384,6 +389,10 @@ const mapURL =
 'https://www.google.com/maps?q=' +
 u.lat + ',' + u.lng;
 
+const userURL =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/mamori.html?id=' +
+u.urlid;
+
 const html = `
 
 <div class="card"
@@ -438,6 +447,14 @@ target="_blank"
 href="${mapURL}">
 
 📍 現在地を見る
+
+</a>
+
+<a class="btn user"
+target="_blank"
+href="${userURL}">
+
+👤 本人ページを見る
 
 </a>
 
