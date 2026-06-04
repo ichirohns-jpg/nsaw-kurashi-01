@@ -353,13 +353,63 @@ color = '#d32f2f';
 
 let alertHtml = '';
 
-if(u.last){
+let lastText = '';
 
-const lastDate =
-new Date(u.last);
+if(String(u.last).includes('Date(')){
+
+const nums =
+String(u.last)
+.match(/\d+/g);
+
+const d = new Date(
+nums[0],
+nums[1],
+nums[2],
+nums[3],
+nums[4],
+nums[5]
+);
+
+lastText =
+d.getFullYear() + '/' +
+(d.getMonth()+1) + '/' +
+d.getDate() + ' ' +
+d.getHours() + ':' +
+String(d.getMinutes()).padStart(2,'0');
+
+}else{
+
+lastText = u.last;
+
+}
+
+if(u.last){
 
 const now =
 new Date();
+
+let lastDate;
+
+if(String(u.last).includes('Date(')){
+
+const nums =
+String(u.last)
+.match(/\d+/g);
+
+lastDate = new Date(
+nums[0],
+nums[1],
+nums[2],
+nums[3],
+nums[4],
+nums[5]
+);
+
+}else{
+
+lastDate = new Date(u.last);
+
+}
 
 const diffHours =
 (now - lastDate)
@@ -416,7 +466,7 @@ ${alertHtml}
 
 <div class="info">
 
-🕒 最終確認：${u.last}<br>
+🕒 最終確認：${lastText}<br>
 💊 朝薬：${u.morning}<br>
 💊 昼薬：${u.noon}<br>
 💊 夜薬：${u.night}<br>
