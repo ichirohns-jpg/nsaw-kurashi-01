@@ -425,6 +425,48 @@ href="index.html">
 
 </div>
 
+<div class="shareBtns">
+
+<a
+class="shareBtn"
+style="background:#1877f2;"
+target="_blank"
+href="https://www.facebook.com/sharer/sharer.php?u=https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html">
+
+Facebook
+
+</a>
+
+<a
+class="shareBtn"
+style="background:#06c755;"
+target="_blank"
+href="https://social-plugins.line.me/lineit/share?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html">
+
+LINE
+
+</a>
+
+<a
+class="shareBtn"
+style="background:#000000;"
+target="_blank"
+href="https://twitter.com/intent/tweet?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html&text=NSAW 地域ラジオ">
+
+X
+
+</a>
+
+</div>
+
+<button
+class="copyBtn"
+onclick="copyRadioURL()">
+
+🔗 この記事URLコピー
+
+</button>
+
 </div>
 
 <div class="card">
@@ -469,6 +511,48 @@ href="index.html">
 </a>
 
 </div>
+
+<div class="shareBtns">
+
+<a
+class="shareBtn"
+style="background:#1877f2;"
+target="_blank"
+href="https://www.facebook.com/sharer/sharer.php?u=https://ichirohns-jpg.github.io/nsaw-kurashi-01/support-map.html">
+
+Facebook
+
+</a>
+
+<a
+class="shareBtn"
+style="background:#06c755;"
+target="_blank"
+href="https://social-plugins.line.me/lineit/share?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/support-map.html">
+
+LINE
+
+</a>
+
+<a
+class="shareBtn"
+style="background:#000000;"
+target="_blank"
+href="https://twitter.com/intent/tweet?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/support-map.html&text=NSAW 支援者マップ">
+
+X
+
+</a>
+
+</div>
+
+<button
+class="copyBtn"
+onclick="copyMapURL()">
+
+🔗 この記事URLコピー
+
+</button>
 
 </div>
 
@@ -516,10 +600,30 @@ border:3px solid white;
 function copyURL(){
 
 navigator.clipboard.writeText(
-window.location.href
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html'
 );
 
-alert("URLをコピーしました");
+alert("瓦版URLをコピーしました");
+
+}
+
+function copyRadioURL(){
+
+navigator.clipboard.writeText(
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html'
+);
+
+alert("地域ラジオURLをコピーしました");
+
+}
+
+function copyMapURL(){
+
+navigator.clipboard.writeText(
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/support-map.html'
+);
+
+alert("支援者マップURLをコピーしました");
 
 }
 
