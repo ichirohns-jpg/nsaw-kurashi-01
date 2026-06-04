@@ -249,6 +249,10 @@ const userURL =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/mamori.html?id=' +
 urlid;
 
+const navURL =
+'https://www.google.com/maps/dir/?api=1&destination=' +
+lat + ',' + lng;
+
 marker.bindPopup(`
 
 <div class="popup">
@@ -263,6 +267,16 @@ target="_blank"
 href="${userURL}">
 
 本人ページを見る
+
+</a>
+
+<a
+class="btn"
+style="background:#ef6c00;"
+target="_blank"
+href="${navURL}">
+
+🧭 現在地へ行く
 
 </a>
 
