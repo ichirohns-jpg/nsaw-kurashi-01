@@ -17,6 +17,7 @@ box-sizing:border-box;
 
 body{
 margin:0;
+padding:0;
 background:#eef3f8;
 font-family:
 "Hiragino Sans",
@@ -25,185 +26,203 @@ sans-serif;
 color:#17324d;
 }
 
-.wrap{
-max-width:760px;
-margin:auto;
-padding:14px;
-}
+.top{
 
-.top,.card{
+padding:20px;
 
-background:#fff;
-
-border-radius:30px;
-
-padding:24px;
-
-margin-bottom:20px;
+background:#ffffff;
 
 box-shadow:
-0 8px 22px rgba(0,0,0,.12);
+0 4px 12px rgba(0,0,0,.12);
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
 }
 
 .title{
 
-font-size:42px;
-
+font-size:34px;
 font-weight:900;
 
-margin-bottom:14px;
+margin-bottom:10px;
+
 }
 
-.sub,.desc{
+.backBtn{
 
-font-size:24px;
+display:inline-block;
 
+margin-top:12px;
+
+background:#455a64;
+color:white;
+
+padding:10px 16px;
+
+border-radius:14px;
+
+text-decoration:none;
+
+font-weight:900;
+font-size:18px;
+
+}
+
+.sub{
+
+font-size:20px;
 line-height:1.8;
 
-color:#425466;
+color:#607080;
+
+margin-top:18px;
+
+}
+
+.wrap{
+
+max-width:900px;
+margin:auto;
+
+padding:24px 16px 120px;
+
+}
+
+.card{
+
+background:#ffffff;
+
+border-radius:24px;
+
+padding:24px;
+
+margin-bottom:24px;
+
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+
 }
 
 .date{
 
-font-size:20px;
-
+font-size:18px;
 font-weight:900;
 
-color:#607080;
+color:#1565c0;
 
 margin-bottom:10px;
+
 }
 
-.news-title{
+.cardTitle{
 
-font-size:34px;
-
+font-size:28px;
 font-weight:900;
+
+line-height:1.5;
 
 margin-bottom:16px;
+
 }
 
-.img{
+.cardText{
 
-width:100%;
+font-size:20px;
+line-height:1.9;
 
-border-radius:22px;
+color:#506070;
 
-margin-bottom:18px;
 }
 
-.city-btn{
-
-display:block;
-
-text-decoration:none;
-
-background:#1976d2;
-
-color:#fff;
-
-padding:16px;
-
-border-radius:18px;
-
-font-size:24px;
-
-font-weight:900;
-
-text-align:center;
-
-margin-top:12px;
-}
-
-.share{
-
-display:grid;
-
-grid-template-columns:
-1fr 1fr;
-
-gap:12px;
-
-margin-top:20px;
-}
-
-.share-btn{
+.cityBtns{
 
 display:flex;
 
-align-items:center;
+flex-wrap:wrap;
 
-justify-content:center;
+gap:10px;
+
+margin-top:20px;
+
+}
+
+.cityBtn{
 
 text-decoration:none;
 
-height:60px;
+color:white;
 
-border-radius:18px;
+padding:12px 16px;
 
-font-size:22px;
+border-radius:14px;
+
+font-size:18px;
+font-weight:900;
+
+display:inline-block;
+
+}
+
+.footerMenu{
+
+position:fixed;
+
+bottom:20px;
+left:50%;
+
+transform:translateX(-50%);
+
+display:flex;
+
+gap:12px;
+
+z-index:9999;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+.footerBtn{
+
+color:white;
+
+padding:14px 18px;
+
+border-radius:16px;
+
+text-decoration:none;
 
 font-weight:900;
 
-color:#fff;
-}
+font-size:18px;
 
-.fb{
-background:#1877f2;
-}
+box-shadow:
+0 4px 12px rgba(0,0,0,.2);
 
-.line{
-background:#06c755;
-}
-
-.x{
-background:#111;
-}
-
-.copy{
-background:#ef6c00;
-}
-
-.archive-title{
-
-font-size:34px;
-
-font-weight:900;
-
-margin:40px 0 20px;
-}
-
-.footer{
-
-text-align:center;
-
-padding:24px 10px 60px;
-
-font-size:20px;
-
-color:#607080;
 }
 
 @media(max-width:768px){
 
 .title{
-font-size:36px;
+font-size:28px;
 }
 
-.news-title{
-font-size:30px;
+.sub{
+font-size:18px;
 }
 
-.sub,.desc{
-font-size:22px;
+.cardTitle{
+font-size:24px;
 }
 
-.city-btn{
-font-size:22px;
-}
-
-.share-btn{
-font-size:20px;
+.cardText{
+font-size:18px;
 }
 
 }
@@ -213,180 +232,125 @@ font-size:20px;
 
 <body>
 
-<div class="wrap">
-
 <div class="top">
 
 <div class="title">
 📰 4市瓦版
 </div>
 
+<a
+href="index.html"
+class="backBtn">
+
+⬅ トップへ戻る
+
+</a>
+
 <div class="sub">
+
 志木・新座・朝霞・和光の
-情報を1枚の瓦版でまとめます
-</div>
-
-</div>
-
-<div id="latest"></div>
-
-<div class="archive-title">
-📚 アーカイブ
-</div>
-
-<div id="archive"></div>
-
-<div class="footer">
-
-NSAW 4市瓦版
+地域情報をまとめています
 
 </div>
 
 </div>
 
-<script>
-
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-
-const PAGE_URL =
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html';
-
-const url =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=4市瓦版&tqx=out:json';
-
-fetch(url)
-.then(res=>res.text())
-.then(text=>{
-
-const json=JSON.parse(
-text.substring(47).slice(0,-2)
-);
-
-const rows=json.table.rows;
-
-rows.reverse();
-
-const latest=
-document.getElementById('latest');
-
-const archive=
-document.getElementById('archive');
-
-rows.forEach((row,index)=>{
-
-const c=row.c;
-
-const date=c[0]?.v||'';
-const img=c[1]?.v||'';
-const title=c[2]?.v||'';
-const desc=c[3]?.v||'';
-
-const shikiTitle=c[4]?.v||'志木市';
-const shikiURL=c[5]?.v||'#';
-
-const niizaTitle=c[6]?.v||'新座市';
-const niizaURL=c[7]?.v||'#';
-
-const asakaTitle=c[8]?.v||'朝霞市';
-const asakaURL=c[9]?.v||'#';
-
-const wakoTitle=c[10]?.v||'和光市';
-const wakoURL=c[11]?.v||'#';
-
-const shareText=
-encodeURIComponent(title + ' ' + PAGE_URL);
-
-const html=`
+<div class="wrap">
 
 <div class="card">
 
 <div class="date">
-${date}
+2026年6月
 </div>
 
-${img ? `<img class="img" src="${img}">` : ''}
+<div class="cardTitle">
 
-<div class="news-title">
-${title}
+地域DX試験運用スタート
+
 </div>
 
-<div class="desc">
-${desc}
+<div class="cardText">
+
+4市瓦版、
+地域ラジオ、
+支援者マップを中心に、
+
+地域情報DXの試験運用を
+開始しています。
+
 </div>
 
-<a class="city-btn"
-href="${shikiURL}"
-target="_blank">
-志木市：${shikiTitle}
+<div class="cityBtns">
+
+<a
+class="cityBtn"
+style="background:#1565c0;"
+href="#">
+
+志木市
+
 </a>
 
-<a class="city-btn"
-href="${niizaURL}"
-target="_blank">
-新座市：${niizaTitle}
+<a
+class="cityBtn"
+style="background:#00897b;"
+href="#">
+
+新座市
+
 </a>
 
-<a class="city-btn"
-href="${asakaURL}"
-target="_blank">
-朝霞市：${asakaTitle}
+<a
+class="cityBtn"
+style="background:#ef6c00;"
+href="#">
+
+朝霞市
+
 </a>
 
-<a class="city-btn"
-href="${wakoURL}"
-target="_blank">
-和光市：${wakoTitle}
-</a>
+<a
+class="cityBtn"
+style="background:#8e24aa;"
+href="#">
 
-<div class="share">
+和光市
 
-<a class="share-btn fb"
-target="_blank"
-href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(PAGE_URL)}">
-Facebook
-</a>
-
-<a class="share-btn line"
-target="_blank"
-href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(PAGE_URL)}">
-LINE
-</a>
-
-<a class="share-btn x"
-target="_blank"
-href="https://twitter.com/intent/tweet?text=${shareText}">
-X
-</a>
-
-<a class="share-btn copy"
-href="#"
-onclick="navigator.clipboard.writeText('${PAGE_URL}')">
-コピー
 </a>
 
 </div>
 
 </div>
-`;
 
-if(index<5){
+</div>
 
-latest.innerHTML+=html;
+<div class="footerMenu">
 
-}else{
+<a href="index.html"
+class="footerBtn"
+style="background:#455a64;">
 
-archive.innerHTML+=html;
+🏠 トップ
 
-}
+</a>
 
-});
+<a href="radio.html"
+class="footerBtn"
+style="background:#00897b;">
 
-});
+📻 ラジオ
 
-</script>
+</a>
+
+<a href="support-map.html"
+class="footerBtn"
+style="background:#d32f2f;">
+
+🗺 支援
+
+</a>
+
+</div>
 
 </body>
 </html>
