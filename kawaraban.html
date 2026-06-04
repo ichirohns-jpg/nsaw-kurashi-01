@@ -149,6 +149,18 @@ font-weight:900;
 font-size:18px;
 }
 
+.copyBtn{
+width:100%;
+border:none;
+background:#455a64;
+color:white;
+padding:16px;
+border-radius:16px;
+font-size:18px;
+font-weight:900;
+margin-top:14px;
+}
+
 .footerMenu{
 position:fixed;
 bottom:14px;
@@ -224,6 +236,37 @@ class="backBtn">
 </div>
 
 <div class="wrap">
+
+<div style="
+background:#1565c0;
+color:white;
+padding:20px;
+border-radius:22px;
+margin-bottom:24px;
+box-shadow:0 6px 18px rgba(0,0,0,.15);
+">
+
+<div style="
+font-size:30px;
+font-weight:900;
+margin-bottom:10px;
+">
+
+📰 NSAW 4市瓦版
+
+</div>
+
+<div style="
+font-size:20px;
+line-height:1.8;
+">
+
+志木・新座・朝霞・和光の
+地域情報を毎日更新予定
+
+</div>
+
+</div>
 
 <div class="card">
 
@@ -326,6 +369,14 @@ X
 </a>
 
 </div>
+
+<button
+class="copyBtn"
+onclick="copyURL()">
+
+🔗 URLコピー
+
+</button>
 
 </div>
 
@@ -459,6 +510,20 @@ border:3px solid white;
 </a>
 
 </div>
+
+<script>
+
+function copyURL(){
+
+navigator.clipboard.writeText(
+window.location.href
+);
+
+alert("URLをコピーしました");
+
+}
+
+</script>
 
 </body>
 </html>
