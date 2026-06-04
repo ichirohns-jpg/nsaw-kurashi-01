@@ -53,7 +53,7 @@ color:#607080;
 
 #map{
 width:100%;
-height:calc(100vh - 180px);
+height:calc(100vh - 220px);
 }
 
 .popup{
@@ -121,6 +121,12 @@ font-size:20px;
 🟠 困りごと　
 🔴 助けて
 
+<br><br>
+
+<span id="updateTime">
+更新確認中...
+</span>
+
 </div>
 
 </div>
@@ -132,6 +138,22 @@ src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
 </script>
 
 <script>
+
+const now = new Date();
+
+document.addEventListener(
+'DOMContentLoaded',
+()=>{
+
+document.getElementById('updateTime')
+.innerHTML =
+
+'🕒 最終更新：' +
+
+now.toLocaleString('ja-JP');
+
+}
+);
 
 const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
