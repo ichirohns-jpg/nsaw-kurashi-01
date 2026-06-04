@@ -201,6 +201,30 @@ line-height:1.8;
 color:#607080;
 }
 
+@keyframes dangerFlash{
+
+0%{
+background:#d32f2f;
+}
+
+50%{
+background:#ff5252;
+}
+
+100%{
+background:#d32f2f;
+}
+
+}
+
+.danger{
+
+animation:
+dangerFlash 1s infinite;
+
+color:#fff;
+}
+
 @media(max-width:768px){
 
 .title{
@@ -393,6 +417,14 @@ color = '#d32f2f';
 
 }
 
+let dangerClass = '';
+
+if(u.status.includes('助け')){
+
+dangerClass = 'danger';
+
+}
+
 let alertHtml = '';
 
 let lastText = '';
@@ -487,7 +519,7 @@ u.urlid;
 
 const html = `
 
-<div class="card"
+<div class="card ${dangerClass}"
 style="
 border-left:14px solid ${color};
 ">
