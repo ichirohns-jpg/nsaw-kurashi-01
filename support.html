@@ -106,6 +106,29 @@ font-weight:900;
 margin-bottom:18px;
 }
 
+.alert{
+
+font-size:24px;
+
+font-weight:900;
+
+padding:14px;
+
+border-radius:18px;
+
+margin-bottom:18px;
+
+color:#fff;
+}
+
+.alert-orange{
+background:#ef6c00;
+}
+
+.alert-red{
+background:#d32f2f;
+}
+
 .info{
 
 font-size:22px;
@@ -154,225 +177,4 @@ text-align:center;
 
 padding:24px 10px 60px;
 
-font-size:20px;
-
-line-height:1.8;
-
-color:#607080;
-}
-
-@media(max-width:768px){
-
-.title{
-font-size:36px;
-}
-
-.sub{
-font-size:22px;
-}
-
-.name{
-font-size:30px;
-}
-
-.status{
-font-size:24px;
-}
-
-.info{
-font-size:20px;
-}
-
-.btn{
-font-size:22px;
-}
-
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="wrap">
-
-<div class="top">
-
-<div class="title">
-👀 支援者ページ
-</div>
-
-<div class="sub">
-利用者の状態・薬・
-最終確認を一覧できます
-</div>
-
-</div>
-
-<div id="list"></div>
-
-<div class="footer">
-
-NSAW 支援者ページ
-
-</div>
-
-</div>
-
-<script>
-
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-
-const url =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=利用者管理&tqx=out:json';
-
-fetch(url)
-.then(res => res.text())
-.then(text => {
-
-const json = JSON.parse(
-text.substring(47).slice(0,-2)
-);
-
-const rows = json.table.rows;
-
-const users = [];
-
-rows.forEach((row)=>{
-
-const c = row.c;
-
-const status =
-c[10]?.v || '';
-
-let priority = 3;
-
-if(status.includes('助け')){
-
-priority = 1;
-
-}else if(status.includes('困')){
-
-priority = 2;
-
-}
-
-users.push({
-
-name:c[1]?.v || '',
-city:c[2]?.v || '',
-area:c[3]?.v || '',
-chome:c[4]?.v || '',
-tel:c[5]?.v || '',
-line:c[6]?.v || '',
-status:status,
-last:c[13]?.v || '',
-morning:c[17]?.v || '',
-noon:c[18]?.v || '',
-night:c[19]?.v || '',
-meal:c[20]?.v || '',
-sleep:c[21]?.v || '',
-condition:c[22]?.v || '',
-memo:c[23]?.v || '',
-priority:priority
-
-});
-
-});
-
-users.sort((a,b)=>{
-
-if(a.priority !== b.priority){
-
-return a.priority - b.priority;
-
-}
-
-return String(b.last)
-.localeCompare(String(a.last));
-
-});
-
-const list =
-document.getElementById('list');
-
-users.forEach((u)=>{
-
-let color = '#43a047';
-
-if(u.status.includes('困')){
-
-color = '#ef6c00';
-
-}
-
-if(u.status.includes('助け')){
-
-color = '#d32f2f';
-
-}
-
-const html = `
-
-<div class="card"
-style="
-border-left:14px solid ${color};
-">
-
-<div class="name">
-${u.name}
-</div>
-
-<div class="area">
-${u.city} ${u.area} ${u.chome}
-</div>
-
-<div class="status">
-現在状態：${u.status}
-</div>
-
-<div class="info">
-
-🕒 最終確認：${u.last}<br>
-💊 朝薬：${u.morning}<br>
-💊 昼薬：${u.noon}<br>
-💊 夜薬：${u.night}<br>
-🍚 食事：${u.meal}<br>
-😴 睡眠：${u.sleep}<br>
-🩺 体調：${u.condition}<br>
-⚠ 要注意：${u.memo}
-
-</div>
-
-<a class="btn tel"
-href="tel:${u.tel}">
-
-📞 電話する
-
-</a>
-
-<a class="btn line"
-target="_blank"
-href="https://line.me/R/ti/p/~${u.line}">
-
-💬 LINEする
-
-</a>
-
-</div>
-
-`;
-
-list.innerHTML += html;
-
-});
-
-});
-
-</script>
-
-</body>
-</html>
+font-size:
