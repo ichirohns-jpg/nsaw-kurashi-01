@@ -131,6 +131,31 @@ padding:24px;
 color:#607080;
 }
 
+@media(max-width:768px){
+
+.title{
+font-size:36px;
+}
+
+.name{
+font-size:32px;
+}
+
+.area{
+font-size:22px;
+}
+
+.status{
+font-size:22px;
+}
+
+.btn{
+font-size:26px;
+padding:22px;
+}
+
+}
+
 </style>
 </head>
 
@@ -234,7 +259,7 @@ NSAW 見まもりDX
 <script>
 
 const GAS_URL =
-'https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxxx/exec';
+'https://script.google.com/macros/s/AKfycbws5QbZzLbXcU4v6xApbbe8hspIWPwrpDEHCtf3yOGURwHCvE9FbW2T3BbVLAIBGfkO/exec';
 
 const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
@@ -286,10 +311,10 @@ document
 (c[3]?.v || '');
 
 userLat =
-c[14]?.v || '';
+parseFloat(c[14]?.v || 0);
 
 userLng =
-c[15]?.v || '';
+parseFloat(c[15]?.v || 0);
 
 }
 
