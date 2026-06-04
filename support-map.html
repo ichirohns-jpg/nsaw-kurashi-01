@@ -279,6 +279,22 @@ const shelterURL =
 'https://www.google.com/maps/search/?api=1&query=' +
 lat + ',' + lng + '+避難所';
 
+const foodURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+配食';
+
+const marketURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+スーパー';
+
+const storeURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+コンビニ';
+
+const gasURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+ガソリンスタンド';
+
 marker.bindPopup(`
 
 <div class="popup">
@@ -371,6 +387,46 @@ target="_blank"
 href="${shelterURL}">
 
 🚨 最寄り避難所
+
+</a>
+
+<a
+class="btn"
+style="background:#8d6e63;"
+target="_blank"
+href="${foodURL}">
+
+🍱 配食サービス
+
+</a>
+
+<a
+class="btn"
+style="background:#2e7d32;"
+target="_blank"
+href="${marketURL}">
+
+🛒 近くのスーパー
+
+</a>
+
+<a
+class="btn"
+style="background:#1565c0;"
+target="_blank"
+href="${storeURL}">
+
+🏪 近くのコンビニ
+
+</a>
+
+<a
+class="btn"
+style="background:#5d4037;"
+target="_blank"
+href="${gasURL}">
+
+⛽ ガソリンスタンド
 
 </a>
 
