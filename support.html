@@ -63,6 +63,17 @@ line-height:1.8;
 color:#425466;
 }
 
+.reload{
+
+margin-top:20px;
+
+font-size:22px;
+
+font-weight:900;
+
+color:#1976d2;
+}
+
 .card{
 
 background:#ffffff;
@@ -200,6 +211,10 @@ font-size:36px;
 font-size:22px;
 }
 
+.reload{
+font-size:20px;
+}
+
 .name{
 font-size:30px;
 }
@@ -243,6 +258,13 @@ font-size:22px;
 
 🔄 10秒ごとに自動更新
 
+<div class="reload"
+id="reloadTime">
+
+更新確認中...
+
+</div>
+
 </div>
 
 </div>
@@ -258,6 +280,21 @@ NSAW 支援者ページ
 </div>
 
 <script>
+
+const now = new Date();
+
+document
+.getElementById('reloadTime')
+.innerText =
+
+'最終更新：' +
+
+now.getFullYear() + '/' +
+(now.getMonth()+1) + '/' +
+now.getDate() + ' ' +
+now.getHours() + ':' +
+String(now.getMinutes()).padStart(2,'0') + ':' +
+String(now.getSeconds()).padStart(2,'0');
 
 const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
