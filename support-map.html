@@ -295,6 +295,22 @@ const gasURL =
 'https://www.google.com/maps/search/?api=1&query=' +
 lat + ',' + lng + '+ガソリンスタンド';
 
+const careURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+地域包括支援センター';
+
+const cityURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+市役所';
+
+const fireURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+消防署';
+
+const policeURL =
+'https://www.google.com/maps/search/?api=1&query=' +
+lat + ',' + lng + '+警察署';
+
 marker.bindPopup(`
 
 <div class="popup">
@@ -427,6 +443,46 @@ target="_blank"
 href="${gasURL}">
 
 ⛽ ガソリンスタンド
+
+</a>
+
+<a
+class="btn"
+style="background:#6a1b9a;"
+target="_blank"
+href="${careURL}">
+
+🧓 地域包括支援センター
+
+</a>
+
+<a
+class="btn"
+style="background:#455a64;"
+target="_blank"
+href="${cityURL}">
+
+🏛 市役所
+
+</a>
+
+<a
+class="btn"
+style="background:#b71c1c;"
+target="_blank"
+href="${fireURL}">
+
+🚒 消防署
+
+</a>
+
+<a
+class="btn"
+style="background:#263238;"
+target="_blank"
+href="${policeURL}">
+
+👮 警察署
 
 </a>
 
