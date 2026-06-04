@@ -239,67 +239,77 @@ text.substring(47).slice(0,-2)
 
 const rows = json.table.rows;
 
-const list =
-document.getElementById('list');
+const users = [];
 
 rows.forEach((row)=>{
 
 const c = row.c;
 
-const name =
-c[1]?.v || '';
-
-const city =
-c[2]?.v || '';
-
-const area =
-c[3]?.v || '';
-
-const chome =
-c[4]?.v || '';
-
-const tel =
-c[5]?.v || '';
-
-const line =
-c[6]?.v || '';
-
 const status =
 c[10]?.v || '';
 
-const last =
-c[13]?.v || '';
+let priority = 3;
 
-const morning =
-c[17]?.v || '';
+if(status.includes('助け')){
 
-const noon =
-c[18]?.v || '';
+priority = 1;
 
-const night =
-c[19]?.v || '';
+}else if(status.includes('困')){
 
-const meal =
-c[20]?.v || '';
+priority = 2;
 
-const sleep =
-c[21]?.v || '';
+}
 
-const condition =
-c[22]?.v || '';
+users.push({
 
-const memo =
-c[23]?.v || '';
+name:c[1]?.v || '',
+city:c[2]?.v || '',
+area:c[3]?.v || '',
+chome:c[4]?.v || '',
+tel:c[5]?.v || '',
+line:c[6]?.v || '',
+status:status,
+last:c[13]?.v || '',
+morning:c[17]?.v || '',
+noon:c[18]?.v || '',
+night:c[19]?.v || '',
+meal:c[20]?.v || '',
+sleep:c[21]?.v || '',
+condition:c[22]?.v || '',
+memo:c[23]?.v || '',
+priority:priority
+
+});
+
+});
+
+users.sort((a,b)=>{
+
+if(a.priority !== b.priority){
+
+return a.priority - b.priority;
+
+}
+
+return String(b.last)
+.localeCompare(String(a.last));
+
+});
+
+const list =
+document.getElementById('list');
+
+users.forEach((u)=>{
 
 let color = '#43a047';
 
-if(status.includes('困')){
+if(u.status.includes('困')){
 
 color = '#ef6c00';
 
 }
 
-if(status.includes('助け')){
+if(u.status.includes('助け')){
 
 color = '#d32f2f';
 
@@ -313,32 +323,32 @@ border-left:14px solid ${color};
 ">
 
 <div class="name">
-${name}
+${u.name}
 </div>
 
 <div class="area">
-${city} ${area} ${chome}
+${u.city} ${u.area} ${u.chome}
 </div>
 
 <div class="status">
-現在状態：${status}
+現在状態：${u.status}
 </div>
 
 <div class="info">
 
-🕒 最終確認：${last}<br>
-💊 朝薬：${morning}<br>
-💊 昼薬：${noon}<br>
-💊 夜薬：${night}<br>
-🍚 食事：${meal}<br>
-😴 睡眠：${sleep}<br>
-🩺 体調：${condition}<br>
-⚠ 要注意：${memo}
+🕒 最終確認：${u.last}<br>
+💊 朝薬：${u.morning}<br>
+💊 昼薬：${u.noon}<br>
+💊 夜薬：${u.night}<br>
+🍚 食事：${u.meal}<br>
+😴 睡眠：${u.sleep}<br>
+🩺 体調：${u.condition}<br>
+⚠ 要注意：${u.memo}
 
 </div>
 
 <a class="btn tel"
-href="tel:${tel}">
+href="tel:${u.tel}">
 
 📞 電話する
 
@@ -346,7 +356,7 @@ href="tel:${tel}">
 
 <a class="btn line"
 target="_blank"
-href="https://line.me/R/ti/p/~${line}">
+href="https://line.me/R/ti/p/~${u.line}">
 
 💬 LINEする
 
