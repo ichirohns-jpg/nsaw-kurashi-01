@@ -3,13 +3,9 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
-<title>
-NSAW 暮らし情報局
-</title>
+<title>NSAW 暮らし情報局</title>
 
 <meta name="description"
 content="志木・新座・朝霞・和光の地域生活テレビ">
@@ -62,8 +58,7 @@ width:100%;
 display:block;
 border-radius:34px;
 margin-bottom:24px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.14);
+box-shadow:0 6px 18px rgba(0,0,0,.14);
 }
 
 .mainCard{
@@ -73,8 +68,7 @@ padding:34px 24px;
 border-radius:34px;
 text-align:center;
 margin-bottom:28px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.14);
+box-shadow:0 6px 18px rgba(0,0,0,.14);
 }
 
 .mainTitle{
@@ -96,8 +90,7 @@ color:white;
 padding:26px;
 border-radius:30px;
 margin-bottom:28px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.12);
+box-shadow:0 6px 18px rgba(0,0,0,.12);
 }
 
 .todayTitle{
@@ -117,8 +110,7 @@ background:white;
 padding:26px;
 border-radius:30px;
 margin-bottom:28px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.08);
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
 
 .todayNewsTitle{
@@ -147,6 +139,54 @@ line-height:1.9;
 color:#506070;
 }
 
+.todayRadio{
+background:white;
+padding:26px;
+border-radius:30px;
+margin-bottom:28px;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.todayRadioTitle{
+font-size:34px;
+font-weight:900;
+margin-bottom:18px;
+color:#00897b;
+}
+
+.radioHeadline{
+font-size:30px;
+font-weight:900;
+line-height:1.5;
+margin-bottom:14px;
+}
+
+.radioText{
+font-size:20px;
+line-height:1.9;
+color:#506070;
+margin-top:14px;
+}
+
+.youtubeBox{
+position:relative;
+width:100%;
+padding-top:56.25%;
+border-radius:24px;
+overflow:hidden;
+background:#000;
+margin-bottom:18px;
+}
+
+.youtubeBox iframe{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+border:0;
+}
+
 .menuGrid{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -158,8 +198,7 @@ margin-top:10px;
 background:white;
 border-radius:30px;
 padding:22px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.08);
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 text-align:center;
 }
 
@@ -192,132 +231,39 @@ border-radius:24px;
 font-size:22px;
 font-weight:900;
 text-align:center;
-box-shadow:
-0 4px 12px rgba(0,0,0,.12);
+box-shadow:0 4px 12px rgba(0,0,0,.12);
 }
 
-.blue{
-background:#1565c0;
-}
-
-.green{
-background:#00897b;
-}
-
-.orange{
-background:#ef6c00;
-}
-
-.red{
-background:#d32f2f;
-}
-
-.purple{
-background:#8e24aa;
-}
-
-.shareSection{
-background:white;
-border-radius:34px;
-padding:26px;
-margin-top:30px;
-margin-bottom:30px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.08);
-}
-
-.shareTitle{
-font-size:34px;
-font-weight:900;
-margin-bottom:20px;
-color:#1565c0;
-text-align:center;
-}
-
-.shareGrid{
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:14px;
-}
-
-.shareBtn{
-color:white;
-text-decoration:none;
-padding:20px;
-border-radius:24px;
-font-size:22px;
-font-weight:900;
-text-align:center;
-}
-
-.footerMenu{
-display:flex;
-justify-content:center;
-gap:12px;
-margin-top:36px;
-margin-bottom:10px;
-flex-wrap:wrap;
-}
-
-.footerBtn{
-text-decoration:none;
-color:white;
-padding:14px 18px;
-border-radius:20px;
-font-size:17px;
-font-weight:900;
-box-shadow:
-0 4px 12px rgba(0,0,0,.2);
-}
+.blue{background:#1565c0;}
+.green{background:#00897b;}
+.orange{background:#ef6c00;}
+.red{background:#d32f2f;}
+.purple{background:#8e24aa;}
 
 @media(max-width:768px){
 
-.mainTitle{
-font-size:46px;
-}
+.mainTitle{font-size:46px;}
+.mainText{font-size:20px;}
 
-.mainText{
-font-size:20px;
-}
-
-.todayTitle{
+.todayTitle,
+.todayNewsTitle,
+.todayRadioTitle{
 font-size:28px;
 }
 
-.todayText{
-font-size:20px;
-}
-
-.todayNewsTitle{
-font-size:28px;
-}
-
-.todayNewsHeadline{
-font-size:24px;
-}
-
-.todayNewsText{
+.todayText,
+.todayNewsText,
+.radioText{
 font-size:18px;
+}
+
+.todayNewsHeadline,
+.radioHeadline{
+font-size:24px;
 }
 
 .menuGrid{
 grid-template-columns:1fr;
-}
-
-.menuTitle{
-font-size:26px;
-}
-
-.bigBtn{
-font-size:20px;
-}
-
-.shareGrid{
-grid-template-columns:1fr;
-}
-
-.shareBtn{
-font-size:20px;
 }
 
 }
@@ -372,13 +318,23 @@ NSAW<br>
 
 </div>
 
+<div class="todayRadio">
+
+<div class="todayRadioTitle">
+📻 最新地域ラジオ
+</div>
+
+<div id="todayRadioArea">
+読み込み中...
+</div>
+
+</div>
+
 <div class="menuGrid">
 
 <div class="menuCard">
 
-<div class="menuIcon">
-📰
-</div>
+<div class="menuIcon">📰</div>
 
 <div class="menuTitle">
 4市瓦版
@@ -400,9 +356,7 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html">
 
 <div class="menuCard">
 
-<div class="menuIcon">
-📻
-</div>
+<div class="menuIcon">📻</div>
 
 <div class="menuTitle">
 地域ラジオ
@@ -424,9 +378,7 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html">
 
 <div class="menuCard">
 
-<div class="menuIcon">
-🎬
-</div>
+<div class="menuIcon">🎬</div>
 
 <div class="menuTitle">
 お楽しみ動画
@@ -448,9 +400,7 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html">
 
 <div class="menuCard">
 
-<div class="menuIcon">
-🗑
-</div>
+<div class="menuIcon">🗑</div>
 
 <div class="menuTitle">
 ゴミ情報
@@ -470,102 +420,6 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/gomi.html">
 
 </div>
 
-<div class="menuCard">
-
-<div class="menuIcon">
-🗺
-</div>
-
-<div class="menuTitle">
-地域支援マップ
-</div>
-
-<div class="menuText">
-病院・薬局・避難所・相談先
-</div>
-
-<a
-class="bigBtn red"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/support-map.html">
-
-開く
-
-</a>
-
-</div>
-
-</div>
-
-<div class="shareSection">
-
-<div class="shareTitle">
-📢 このページを共有
-</div>
-
-<div class="shareGrid">
-
-<a
-href="https://www.facebook.com/sharer/sharer.php?u=https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html"
-target="_blank"
-class="shareBtn"
-style="background:#1877f2;">
-
-Facebook
-
-</a>
-
-<a
-href="https://social-plugins.line.me/lineit/share?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html"
-target="_blank"
-class="shareBtn"
-style="background:#06c755;">
-
-LINE
-
-</a>
-
-<a
-href="https://twitter.com/intent/tweet?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/share.html"
-target="_blank"
-class="shareBtn"
-style="background:#000;">
-
-X
-
-</a>
-
-</div>
-
-</div>
-
-<div class="footerMenu">
-
-<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
-class="footerBtn"
-style="background:#455a64;">
-
-🏠 トップ
-
-</a>
-
-<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html"
-class="footerBtn"
-style="background:#1565c0;">
-
-📰 瓦版
-
-</a>
-
-<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html"
-class="footerBtn"
-style="background:#00897b;">
-
-📻 ラジオ
-
-</a>
-
-</div>
-
 </div>
 
 <script>
@@ -573,22 +427,10 @@ style="background:#00897b;">
 const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-const GOMI_SHEET =
-'ゴミ';
-
-const gomiUrl =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=' +
-encodeURIComponent(GOMI_SHEET) +
-'&tqx=out:json';
-
 function cell(row,index){
-
 return row.c[index]
 ? (row.c[index].f || row.c[index].v || '')
 : '';
-
 }
 
 const week = [
@@ -604,14 +446,17 @@ const week = [
 const today =
 week[new Date().getDay()];
 
-fetch(gomiUrl)
+const GOMI_URL =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=ゴミ&tqx=out:json';
+
+fetch(GOMI_URL)
 .then(res=>res.text())
 .then(text=>{
 
 const json =
-JSON.parse(
-text.substr(47).slice(0,-2)
-);
+JSON.parse(text.substr(47).slice(0,-2));
 
 const rows =
 json.table.rows;
@@ -620,14 +465,9 @@ let gomiList = [];
 
 rows.forEach(r=>{
 
-const area =
-cell(r,1);
-
-const day =
-cell(r,2);
-
-const type =
-cell(r,3);
+const area = cell(r,1);
+const day = cell(r,2);
+const type = cell(r,3);
 
 if(day !== today) return;
 
@@ -646,17 +486,17 @@ gomiList.length
 
 });
 
-const NEWS_SHEET =
-'https://docs.google.com/spreadsheets/d/149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc/gviz/tq?sheet=4市瓦版&tqx=out:json';
+const NEWS_URL =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=4市瓦版&tqx=out:json';
 
-fetch(NEWS_SHEET)
+fetch(NEWS_URL)
 .then(res=>res.text())
 .then(text=>{
 
 const json =
-JSON.parse(
-text.substr(47).slice(0,-2)
-);
+JSON.parse(text.substr(47).slice(0,-2));
 
 const rows =
 json.table.rows;
@@ -667,11 +507,9 @@ const r =
 rows[rows.length - 1];
 
 function newsCell(i){
-
 return r.c[i]
 ? (r.c[i].f || r.c[i].v || '')
 : '';
-
 }
 
 let image =
@@ -712,6 +550,82 @@ ${title}
 
 <div class="todayNewsText">
 ${textBody}
+</div>
+
+`;
+
+});
+
+const RADIO_URL =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=地域ラジオ&tqx=out:json';
+
+function getYouTubeId(url){
+
+if(!url) return '';
+
+const m =
+url.match(
+/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{11})/
+);
+
+return m ? m[1] : '';
+
+}
+
+fetch(RADIO_URL)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(text.substr(47).slice(0,-2));
+
+const rows =
+json.table.rows;
+
+if(!rows.length) return;
+
+const r =
+rows[rows.length - 1];
+
+function radioCell(i){
+return r.c[i]
+? (r.c[i].f || r.c[i].v || '')
+: '';
+}
+
+const title =
+radioCell(2);
+
+const desc =
+radioCell(4);
+
+const movieURL =
+radioCell(5);
+
+const youtubeId =
+getYouTubeId(movieURL);
+
+document.getElementById(
+'todayRadioArea'
+).innerHTML = `
+
+<div class="youtubeBox">
+
+<iframe
+src="https://www.youtube.com/embed/${youtubeId}"
+allowfullscreen>
+</iframe>
+
+</div>
+
+<div class="radioHeadline">
+${title}
+</div>
+
+<div class="radioText">
+${desc}
 </div>
 
 `;
