@@ -468,10 +468,15 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/gomi.html">
 
 </div>
 
+</div>
+
 <script>
 
 const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const GAS_URL =
+'https://script.google.com/macros/s/ここに自分のexecURL/exec';
 
 function cell(row,index){
 return row.c[index]
@@ -748,20 +753,49 @@ now.toLocaleString('ja-JP');
 document.getElementById(
 'statusResult'
 ).innerHTML =
+'送信中...';
+
+const payload = {
+
+name:'利用者',
+status:status,
+memo:'',
+lat:'',
+lng:''
+
+};
+
+fetch(
+GAS_URL,
+{
+
+method:'POST',
+
+body:JSON.stringify(payload)
+
+}
+
+)
+.then(r=>r.json())
+.then(data=>{
+
+document.getElementById(
+'statusResult'
+).innerHTML =
 status +
 '<br>' +
 time +
-' に記録しました';
+' に送信しました';
 
-localStorage.setItem(
-'nsaw_status',
-status
-);
+})
+.catch(err=>{
 
-localStorage.setItem(
-'nsaw_status_time',
-time
-);
+document.getElementById(
+'statusResult'
+).innerHTML =
+'送信失敗';
+
+});
 
 }
 
