@@ -312,36 +312,40 @@ let html = '';
 
 rows.reverse().forEach(r=>{
 
-const rawDate =
-r.c[0] ? r.c[0].v : '';
-
-let date = '';
-
-if(rawDate && rawDate.year){
-
-date =
-rawDate.year + '/' +
-(rawDate.month + 1) + '/' +
-rawDate.day;
-
-}
+const date =
+r.c[0]
+? (r.c[0].f || r.c[0].v)
+: '';
 
 const movieId =
-r.c[1] ? r.c[1].v : '';
+r.c[1]
+? (r.c[1].v || r.c[1].f)
+: '';
 
 const title =
-r.c[2] ? r.c[2].v : '';
+r.c[2]
+? (r.c[2].v || r.c[2].f)
+: '';
 
 let image =
-r.c[3] ? r.c[3].v : '';
+r.c[3]
+? (r.c[3].v || r.c[3].f)
+: '';
 
 const desc =
-r.c[4] ? r.c[4].v : '';
+r.c[4]
+? (r.c[4].v || r.c[4].f)
+: '';
 
 const movieURL =
-r.c[5] ? r.c[5].v : '';
+r.c[5]
+? (r.c[5].v || r.c[5].f)
+: '';
 
-if(image && image.includes('drive.google.com/file/d/')){
+if(
+image &&
+image.includes('drive.google.com/file/d/')
+){
 
 const fileId =
 image.split('/d/')[1].split('/')[0];
