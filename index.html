@@ -199,6 +199,18 @@ box-shadow:0 4px 12px rgba(0,0,0,.12);
 .green{background:#00897b;}
 .orange{background:#ef6c00;}
 .purple{background:#8e24aa;}
+.red{background:#d32f2f;}
+
+.statusBtn{
+width:100%;
+border:none;
+padding:24px;
+border-radius:26px;
+font-size:30px;
+font-weight:900;
+color:white;
+box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
 
 @media(max-width:768px){
 
@@ -224,6 +236,10 @@ font-size:18px;
 
 .menuGrid{
 grid-template-columns:1fr;
+}
+
+.statusBtn{
+font-size:24px;
 }
 
 }
@@ -298,6 +314,64 @@ NSAW<br>
 
 <div id="todayFunArea">
 読み込み中...
+</div>
+
+</div>
+
+<div class="block">
+
+<div class="blockTitle whiteTitle">
+🫶 地域見守り
+</div>
+
+<div
+style="
+display:grid;
+grid-template-columns:1fr;
+gap:16px;
+">
+
+<button
+class="statusBtn"
+style="background:#00897b;"
+onclick="setStatus('😊 元気です')">
+
+😊 元気です
+
+</button>
+
+<button
+class="statusBtn"
+style="background:#ef6c00;"
+onclick="setStatus('😓 少し困っています')">
+
+😓 少し困っています
+
+</button>
+
+<button
+class="statusBtn"
+style="background:#d32f2f;"
+onclick="setStatus('🚨 助けてください')">
+
+🚨 助けてください
+
+</button>
+
+</div>
+
+<div
+id="statusResult"
+style="
+margin-top:20px;
+font-size:24px;
+font-weight:900;
+line-height:1.8;
+color:#17324d;
+">
+
+まだ送信されていません
+
 </div>
 
 </div>
@@ -389,8 +463,6 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/gomi.html">
 確認
 
 </a>
-
-</div>
 
 </div>
 
@@ -664,6 +736,34 @@ ${desc}
 `;
 
 });
+
+function setStatus(status){
+
+const now =
+new Date();
+
+const time =
+now.toLocaleString('ja-JP');
+
+document.getElementById(
+'statusResult'
+).innerHTML =
+status +
+'<br>' +
+time +
+' に記録しました';
+
+localStorage.setItem(
+'nsaw_status',
+status
+);
+
+localStorage.setItem(
+'nsaw_status_time',
+time
+);
+
+}
 
 </script>
 
