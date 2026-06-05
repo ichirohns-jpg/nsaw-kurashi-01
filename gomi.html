@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+今日のゴミ情報
+</title>
+
+<meta property="og:title"
+content="今日のゴミ情報">
+
+<meta property="og:description"
+content="地区別ゴミ収集情報">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/map.jpg">
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#eef3f8;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+color:#17324d;
+}
+
+.wrap{
+max-width:900px;
+margin:auto;
+padding:18px 14px 80px;
+}
+
+.topCard{
+background:white;
+border-radius:32px;
+padding:24px;
+margin-bottom:28px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+}
+
+.pageTitle{
+font-size:58px;
+font-weight:900;
+margin-bottom:18px;
+line-height:1.3;
+}
+
+.backBtn{
+display:inline-block;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px 24px;
+border-radius:22px;
+font-size:22px;
+font-weight:900;
+margin-bottom:22px;
+}
+
+.desc{
+font-size:22px;
+line-height:1.9;
+color:#607080;
+}
+
+.gomiCard{
+background:white;
+border-radius:28px;
+padding:22px;
+margin-bottom:24px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+}
+
+.area{
+font-size:34px;
+font-weight:900;
+color:#1565c0;
+margin-bottom:14px;
+}
+
+.day{
+font-size:22px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.type{
+font-size:30px;
+font-weight:900;
+color:#d32f2f;
+margin-bottom:14px;
+}
+
+.text{
+font-size:22px;
+line-height:1.9;
+color:#506070;
+}
+
+.footerMenu{
+display:flex;
+justify-content:center;
+gap:12px;
+margin-top:34px;
+margin-bottom:10px;
+flex-wrap:wrap;
+}
+
+.footerBtn{
+text-decoration:none;
+color:white;
+padding:14px 18px;
+border-radius:20px;
+font-size:17px;
+font-weight:900;
+box-shadow:
+0 4px 12px rgba(0,0,0,.2);
+}
+
+.loading{
+background:white;
+padding:40px;
+border-radius:24px;
+font-size:26px;
+font-weight:900;
+text-align:center;
+}
+
+@media(max-width:768px){
+
+.pageTitle{
+font-size:46px;
+}
+
+.area{
+font-size:28px;
+}
+
+.type{
+font-size:24px;
+}
+
+.text{
+font-size:19px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="topCard">
+
+<div class="pageTitle">
+🗑 今日のゴミ情報
+</div>
+
+<a
+href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/"
+class="backBtn">
+
+⬅ トップへ戻る
+
+</a>
+
+<div class="desc">
+地区別のゴミ収集情報です。
+朝8時までに出してください。
+</div>
+
+</div>
+
+<div id="gomiArea">
+
+<div class="loading">
+読み込み中...
+</div>
+
+</div>
+
+<div class="footerMenu">
+
+<a href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/"
+class="footerBtn"
+style="background:#455a64;">
+
+🏠 トップ
+
+</a>
+
+<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html"
+class="footerBtn"
+style="background:#1565c0;">
+
+📰 瓦版
+
+</a>
+
+<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html"
+class="footerBtn"
+style="background:#00897b;">
+
+📻 ラジオ
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const SHEET_NAME =
+'ゴミ';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json';
+
+function cell(row,index){
+
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
+: '';
+
+}
+
+fetch(url)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(
+text.substr(47).slice(0,-2)
+);
+
+const rows =
+json.table.rows;
+
+let html = '';
+
+rows.forEach(r=>{
+
+const city =
+cell(r,0);
+
+const area =
+cell(r,1);
+
+const day =
+cell(r,2);
+
+const type =
+cell(r,3);
+
+const msg =
+cell(r,4);
+
+html += `
+
+<div class="gomiCard">
+
+<div class="area">
+${city} ${area}
+</div>
+
+<div class="day">
+${day}
+</div>
+
+<div class="type">
+${type}
+</div>
+
+<div class="text">
+${msg}
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+'gomiArea'
+).innerHTML = html;
+
+});
+
+</script>
+
+</body>
+</html>
