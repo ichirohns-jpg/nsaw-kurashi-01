@@ -93,6 +93,9 @@ width:100%;
 border-radius:20px;
 margin-bottom:18px;
 display:block;
+background:#dfe6ec;
+min-height:240px;
+object-fit:cover;
 }
 
 .movieDate{
@@ -323,7 +326,7 @@ rawDate.day;
 
 }
 
-const image =
+let image =
 r.c[1] ? r.c[1].v : '';
 
 const title =
@@ -334,6 +337,20 @@ r.c[3] ? r.c[3].v : '';
 
 const movieURL =
 r.c[4] ? r.c[4].v : '';
+
+/* ▼ Drive共有URL変換 */
+
+if(image.includes('drive.google.com/file/d/')){
+
+const fileId =
+image.split('/d/')[1].split('/')[0];
+
+image =
+'https://drive.google.com/thumbnail?id=' +
+fileId +
+'&sz=w2000';
+
+}
 
 html += `
 
