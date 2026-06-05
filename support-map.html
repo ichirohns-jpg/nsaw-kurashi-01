@@ -3,7 +3,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
@@ -15,7 +14,7 @@ content="width=device-width,initial-scale=1">
 content="地域支援マップ">
 
 <meta property="og:description"
-content="病院・薬局・避難所・地域包括">
+content="病院・薬局・避難所・トイレ・コンビニ">
 
 <meta property="og:image"
 content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/map.jpg">
@@ -79,82 +78,92 @@ line-height:1.9;
 color:#607080;
 }
 
+.nowBox{
+background:#1565c0;
+color:white;
+padding:24px;
+border-radius:28px;
+margin-bottom:28px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.12);
+}
+
+.nowTitle{
+font-size:34px;
+font-weight:900;
+margin-bottom:12px;
+}
+
+.nowText{
+font-size:22px;
+line-height:1.8;
+}
+
+.mapGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
 .mapCard{
 background:white;
 border-radius:30px;
 padding:24px;
-margin-bottom:26px;
 box-shadow:
 0 6px 18px rgba(0,0,0,.08);
+text-align:center;
+}
+
+.mapIcon{
+font-size:68px;
+margin-bottom:14px;
 }
 
 .mapTitle{
-font-size:34px;
+font-size:30px;
 font-weight:900;
-margin-bottom:16px;
-color:#1565c0;
+margin-bottom:14px;
 }
 
 .mapText{
-font-size:22px;
-line-height:1.9;
-color:#506070;
+font-size:18px;
+line-height:1.8;
+color:#607080;
 margin-bottom:18px;
 }
 
-.bigBtn{
+.mapBtn{
 display:block;
-width:100%;
 text-decoration:none;
 color:white;
-padding:22px;
+padding:20px;
 border-radius:24px;
-font-size:24px;
+font-size:22px;
 font-weight:900;
 text-align:center;
-margin-bottom:14px;
 box-shadow:
 0 4px 12px rgba(0,0,0,.12);
 }
 
-.blue{
-background:#1565c0;
-}
+.red{background:#d32f2f;}
+.blue{background:#1565c0;}
+.green{background:#00897b;}
+.orange{background:#ef6c00;}
+.purple{background:#8e24aa;}
 
-.green{
+.gpsBtn{
+display:block;
+width:100%;
+border:none;
 background:#00897b;
-}
-
-.orange{
-background:#ef6c00;
-}
-
-.red{
-background:#d32f2f;
-}
-
-.purple{
-background:#8e24aa;
-}
-
-.footerMenu{
-display:flex;
-justify-content:center;
-gap:12px;
-margin-top:36px;
-margin-bottom:10px;
-flex-wrap:wrap;
-}
-
-.footerBtn{
-text-decoration:none;
 color:white;
-padding:14px 18px;
-border-radius:20px;
-font-size:17px;
+padding:22px;
+border-radius:26px;
+font-size:26px;
 font-weight:900;
+margin-top:22px;
 box-shadow:
-0 4px 12px rgba(0,0,0,.2);
+0 6px 18px rgba(0,0,0,.12);
 }
 
 @media(max-width:768px){
@@ -163,22 +172,30 @@ box-shadow:
 font-size:46px;
 }
 
+.mapGrid{
+grid-template-columns:1fr;
+}
+
 .mapTitle{
+font-size:26px;
+}
+
+.mapBtn{
+font-size:20px;
+}
+
+.nowTitle{
 font-size:28px;
 }
 
-.mapText{
+.nowText{
 font-size:19px;
-}
-
-.bigBtn{
-font-size:22px;
-padding:20px;
 }
 
 }
 
 </style>
+
 </head>
 
 <body>
@@ -200,133 +217,218 @@ class="backBtn">
 </a>
 
 <div class="desc">
-病院・薬局・避難所・地域包括支援センターなど、
-暮らしに役立つ地域支援情報です。
+病院・薬局・避難所・コンビニ・トイレを、
+Googleマップで確認できます。
 </div>
 
 </div>
 
-<!-- ▼ 病院 -->
+<div class="nowBox">
+
+<div class="nowTitle">
+📍 現在地
+</div>
+
+<div class="nowText" id="gpsText">
+現在地を取得してください
+</div>
+
+<button
+class="gpsBtn"
+onclick="getLocation()">
+
+📡 現在地を取得する
+
+</button>
+
+</div>
+
+<div class="mapGrid">
 
 <div class="mapCard">
 
+<div class="mapIcon">
+🏥
+</div>
+
 <div class="mapTitle">
-🏥 病院
+病院
 </div>
 
 <div class="mapText">
-近くの病院をGoogleマップで確認できます。
+近くの病院を探します
 </div>
 
 <a
-class="bigBtn red"
-href="https://www.google.com/maps/search/病院+志木市/"
-target="_blank">
+class="mapBtn red"
+target="_blank"
+href="https://www.google.com/maps/search/病院">
 
-病院を探す
+Googleマップを見る
 
 </a>
 
 </div>
-
-<!-- ▼ 薬局 -->
 
 <div class="mapCard">
 
+<div class="mapIcon">
+💊
+</div>
+
 <div class="mapTitle">
-💊 薬局
+薬局
 </div>
 
 <div class="mapText">
-近くの薬局をGoogleマップで確認できます。
+近くの薬局を探します
 </div>
 
 <a
-class="bigBtn green"
-href="https://www.google.com/maps/search/薬局+志木市/"
-target="_blank">
+class="mapBtn blue"
+target="_blank"
+href="https://www.google.com/maps/search/薬局">
 
-薬局を探す
+Googleマップを見る
 
 </a>
 
 </div>
-
-<!-- ▼ 避難所 -->
 
 <div class="mapCard">
 
+<div class="mapIcon">
+🏪
+</div>
+
 <div class="mapTitle">
-🚨 避難所
+コンビニ
 </div>
 
 <div class="mapText">
-避難所・防災施設を確認できます。
+近くのコンビニを探します
 </div>
 
 <a
-class="bigBtn orange"
-href="https://www.google.com/maps/search/避難所+志木市/"
-target="_blank">
+class="mapBtn green"
+target="_blank"
+href="https://www.google.com/maps/search/コンビニ">
 
-避難所を見る
+Googleマップを見る
 
 </a>
 
 </div>
-
-<!-- ▼ 地域包括 -->
 
 <div class="mapCard">
 
+<div class="mapIcon">
+🚻
+</div>
+
 <div class="mapTitle">
-👴 地域包括支援センター
+トイレ
 </div>
 
 <div class="mapText">
-高齢者相談・介護・見守り相談窓口です。
+近くのトイレを探します
 </div>
 
 <a
-class="bigBtn purple"
-href="https://www.google.com/maps/search/地域包括支援センター+志木市/"
-target="_blank">
+class="mapBtn orange"
+target="_blank"
+href="https://www.google.com/maps/search/トイレ">
 
-相談先を見る
+Googleマップを見る
 
 </a>
 
 </div>
 
-<div class="footerMenu">
+<div class="mapCard">
 
-<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
-class="footerBtn"
-style="background:#455a64;">
+<div class="mapIcon">
+🏫
+</div>
 
-🏠 トップ
+<div class="mapTitle">
+避難所
+</div>
 
-</a>
+<div class="mapText">
+近くの避難所を探します
+</div>
 
-<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html"
-class="footerBtn"
-style="background:#1565c0;">
+<a
+class="mapBtn purple"
+target="_blank"
+href="https://www.google.com/maps/search/避難所">
 
-📰 瓦版
-
-</a>
-
-<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html"
-class="footerBtn"
-style="background:#00897b;">
-
-📻 ラジオ
+Googleマップを見る
 
 </a>
 
 </div>
 
 </div>
+
+</div>
+
+<script>
+
+function getLocation(){
+
+if(!navigator.geolocation){
+
+document.getElementById(
+'gpsText'
+).innerHTML =
+'位置情報に対応していません';
+
+return;
+
+}
+
+navigator.geolocation.getCurrentPosition(
+
+function(position){
+
+const lat =
+position.coords.latitude;
+
+const lng =
+position.coords.longitude;
+
+document.getElementById(
+'gpsText'
+).innerHTML =
+'緯度：' +
+lat +
+'<br>経度：' +
+lng;
+
+},
+
+function(){
+
+document.getElementById(
+'gpsText'
+).innerHTML =
+'現在地を取得できませんでした';
+
+},
+
+{
+enableHighAccuracy:true,
+timeout:5000,
+maximumAge:0
+}
+
+);
+
+}
+
+</script>
 
 </body>
 </html>
