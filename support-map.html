@@ -1,17 +1,332 @@
-<a
-href="index.html"
-style="
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+地域支援マップ
+</title>
+
+<meta property="og:title"
+content="地域支援マップ">
+
+<meta property="og:description"
+content="病院・薬局・避難所・地域包括">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/map.jpg">
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#eef3f8;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+color:#17324d;
+}
+
+.wrap{
+max-width:920px;
+margin:auto;
+padding:18px 14px 80px;
+}
+
+.topCard{
+background:white;
+border-radius:32px;
+padding:24px;
+margin-bottom:28px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+}
+
+.pageTitle{
+font-size:58px;
+font-weight:900;
+margin-bottom:18px;
+line-height:1.3;
+}
+
+.backBtn{
 display:inline-block;
-margin-top:12px;
 background:#455a64;
 color:white;
-padding:10px 16px;
-border-radius:14px;
 text-decoration:none;
+padding:18px 24px;
+border-radius:22px;
+font-size:22px;
 font-weight:900;
-font-size:18px;
-">
+margin-bottom:22px;
+}
+
+.desc{
+font-size:22px;
+line-height:1.9;
+color:#607080;
+}
+
+.mapCard{
+background:white;
+border-radius:30px;
+padding:24px;
+margin-bottom:26px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+}
+
+.mapTitle{
+font-size:34px;
+font-weight:900;
+margin-bottom:16px;
+color:#1565c0;
+}
+
+.mapText{
+font-size:22px;
+line-height:1.9;
+color:#506070;
+margin-bottom:18px;
+}
+
+.bigBtn{
+display:block;
+width:100%;
+text-decoration:none;
+color:white;
+padding:22px;
+border-radius:24px;
+font-size:24px;
+font-weight:900;
+text-align:center;
+margin-bottom:14px;
+box-shadow:
+0 4px 12px rgba(0,0,0,.12);
+}
+
+.blue{
+background:#1565c0;
+}
+
+.green{
+background:#00897b;
+}
+
+.orange{
+background:#ef6c00;
+}
+
+.red{
+background:#d32f2f;
+}
+
+.purple{
+background:#8e24aa;
+}
+
+.footerMenu{
+display:flex;
+justify-content:center;
+gap:12px;
+margin-top:36px;
+margin-bottom:10px;
+flex-wrap:wrap;
+}
+
+.footerBtn{
+text-decoration:none;
+color:white;
+padding:14px 18px;
+border-radius:20px;
+font-size:17px;
+font-weight:900;
+box-shadow:
+0 4px 12px rgba(0,0,0,.2);
+}
+
+@media(max-width:768px){
+
+.pageTitle{
+font-size:46px;
+}
+
+.mapTitle{
+font-size:28px;
+}
+
+.mapText{
+font-size:19px;
+}
+
+.bigBtn{
+font-size:22px;
+padding:20px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="topCard">
+
+<div class="pageTitle">
+🗺 地域支援マップ
+</div>
+
+<a
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
+class="backBtn">
 
 ⬅ トップへ戻る
 
 </a>
+
+<div class="desc">
+病院・薬局・避難所・地域包括支援センターなど、
+暮らしに役立つ地域支援情報です。
+</div>
+
+</div>
+
+<!-- ▼ 病院 -->
+
+<div class="mapCard">
+
+<div class="mapTitle">
+🏥 病院
+</div>
+
+<div class="mapText">
+近くの病院をGoogleマップで確認できます。
+</div>
+
+<a
+class="bigBtn red"
+href="https://www.google.com/maps/search/病院+志木市/"
+target="_blank">
+
+病院を探す
+
+</a>
+
+</div>
+
+<!-- ▼ 薬局 -->
+
+<div class="mapCard">
+
+<div class="mapTitle">
+💊 薬局
+</div>
+
+<div class="mapText">
+近くの薬局をGoogleマップで確認できます。
+</div>
+
+<a
+class="bigBtn green"
+href="https://www.google.com/maps/search/薬局+志木市/"
+target="_blank">
+
+薬局を探す
+
+</a>
+
+</div>
+
+<!-- ▼ 避難所 -->
+
+<div class="mapCard">
+
+<div class="mapTitle">
+🚨 避難所
+</div>
+
+<div class="mapText">
+避難所・防災施設を確認できます。
+</div>
+
+<a
+class="bigBtn orange"
+href="https://www.google.com/maps/search/避難所+志木市/"
+target="_blank">
+
+避難所を見る
+
+</a>
+
+</div>
+
+<!-- ▼ 地域包括 -->
+
+<div class="mapCard">
+
+<div class="mapTitle">
+👴 地域包括支援センター
+</div>
+
+<div class="mapText">
+高齢者相談・介護・見守り相談窓口です。
+</div>
+
+<a
+class="bigBtn purple"
+href="https://www.google.com/maps/search/地域包括支援センター+志木市/"
+target="_blank">
+
+相談先を見る
+
+</a>
+
+</div>
+
+<div class="footerMenu">
+
+<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
+class="footerBtn"
+style="background:#455a64;">
+
+🏠 トップ
+
+</a>
+
+<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html"
+class="footerBtn"
+style="background:#1565c0;">
+
+📰 瓦版
+
+</a>
+
+<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html"
+class="footerBtn"
+style="background:#00897b;">
+
+📻 ラジオ
+
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>
