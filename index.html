@@ -90,6 +90,28 @@ font-weight:900;
 line-height:1.8;
 }
 
+.todayGomi{
+background:#00897b;
+color:white;
+padding:26px;
+border-radius:30px;
+margin-bottom:28px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.12);
+}
+
+.todayTitle{
+font-size:36px;
+font-weight:900;
+margin-bottom:12px;
+}
+
+.todayText{
+font-size:24px;
+font-weight:900;
+line-height:1.8;
+}
+
 .menuGrid{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -223,6 +245,14 @@ font-size:46px;
 font-size:20px;
 }
 
+.todayTitle{
+font-size:28px;
+}
+
+.todayText{
+font-size:20px;
+}
+
 .menuGrid{
 grid-template-columns:1fr;
 }
@@ -267,6 +297,18 @@ NSAW<br>
 <div class="mainText">
 志木・新座・朝霞・和光<br>
 地域生活テレビ
+</div>
+
+</div>
+
+<div class="todayGomi">
+
+<div class="todayTitle">
+🗑 今日のゴミ情報
+</div>
+
+<div class="todayText" id="todayGomiText">
+読み込み中...
 </div>
 
 </div>
@@ -466,6 +508,86 @@ style="background:#00897b;">
 </div>
 
 </div>
+
+<script>
+
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const SHEET_NAME =
+'ゴミ';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json';
+
+function cell(row,index){
+
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
+: '';
+
+}
+
+const week = [
+'日曜日',
+'月曜日',
+'火曜日',
+'水曜日',
+'木曜日',
+'金曜日',
+'土曜日'
+];
+
+const today =
+week[new Date().getDay()];
+
+fetch(url)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(
+text.substr(47).slice(0,-2)
+);
+
+const rows =
+json.table.rows;
+
+let gomiList = [];
+
+rows.forEach(r=>{
+
+const area =
+cell(r,1);
+
+const day =
+cell(r,2);
+
+const type =
+cell(r,3);
+
+if(day !== today) return;
+
+gomiList.push(
+area + '：' + type
+);
+
+});
+
+document.getElementById(
+'todayGomiText'
+).innerHTML =
+gomiList.length
+? gomiList.join('<br>')
+: '今日は収集情報がありません';
+
+});
+
+</script>
 
 </body>
 </html>
