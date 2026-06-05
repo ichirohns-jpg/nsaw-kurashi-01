@@ -112,6 +112,41 @@ font-weight:900;
 line-height:1.8;
 }
 
+.todayNews{
+background:white;
+padding:26px;
+border-radius:30px;
+margin-bottom:28px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+}
+
+.todayNewsTitle{
+font-size:34px;
+font-weight:900;
+margin-bottom:18px;
+color:#1565c0;
+}
+
+.todayNewsImage{
+width:100%;
+border-radius:24px;
+margin-bottom:16px;
+}
+
+.todayNewsHeadline{
+font-size:30px;
+font-weight:900;
+line-height:1.5;
+margin-bottom:14px;
+}
+
+.todayNewsText{
+font-size:20px;
+line-height:1.9;
+color:#506070;
+}
+
 .menuGrid{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -253,6 +288,18 @@ font-size:28px;
 font-size:20px;
 }
 
+.todayNewsTitle{
+font-size:28px;
+}
+
+.todayNewsHeadline{
+font-size:24px;
+}
+
+.todayNewsText{
+font-size:18px;
+}
+
 .menuGrid{
 grid-template-columns:1fr;
 }
@@ -308,6 +355,18 @@ NSAW<br>
 </div>
 
 <div class="todayText" id="todayGomiText">
+読み込み中...
+</div>
+
+</div>
+
+<div class="todayNews">
+
+<div class="todayNewsTitle">
+📰 今日の地域ニュース
+</div>
+
+<div id="todayNewsArea">
 読み込み中...
 </div>
 
@@ -514,14 +573,14 @@ style="background:#00897b;">
 const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-const SHEET_NAME =
+const GOMI_SHEET =
 'ゴミ';
 
-const url =
+const gomiUrl =
 'https://docs.google.com/spreadsheets/d/' +
 SHEET_ID +
 '/gviz/tq?sheet=' +
-encodeURIComponent(SHEET_NAME) +
+encodeURIComponent(GOMI_SHEET) +
 '&tqx=out:json';
 
 function cell(row,index){
@@ -545,7 +604,7 @@ const week = [
 const today =
 week[new Date().getDay()];
 
-fetch(url)
+fetch(gomiUrl)
 .then(res=>res.text())
 .then(text=>{
 
@@ -584,6 +643,78 @@ document.getElementById(
 gomiList.length
 ? gomiList.join('<br>')
 : '今日は収集情報がありません';
+
+});
+
+const NEWS_SHEET =
+'https://docs.google.com/spreadsheets/d/149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc/gviz/tq?sheet=4市瓦版&tqx=out:json';
+
+fetch(NEWS_SHEET)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(
+text.substr(47).slice(0,-2)
+);
+
+const rows =
+json.table.rows;
+
+if(!rows.length) return;
+
+const r =
+rows[rows.length - 1];
+
+function newsCell(i){
+
+return r.c[i]
+? (r.c[i].f || r.c[i].v || '')
+: '';
+
+}
+
+let image =
+newsCell(1);
+
+if(
+image &&
+image.includes('drive.google.com/file/d/')
+){
+
+const fileId =
+image.split('/d/')[1].split('/')[0];
+
+image =
+'https://drive.google.com/thumbnail?id=' +
+fileId +
+'&sz=w2000';
+
+}
+
+const title =
+newsCell(2);
+
+const textBody =
+newsCell(3);
+
+document.getElementById(
+'todayNewsArea'
+).innerHTML = `
+
+<img
+src="${image}"
+class="todayNewsImage">
+
+<div class="todayNewsHeadline">
+${title}
+</div>
+
+<div class="todayNewsText">
+${textBody}
+</div>
+
+`;
 
 });
 
