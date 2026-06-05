@@ -40,7 +40,7 @@ color:#17324d;
 }
 
 .wrap{
-max-width:900px;
+max-width:920px;
 margin:auto;
 padding:18px 14px 80px;
 }
@@ -79,6 +79,29 @@ line-height:1.9;
 color:#607080;
 }
 
+.todayBox{
+background:#1565c0;
+color:white;
+padding:24px;
+border-radius:28px;
+margin-bottom:26px;
+text-align:center;
+box-shadow:
+0 6px 18px rgba(0,0,0,.12);
+}
+
+.todayTitle{
+font-size:34px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.todayText{
+font-size:24px;
+font-weight:900;
+line-height:1.8;
+}
+
 .gomiCard{
 background:white;
 border-radius:28px;
@@ -104,34 +127,29 @@ margin-bottom:10px;
 .type{
 font-size:30px;
 font-weight:900;
-color:#d32f2f;
 margin-bottom:14px;
+}
+
+.moeru{
+color:#d32f2f;
+}
+
+.moenai{
+color:#1565c0;
+}
+
+.plastic{
+color:#00897b;
+}
+
+.bin{
+color:#8e24aa;
 }
 
 .text{
 font-size:22px;
 line-height:1.9;
 color:#506070;
-}
-
-.footerMenu{
-display:flex;
-justify-content:center;
-gap:12px;
-margin-top:34px;
-margin-bottom:10px;
-flex-wrap:wrap;
-}
-
-.footerBtn{
-text-decoration:none;
-color:white;
-padding:14px 18px;
-border-radius:20px;
-font-size:17px;
-font-weight:900;
-box-shadow:
-0 4px 12px rgba(0,0,0,.2);
 }
 
 .loading{
@@ -161,6 +179,14 @@ font-size:24px;
 font-size:19px;
 }
 
+.todayTitle{
+font-size:28px;
+}
+
+.todayText{
+font-size:20px;
+}
+
 }
 
 </style>
@@ -177,7 +203,7 @@ font-size:19px;
 </div>
 
 <a
-href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/"
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
 class="backBtn">
 
 ⬅ トップへ戻る
@@ -185,8 +211,20 @@ class="backBtn">
 </a>
 
 <div class="desc">
-地区別のゴミ収集情報です。
+地区別ゴミ収集情報です。<br>
 朝8時までに出してください。
+</div>
+
+</div>
+
+<div class="todayBox">
+
+<div class="todayTitle">
+📅 今日の曜日
+</div>
+
+<div class="todayText" id="todayText">
+読み込み中...
 </div>
 
 </div>
@@ -196,34 +234,6 @@ class="backBtn">
 <div class="loading">
 読み込み中...
 </div>
-
-</div>
-
-<div class="footerMenu">
-
-<a href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/"
-class="footerBtn"
-style="background:#455a64;">
-
-🏠 トップ
-
-</a>
-
-<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html"
-class="footerBtn"
-style="background:#1565c0;">
-
-📰 瓦版
-
-</a>
-
-<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html"
-class="footerBtn"
-style="background:#00897b;">
-
-📻 ラジオ
-
-</a>
 
 </div>
 
@@ -251,6 +261,23 @@ return row.c[index]
 : '';
 
 }
+
+const week = [
+'日曜日',
+'月曜日',
+'火曜日',
+'水曜日',
+'木曜日',
+'金曜日',
+'土曜日'
+];
+
+const today =
+week[new Date().getDay()];
+
+document.getElementById(
+'todayText'
+).innerHTML = today;
 
 fetch(url)
 .then(res=>res.text())
@@ -283,6 +310,22 @@ cell(r,3);
 const msg =
 cell(r,4);
 
+if(day !== today) return;
+
+let typeClass = '';
+
+if(type.includes('燃える')){
+typeClass = 'moeru';
+}else
+if(type.includes('燃えない')){
+typeClass = 'moenai';
+}else
+if(type.includes('プラ')){
+typeClass = 'plastic';
+}else{
+typeClass = 'bin';
+}
+
 html += `
 
 <div class="gomiCard">
@@ -295,7 +338,7 @@ ${city} ${area}
 ${day}
 </div>
 
-<div class="type">
+<div class="type ${typeClass}">
 ${type}
 </div>
 
@@ -311,7 +354,8 @@ ${msg}
 
 document.getElementById(
 'gomiArea'
-).innerHTML = html;
+).innerHTML =
+html || '<div class="loading">今日は収集情報がありません</div>';
 
 });
 
