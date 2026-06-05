@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
 
 <meta charset="UTF-8">
@@ -70,82 +69,74 @@ box-shadow:
 .mainCard{
 background:#1565c0;
 color:white;
-padding:40px 26px;
+padding:34px 24px;
 border-radius:34px;
 text-align:center;
-margin-bottom:30px;
+margin-bottom:28px;
 box-shadow:
 0 6px 18px rgba(0,0,0,.14);
 }
 
 .mainTitle{
-font-size:74px;
+font-size:62px;
 font-weight:900;
 line-height:1.15;
-margin-bottom:20px;
+margin-bottom:16px;
 }
 
 .mainText{
-font-size:28px;
+font-size:24px;
 font-weight:900;
 line-height:1.8;
 }
 
-.section{
+.menuGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:10px;
+}
+
+.menuCard{
 background:white;
-border-radius:34px;
-padding:26px;
-margin-bottom:30px;
+border-radius:30px;
+padding:22px;
 box-shadow:
 0 6px 18px rgba(0,0,0,.08);
+text-align:center;
 }
 
-.sectionImage{
-width:100%;
-display:block;
-border-radius:26px;
-margin-bottom:20px;
-box-shadow:
-0 4px 12px rgba(0,0,0,.12);
+.menuIcon{
+font-size:64px;
+margin-bottom:12px;
 }
 
-.sectionTitle{
-font-size:36px;
+.menuTitle{
+font-size:30px;
 font-weight:900;
-margin-bottom:22px;
-color:#1565c0;
+margin-bottom:14px;
+line-height:1.4;
+}
+
+.menuText{
+font-size:18px;
+line-height:1.8;
+color:#607080;
+margin-bottom:18px;
 }
 
 .bigBtn{
-
 display:block;
 width:100%;
-
-color:white;
 text-decoration:none;
-
-padding:24px;
-
-border-radius:26px;
-
-font-size:28px;
+color:white;
+padding:20px;
+border-radius:24px;
+font-size:22px;
 font-weight:900;
-
-margin-bottom:18px;
-
 text-align:center;
-
-line-height:1.6;
-
 box-shadow:
 0 4px 12px rgba(0,0,0,.12);
-
-transition:.2s;
-
-}
-
-.bigBtn:active{
-transform:scale(.98);
 }
 
 .blue{
@@ -169,16 +160,12 @@ background:#8e24aa;
 }
 
 .footerMenu{
-
 display:flex;
 justify-content:center;
 gap:12px;
-
 margin-top:36px;
 margin-bottom:10px;
-
 flex-wrap:wrap;
-
 }
 
 .footerBtn{
@@ -195,20 +182,23 @@ box-shadow:
 @media(max-width:768px){
 
 .mainTitle{
-font-size:56px;
+font-size:46px;
 }
 
 .mainText{
-font-size:22px;
+font-size:20px;
 }
 
-.sectionTitle{
-font-size:30px;
+.menuGrid{
+grid-template-columns:1fr;
+}
+
+.menuTitle{
+font-size:26px;
 }
 
 .bigBtn{
-font-size:24px;
-padding:22px;
+font-size:20px;
 }
 
 }
@@ -239,23 +229,29 @@ NSAW<br>
 
 </div>
 
-<!-- ▼ 4市瓦版 -->
+<div class="menuGrid">
 
-<div class="section">
+<!-- ▼ 瓦版 -->
 
-<img
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg"
-class="sectionImage">
+<div class="menuCard">
 
-<div class="sectionTitle">
-📰 4市瓦版
+<div class="menuIcon">
+📰
+</div>
+
+<div class="menuTitle">
+4市瓦版
+</div>
+
+<div class="menuText">
+今日の地域ニュース・行政情報
 </div>
 
 <a
 class="bigBtn blue"
 href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html">
 
-今日の地域情報を見る
+見る
 
 </a>
 
@@ -263,21 +259,25 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html">
 
 <!-- ▼ ラジオ -->
 
-<div class="section">
+<div class="menuCard">
 
-<img
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/radio.jpg"
-class="sectionImage">
+<div class="menuIcon">
+📻
+</div>
 
-<div class="sectionTitle">
-📻 地域ラジオ
+<div class="menuTitle">
+地域ラジオ
+</div>
+
+<div class="menuText">
+朝3分の地域ニュースラジオ
 </div>
 
 <a
 class="bigBtn green"
 href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html">
 
-地域ラジオを聞く
+聞く
 
 </a>
 
@@ -285,21 +285,51 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html">
 
 <!-- ▼ お楽しみ -->
 
-<div class="section">
+<div class="menuCard">
 
-<img
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/radio.jpg"
-class="sectionImage">
+<div class="menuIcon">
+🎬
+</div>
 
-<div class="sectionTitle">
-🎬 お楽しみ動画
+<div class="menuTitle">
+お楽しみ動画
+</div>
+
+<div class="menuText">
+昭和歌謡・懐かしい映像
 </div>
 
 <a
 class="bigBtn orange"
 href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html">
 
-昭和歌謡・懐かしい動画
+見る
+
+</a>
+
+</div>
+
+<!-- ▼ ゴミ -->
+
+<div class="menuCard">
+
+<div class="menuIcon">
+🗑
+</div>
+
+<div class="menuTitle">
+ゴミ情報
+</div>
+
+<div class="menuText">
+地区別ゴミ収集情報
+</div>
+
+<a
+class="bigBtn purple"
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/gomi.html">
+
+確認
 
 </a>
 
@@ -307,31 +337,29 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html">
 
 <!-- ▼ 支援 -->
 
-<div class="section">
+<div class="menuCard">
 
-<img
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/map.jpg"
-class="sectionImage">
+<div class="menuIcon">
+🗺
+</div>
 
-<div class="sectionTitle">
-🗺 地域支援
+<div class="menuTitle">
+地域支援マップ
+</div>
+
+<div class="menuText">
+病院・薬局・避難所・相談先
 </div>
 
 <a
 class="bigBtn red"
 href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/support-map.html">
 
-支援マップを見る
+開く
 
 </a>
 
-<a
-class="bigBtn purple"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/gomi.html">
-
-ゴミ情報を見る
-
-</a>
+</div>
 
 </div>
 
