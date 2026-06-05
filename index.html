@@ -7,30 +7,6 @@
 
 <title>NSAW 暮らし情報局</title>
 
-<meta name="description"
-content="志木・新座・朝霞・和光の地域生活テレビ">
-
-<meta property="og:title"
-content="NSAW 暮らし情報局">
-
-<meta property="og:description"
-content="志木・新座・朝霞・和光の地域生活テレビ">
-
-<meta property="og:type"
-content="website">
-
-<meta property="og:url"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/">
-
-<meta property="og:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg">
-
-<meta name="twitter:card"
-content="summary_large_image">
-
-<link rel="apple-touch-icon"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/icon.png">
-
 <style>
 
 *{
@@ -53,14 +29,6 @@ margin:auto;
 padding:18px 14px 80px;
 }
 
-.topImage{
-width:100%;
-display:block;
-border-radius:34px;
-margin-bottom:24px;
-box-shadow:0 6px 18px rgba(0,0,0,.14);
-}
-
 .mainCard{
 background:#1565c0;
 color:white;
@@ -68,20 +36,12 @@ padding:34px 24px;
 border-radius:34px;
 text-align:center;
 margin-bottom:28px;
-box-shadow:0 6px 18px rgba(0,0,0,.14);
 }
 
 .mainTitle{
-font-size:62px;
+font-size:56px;
 font-weight:900;
-line-height:1.15;
-margin-bottom:16px;
-}
-
-.mainText{
-font-size:24px;
-font-weight:900;
-line-height:1.8;
+line-height:1.3;
 }
 
 .block{
@@ -89,64 +49,47 @@ background:white;
 padding:26px;
 border-radius:30px;
 margin-bottom:28px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
-}
-
-.greenBlock{
-background:#00897b;
-color:white;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
 }
 
 .blockTitle{
 font-size:34px;
 font-weight:900;
 margin-bottom:18px;
-}
-
-.whiteTitle{
 color:#1565c0;
 }
 
-.blockImage{
+.statusBtn{
 width:100%;
-border-radius:24px;
-margin-bottom:16px;
-}
-
-.headline{
+border:none;
+padding:24px;
+border-radius:26px;
 font-size:30px;
 font-weight:900;
-line-height:1.5;
-margin-bottom:14px;
-}
-
-.bodyText{
-font-size:20px;
-line-height:1.9;
-color:#506070;
-}
-
-.greenBlock .bodyText{
 color:white;
+margin-bottom:16px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.12);
 }
 
-.youtubeBox{
-position:relative;
-width:100%;
-padding-top:56.25%;
-border-radius:24px;
-overflow:hidden;
-background:#000;
-margin-bottom:18px;
+.green{
+background:#00897b;
 }
 
-.youtubeBox iframe{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-border:0;
+.orange{
+background:#ef6c00;
+}
+
+.red{
+background:#d32f2f;
+}
+
+.resultBox{
+margin-top:20px;
+font-size:24px;
+font-weight:900;
+line-height:1.8;
 }
 
 .menuGrid{
@@ -159,8 +102,9 @@ gap:18px;
 background:white;
 border-radius:30px;
 padding:22px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
 text-align:center;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
 }
 
 .menuIcon{
@@ -172,7 +116,6 @@ margin-bottom:12px;
 font-size:30px;
 font-weight:900;
 margin-bottom:14px;
-line-height:1.4;
 }
 
 .menuText{
@@ -192,54 +135,28 @@ border-radius:24px;
 font-size:22px;
 font-weight:900;
 text-align:center;
-box-shadow:0 4px 12px rgba(0,0,0,.12);
 }
 
-.blue{background:#1565c0;}
-.green{background:#00897b;}
-.orange{background:#ef6c00;}
-.purple{background:#8e24aa;}
-.red{background:#d32f2f;}
-
-.statusBtn{
-width:100%;
-border:none;
-padding:24px;
-border-radius:26px;
-font-size:30px;
-font-weight:900;
-color:white;
-box-shadow:0 6px 18px rgba(0,0,0,.12);
+.blue{
+background:#1565c0;
 }
 
 @media(max-width:768px){
 
 .mainTitle{
-font-size:46px;
-}
-
-.mainText{
-font-size:20px;
+font-size:42px;
 }
 
 .blockTitle{
 font-size:28px;
 }
 
-.headline{
+.statusBtn{
 font-size:24px;
-}
-
-.bodyText{
-font-size:18px;
 }
 
 .menuGrid{
 grid-template-columns:1fr;
-}
-
-.statusBtn{
-font-size:24px;
 }
 
 }
@@ -252,10 +169,6 @@ font-size:24px;
 
 <div class="wrap">
 
-<img
-src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg"
-class="topImage">
-
 <div class="mainCard">
 
 <div class="mainTitle">
@@ -263,77 +176,16 @@ NSAW<br>
 暮らし情報局
 </div>
 
-<div class="mainText">
-志木・新座・朝霞・和光<br>
-地域生活テレビ
 </div>
 
-</div>
-
-<div class="block greenBlock">
+<div class="block">
 
 <div class="blockTitle">
-🗑 今日のゴミ情報
-</div>
-
-<div class="bodyText" id="todayGomiText">
-読み込み中...
-</div>
-
-</div>
-
-<div class="block">
-
-<div class="blockTitle whiteTitle">
-📰 今日の地域ニュース
-</div>
-
-<div id="todayNewsArea">
-読み込み中...
-</div>
-
-</div>
-
-<div class="block">
-
-<div class="blockTitle whiteTitle">
-📻 最新地域ラジオ
-</div>
-
-<div id="todayRadioArea">
-読み込み中...
-</div>
-
-</div>
-
-<div class="block">
-
-<div class="blockTitle whiteTitle">
-🎬 最新お楽しみ動画
-</div>
-
-<div id="todayFunArea">
-読み込み中...
-</div>
-
-</div>
-
-<div class="block">
-
-<div class="blockTitle whiteTitle">
 🫶 地域見守り
 </div>
 
-<div
-style="
-display:grid;
-grid-template-columns:1fr;
-gap:16px;
-">
-
 <button
-class="statusBtn"
-style="background:#00897b;"
+class="statusBtn green"
 onclick="setStatus('😊 元気です')">
 
 😊 元気です
@@ -341,8 +193,7 @@ onclick="setStatus('😊 元気です')">
 </button>
 
 <button
-class="statusBtn"
-style="background:#ef6c00;"
+class="statusBtn orange"
 onclick="setStatus('😓 少し困っています')">
 
 😓 少し困っています
@@ -350,25 +201,16 @@ onclick="setStatus('😓 少し困っています')">
 </button>
 
 <button
-class="statusBtn"
-style="background:#d32f2f;"
+class="statusBtn red"
 onclick="setStatus('🚨 助けてください')">
 
 🚨 助けてください
 
 </button>
 
-</div>
-
 <div
 id="statusResult"
-style="
-margin-top:20px;
-font-size:24px;
-font-weight:900;
-line-height:1.8;
-color:#17324d;
-">
+class="resultBox">
 
 まだ送信されていません
 
@@ -380,106 +222,20 @@ color:#17324d;
 
 <div class="menuCard">
 
-<div class="menuIcon">📰</div>
-
-<div class="menuTitle">
-4市瓦版
+<div class="menuIcon">
+🫶
 </div>
-
-<div class="menuText">
-今日の地域ニュース・行政情報
-</div>
-
-<a
-class="bigBtn blue"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html">
-
-見る
-
-</a>
-
-</div>
-
-<div class="menuCard">
-
-<div class="menuIcon">📻</div>
-
-<div class="menuTitle">
-地域ラジオ
-</div>
-
-<div class="menuText">
-朝3分の地域ニュースラジオ
-</div>
-
-<a
-class="bigBtn green"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html">
-
-聞く
-
-</a>
-
-</div>
-
-<div class="menuCard">
-
-<div class="menuIcon">🎬</div>
-
-<div class="menuTitle">
-お楽しみ動画
-</div>
-
-<div class="menuText">
-昭和歌謡・懐かしい映像
-</div>
-
-<a
-class="bigBtn orange"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html">
-
-見る
-
-</a>
-
-</div>
-
-<div class="menuCard">
-
-<div class="menuIcon">🗑</div>
-
-<div class="menuTitle">
-ゴミ情報
-</div>
-
-<div class="menuText">
-地区別ゴミ収集情報
-</div>
-
-<a
-class="bigBtn purple"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/gomi.html">
-
-確認
-
-</a>
-
-</div>
-
-<div class="menuCard">
-
-<div class="menuIcon">🫶</div>
 
 <div class="menuTitle">
 見守りDX
 </div>
 
 <div class="menuText">
-支援者用の見守り確認ページ
+支援者用確認ページ
 </div>
 
 <a
-class="bigBtn red"
+class="bigBtn blue"
 href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/watch.html">
 
 開く
@@ -494,277 +250,55 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/watch.html">
 
 <script>
 
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-
 const GAS_URL =
 'https://script.google.com/macros/s/ここに自分のexecURL/exec';
 
-function cell(row,index){
-return row.c[index]
-? (row.c[index].f || row.c[index].v || '')
-: '';
-}
-
-function getYouTubeId(url){
-
-if(!url) return '';
-
-const m =
-url.match(
-/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{11})/
-);
-
-return m ? m[1] : '';
-
-}
-
-const week = [
-'日曜日',
-'月曜日',
-'火曜日',
-'水曜日',
-'木曜日',
-'金曜日',
-'土曜日'
-];
-
-const today =
-week[new Date().getDay()];
-
-fetch(
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=ゴミ&tqx=out:json'
-)
-.then(res=>res.text())
-.then(text=>{
-
-const json =
-JSON.parse(text.substr(47).slice(0,-2));
-
-const rows =
-json.table.rows;
-
-let gomiList = [];
-
-rows.forEach(r=>{
-
-const area = cell(r,1);
-const day = cell(r,2);
-const type = cell(r,3);
-
-if(day !== today) return;
-
-gomiList.push(
-area + '：' + type
-);
-
-});
-
-document.getElementById(
-'todayGomiText'
-).innerHTML =
-gomiList.length
-? gomiList.join('<br>')
-: '今日は収集情報がありません';
-
-});
-
-fetch(
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=4市瓦版&tqx=out:json'
-)
-.then(res=>res.text())
-.then(text=>{
-
-const json =
-JSON.parse(text.substr(47).slice(0,-2));
-
-const rows =
-json.table.rows;
-
-if(!rows.length) return;
-
-const r =
-rows[rows.length - 1];
-
-function newsCell(i){
-return r.c[i]
-? (r.c[i].f || r.c[i].v || '')
-: '';
-}
-
-let image =
-newsCell(1);
-
-if(
-image &&
-image.includes('drive.google.com/file/d/')
-){
-
-const fileId =
-image.split('/d/')[1].split('/')[0];
-
-image =
-'https://drive.google.com/thumbnail?id=' +
-fileId +
-'&sz=w2000';
-
-}
-
-const title =
-newsCell(2);
-
-const textBody =
-newsCell(3);
-
-document.getElementById(
-'todayNewsArea'
-).innerHTML = `
-
-<img
-src="${image}"
-class="blockImage">
-
-<div class="headline">
-${title}
-</div>
-
-<div class="bodyText">
-${textBody}
-</div>
-
-`;
-
-});
-
-fetch(
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=地域ラジオ&tqx=out:json'
-)
-.then(res=>res.text())
-.then(text=>{
-
-const json =
-JSON.parse(text.substr(47).slice(0,-2));
-
-const rows =
-json.table.rows;
-
-if(!rows.length) return;
-
-const r =
-rows[rows.length - 1];
-
-function radioCell(i){
-return r.c[i]
-? (r.c[i].f || r.c[i].v || '')
-: '';
-}
-
-const title =
-radioCell(2);
-
-const desc =
-radioCell(4);
-
-const movieURL =
-radioCell(5);
-
-const youtubeId =
-getYouTubeId(movieURL);
-
-document.getElementById(
-'todayRadioArea'
-).innerHTML = `
-
-<div class="youtubeBox">
-
-<iframe
-src="https://www.youtube.com/embed/${youtubeId}"
-allowfullscreen>
-</iframe>
-
-</div>
-
-<div class="headline">
-${title}
-</div>
-
-<div class="bodyText">
-${desc}
-</div>
-
-`;
-
-});
-
-fetch(
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=お楽しみ動画&tqx=out:json'
-)
-.then(res=>res.text())
-.then(text=>{
-
-const json =
-JSON.parse(text.substr(47).slice(0,-2));
-
-const rows =
-json.table.rows;
-
-if(!rows.length) return;
-
-const r =
-rows[rows.length - 1];
-
-function funCell(i){
-return r.c[i]
-? (r.c[i].f || r.c[i].v || '')
-: '';
-}
-
-const title =
-funCell(2);
-
-const desc =
-funCell(4);
-
-const movieURL =
-funCell(5);
-
-const youtubeId =
-getYouTubeId(movieURL);
-
-document.getElementById(
-'todayFunArea'
-).innerHTML = `
-
-<div class="youtubeBox">
-
-<iframe
-src="https://www.youtube.com/embed/${youtubeId}"
-allowfullscreen>
-</iframe>
-
-</div>
-
-<div class="headline">
-${title}
-</div>
-
-<div class="bodyText">
-${desc}
-</div>
-
-`;
-
-});
-
 function setStatus(status){
+
+document.getElementById(
+'statusResult'
+).innerHTML =
+'位置情報取得中...';
+
+if(!navigator.geolocation){
+
+sendData(status,'','');
+
+return;
+
+}
+
+navigator.geolocation.getCurrentPosition(
+
+function(position){
+
+const lat =
+position.coords.latitude;
+
+const lng =
+position.coords.longitude;
+
+sendData(status,lat,lng);
+
+},
+
+function(){
+
+sendData(status,'','');
+
+},
+
+{
+enableHighAccuracy:true,
+timeout:5000,
+maximumAge:0
+}
+
+);
+
+}
+
+function sendData(status,lat,lng){
 
 const now =
 new Date();
@@ -772,18 +306,13 @@ new Date();
 const time =
 now.toLocaleString('ja-JP');
 
-document.getElementById(
-'statusResult'
-).innerHTML =
-'送信中...';
-
 const payload = {
 
 name:'利用者',
 status:status,
 memo:'',
-lat:'',
-lng:''
+lat:lat,
+lng:lng
 
 };
 
@@ -801,13 +330,28 @@ body:JSON.stringify(payload)
 .then(r=>r.json())
 .then(data=>{
 
+let mapLink = '';
+
+if(lat && lng){
+
+mapLink =
+'<br><a target="_blank" href="https://www.google.com/maps?q=' +
+lat +
+',' +
+lng +
+'">📍 地図を見る</a>';
+
+}
+
 document.getElementById(
 'statusResult'
 ).innerHTML =
+
 status +
 '<br>' +
 time +
-' に送信しました';
+' に送信しました' +
+mapLink;
 
 })
 .catch(err=>{
