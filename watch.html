@@ -171,6 +171,18 @@ font-weight:900;
 line-height:1.8;
 }
 
+.mapBtn{
+display:inline-block;
+background:white;
+color:#1565c0;
+text-decoration:none;
+padding:14px 18px;
+border-radius:18px;
+font-size:18px;
+font-weight:900;
+margin-top:12px;
+}
+
 .loading{
 background:white;
 padding:40px;
@@ -299,6 +311,12 @@ cell(r,1);
 const status =
 cell(r,2);
 
+const lat =
+cell(r,4);
+
+const lng =
+cell(r,5);
+
 let statusClass = '';
 let cardClass = '';
 
@@ -339,8 +357,29 @@ ${status}
 </div>
 
 <div class="lastBox">
+
 最終確認：
 ${time}
+
+${
+lat && lng
+? `
+
+<br><br>
+
+<a
+target="_blank"
+href="https://www.google.com/maps?q=${lat},${lng}"
+class="mapBtn">
+
+📍 地図を見る
+
+</a>
+
+`
+: ''
+}
+
 </div>
 
 </div>
