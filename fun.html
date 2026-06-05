@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
@@ -10,19 +12,13 @@ content="width=device-width,initial-scale=1">
 </title>
 
 <meta property="og:title"
-content="NSAW お楽しみ動画">
+content="お楽しみ動画">
 
 <meta property="og:description"
-content="昭和歌謡・懐かし映像・地域のお楽しみ動画">
-
-<meta property="og:type"
-content="website">
-
-<meta property="og:url"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html">
+content="昭和歌謡・懐かしい映像・地域のお楽しみ動画">
 
 <meta property="og:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg">
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/radio.jpg">
 
 <meta name="twitter:card"
 content="summary_large_image">
@@ -35,7 +31,6 @@ box-sizing:border-box;
 
 body{
 margin:0;
-padding:0;
 background:#eef3f8;
 font-family:
 "Hiragino Sans",
@@ -44,123 +39,112 @@ sans-serif;
 color:#17324d;
 }
 
-.top{
-padding:20px;
-background:#ffffff;
-box-shadow:
-0 4px 12px rgba(0,0,0,.12);
-position:sticky;
-top:0;
-z-index:999;
+.wrap{
+max-width:900px;
+margin:auto;
+padding:18px 14px 80px;
 }
 
-.title{
-font-size:34px;
+.topCard{
+background:white;
+border-radius:32px;
+padding:24px;
+margin-bottom:28px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+}
+
+.pageTitle{
+font-size:58px;
 font-weight:900;
-margin-bottom:10px;
+margin-bottom:18px;
+line-height:1.3;
 }
 
 .backBtn{
 display:inline-block;
-margin-top:12px;
 background:#455a64;
 color:white;
-padding:10px 16px;
-border-radius:14px;
 text-decoration:none;
+padding:18px 24px;
+border-radius:22px;
+font-size:22px;
 font-weight:900;
-font-size:18px;
+margin-bottom:22px;
 }
 
-.sub{
-font-size:20px;
-line-height:1.8;
+.desc{
+font-size:22px;
+line-height:1.9;
 color:#607080;
-margin-top:18px;
 }
 
-.wrap{
-max-width:900px;
-margin:auto;
-padding:24px 16px 120px;
-}
-
-.card{
-background:#ffffff;
-border-radius:24px;
-padding:24px;
+.movieCard{
+background:white;
+border-radius:28px;
+padding:22px;
 margin-bottom:24px;
 box-shadow:
 0 6px 18px rgba(0,0,0,.08);
 }
 
-.articleImage{
+.movieImage{
 width:100%;
-border-radius:18px;
+border-radius:20px;
 margin-bottom:18px;
 display:block;
 }
 
-.date{
+.movieDate{
 font-size:18px;
 font-weight:900;
-color:#ff9800;
+color:#1565c0;
 margin-bottom:10px;
 }
 
-.category{
-display:inline-block;
-background:#ff9800;
-color:white;
-padding:6px 12px;
-border-radius:10px;
-font-size:14px;
+.movieTitle{
+font-size:34px;
 font-weight:900;
+line-height:1.4;
 margin-bottom:14px;
 }
 
-.cardTitle{
-font-size:28px;
-font-weight:900;
-line-height:1.5;
-margin-bottom:16px;
-}
-
-.cardText{
-font-size:20px;
+.movieText{
+font-size:22px;
 line-height:1.9;
 color:#506070;
+margin-bottom:20px;
 }
 
-.videoBtn{
+.watchBtn{
 display:block;
-background:#ff9800;
+background:#ef6c00;
 color:white;
 text-decoration:none;
-padding:16px;
-border-radius:16px;
-text-align:center;
-font-size:18px;
+padding:20px;
+border-radius:22px;
+font-size:24px;
 font-weight:900;
-margin-top:18px;
-}
-
-.shareBtns{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-top:20px;
-}
-
-.shareBtn{
-flex:1;
 text-align:center;
+margin-bottom:18px;
+}
+
+.snsRow{
+display:flex;
+gap:10px;
+margin-top:18px;
+flex-wrap:wrap;
+}
+
+.snsBtn{
+flex:1;
 text-decoration:none;
 color:white;
 padding:14px;
-border-radius:14px;
-font-weight:900;
+border-radius:16px;
 font-size:18px;
+font-weight:900;
+text-align:center;
 }
 
 .copyBtn{
@@ -169,119 +153,128 @@ border:none;
 background:#455a64;
 color:white;
 padding:16px;
-border-radius:16px;
+border-radius:18px;
 font-size:18px;
 font-weight:900;
-margin-top:14px;
+margin-top:12px;
 }
 
 .footerMenu{
-position:fixed;
-bottom:14px;
-left:0;
-right:0;
+
 display:flex;
 justify-content:center;
-gap:10px;
-z-index:9999;
+gap:12px;
+
+margin-top:34px;
+margin-bottom:10px;
+
+flex-wrap:wrap;
+
 }
 
 .footerBtn{
-color:white;
-padding:10px 14px;
-border-radius:16px;
 text-decoration:none;
+color:white;
+padding:14px 18px;
+border-radius:20px;
+font-size:17px;
 font-weight:900;
-font-size:16px;
 box-shadow:
 0 4px 12px rgba(0,0,0,.2);
 }
 
 .loading{
-text-align:center;
-font-size:22px;
-font-weight:900;
+background:white;
 padding:40px;
+border-radius:24px;
+font-size:26px;
+font-weight:900;
+text-align:center;
+}
+
+@media(max-width:768px){
+
+.pageTitle{
+font-size:46px;
+}
+
+.movieTitle{
+font-size:28px;
+}
+
+.movieText{
+font-size:19px;
+}
+
+.watchBtn{
+font-size:22px;
+}
+
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="top">
+<div class="wrap">
 
-<div class="title">
+<div class="topCard">
+
+<div class="pageTitle">
 🎬 お楽しみ動画
 </div>
 
 <a
-href="index.html"
+href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/"
 class="backBtn">
 
 ⬅ トップへ戻る
 
 </a>
 
-<div class="sub">
-
-昭和歌謡、
-懐かしい映像、
+<div class="desc">
+昭和歌謡、懐かしい映像、
 地域のお楽しみ動画
-
 </div>
 
 </div>
 
-<div class="wrap">
-
-<div id="funArea">
+<div id="movieArea">
 
 <div class="loading">
-
 読み込み中...
-
-</div>
-
 </div>
 
 </div>
 
 <div class="footerMenu">
 
-<a href="index.html"
+<a href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/"
 class="footerBtn"
-style="
-background:#455a64;
-border:3px solid white;
-">
+style="background:#455a64;">
 
 🏠 トップ
 
 </a>
 
-<a href="kawaraban.html"
+<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html"
 class="footerBtn"
-style="
-background:#1565c0;
-border:3px solid white;
-">
+style="background:#1565c0;">
 
 📰 瓦版
 
 </a>
 
-<a href="radio.html"
+<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html"
 class="footerBtn"
-style="
-background:#00897b;
-border:3px solid white;
-">
+style="background:#00897b;">
 
 📻 ラジオ
 
 </a>
+
+</div>
 
 </div>
 
@@ -291,7 +284,7 @@ const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
 const SHEET_NAME =
-'シート1';
+'お楽しみ';
 
 const url =
 'https://docs.google.com/spreadsheets/d/' +
@@ -314,90 +307,90 @@ json.table.rows;
 
 let html = '';
 
-rows.forEach(r=>{
+rows.reverse().forEach(r=>{
 
-const date =
+const rawDate =
 r.c[0] ? r.c[0].v : '';
 
-const title =
-r.c[1] ? r.c[1].v : '';
+let date = '';
+
+if(rawDate && rawDate.year){
+
+date =
+rawDate.year + '/' +
+(rawDate.month + 1) + '/' +
+rawDate.day;
+
+}
 
 const image =
+r.c[1] ? r.c[1].v : '';
+
+const title =
 r.c[2] ? r.c[2].v : '';
 
 const desc =
 r.c[3] ? r.c[3].v : '';
 
-const video =
+const movieURL =
 r.c[4] ? r.c[4].v : '';
-
-const category =
-r.c[5] ? r.c[5].v : '';
-
-if(category !== 'お楽しみ'){
-return;
-}
 
 html += `
 
-<div class="card">
+<div class="movieCard">
 
 <img
 src="${image}"
-class="articleImage">
+class="movieImage">
 
-<div class="date">
+<div class="movieDate">
 ${date}
 </div>
 
-<div class="category">
-お楽しみ動画
-</div>
-
-<div class="cardTitle">
+<div class="movieTitle">
 ${title}
 </div>
 
-<div class="cardText">
+<div class="movieText">
 ${desc}
 </div>
 
 <a
-class="videoBtn"
-href="${video}"
+class="watchBtn"
+href="${movieURL}"
 target="_blank">
 
-▶ 動画を見る
+🎬 動画を見る
 
 </a>
 
-<div class="shareBtns">
+<div class="snsRow">
 
 <a
-class="shareBtn"
+class="snsBtn"
 style="background:#1877f2;"
 target="_blank"
-href="https://www.facebook.com/sharer/sharer.php?u=${video}">
+href="https://www.facebook.com/sharer/sharer.php?u=https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html">
 
 Facebook
 
 </a>
 
 <a
-class="shareBtn"
+class="snsBtn"
 style="background:#06c755;"
 target="_blank"
-href="https://social-plugins.line.me/lineit/share?url=${video}">
+href="https://social-plugins.line.me/lineit/share?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html">
 
 LINE
 
 </a>
 
 <a
-class="shareBtn"
-style="background:#000000;"
+class="snsBtn"
+style="background:#000;"
 target="_blank"
-href="https://twitter.com/intent/tweet?url=${video}&text=${title}">
+href="https://twitter.com/intent/tweet?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html">
 
 X
 
@@ -407,7 +400,7 @@ X
 
 <button
 class="copyBtn"
-onclick="copyURL('${video}')">
+onclick="copyURL()">
 
 🔗 URLコピー
 
@@ -420,18 +413,18 @@ onclick="copyURL('${video}')">
 });
 
 document.getElementById(
-'funArea'
+'movieArea'
 ).innerHTML = html;
 
 });
 
-function copyURL(url){
+function copyURL(){
 
 navigator.clipboard.writeText(
-url
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html'
 );
 
-alert("URLをコピーしました");
+alert('URLをコピーしました');
 
 }
 
