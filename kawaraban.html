@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
-<title>NSAW 暮らし情報局</title>
+<title>
+NSAW 暮らし情報局
+</title>
 
 <meta property="og:title"
 content="NSAW 暮らし情報局">
@@ -13,11 +17,14 @@ content="NSAW 暮らし情報局">
 <meta property="og:description"
 content="志木・新座・朝霞・和光の地域生活テレビ">
 
-<meta property="og:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/4city.jpg">
+<meta property="og:type"
+content="website">
 
 <meta property="og:url"
 content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg">
 
 <meta name="twitter:card"
 content="summary_large_image">
@@ -41,25 +48,25 @@ color:#17324d;
 .wrap{
 max-width:900px;
 margin:auto;
-padding:18px 14px 120px;
+padding:18px 14px 60px;
 }
 
-.topBanner{
+.topImage{
 width:100%;
-border-radius:28px;
 display:block;
+border-radius:28px;
 margin-bottom:22px;
 box-shadow:
-0 6px 18px rgba(0,0,0,.12);
+0 6px 18px rgba(0,0,0,.14);
 }
 
 .mainCard{
 background:#1565c0;
 color:white;
-border-radius:28px;
 padding:28px 22px;
-margin-bottom:24px;
+border-radius:28px;
 text-align:center;
+margin-bottom:24px;
 box-shadow:
 0 6px 18px rgba(0,0,0,.14);
 }
@@ -163,14 +170,16 @@ margin-top:12px;
 }
 
 .footerMenu{
-position:fixed;
-bottom:12px;
-left:0;
-right:0;
+
 display:flex;
 justify-content:center;
 gap:10px;
-z-index:9999;
+
+margin-top:30px;
+margin-bottom:30px;
+
+flex-wrap:wrap;
+
 }
 
 .footerBtn{
@@ -225,8 +234,8 @@ font-size:18px;
 <div class="wrap">
 
 <img
-src="img/4city.jpg"
-class="topBanner">
+src="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg"
+class="topImage">
 
 <div class="mainCard">
 
@@ -253,7 +262,7 @@ class="topBanner">
 
 <div class="footerMenu">
 
-<a href="index.html"
+<a href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/"
 class="footerBtn"
 style="background:#455a64;">
 
@@ -261,7 +270,7 @@ style="background:#455a64;">
 
 </a>
 
-<a href="radio.html"
+<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html"
 class="footerBtn"
 style="background:#00897b;">
 
@@ -269,9 +278,9 @@ style="background:#00897b;">
 
 </a>
 
-<a href="fun.html"
+<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html"
 class="footerBtn"
-style="background:#ff9800;">
+style="background:#ef6c00;">
 
 🎬 お楽しみ
 
@@ -310,8 +319,19 @@ let html = '';
 
 rows.reverse().forEach(r=>{
 
-const date =
+const rawDate =
 r.c[0] ? r.c[0].v : '';
+
+let date = '';
+
+if(rawDate && rawDate.year){
+
+date =
+rawDate.year + '/' +
+(rawDate.month + 1) + '/' +
+rawDate.day;
+
+}
 
 const image =
 r.c[1] ? r.c[1].v : '';
