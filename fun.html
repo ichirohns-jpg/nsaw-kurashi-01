@@ -20,7 +20,10 @@ box-sizing:border-box;
 body{
 margin:0;
 background:#eef3f8;
-font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
 color:#17324d;
 }
 
@@ -30,12 +33,14 @@ margin:auto;
 padding:18px 14px 80px;
 }
 
-.topCard{
+.topCard,
+.movieCard{
 background:white;
 border-radius:32px;
 padding:24px;
 margin-bottom:28px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
 }
 
 .pageTitle{
@@ -63,18 +68,10 @@ line-height:1.9;
 color:#607080;
 }
 
-.movieCard{
-background:white;
-border-radius:28px;
-padding:22px;
-margin-bottom:24px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
-}
-
 .movieDate{
 font-size:18px;
 font-weight:900;
-color:#1565c0;
+color:#ef6c00;
 margin-bottom:10px;
 }
 
@@ -157,7 +154,8 @@ padding:14px 18px;
 border-radius:20px;
 font-size:17px;
 font-weight:900;
-box-shadow:0 4px 12px rgba(0,0,0,.2);
+box-shadow:
+0 4px 12px rgba(0,0,0,.2);
 }
 
 .loading{
@@ -199,7 +197,7 @@ font-size:19px;
 </div>
 
 <a
-href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/"
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
 class="backBtn">
 
 ⬅ トップへ戻る
@@ -223,7 +221,7 @@ class="backBtn">
 
 <div class="footerMenu">
 
-<a href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/"
+<a href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
 class="footerBtn"
 style="background:#455a64;">
 
@@ -267,9 +265,11 @@ encodeURIComponent(SHEET_NAME) +
 '&tqx=out:json';
 
 function cell(row,index){
+
 return row.c[index]
 ? (row.c[index].f || row.c[index].v || '')
 : '';
+
 }
 
 function getYouTubeId(url){
@@ -349,7 +349,7 @@ ${desc}
 class="snsBtn"
 style="background:#1877f2;"
 target="_blank"
-href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(movieURL)}">
+href="https://www.facebook.com/sharer/sharer.php?u=https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-003.html">
 
 Facebook
 
@@ -359,7 +359,7 @@ Facebook
 class="snsBtn"
 style="background:#06c755;"
 target="_blank"
-href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(movieURL)}">
+href="https://social-plugins.line.me/lineit/share?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-003.html">
 
 LINE
 
@@ -369,7 +369,7 @@ LINE
 class="snsBtn"
 style="background:#000;"
 target="_blank"
-href="https://twitter.com/intent/tweet?url=${encodeURIComponent(movieURL)}&text=${encodeURIComponent(title)}">
+href="https://twitter.com/intent/tweet?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-003.html">
 
 X
 
@@ -379,7 +379,7 @@ X
 
 <button
 class="copyBtn"
-onclick="copyURL('${movieURL}')">
+onclick="copyURL()">
 
 🔗 URLコピー
 
@@ -393,13 +393,16 @@ onclick="copyURL('${movieURL}')">
 
 document.getElementById(
 'movieArea'
-).innerHTML = html;
+).innerHTML =
+html || '<div class="loading">表示できる動画がありません</div>';
 
 });
 
-function copyURL(url){
+function copyURL(){
 
-navigator.clipboard.writeText(url);
+navigator.clipboard.writeText(
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-003.html'
+);
 
 alert('URLをコピーしました');
 
