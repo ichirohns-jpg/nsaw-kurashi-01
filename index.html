@@ -1,21 +1,624 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>
+個人別 見守りDX
+</title>
+
+<meta property="og:title"
+content="個人別 見守りDX">
+
+<meta property="og:description"
+content="地域見守り・薬確認DX">
+
+<meta property="og:image"
+content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg">
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#eef3f8;
+font-family:
+"Hiragino Sans",
+"Yu Gothic",
+sans-serif;
+color:#17324d;
+}
+
+.wrap{
+max-width:920px;
+margin:auto;
+padding:18px 14px 80px;
+}
+
+.topCard{
+background:#1565c0;
+color:white;
+padding:34px 24px;
+border-radius:34px;
+margin-bottom:28px;
+text-align:center;
+box-shadow:
+0 6px 18px rgba(0,0,0,.14);
+}
+
+.nameBox{
+font-size:56px;
+font-weight:900;
+line-height:1.3;
+margin-bottom:14px;
+}
+
+.areaBox{
+font-size:24px;
+font-weight:900;
+line-height:1.8;
+}
+
+.block{
+background:white;
+padding:26px;
+border-radius:30px;
+margin-bottom:28px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+}
+
+.blockTitle{
+font-size:34px;
+font-weight:900;
+margin-bottom:18px;
+color:#1565c0;
+}
+
+.statusBtn{
+width:100%;
+border:none;
+padding:24px;
+border-radius:26px;
+font-size:30px;
+font-weight:900;
+color:white;
+margin-bottom:16px;
+box-shadow:
+0 6px 18px rgba(0,0,0,.12);
+}
+
+.green{
+background:#00897b;
+}
+
+.orange{
+background:#ef6c00;
+}
+
+.red{
+background:#d32f2f;
+}
+
+.blue{
+background:#1565c0;
+}
+
+.purple{
+background:#8e24aa;
+}
+
+.resultBox{
+background:#f4f7fb;
+border-radius:24px;
+padding:22px;
+font-size:24px;
+font-weight:900;
+line-height:1.8;
+margin-top:18px;
+}
+
+.infoCard{
+background:#f4f7fb;
+padding:22px;
+border-radius:24px;
+margin-bottom:18px;
+}
+
+.infoTitle{
+font-size:26px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.infoText{
+font-size:20px;
+line-height:1.8;
+color:#607080;
+}
+
+.menuGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
+.menuCard{
+background:white;
+border-radius:30px;
+padding:22px;
+text-align:center;
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+}
+
+.menuIcon{
+font-size:64px;
+margin-bottom:12px;
+}
+
+.menuTitle{
+font-size:30px;
+font-weight:900;
+margin-bottom:14px;
+}
+
+.menuText{
+font-size:18px;
+line-height:1.8;
+color:#607080;
+margin-bottom:18px;
+}
+
+.bigBtn{
+display:block;
+width:100%;
+text-decoration:none;
+color:white;
+padding:20px;
+border-radius:24px;
+font-size:22px;
+font-weight:900;
+text-align:center;
+}
+
+@media(max-width:768px){
+
+.nameBox{
+font-size:42px;
+}
+
+.areaBox{
+font-size:20px;
+}
+
+.blockTitle{
+font-size:28px;
+}
+
+.statusBtn{
+font-size:24px;
+}
+
+.menuGrid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="topCard">
+
+<div
+class="nameBox"
+id="userName">
+
+利用者
+
+</div>
+
+<div
+class="areaBox"
+id="userArea">
+
+地域情報読み込み中...
+
+</div>
+
+</div>
+
+<div class="block">
+
+<div class="blockTitle">
+🫶 見守り
+</div>
+
+<button
+class="statusBtn green"
+onclick="setStatus('😊 元気です')">
+
+😊 元気です
+
+</button>
+
+<button
+class="statusBtn orange"
+onclick="setStatus('😓 少し困っています')">
+
+😓 少し困っています
+
+</button>
+
+<button
+class="statusBtn red"
+onclick="setStatus('🚨 助けてください')">
+
+🚨 助けてください
+
+</button>
+
+<div
+id="statusResult"
+class="resultBox">
+
+まだ送信されていません
+
+</div>
+
+</div>
+
+<div class="block">
+
+<div class="blockTitle">
+💊 薬確認
+</div>
+
+<button
+class="statusBtn blue"
+onclick="sendMedicine('朝の薬')">
+
+🌅 朝の薬
+
+</button>
+
+<button
+class="statusBtn green"
+onclick="sendMedicine('昼の薬')">
+
+☀️ 昼の薬
+
+</button>
+
+<button
+class="statusBtn purple"
+onclick="sendMedicine('夜の薬')">
+
+🌙 夜の薬
+
+</button>
+
+<div
+id="medicineResult"
+class="resultBox">
+
+まだ記録されていません
+
+</div>
+
+</div>
+
+<div class="block">
+
+<div class="blockTitle">
+📍 現在の状態
+</div>
+
+<div class="infoCard">
+
+<div class="infoTitle">
+現在の利用者ID
+</div>
+
+<div
+class="infoText"
+id="userIdBox">
+
+読み込み中...
+
+</div>
+
+</div>
+
+<div class="infoCard">
+
+<div class="infoTitle">
+GPS連動
+</div>
+
+<div class="infoText">
+位置情報付き見守り対応
+</div>
+
+</div>
+
+</div>
+
+<div class="menuGrid">
+
 <div class="menuCard">
 
-<div class="menuIcon">💊</div>
+<div class="menuIcon">
+🫶
+</div>
 
 <div class="menuTitle">
-薬確認DX
+見守り履歴
 </div>
 
 <div class="menuText">
-朝・昼・夜の薬確認
+支援者用ページ
 </div>
 
 <a
-class="bigBtn green"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/medicine.html">
+class="bigBtn red"
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/watch.html">
 
 開く
 
 </a>
 
 </div>
+
+<div class="menuCard">
+
+<div class="menuIcon">
+💊
+</div>
+
+<div class="menuTitle">
+薬確認履歴
+</div>
+
+<div class="menuText">
+薬の確認一覧
+</div>
+
+<a
+class="bigBtn blue"
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/medicine-watch.html">
+
+開く
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const GAS_URL =
+'https://script.google.com/macros/s/ここに自分のexecURL/exec';
+
+const params =
+new URLSearchParams(
+location.search
+);
+
+const userId =
+params.get('id') || 'a001';
+
+const userData = {
+
+a001:{
+name:'山田 太郎',
+area:'志木市 本町'
+},
+
+a002:{
+name:'佐藤 花子',
+area:'新座市 東'
+},
+
+a003:{
+name:'鈴木 一郎',
+area:'朝霞市 西原'
+}
+
+};
+
+const user =
+userData[userId] || {
+name:'利用者',
+area:'地域未設定'
+};
+
+document.getElementById(
+'userName'
+).innerHTML =
+user.name;
+
+document.getElementById(
+'userArea'
+).innerHTML =
+user.area;
+
+document.getElementById(
+'userIdBox'
+).innerHTML =
+userId;
+
+function setStatus(status){
+
+document.getElementById(
+'statusResult'
+).innerHTML =
+'位置情報取得中...';
+
+if(!navigator.geolocation){
+
+sendStatus(status,'','');
+
+return;
+
+}
+
+navigator.geolocation.getCurrentPosition(
+
+function(position){
+
+const lat =
+position.coords.latitude;
+
+const lng =
+position.coords.longitude;
+
+sendStatus(status,lat,lng);
+
+},
+
+function(){
+
+sendStatus(status,'','');
+
+},
+
+{
+enableHighAccuracy:true,
+timeout:5000,
+maximumAge:0
+}
+
+);
+
+}
+
+function sendStatus(status,lat,lng){
+
+const now =
+new Date();
+
+const time =
+now.toLocaleString('ja-JP');
+
+const payload = {
+
+id:userId,
+name:user.name,
+status:status,
+memo:'',
+lat:lat,
+lng:lng
+
+};
+
+fetch(
+GAS_URL,
+{
+
+method:'POST',
+
+body:JSON.stringify(payload)
+
+}
+
+)
+.then(r=>r.json())
+.then(data=>{
+
+document.getElementById(
+'statusResult'
+).innerHTML =
+
+status +
+'<br>' +
+time +
+' に送信しました';
+
+})
+.catch(err=>{
+
+document.getElementById(
+'statusResult'
+).innerHTML =
+'送信失敗';
+
+});
+
+}
+
+function sendMedicine(type){
+
+const now =
+new Date();
+
+const time =
+now.toLocaleString('ja-JP');
+
+const payload = {
+
+id:userId,
+name:user.name,
+status:'💊 ' + type,
+memo:'薬確認',
+lat:'',
+lng:''
+
+};
+
+fetch(
+GAS_URL,
+{
+
+method:'POST',
+
+body:JSON.stringify(payload)
+
+}
+
+)
+.then(r=>r.json())
+.then(data=>{
+
+document.getElementById(
+'medicineResult'
+).innerHTML =
+
+type +
+'<br>' +
+time +
+' に記録しました';
+
+})
+.catch(err=>{
+
+document.getElementById(
+'medicineResult'
+).innerHTML =
+'送信失敗';
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
