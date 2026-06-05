@@ -78,6 +78,35 @@ line-height:1.9;
 color:#607080;
 }
 
+.alertBox{
+background:#d32f2f;
+color:white;
+padding:24px;
+border-radius:28px;
+margin-bottom:28px;
+font-size:28px;
+font-weight:900;
+line-height:1.8;
+display:none;
+animation:flash 1s infinite;
+}
+
+@keyframes flash{
+
+0%{
+opacity:1;
+}
+
+50%{
+opacity:.4;
+}
+
+100%{
+opacity:1;
+}
+
+}
+
 .medCard{
 background:white;
 border-radius:30px;
@@ -191,6 +220,10 @@ font-size:18px;
 font-size:18px;
 }
 
+.alertBox{
+font-size:22px;
+}
+
 }
 
 </style>
@@ -218,6 +251,14 @@ class="backBtn">
 <div class="desc">
 朝・昼・夜の薬確認履歴です。
 </div>
+
+</div>
+
+<div
+id="alertBox"
+class="alertBox">
+
+🚨 薬の未確認があります
 
 </div>
 
@@ -294,6 +335,16 @@ json.table.rows;
 
 let html = '';
 
+let morningOK = false;
+let noonOK = false;
+let nightOK = false;
+
+const now =
+new Date();
+
+const hour =
+now.getHours();
+
 rows.reverse().forEach(r=>{
 
 const time =
@@ -307,6 +358,18 @@ cell(r,2);
 
 if(!status.includes('薬')){
 return;
+}
+
+if(status.includes('朝')){
+morningOK = true;
+}
+
+if(status.includes('昼')){
+noonOK = true;
+}
+
+if(status.includes('夜')){
+nightOK = true;
 }
 
 let statusClass = '';
@@ -356,6 +419,45 @@ ${time}
 `;
 
 });
+
+let alerts = [];
+
+if(hour >= 10 && !morningOK){
+
+alerts.push(
+'🚨 朝の薬が未確認です'
+);
+
+}
+
+if(hour >= 15 && !noonOK){
+
+alerts.push(
+'🚨 昼の薬が未確認です'
+);
+
+}
+
+if(hour >= 21 && !nightOK){
+
+alerts.push(
+'🚨 夜の薬が未確認です'
+);
+
+}
+
+if(alerts.length){
+
+document.getElementById(
+'alertBox'
+).style.display = 'block';
+
+document.getElementById(
+'alertBox'
+).innerHTML =
+alerts.join('<br>');
+
+}
 
 document.getElementById(
 'medicineArea'
