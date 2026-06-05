@@ -287,7 +287,7 @@ const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
 const SHEET_NAME =
-'お楽しみ';
+'お楽しみ動画';
 
 const url =
 'https://docs.google.com/spreadsheets/d/' +
@@ -326,21 +326,22 @@ rawDate.day;
 
 }
 
-let image =
+const movieId =
 r.c[1] ? r.c[1].v : '';
 
 const title =
 r.c[2] ? r.c[2].v : '';
 
-const desc =
+let image =
 r.c[3] ? r.c[3].v : '';
 
-const movieURL =
+const desc =
 r.c[4] ? r.c[4].v : '';
 
-/* ▼ Drive共有URL変換 */
+const movieURL =
+r.c[5] ? r.c[5].v : '';
 
-if(image.includes('drive.google.com/file/d/')){
+if(image && image.includes('drive.google.com/file/d/')){
 
 const fileId =
 image.split('/d/')[1].split('/')[0];
