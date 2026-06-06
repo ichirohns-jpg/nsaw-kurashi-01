@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>家族ダッシュボード</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:#eef3f8;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+}
+
+.wrap{
+max-width:960px;
+margin:auto;
+padding:16px;
+}
+
+.header{
+background:#1976d2;
+color:white;
+padding:30px;
+border-radius:30px;
+text-align:center;
+margin-bottom:24px;
+}
+
+.header h1{
+margin:0;
+font-size:46px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
+.card{
+background:white;
+border-radius:24px;
+padding:24px;
+text-align:center;
+box-shadow:0 4px 12px rgba(0,0,0,.10);
+}
+
+.num{
+font-size:56px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.title{
+font-size:24px;
+font-weight:900;
+}
+
+.green{color:#00897b}
+.orange{color:#ef6c00}
+.red{color:#d32f2f}
+.blue{color:#1565c0}
+
+.btn{
+display:block;
+margin-top:24px;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px;
+border-radius:18px;
+text-align:center;
+font-size:22px;
+font-weight:900;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="header">
+<h1>👨‍👩‍👧‍👦 家族ダッシュボード</h1>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="num green">12</div>
+<div class="title">😊 元気です</div>
+</div>
+
+<div class="card">
+<div class="num orange">2</div>
+<div class="title">😓 少し困っています</div>
+</div>
+
+<div class="card">
+<div class="num red">1</div>
+<div class="title">🚨 助けてください</div>
+</div>
+
+<div class="card">
+<div class="num blue">3</div>
+<div class="title">💊 薬未確認</div>
+</div>
+
+</div>
+
+<a
+class="btn"
+href="family-list.html">
+
+👨‍👩‍👧‍👦 家族一覧へ
+
+</a>
+
+</div>
+
+</body>
+</html>
