@@ -8,6 +8,7 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
 margin:0;
 background:#eef3f8;
@@ -79,12 +80,15 @@ font-weight:900;
 }
 
 @media(max-width:768px){
+
 .grid{
 grid-template-columns:1fr;
 }
+
 .header h1{
 font-size:38px;
 }
+
 }
 </style>
 </head>
@@ -134,25 +138,90 @@ font-size:38px;
 
 <script>
 
-const users = [
-'a001',
-'a002',
-'a003',
-'a004'
-];
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const SHEET_NAME =
+'見守り';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json';
+
+function cell(row,index){
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
+: '';
+}
+
+fetch(url)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(text.substr(47).slice(0,-2));
+
+const rows =
+json.table.rows;
+
+let help = 0;
+let warn = 0;
+let ok = 0;
+
+let names = new Set();
+
+rows.forEach(r=>{
+
+const name =
+cell(r,1);
+
+const status =
+cell(r,2);
+
+if(name){
+names.add(name);
+}
+
+if(status.includes('助け')){
+help++;
+}
+else if(status.includes('困')){
+warn++;
+}
+else if(status.includes('元気')){
+ok++;
+}
+
+});
+
+document.getElementById('helpCount').innerText =
+help;
+
+document.getElementById('warnCount').innerText =
+warn;
+
+document.getElementById('okCount').innerText =
+ok;
+
+document.getElementById('medicineCount').innerText =
+0;
 
 document.getElementById('userCount').innerText =
-users.length;
+names.size;
 
-const help = 1;
-const warn = 1;
-const ok = 2;
-const medicine = 3;
+})
+.catch(err=>{
 
-document.getElementById('helpCount').innerText = help;
-document.getElementById('warnCount').innerText = warn;
-document.getElementById('okCount').innerText = ok;
-document.getElementById('medicineCount').innerText = medicine;
+document.getElementById('helpCount').innerText = '-';
+document.getElementById('warnCount').innerText = '-';
+document.getElementById('okCount').innerText = '-';
+document.getElementById('medicineCount').innerText = '-';
+document.getElementById('userCount').innerText = '-';
+
+});
 
 </script>
 
