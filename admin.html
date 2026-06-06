@@ -7,105 +7,156 @@
 <title>支援者ページ</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
-background:#eef3f8;
-font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+background:linear-gradient(180deg,#fff1f1 0%,#f7fbff 100%);
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 color:#17324d;
 }
 
 .wrap{
-max-width:960px;
+max-width:920px;
 margin:auto;
-padding:16px;
+padding:16px 14px 60px;
 }
 
 .header{
-background:#d32f2f;
+background:linear-gradient(135deg,#b71c1c,#d32f2f);
 color:white;
-padding:30px;
-border-radius:30px;
+padding:36px 24px;
+border-radius:34px;
 text-align:center;
-margin-bottom:24px;
+margin-bottom:22px;
+box-shadow:0 10px 26px rgba(211,47,47,.25);
 }
 
 .header h1{
 margin:0;
-font-size:48px;
+font-size:42px;
+line-height:1.3;
 }
 
 .header p{
-font-size:22px;
+font-size:21px;
 font-weight:900;
-margin-top:12px;
+line-height:1.8;
+margin:14px 0 0;
+}
+
+.note{
+background:white;
+border-radius:26px;
+padding:20px;
+font-size:20px;
+font-weight:900;
+line-height:1.8;
+margin-bottom:20px;
+box-shadow:0 5px 16px rgba(0,0,0,.08);
+text-align:center;
 }
 
 .grid{
 display:grid;
-grid-template-columns:1fr 1fr;
+grid-template-columns:1fr;
 gap:18px;
 }
 
 .card{
 background:white;
-border-radius:28px;
-padding:24px;
-text-align:center;
-box-shadow:0 4px 14px rgba(0,0,0,.10);
+border-radius:30px;
+padding:26px 22px;
+box-shadow:0 7px 20px rgba(0,0,0,.10);
+}
+
+.cardInner{
+display:flex;
+gap:18px;
+align-items:center;
 }
 
 .icon{
-font-size:70px;
-margin-bottom:12px;
+width:82px;
+height:82px;
+border-radius:24px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:46px;
+flex:0 0 auto;
+}
+
+.dashIcon{background:#e3f2fd}
+.todayIcon{background:#e8f5e9}
+.alertIcon{background:#ffebee}
+.warnIcon{background:#fff3e0}
+.userIcon{background:#e3f2fd}
+.mapIcon{background:#ede7f6}
+.historyIcon{background:#fff3e0}
+.medIcon{background:#e8f5e9}
+.homeIcon{background:#eceff1}
+
+.text{
+flex:1;
 }
 
 .title{
 font-size:30px;
 font-weight:900;
-margin-bottom:12px;
+margin-bottom:8px;
 }
 
 .desc{
-font-size:18px;
-line-height:1.8;
+font-size:19px;
+line-height:1.7;
 color:#607080;
-margin-bottom:18px;
+font-weight:700;
 }
 
 .btn{
 display:block;
 width:100%;
-padding:18px;
-color:white;
+margin-top:18px;
+padding:20px;
+border-radius:22px;
+text-align:center;
 text-decoration:none;
-border-radius:20px;
-font-size:22px;
+color:white;
+font-size:23px;
 font-weight:900;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
-.red{background:#d32f2f;}
-.green{background:#00897b;}
-.blue{background:#1565c0;}
-.orange{background:#ef6c00;}
-.gray{background:#455a64;}
+.red{background:#d32f2f}
+.green{background:#00897b}
+.blue{background:#1565c0}
+.orange{background:#ef6c00}
+.purple{background:#6a1b9a}
+.gray{background:#455a64}
 
-@media(max-width:768px){
-
-.grid{
-grid-template-columns:1fr;
+.footer{
+text-align:center;
+color:#607080;
+font-size:16px;
+font-weight:900;
+line-height:1.7;
+margin-top:30px;
 }
 
-.header h1{
-font-size:38px;
+@media(max-width:640px){
+.header h1{font-size:36px}
+.header p{font-size:19px}
+.cardInner{align-items:flex-start}
+.icon{
+width:72px;
+height:72px;
+font-size:40px;
 }
-
+.title{font-size:27px}
+.desc{font-size:18px}
+.btn{font-size:22px}
 }
-
 </style>
 </head>
 
@@ -115,81 +166,130 @@ font-size:38px;
 
 <div class="header">
 <h1>🧑‍⚕️ 支援者ページ</h1>
-<p>見守り・服薬・利用者管理</p>
+<p>見守り・服薬・利用者管理をまとめて確認</p>
+</div>
+
+<div class="note">
+まずは緊急対応と本日の状況を確認してください。
 </div>
 
 <div class="grid">
 
 <div class="card">
-<div class="icon">📊</div>
+<div class="cardInner">
+<div class="icon dashIcon">📊</div>
+<div class="text">
 <div class="title">支援者ダッシュボード</div>
-<div class="desc">全体状況を確認</div>
+<div class="desc">全体の見守り状況をひと目で確認します。</div>
+</div>
+</div>
 <a class="btn blue" href="dashboard.html">開く</a>
 </div>
 
 <div class="card">
-<div class="icon">📅</div>
+<div class="cardInner">
+<div class="icon todayIcon">📅</div>
+<div class="text">
 <div class="title">本日の状況</div>
-<div class="desc">今日の見守り状況</div>
-<a class="btn blue" href="today-board.html">開く</a>
+<div class="desc">今日の見守り状況を確認します。</div>
+</div>
+</div>
+<a class="btn green" href="today-board.html">開く</a>
 </div>
 
 <div class="card">
-<div class="icon">🚨</div>
+<div class="cardInner">
+<div class="icon alertIcon">🚨</div>
+<div class="text">
 <div class="title">緊急対応ボード</div>
-<div class="desc">助けてください一覧</div>
+<div class="desc">「助けてください」を最優先で確認します。</div>
+</div>
+</div>
 <a class="btn red" href="alert-board.html">開く</a>
 </div>
 
 <div class="card">
-<div class="icon">📋</div>
+<div class="cardInner">
+<div class="icon warnIcon">📋</div>
+<div class="text">
 <div class="title">要対応者一覧</div>
-<div class="desc">困っています一覧</div>
+<div class="desc">「困っています」を中心に確認します。</div>
+</div>
+</div>
 <a class="btn orange" href="status-board.html">開く</a>
 </div>
 
 <div class="card">
-<div class="icon">👥</div>
+<div class="cardInner">
+<div class="icon userIcon">👥</div>
+<div class="text">
 <div class="title">利用者一覧</div>
-<div class="desc">利用者管理</div>
+<div class="desc">本人ページ・家族ページ・利用者詳細へ進みます。</div>
+</div>
+</div>
 <a class="btn blue" href="users.html">開く</a>
 </div>
 
 <div class="card">
-<div class="icon">📍</div>
+<div class="cardInner">
+<div class="icon mapIcon">📍</div>
+<div class="text">
 <div class="title">利用者位置マップ</div>
-<div class="desc">位置と状態確認</div>
-<a class="btn blue" href="support-map.html">開く</a>
+<div class="desc">利用者の状態と位置情報を確認します。</div>
+</div>
+</div>
+<a class="btn purple" href="support-map.html">開く</a>
 </div>
 
 <div class="card">
-<div class="icon">📋</div>
+<div class="cardInner">
+<div class="icon historyIcon">📋</div>
+<div class="text">
 <div class="title">見守り履歴</div>
-<div class="desc">全履歴を見る</div>
+<div class="desc">これまでの見守り送信履歴を確認します。</div>
+</div>
+</div>
 <a class="btn orange" href="watch.html">開く</a>
 </div>
 
 <div class="card">
-<div class="icon">💊</div>
+<div class="cardInner">
+<div class="icon medIcon">💊</div>
+<div class="text">
 <div class="title">薬履歴</div>
-<div class="desc">服薬履歴確認</div>
+<div class="desc">服薬確認の履歴を確認します。</div>
+</div>
+</div>
 <a class="btn green" href="medicine-watch.html">開く</a>
 </div>
 
 <div class="card">
-<div class="icon">💊</div>
+<div class="cardInner">
+<div class="icon medIcon">💊</div>
+<div class="text">
 <div class="title">薬未確認一覧</div>
-<div class="desc">服薬状況確認</div>
+<div class="desc">服薬状況を確認します。</div>
+</div>
+</div>
 <a class="btn green" href="medicine-missing.html">開く</a>
 </div>
 
 <div class="card">
-<div class="icon">🏠</div>
+<div class="cardInner">
+<div class="icon homeIcon">🏠</div>
+<div class="text">
 <div class="title">地域OS入口</div>
-<div class="desc">トップへ戻る</div>
+<div class="desc">最初の入口ページへ戻ります。</div>
+</div>
+</div>
 <a class="btn gray" href="portal.html">開く</a>
 </div>
 
+</div>
+
+<div class="footer">
+NSAW 地域OS 支援者ページ<br>
+必要な確認先へ迷わず進むための画面です
 </div>
 
 </div>
