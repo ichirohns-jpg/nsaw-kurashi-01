@@ -4,10 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>NSAW 地域OS</title>
+<title>地域OS</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
@@ -25,7 +28,7 @@ padding:16px;
 .header{
 background:#1565c0;
 color:white;
-padding:30px;
+padding:40px 30px;
 border-radius:30px;
 text-align:center;
 margin-bottom:24px;
@@ -33,43 +36,37 @@ margin-bottom:24px;
 
 .header h1{
 margin:0;
-font-size:48px;
+font-size:52px;
 }
 
 .header p{
 font-size:22px;
 font-weight:900;
 margin-top:12px;
-line-height:1.8;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
 }
 
 .card{
 background:white;
 border-radius:28px;
-padding:24px;
+padding:28px;
+margin-bottom:18px;
 text-align:center;
 box-shadow:0 4px 14px rgba(0,0,0,.10);
 }
 
 .icon{
-font-size:70px;
-margin-bottom:12px;
+font-size:72px;
+margin-bottom:14px;
 }
 
 .title{
-font-size:30px;
+font-size:34px;
 font-weight:900;
 margin-bottom:12px;
 }
 
 .desc{
-font-size:18px;
+font-size:20px;
 line-height:1.8;
 color:#607080;
 margin-bottom:18px;
@@ -78,45 +75,26 @@ margin-bottom:18px;
 .btn{
 display:block;
 width:100%;
-padding:18px;
-color:white;
-text-decoration:none;
+padding:20px;
 border-radius:20px;
-font-size:22px;
+text-decoration:none;
+color:white;
+font-size:24px;
 font-weight:900;
-}
-
-.blue{
-background:#1565c0;
-}
-
-.orange{
-background:#ef6c00;
-}
-
-.red{
-background:#d32f2f;
 }
 
 .green{
 background:#00897b;
 }
 
-.family{
-background:#1976d2;
+.blue{
+background:#1565c0;
 }
 
-@media(max-width:768px){
-
-.grid{
-grid-template-columns:1fr;
+.red{
+background:#d32f2f;
 }
 
-.header h1{
-font-size:38px;
-}
-
-}
 </style>
 
 </head>
@@ -128,82 +106,31 @@ font-size:38px;
 <div class="header">
 
 <h1>
-🏠 NSAW 地域OS
+🏠 地域OS
 </h1>
 
 <p>
-志木・新座・朝霞・和光<br>
-暮らし情報と見守りの入口
+見守り・家族・支援者 共通入口
 </p>
 
 </div>
 
-<div class="grid">
-
 <div class="card">
 
 <div class="icon">
-📰
+👤
 </div>
 
 <div class="title">
-4市瓦版
+本人入口
 </div>
 
 <div class="desc">
-地域ニュース・イベント情報
+利用者本人用ページ
 </div>
 
 <a
-class="btn blue"
-href="kawaraban.html">
-
-開く
-
-</a>
-
-</div>
-
-<div class="card">
-
-<div class="icon">
-🌅
-</div>
-
-<div class="title">
-地域ラジオ
-</div>
-
-<div class="desc">
-朝の3分 地域ラジオ
-</div>
-
-<a
-class="btn orange"
-href="radio2.html">
-
-聞く
-
-</a>
-
-</div>
-
-<div class="card">
-
-<div class="icon">
-🫶
-</div>
-
-<div class="title">
-本人ページ
-</div>
-
-<div class="desc">
-見守り・薬確認
-</div>
-
-<a
-class="btn red"
+class="btn green"
 href="index.html?id=a001">
 
 開く
@@ -219,15 +146,15 @@ href="index.html?id=a001">
 </div>
 
 <div class="title">
-家族ページ
+家族入口
 </div>
 
 <div class="desc">
-家族の見守り確認
+家族向け見守りページ
 </div>
 
 <a
-class="btn family"
+class="btn blue"
 href="family-dashboard.html">
 
 開く
@@ -243,7 +170,7 @@ href="family-dashboard.html">
 </div>
 
 <div class="title">
-支援者ページ
+支援者入口
 </div>
 
 <div class="desc">
@@ -251,14 +178,12 @@ href="family-dashboard.html">
 </div>
 
 <a
-class="btn green"
+class="btn red"
 href="admin.html">
 
 開く
 
 </a>
-
-</div>
 
 </div>
 
