@@ -17,13 +17,13 @@ color:#17324d;
 }
 
 .wrap{
-max-width:900px;
+max-width:960px;
 margin:auto;
 padding:16px;
 }
 
 .header{
-background:#1565c0;
+background:#1976d2;
 color:white;
 padding:30px;
 border-radius:30px;
@@ -38,33 +38,27 @@ font-size:46px;
 
 .card{
 background:white;
-border-radius:28px;
+border-radius:24px;
 padding:24px;
 margin-bottom:18px;
-box-shadow:0 4px 14px rgba(0,0,0,.10);
+box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .name{
-font-size:36px;
-font-weight:900;
-margin-bottom:12px;
-}
-
-.area{
-font-size:22px;
-color:#607080;
-margin-bottom:12px;
-}
-
-.status{
-font-size:30px;
+font-size:38px;
 font-weight:900;
 margin-bottom:10px;
 }
 
-.time{
-font-size:20px;
+.area{
+font-size:22px;
 color:#666;
+}
+
+.status{
+font-size:32px;
+font-weight:900;
+margin-top:12px;
 }
 
 .ok{color:#00897b}
@@ -73,33 +67,31 @@ color:#666;
 
 .btn{
 display:block;
-background:#1565c0;
+background:#1976d2;
 color:white;
 text-decoration:none;
 padding:18px;
-border-radius:20px;
+border-radius:18px;
 text-align:center;
 font-size:22px;
 font-weight:900;
-margin-top:20px;
+margin-top:12px;
 }
 
-@media(max-width:768px){
-
-.header h1{
-font-size:38px;
-}
-
-.name{
-font-size:30px;
-}
-
-.status{
-font-size:24px;
-}
-
+.homeBtn{
+display:block;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px;
+border-radius:18px;
+text-align:center;
+font-size:22px;
+font-weight:900;
+margin-top:24px;
 }
 </style>
+
 </head>
 
 <body>
@@ -112,76 +104,52 @@ font-size:24px;
 
 <div class="card">
 
-<div
-class="name"
-id="userName">
-
+<div id="userName" class="name">
 利用者
-
 </div>
 
-<div
-class="area"
-id="userArea">
-
+<div id="userArea" class="area">
 地域
-
 </div>
 
 </div>
 
 <div class="card">
 
-<div class="name">
-現在の状態
-</div>
+<h2>現在状態</h2>
 
-<div
-class="status ok"
-id="userStatus">
-
+<div id="userStatus" class="status ok">
 😊 元気です
-
-</div>
-
-<div
-class="time"
-id="statusTime">
-
-最終確認：
-2026/06/08 08:12
-
 </div>
 
 </div>
 
 <div class="card">
 
-<div class="name">
-💊 服薬状況
-</div>
+<h2>見守り情報</h2>
 
-<div class="status ok">
+<p>最終確認：2026/06/08 08:12</p>
 
-確認済み
-
-</div>
-
-<div class="time">
-
-最終確認：
-2026/06/08 08:15
-
-</div>
+<p>服薬確認：済</p>
 
 </div>
 
 <a
 class="btn"
+href="family-list.html">
+👨‍👩‍👧‍👦 家族一覧
+</a>
+
+<a
+class="btn"
+href="family-dashboard.html">
+📊 家族ダッシュボード
+</a>
+
+<a
+class="homeBtn"
 href="portal.html">
-
 🏠 地域OSへ戻る
-
 </a>
 
 </div>
@@ -189,9 +157,7 @@ href="portal.html">
 <script>
 
 const params =
-new URLSearchParams(
-location.search
-);
+new URLSearchParams(location.search);
 
 const userId =
 params.get('id') || 'a001';
@@ -221,19 +187,12 @@ area:'和光市 丸山台'
 };
 
 const user =
-users[userId] || {
-name:'利用者',
-area:'地域未設定'
-};
+users[userId] || users.a001;
 
-document.getElementById(
-'userName'
-).innerHTML =
+document.getElementById('userName').innerHTML =
 '👤 ' + user.name;
 
-document.getElementById(
-'userArea'
-).innerHTML =
+document.getElementById('userArea').innerHTML =
 '📍 ' + user.area;
 
 </script>
