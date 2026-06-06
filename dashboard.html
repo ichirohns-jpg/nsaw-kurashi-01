@@ -8,7 +8,6 @@
 
 <style>
 *{box-sizing:border-box}
-
 body{
 margin:0;
 background:#eef3f8;
@@ -23,7 +22,7 @@ padding:16px;
 
 .header{
 background:#1565c0;
-color:#fff;
+color:white;
 padding:30px;
 border-radius:30px;
 text-align:center;
@@ -42,7 +41,7 @@ gap:18px;
 }
 
 .card{
-background:#fff;
+background:white;
 border-radius:24px;
 padding:24px;
 text-align:center;
@@ -80,15 +79,12 @@ font-weight:900;
 }
 
 @media(max-width:768px){
-
 .grid{
 grid-template-columns:1fr;
 }
-
 .header h1{
 font-size:38px;
 }
-
 }
 </style>
 </head>
@@ -130,51 +126,33 @@ font-size:38px;
 
 </div>
 
-<a
-class="btn"
-href="admin.html">
-
+<a class="btn" href="admin.html">
 🧑‍⚕️ 支援者ページへ戻る
-
 </a>
 
 </div>
 
 <script>
 
-let help = 0;
-let warn = 0;
-let ok = 0;
-
-const users = 4;
-const medicine = 3;
-
-const statusData = [
-
-'助けてください',
-'困っています',
-'元気です',
-'元気です'
-
+const users = [
+'a001',
+'a002',
+'a003',
+'a004'
 ];
 
-statusData.forEach(s=>{
+document.getElementById('userCount').innerText =
+users.length;
 
-if(s.includes('助け')){
-help++;
-}else if(s.includes('困')){
-warn++;
-}else{
-ok++;
-}
-
-});
+const help = 1;
+const warn = 1;
+const ok = 2;
+const medicine = 3;
 
 document.getElementById('helpCount').innerText = help;
 document.getElementById('warnCount').innerText = warn;
 document.getElementById('okCount').innerText = ok;
 document.getElementById('medicineCount').innerText = medicine;
-document.getElementById('userCount').innerText = users;
 
 </script>
 
