@@ -7,18 +7,12 @@
 <title>朝の3分 地域ラジオ</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
 background:#eef3f8;
-font-family:
-"Hiragino Sans",
-"Yu Gothic",
-sans-serif;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
 color:#17324d;
 }
 
@@ -52,49 +46,78 @@ background:white;
 border-radius:24px;
 padding:24px;
 margin-bottom:20px;
-box-shadow:
-0 4px 12px rgba(0,0,0,.08);
+box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
 
-.sectionTitle{
-font-size:32px;
+.date{
+font-size:20px;
 font-weight:900;
-margin-bottom:16px;
 color:#1565c0;
-}
-
-.topic{
-font-size:22px;
-line-height:1.8;
-margin-bottom:10px;
-}
-
-.special{
-background:#fff3cd;
-border-left:10px solid #ff9800;
-}
-
-.specialTitle{
-font-size:34px;
-font-weight:900;
 margin-bottom:12px;
 }
 
-.specialText{
+.title{
+font-size:34px;
+font-weight:900;
+line-height:1.5;
+margin-bottom:18px;
+}
+
+.text{
 font-size:22px;
 line-height:1.9;
+white-space:pre-wrap;
+margin-bottom:20px;
+}
+
+.tags{
+font-size:20px;
+font-weight:900;
+color:#607080;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-wrap;
+}
+
+.youtubeBox{
+position:relative;
+width:100%;
+padding-top:56.25%;
+border-radius:22px;
+overflow:hidden;
+background:#000;
+margin-bottom:18px;
+}
+
+.youtubeBox iframe{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+border:0;
 }
 
 .btn{
 display:block;
 width:100%;
 padding:20px;
-background:#1565c0;
+background:#d32f2f;
 color:white;
-border:none;
+text-decoration:none;
 border-radius:20px;
 font-size:24px;
 font-weight:900;
+text-align:center;
+}
+
+.loading{
+background:white;
+padding:40px;
+border-radius:24px;
+font-size:26px;
+font-weight:900;
+text-align:center;
 }
 
 .footer{
@@ -104,8 +127,15 @@ margin-top:30px;
 color:#666;
 }
 
+@media(max-width:768px){
+.header h1{font-size:34px}
+.title{font-size:28px}
+.text{font-size:19px}
+.btn{font-size:20px}
+}
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
@@ -115,83 +145,137 @@ color:#666;
 <p>志木・新座・朝霞・和光 暮らし情報</p>
 </div>
 
-<div class="card">
-
-<div class="sectionTitle">
-📢 今日の4市TOPIX
+<div id="radioArea">
+<div class="loading">読み込み中...</div>
 </div>
-
-<div class="topic">
-・志木市：本日のTOPIX
-</div>
-
-<div class="topic">
-・新座市：本日のTOPIX
-</div>
-
-<div class="topic">
-・朝霞市：本日のTOPIX
-</div>
-
-<div class="topic">
-・和光市：本日のTOPIX
-</div>
-
-</div>
-
-<div class="card special">
-
-<div class="specialTitle">
-🏙 今日の特集：志木市
-</div>
-
-<div class="specialText">
-
-今日は志木市特集です。
-
-ここにAIで整理した内容を入れます。
-
-条例改正、補助金、防犯情報、
-イベント、工事情報などを
-3分でわかるようにまとめます。
-
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="sectionTitle">
-⚠ 今日の暮らし情報
-</div>
-
-<div class="topic">
-・熱中症注意
-</div>
-
-<div class="topic">
-・防犯情報
-</div>
-
-<div class="topic">
-・安売り情報
-</div>
-
-</div>
-
-<button class="btn">
-
-▶ YouTube地域ラジオを見る
-
-</button>
 
 <div class="footer">
-
 NSAW 暮らし情報局
-
 </div>
 
 </div>
-TV
+
+<script>
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const SHEET_NAME =
+'地域ラジオ';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json';
+
+function cell(row,index){
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
+: '';
+}
+
+function getYouTubeId(url){
+if(!url) return '';
+const m = url.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+return m ? m[1] : '';
+}
+
+fetch(url)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(text.substr(47).slice(0,-2));
+
+const rows =
+json.table.rows.filter(r=>{
+return cell(r,0) || cell(r,1) || cell(r,2);
+});
+
+if(!rows.length){
+document.getElementById('radioArea').innerHTML =
+'<div class="loading">地域ラジオがありません</div>';
+return;
+}
+
+const r =
+rows[rows.length - 1];
+
+const date =
+cell(r,0);
+
+const youtubeURL =
+cell(r,1);
+
+const title =
+cell(r,2);
+
+const description =
+cell(r,3);
+
+const hashtags =
+cell(r,4);
+
+const youtubeId =
+getYouTubeId(youtubeURL);
+
+let movieHtml = '';
+
+if(youtubeId){
+movieHtml = `
+<div class="youtubeBox">
+<iframe
+src="https://www.youtube.com/embed/${youtubeId}"
+allowfullscreen>
+</iframe>
+</div>
+`;
+}
+
+document.getElementById('radioArea').innerHTML = `
+
+<div class="card">
+
+${movieHtml}
+
+<div class="date">
+${date}
+</div>
+
+<div class="title">
+${title}
+</div>
+
+<div class="text">
+${description}
+</div>
+
+<div class="tags">
+${hashtags}
+</div>
+
+<a
+class="btn"
+href="${youtubeURL}"
+target="_blank">
+
+▶ YouTubeで見る
+
+</a>
+
+</div>
+
+`;
+
+})
+.catch(err=>{
+
+document.getElementById('radioArea').innerHTML =
+'<div class="loading">読み込みに失敗しました</div>';
+
+});
+</script>
+
 </body>
 </html>
