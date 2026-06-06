@@ -23,7 +23,7 @@ padding:16px;
 
 .header{
 background:#1565c0;
-color:white;
+color:#fff;
 padding:30px;
 border-radius:30px;
 text-align:center;
@@ -42,7 +42,7 @@ gap:18px;
 }
 
 .card{
-background:white;
+background:#fff;
 border-radius:24px;
 padding:24px;
 text-align:center;
@@ -50,26 +50,24 @@ box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .num{
-font-size:60px;
+font-size:56px;
 font-weight:900;
-margin-bottom:10px;
 }
 
 .title{
 font-size:24px;
 font-weight:900;
+margin-top:10px;
 }
 
-.red{color:#d32f2f}
-.orange{color:#ef6c00}
-.green{color:#00897b}
-.blue{color:#1565c0}
-.purple{color:#8e24aa}
+.green{color:#00897b;}
+.orange{color:#ef6c00;}
+.red{color:#d32f2f;}
+.blue{color:#1565c0;}
 
 .btn{
 display:block;
-margin-top:24px;
-background:#455a64;
+background:#1565c0;
 color:white;
 text-decoration:none;
 padding:18px;
@@ -77,20 +75,10 @@ border-radius:18px;
 text-align:center;
 font-size:22px;
 font-weight:900;
-}
-
-@media(max-width:768px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.header h1{
-font-size:38px;
-}
-
+margin-top:24px;
 }
 </style>
+
 </head>
 
 <body>
@@ -104,8 +92,8 @@ font-size:38px;
 <div class="grid">
 
 <div class="card">
-<div id="helpCount" class="num red">0</div>
-<div class="title">🚨 助けてください</div>
+<div id="okCount" class="num green">0</div>
+<div class="title">😊 元気です</div>
 </div>
 
 <div class="card">
@@ -114,24 +102,19 @@ font-size:38px;
 </div>
 
 <div class="card">
-<div id="okCount" class="num green">0</div>
-<div class="title">😊 元気です</div>
+<div id="helpCount" class="num red">0</div>
+<div class="title">🚨 助けてください</div>
 </div>
 
 <div class="card">
-<div id="medicineCount" class="num blue">0</div>
-<div class="title">💊 薬未確認</div>
-</div>
-
-<div class="card">
-<div id="userCount" class="num purple">0</div>
+<div id="userCount" class="num blue">0</div>
 <div class="title">👥 登録利用者</div>
 </div>
 
 </div>
 
 <a class="btn" href="admin.html">
-🧑‍⚕️ 支援者ページへ戻る
+⬅ 支援者ページへ戻る
 </a>
 
 </div>
@@ -141,15 +124,10 @@ font-size:38px;
 const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-const SHEET_NAME =
-'見守り';
-
 const url =
 'https://docs.google.com/spreadsheets/d/' +
 SHEET_ID +
-'/gviz/tq?sheet=' +
-encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json';
+'/gviz/tq?sheet=見守り&tqx=out:json';
 
 function cell(row,index){
 return row.c[index]
@@ -158,32 +136,37 @@ return row.c[index]
 }
 
 fetch(url)
-.then(res=>res.text())
-.then(text=>{
+
+.then(r=>r.text())
+
+.then(t=>{
 
 const json =
-JSON.parse(text.substr(47).slice(0,-2));
+JSON.parse(
+t.substr(47).slice(0,-2)
+);
 
 const rows =
 json.table.rows;
 
-let help = 0;
-let warn = 0;
-let ok = 0;
+let latest = {};
 
-let names = new Set();
+rows.forEach(row=>{
 
-rows.forEach(r=>{
+const name = cell(row,2);
+const status = cell(row,3);
 
-const name =
-cell(r,1);
+if(!name)return;
 
-const status =
-cell(r,2);
+latest[name] = status;
 
-if(name){
-names.add(name);
-}
+});
+
+let ok=0;
+let warn=0;
+let help=0;
+
+Object.values(latest).forEach(status=>{
 
 if(status.includes('助け')){
 help++;
@@ -191,35 +174,17 @@ help++;
 else if(status.includes('困')){
 warn++;
 }
-else if(status.includes('元気')){
+else{
 ok++;
 }
 
 });
 
-document.getElementById('helpCount').innerText =
-help;
-
-document.getElementById('warnCount').innerText =
-warn;
-
-document.getElementById('okCount').innerText =
-ok;
-
-document.getElementById('medicineCount').innerText =
-0;
-
+document.getElementById('okCount').innerText = ok;
+document.getElementById('warnCount').innerText = warn;
+document.getElementById('helpCount').innerText = help;
 document.getElementById('userCount').innerText =
-names.size;
-
-})
-.catch(err=>{
-
-document.getElementById('helpCount').innerText = '-';
-document.getElementById('warnCount').innerText = '-';
-document.getElementById('okCount').innerText = '-';
-document.getElementById('medicineCount').innerText = '-';
-document.getElementById('userCount').innerText = '-';
+Object.keys(latest).length;
 
 });
 
