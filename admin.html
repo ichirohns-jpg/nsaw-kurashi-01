@@ -25,21 +25,21 @@ padding:16px;
 .header{
 background:#d32f2f;
 color:white;
-padding:28px;
-border-radius:28px;
+padding:30px;
+border-radius:30px;
 text-align:center;
 margin-bottom:24px;
 }
 
 .header h1{
 margin:0;
-font-size:42px;
+font-size:48px;
 }
 
 .header p{
-font-size:20px;
+font-size:22px;
 font-weight:900;
-margin-top:10px;
+margin-top:12px;
 }
 
 .grid{
@@ -57,7 +57,7 @@ box-shadow:0 4px 14px rgba(0,0,0,.10);
 }
 
 .icon{
-font-size:64px;
+font-size:70px;
 margin-bottom:12px;
 }
 
@@ -86,22 +86,16 @@ font-weight:900;
 }
 
 .red{background:#d32f2f}
-.blue{background:#1565c0}
 .green{background:#00897b}
-
-.footer{
-text-align:center;
-font-size:18px;
-margin-top:30px;
-color:#666;
-}
+.blue{background:#1565c0}
+gray{background:#455a64}
 
 @media(max-width:768px){
 .grid{
 grid-template-columns:1fr;
 }
 .header h1{
-font-size:34px;
+font-size:38px;
 }
 }
 </style>
@@ -113,16 +107,28 @@ font-size:34px;
 
 <div class="header">
 <h1>🧑‍⚕️ 支援者ページ</h1>
-<p>見守り・薬確認・利用者管理</p>
+<p>見守り・服薬・利用者管理</p>
 </div>
 
 <div class="grid">
 
 <div class="card">
+<div class="icon">👥</div>
+<div class="title">担当利用者一覧</div>
+<div class="desc">
+担当利用者を管理します
+</div>
+<a class="btn blue"
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/users.html">
+開く
+</a>
+</div>
+
+<div class="card">
 <div class="icon">📋</div>
 <div class="title">見守り履歴</div>
 <div class="desc">
-利用者の見守り状況を確認
+元気です・困っています・助けてください
 </div>
 <a class="btn red"
 href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/watch.html">
@@ -132,9 +138,9 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/watch.html">
 
 <div class="card">
 <div class="icon">💊</div>
-<div class="title">薬確認履歴</div>
+<div class="title">薬履歴</div>
 <div class="desc">
-服薬状況を確認
+朝・昼・夜の服薬確認
 </div>
 <a class="btn green"
 href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/medicine-watch.html">
@@ -143,21 +149,17 @@ href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/medicine-watch.html">
 </div>
 
 <div class="card">
-<div class="icon">👬</div>
-<div class="title">利用者一覧DX</div>
+<div class="icon">🏠</div>
+<div class="title">地域OS入口</div>
 <div class="desc">
-利用者管理・QR管理
+トップページへ戻る
 </div>
 <a class="btn blue"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/users.html">
+href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/portal.html">
 開く
 </a>
 </div>
 
-</div>
-
-<div class="footer">
-NSAW 暮らし情報局
 </div>
 
 </div>
