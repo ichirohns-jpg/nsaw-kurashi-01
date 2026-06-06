@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>支援者ダッシュボード</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:#eef3f8;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+}
+
+.wrap{
+max-width:960px;
+margin:auto;
+padding:16px;
+}
+
+.header{
+background:#1565c0;
+color:white;
+padding:30px;
+border-radius:30px;
+text-align:center;
+margin-bottom:24px;
+}
+
+.header h1{
+margin:0;
+font-size:48px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
+.card{
+background:white;
+border-radius:28px;
+padding:24px;
+text-align:center;
+box-shadow:0 4px 14px rgba(0,0,0,.10);
+}
+
+.num{
+font-size:56px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.title{
+font-size:24px;
+font-weight:900;
+}
+
+.red{color:#d32f2f}
+.orange{color:#ef6c00}
+.green{color:#00897b}
+.blue{color:#1565c0}
+.purple{color:#8e24aa}
+
+.btn{
+display:block;
+margin-top:24px;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px;
+border-radius:20px;
+text-align:center;
+font-size:22px;
+font-weight:900;
+}
+
+@media(max-width:768px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="header">
+<h1>📊 支援者ダッシュボード</h1>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="num red">2</div>
+<div class="title">🚨 助けてください</div>
+</div>
+
+<div class="card">
+<div class="num orange">3</div>
+<div class="title">😓 困っています</div>
+</div>
+
+<div class="card">
+<div class="num green">12</div>
+<div class="title">😊 元気です</div>
+</div>
+
+<div class="card">
+<div class="num blue">4</div>
+<div class="title">💊 薬未確認</div>
+</div>
+
+<div class="card">
+<div class="num purple">21</div>
+<div class="title">👥 登録利用者</div>
+</div>
+
+</div>
+
+<a
+class="btn"
+href="admin.html">
+
+🧑‍⚕️ 支援者ページへ戻る
+
+</a>
+
+</div>
+
+</body>
+</html>
