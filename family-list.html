@@ -13,6 +13,7 @@ body{
 margin:0;
 background:#eef3f8;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+color:#17324d;
 }
 
 .wrap{
@@ -80,7 +81,6 @@ font-size:22px;
 font-weight:900;
 }
 </style>
-
 </head>
 
 <body>
@@ -91,48 +91,79 @@ font-weight:900;
 <h1>👨‍👩‍👧‍👦 家族一覧</h1>
 </div>
 
-<div class="card">
-<div class="name">👤 山田 太郎</div>
-<div class="area">📍 志木市 本町</div>
-<a class="btn"
-href="family-board.html?id=a001">
-開く
+<div id="list"></div>
+
+<a
+class="homeBtn"
+href="family-dashboard.html">
+⬅ 家族ダッシュボードへ戻る
 </a>
+
 </div>
+
+<script>
+
+const users = [
+
+{
+id:'a001',
+name:'山田 太郎',
+area:'志木市 本町'
+},
+
+{
+id:'a002',
+name:'佐藤 花子',
+area:'新座市 東'
+},
+
+{
+id:'a003',
+name:'鈴木 一郎',
+area:'朝霞市 西原'
+},
+
+{
+id:'a004',
+name:'高橋 京子',
+area:'和光市 丸山台'
+}
+
+];
+
+let html='';
+
+users.forEach(user=>{
+
+html += `
 
 <div class="card">
-<div class="name">👤 佐藤 花子</div>
-<div class="area">📍 新座市 東</div>
-<a class="btn"
-href="family-board.html?id=a002">
-開く
-</a>
+
+<div class="name">
+👤 ${user.name}
 </div>
 
-<div class="card">
-<div class="name">👤 鈴木 一郎</div>
-<div class="area">📍 朝霞市 西原</div>
-<a class="btn"
-href="family-board.html?id=a003">
-開く
-</a>
+<div class="area">
+📍 ${user.area}
 </div>
 
-<div class="card">
-<div class="name">👤 高橋 京子</div>
-<div class="area">📍 和光市 丸山台</div>
-<a class="btn"
-href="family-board.html?id=a004">
-開く
-</a>
-</div>
+<a
+class="btn"
+href="family-board.html?id=${user.id}">
 
-<a class="homeBtn"
-href="portal.html">
-🏠 地域OSへ戻る
+状況を見る
+
 </a>
 
 </div>
+
+`;
+
+});
+
+document.getElementById('list').innerHTML = html;
+
+</script>
 
 </body>
 </html>
