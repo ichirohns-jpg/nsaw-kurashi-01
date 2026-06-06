@@ -7,7 +7,10 @@
 <title>家族一覧</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
@@ -53,7 +56,25 @@ margin-bottom:10px;
 .area{
 font-size:20px;
 color:#666;
+margin-bottom:10px;
+}
+
+.status{
+font-size:22px;
+font-weight:900;
 margin-bottom:14px;
+}
+
+.ok{
+color:#00897b;
+}
+
+.warn{
+color:#ef6c00;
+}
+
+.help{
+color:#d32f2f;
 }
 
 .btn{
@@ -80,7 +101,9 @@ text-align:center;
 font-size:22px;
 font-weight:900;
 }
+
 </style>
+
 </head>
 
 <body>
@@ -96,7 +119,9 @@ font-weight:900;
 <a
 class="homeBtn"
 href="family-dashboard.html">
+
 ⬅ 家族ダッシュボードへ戻る
+
 </a>
 
 </div>
@@ -108,25 +133,29 @@ const users = [
 {
 id:'a001',
 name:'山田 太郎',
-area:'志木市 本町'
+area:'志木市 本町',
+status:'助けてください'
 },
 
 {
 id:'a002',
 name:'佐藤 花子',
-area:'新座市 東'
+area:'新座市 東',
+status:'困っています'
 },
 
 {
 id:'a003',
 name:'鈴木 一郎',
-area:'朝霞市 西原'
+area:'朝霞市 西原',
+status:'元気です'
 },
 
 {
 id:'a004',
 name:'高橋 京子',
-area:'和光市 丸山台'
+area:'和光市 丸山台',
+status:'元気です'
 }
 
 ];
@@ -134,6 +163,18 @@ area:'和光市 丸山台'
 let html='';
 
 users.forEach(user=>{
+
+let cls='ok';
+let icon='😊';
+
+if(user.status.includes('助け')){
+cls='help';
+icon='🚨';
+}
+else if(user.status.includes('困')){
+cls='warn';
+icon='😓';
+}
 
 html += `
 
@@ -145,6 +186,10 @@ html += `
 
 <div class="area">
 📍 ${user.area}
+</div>
+
+<div class="status ${cls}">
+${icon} ${user.status}
 </div>
 
 <a
@@ -161,7 +206,8 @@ href="family-board.html?id=${user.id}">
 
 });
 
-document.getElementById('list').innerHTML = html;
+document.getElementById('list').innerHTML =
+html;
 
 </script>
 
