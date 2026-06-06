@@ -39,6 +39,39 @@ margin:0;
 font-size:46px;
 }
 
+.filterBox{
+display:grid;
+grid-template-columns:1fr 1fr 1fr 1fr;
+gap:10px;
+margin-bottom:20px;
+}
+
+.filterBtn{
+border:none;
+padding:14px;
+border-radius:16px;
+font-size:18px;
+font-weight:900;
+color:white;
+cursor:pointer;
+}
+
+.allBtn{
+background:#455a64;
+}
+
+.helpBtn{
+background:#d32f2f;
+}
+
+.warnBtn{
+background:#ef6c00;
+}
+
+.okBtn{
+background:#00897b;
+}
+
 .card{
 background:white;
 border-radius:24px;
@@ -63,6 +96,7 @@ margin-bottom:10px;
 font-size:22px;
 font-weight:900;
 margin-bottom:14px;
+line-height:1.8;
 }
 
 .ok{
@@ -103,6 +137,14 @@ font-size:22px;
 font-weight:900;
 }
 
+@media(max-width:768px){
+
+.filterBox{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
 </style>
 
 </head>
@@ -114,6 +156,36 @@ font-weight:900;
 <div class="header">
 <h1>📍 利用者位置マップ</h1>
 </div>
+
+<div class="filterBox">
+
+<button
+class="filterBtn allBtn"
+onclick="showAll()">
+全員
+</button>
+
+<button
+class="filterBtn helpBtn"
+onclick="showHelp()">
+🚨 緊急
+</button>
+
+<button
+class="filterBtn warnBtn"
+onclick="showWarn()">
+😓 注意
+</button>
+
+<button
+class="filterBtn okBtn"
+onclick="showOk()">
+😊 元気
+</button>
+
+</div>
+
+<div id="helpArea">
 
 <div class="card">
 
@@ -127,26 +199,28 @@ font-weight:900;
 
 <div class="status help">
 🚨 助けてください
+<br>
+🕒 15:20
 </div>
 
 <a
 class="btn"
 href="person.html?id=a001">
-
 利用者詳細を見る
-
 </a>
 
 <a
 class="btn"
 href="https://www.google.com/maps/search/?api=1&query=志木市本町"
 target="_blank">
-
 地図を見る
-
 </a>
 
 </div>
+
+</div>
+
+<div id="warnArea">
 
 <div class="card">
 
@@ -160,26 +234,28 @@ target="_blank">
 
 <div class="status warn">
 😓 困っています
+<br>
+🕒 14:35
 </div>
 
 <a
 class="btn"
 href="person.html?id=a002">
-
 利用者詳細を見る
-
 </a>
 
 <a
 class="btn"
 href="https://www.google.com/maps/search/?api=1&query=新座市東"
 target="_blank">
-
 地図を見る
-
 </a>
 
 </div>
+
+</div>
+
+<div id="okArea">
 
 <div class="card">
 
@@ -193,23 +269,21 @@ target="_blank">
 
 <div class="status ok">
 😊 元気です
+<br>
+🕒 08:12
 </div>
 
 <a
 class="btn"
 href="person.html?id=a003">
-
 利用者詳細を見る
-
 </a>
 
 <a
 class="btn"
 href="https://www.google.com/maps/search/?api=1&query=朝霞市西原"
 target="_blank">
-
 地図を見る
-
 </a>
 
 </div>
@@ -226,36 +300,62 @@ target="_blank">
 
 <div class="status ok">
 😊 元気です
+<br>
+🕒 07:55
 </div>
 
 <a
 class="btn"
 href="person.html?id=a004">
-
 利用者詳細を見る
-
 </a>
 
 <a
 class="btn"
 href="https://www.google.com/maps/search/?api=1&query=和光市丸山台"
 target="_blank">
-
 地図を見る
-
 </a>
+
+</div>
 
 </div>
 
 <a
 class="homeBtn"
 href="admin.html">
-
 ⬅ 支援者ページへ戻る
-
 </a>
 
 </div>
+
+<script>
+
+function showAll(){
+helpArea.style.display='block';
+warnArea.style.display='block';
+okArea.style.display='block';
+}
+
+function showHelp(){
+helpArea.style.display='block';
+warnArea.style.display='none';
+okArea.style.display='none';
+}
+
+function showWarn(){
+helpArea.style.display='none';
+warnArea.style.display='block';
+okArea.style.display='none';
+}
+
+function showOk(){
+helpArea.style.display='none';
+warnArea.style.display='none';
+okArea.style.display='block';
+}
+
+</script>
 
 </body>
 </html>
