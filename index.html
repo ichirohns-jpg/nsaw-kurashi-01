@@ -1,15 +1,298 @@
-<button class="bigBtn green">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>本人ページ</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#eef3f8;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+color:#17324d;
+}
+
+.wrap{
+max-width:760px;
+margin:auto;
+padding:16px;
+}
+
+.header{
+background:#1565c0;
+color:white;
+padding:30px;
+border-radius:30px;
+text-align:center;
+margin-bottom:24px;
+}
+
+.header h1{
+margin:0;
+font-size:44px;
+}
+
+.card{
+background:white;
+border-radius:24px;
+padding:24px;
+margin-bottom:18px;
+box-shadow:0 4px 12px rgba(0,0,0,.10);
+}
+
+.name{
+font-size:38px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.area{
+font-size:22px;
+color:#666;
+}
+
+.bigBtn{
+display:block;
+width:100%;
+border:none;
+padding:24px;
+margin-bottom:16px;
+border-radius:22px;
+font-size:28px;
+font-weight:900;
+color:white;
+cursor:pointer;
+}
+
+.green{
+background:#00897b;
+}
+
+.orange{
+background:#ef6c00;
+}
+
+.red{
+background:#d32f2f;
+}
+
+.blue{
+background:#1565c0;
+}
+
+.statusBox{
+background:#f4f7fb;
+border-radius:20px;
+padding:20px;
+font-size:24px;
+font-weight:900;
+text-align:center;
+}
+
+.time{
+margin-top:12px;
+font-size:18px;
+color:#666;
+text-align:center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="header">
+<h1>🫶 本人ページ</h1>
+</div>
+
+<div class="card">
+
+<div id="userName" class="name">
+👤 利用者
+</div>
+
+<div id="userArea" class="area">
+地域
+</div>
+
+</div>
+
+<div class="card">
+
+<button
+class="bigBtn green"
+onclick="saveStatus('元気です')">
+
 😊 元気です
+
 </button>
 
-<button class="bigBtn orange">
+<button
+class="bigBtn orange"
+onclick="saveStatus('困っています')">
+
 😓 少し困っています
+
 </button>
 
-<button class="bigBtn red">
+<button
+class="bigBtn red"
+onclick="saveStatus('助けてください')">
+
 🚨 助けてください
+
 </button>
 
-<button class="bigBtn blue">
+<button
+class="bigBtn blue"
+onclick="saveMedicine()">
+
 💊 薬を飲みました
+
 </button>
+
+</div>
+
+<div class="card">
+
+<div
+id="currentStatus"
+class="statusBox">
+
+現在状態：未送信
+
+</div>
+
+<div
+id="currentTime"
+class="time">
+
+最終確認：未送信
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const GAS_URL =
+'https://script.google.com/macros/s/AKfycbwF42-3JwuoBglGVuPZzLyAKFV-0scKlh1Q7yrI17UaUgFB2JUig-fQIJjRlZiDs264/exec';
+
+const params =
+new URLSearchParams(location.search);
+
+const userId =
+params.get('id') || 'a001';
+
+const users = {
+
+a001:{
+name:'山田 太郎',
+area:'志木市 本町'
+},
+
+a002:{
+name:'佐藤 花子',
+area:'新座市 東'
+},
+
+a003:{
+name:'鈴木 一郎',
+area:'朝霞市 西原'
+},
+
+a004:{
+name:'高橋 京子',
+area:'和光市 丸山台'
+}
+
+};
+
+const user =
+users[userId] || users.a001;
+
+document.getElementById('userName').innerHTML =
+'👤 ' + user.name;
+
+document.getElementById('userArea').innerHTML =
+'📍 ' + user.area;
+
+function nowString(){
+
+const d = new Date();
+
+return d.getFullYear() + '/' +
+String(d.getMonth()+1).padStart(2,'0') + '/' +
+String(d.getDate()).padStart(2,'0') + ' ' +
+String(d.getHours()).padStart(2,'0') + ':' +
+String(d.getMinutes()).padStart(2,'0');
+
+}
+
+function saveStatus(status){
+
+fetch(
+GAS_URL +
+'?mode=status' +
+'&id=' + encodeURIComponent(userId) +
+'&name=' + encodeURIComponent(user.name) +
+'&status=' + encodeURIComponent(status)
+)
+.then(r=>r.text())
+.then(()=>{
+
+document.getElementById('currentStatus').innerHTML =
+'現在状態：' + status;
+
+document.getElementById('currentTime').innerHTML =
+'最終確認：' + nowString();
+
+alert(status + ' を送信しました');
+
+})
+.catch(()=>{
+
+alert('送信に失敗しました');
+
+});
+
+}
+
+function saveMedicine(){
+
+fetch(
+GAS_URL +
+'?mode=medicine' +
+'&id=' + encodeURIComponent(userId) +
+'&name=' + encodeURIComponent(user.name)
+)
+.then(r=>r.text())
+.then(()=>{
+
+alert('服薬を記録しました');
+
+})
+.catch(()=>{
+
+alert('送信に失敗しました');
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
