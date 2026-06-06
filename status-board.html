@@ -7,7 +7,10 @@
 <title>要対応者一覧</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
@@ -36,53 +39,38 @@ margin:0;
 font-size:46px;
 }
 
-.header p{
-font-size:22px;
-font-weight:900;
-line-height:1.8;
-margin-top:10px;
-}
-
 .card{
 background:white;
 border-radius:24px;
 padding:24px;
-margin-bottom:18px;
+margin-bottom:16px;
 box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
-.help{
-border-left:14px solid #d32f2f;
-background:#fff5f5;
-}
-
-.warn{
-border-left:14px solid #ef6c00;
-background:#fffaf2;
-}
-
-.ok{
-border-left:14px solid #00897b;
-background:#f2fff7;
-}
-
 .name{
-font-size:34px;
+font-size:30px;
 font-weight:900;
 margin-bottom:10px;
 }
 
 .status{
-font-size:28px;
+font-size:24px;
 font-weight:900;
 margin-bottom:10px;
 }
 
+.help{
+color:#d32f2f;
+}
+
+.warn{
+color:#ef6c00;
+}
+
 .time{
-font-size:20px;
+font-size:18px;
 color:#666;
 margin-bottom:14px;
-line-height:1.7;
 }
 
 .btn{
@@ -90,11 +78,12 @@ display:block;
 background:#1565c0;
 color:white;
 text-decoration:none;
-padding:18px;
+padding:16px;
 border-radius:18px;
 text-align:center;
-font-size:22px;
+font-size:20px;
 font-weight:900;
+margin-top:10px;
 }
 
 .homeBtn{
@@ -110,21 +99,8 @@ font-size:22px;
 font-weight:900;
 }
 
-.loading{
-background:white;
-border-radius:24px;
-padding:34px;
-font-size:24px;
-font-weight:900;
-text-align:center;
-}
-
-@media(max-width:768px){
-.header h1{font-size:36px}
-.name{font-size:28px}
-.status{font-size:24px}
-}
 </style>
+
 </head>
 
 <body>
@@ -132,153 +108,128 @@ text-align:center;
 <div class="wrap">
 
 <div class="header">
-<h1>📊 要対応者一覧</h1>
-<p>助けてください・困っています・元気ですを一覧確認</p>
+<h1>📋 要対応者一覧</h1>
 </div>
 
 <div id="list">
-<div class="loading">読み込み中...</div>
+
+<div class="card">
+読み込み中...
 </div>
 
-<a class="homeBtn" href="admin.html">
+</div>
+
+<a
+class="homeBtn"
+href="admin.html">
+
 ⬅ 支援者ページへ戻る
+
 </a>
 
 </div>
 
 <script>
+
 const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-
-const SHEET_NAME =
-'見守り';
-
-const users = {
-'山田 太郎':'a001',
-'佐藤 花子':'a002',
-'鈴木 一郎':'a003',
-'高橋 京子':'a004'
-};
 
 const url =
 'https://docs.google.com/spreadsheets/d/' +
 SHEET_ID +
-'/gviz/tq?sheet=' +
-encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json';
+'/gviz/tq?sheet=見守り&tqx=out:json';
 
 function cell(row,index){
+
 return row.c[index]
 ? (row.c[index].f || row.c[index].v || '')
 : '';
-}
 
-function getClass(status){
-if(status.includes('助け')){
-return 'help';
-}
-if(status.includes('困')){
-return 'warn';
-}
-return 'ok';
-}
-
-function getIcon(status){
-if(status.includes('助け')){
-return '🚨';
-}
-if(status.includes('困')){
-return '😓';
-}
-return '😊';
-}
-
-function getRank(status){
-if(status.includes('助け')){
-return 1;
-}
-if(status.includes('困')){
-return 2;
-}
-return 3;
 }
 
 fetch(url)
-.then(res=>res.text())
-.then(text=>{
+
+.then(r=>r.text())
+
+.then(t=>{
 
 const json =
-JSON.parse(text.substr(47).slice(0,-2));
+JSON.parse(
+t.substr(47).slice(0,-2)
+);
 
 const rows =
 json.table.rows;
 
-let latestByName = {};
+let latest = {};
 
-rows.forEach(r=>{
+rows.forEach(row=>{
 
 const time =
-cell(r,0);
+cell(row,0);
+
+const id =
+cell(row,1);
 
 const name =
-cell(r,1);
+cell(row,2);
 
 const status =
-cell(r,2);
+cell(row,3);
 
-if(!name || !status){
-return;
-}
+if(!name)return;
 
-latestByName[name] = {
+latest[name] = {
+id:id,
 time:time,
-name:name,
 status:status
 };
 
 });
 
-let list =
-Object.values(latestByName);
+let html='';
 
-list.sort((a,b)=>{
-return getRank(a.status) - getRank(b.status);
-});
+Object.keys(latest).forEach(name=>{
 
-let html = '';
+const item =
+latest[name];
 
-list.forEach(row=>{
+if(
+!item.status.includes('困') &&
+!item.status.includes('助け')
+){
+return;
+}
 
-const id =
-users[row.name] || 'a001';
+let cls='warn';
+let icon='😓';
 
-const cls =
-getClass(row.status);
-
-const icon =
-getIcon(row.status);
+if(item.status.includes('助け')){
+cls='help';
+icon='🚨';
+}
 
 html += `
 
-<div class="card ${cls}">
+<div class="card">
 
 <div class="name">
-👤 ${row.name}
+👤 ${name}
 </div>
 
-<div class="status">
-${icon} ${row.status}
+<div class="status ${cls}">
+${icon} ${item.status}
 </div>
 
 <div class="time">
-最終確認：${row.time}
+🕒 ${item.time}
 </div>
 
 <a
 class="btn"
-href="person.html?id=${id}">
+href="person.html?id=${item.id}">
 
-詳細を見る
+利用者詳細
 
 </a>
 
@@ -289,15 +240,17 @@ href="person.html?id=${id}">
 });
 
 document.getElementById('list').innerHTML =
-html || '<div class="loading">見守り記録がありません</div>';
+html || '<div class="card">要対応者はいません</div>';
 
 })
-.catch(err=>{
+
+.catch(()=>{
 
 document.getElementById('list').innerHTML =
-'<div class="loading">読み込みに失敗しました</div>';
+'<div class="card">読み込み失敗</div>';
 
 });
+
 </script>
 
 </body>
