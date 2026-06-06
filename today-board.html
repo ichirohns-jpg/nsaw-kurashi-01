@@ -7,7 +7,10 @@
 <title>本日の状況</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
@@ -44,18 +47,6 @@ margin-bottom:16px;
 box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
-.help{
-border-left:12px solid #d32f2f;
-}
-
-.warn{
-border-left:12px solid #ef6c00;
-}
-
-.ok{
-border-left:12px solid #00897b;
-}
-
 .name{
 font-size:30px;
 font-weight:900;
@@ -68,12 +59,24 @@ font-weight:900;
 margin-bottom:10px;
 }
 
+.ok{
+color:#00897b;
+}
+
+.warn{
+color:#ef6c00;
+}
+
+.help{
+color:#d32f2f;
+}
+
 .time{
 font-size:18px;
 color:#666;
 }
 
-.btn{
+.homeBtn{
 display:block;
 margin-top:24px;
 background:#455a64;
@@ -85,7 +88,9 @@ text-align:center;
 font-size:22px;
 font-weight:900;
 }
+
 </style>
+
 </head>
 
 <body>
@@ -96,10 +101,20 @@ font-weight:900;
 <h1>📅 本日の状況</h1>
 </div>
 
-<div id="list"></div>
+<div id="list">
 
-<a class="btn" href="admin.html">
+<div class="card">
+読み込み中...
+</div>
+
+</div>
+
+<a
+class="homeBtn"
+href="admin.html">
+
 ⬅ 支援者ページへ戻る
+
 </a>
 
 </div>
@@ -114,18 +129,24 @@ const url =
 SHEET_ID +
 '/gviz/tq?sheet=見守り&tqx=out:json';
 
-function cell(r,i){
-return r.c[i]
-? (r.c[i].f || r.c[i].v || '')
+function cell(row,index){
+
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
 : '';
+
 }
 
 fetch(url)
+
 .then(r=>r.text())
+
 .then(t=>{
 
 const json =
-JSON.parse(t.substr(47).slice(0,-2));
+JSON.parse(
+t.substr(47).slice(0,-2)
+);
 
 const rows =
 json.table.rows;
@@ -134,15 +155,23 @@ let latest = {};
 
 rows.forEach(row=>{
 
-const time = cell(row,0);
-const name = cell(row,2);
-const status = cell(row,3);
+const time =
+cell(row,0);
+
+const id =
+cell(row,1);
+
+const name =
+cell(row,2);
+
+const status =
+cell(row,3);
 
 if(!name)return;
 
 latest[name] = {
+id:id,
 time:time,
-name:name,
 status:status
 };
 
@@ -150,34 +179,37 @@ status:status
 
 let html='';
 
-Object.values(latest).forEach(row=>{
+Object.keys(latest).forEach(name=>{
+
+const item =
+latest[name];
 
 let cls='ok';
 let icon='😊';
 
-if(row.status.includes('助け')){
+if(item.status.includes('助け')){
 cls='help';
 icon='🚨';
 }
-else if(row.status.includes('困')){
+else if(item.status.includes('困')){
 cls='warn';
 icon='😓';
 }
 
 html += `
 
-<div class="card ${cls}">
+<div class="card">
 
 <div class="name">
-👤 ${row.name}
+👤 ${name}
 </div>
 
-<div class="status">
-${icon} ${row.status}
+<div class="status ${cls}">
+${icon} ${item.status}
 </div>
 
 <div class="time">
-${row.time}
+🕒 ${item.time}
 </div>
 
 </div>
@@ -190,10 +222,11 @@ document.getElementById('list').innerHTML =
 html || '<div class="card">データがありません</div>';
 
 })
+
 .catch(()=>{
 
 document.getElementById('list').innerHTML =
-'<div class="card">読み込みに失敗しました</div>';
+'<div class="card">読み込み失敗</div>';
 
 });
 
