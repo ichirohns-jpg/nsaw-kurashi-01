@@ -23,7 +23,7 @@ padding:16px;
 
 .header{
 background:#1565c0;
-color:white;
+color:#fff;
 padding:30px;
 border-radius:30px;
 text-align:center;
@@ -32,7 +32,7 @@ margin-bottom:24px;
 
 .header h1{
 margin:0;
-font-size:48px;
+font-size:46px;
 }
 
 .grid{
@@ -42,15 +42,15 @@ gap:18px;
 }
 
 .card{
-background:white;
-border-radius:28px;
+background:#fff;
+border-radius:24px;
 padding:24px;
 text-align:center;
-box-shadow:0 4px 14px rgba(0,0,0,.10);
+box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .num{
-font-size:56px;
+font-size:60px;
 font-weight:900;
 margin-bottom:10px;
 }
@@ -73,16 +73,22 @@ background:#455a64;
 color:white;
 text-decoration:none;
 padding:18px;
-border-radius:20px;
+border-radius:18px;
 text-align:center;
 font-size:22px;
 font-weight:900;
 }
 
 @media(max-width:768px){
+
 .grid{
 grid-template-columns:1fr;
 }
+
+.header h1{
+font-size:38px;
+}
+
 }
 </style>
 </head>
@@ -98,27 +104,27 @@ grid-template-columns:1fr;
 <div class="grid">
 
 <div class="card">
-<div class="num red">2</div>
+<div id="helpCount" class="num red">0</div>
 <div class="title">🚨 助けてください</div>
 </div>
 
 <div class="card">
-<div class="num orange">3</div>
+<div id="warnCount" class="num orange">0</div>
 <div class="title">😓 困っています</div>
 </div>
 
 <div class="card">
-<div class="num green">12</div>
+<div id="okCount" class="num green">0</div>
 <div class="title">😊 元気です</div>
 </div>
 
 <div class="card">
-<div class="num blue">4</div>
+<div id="medicineCount" class="num blue">0</div>
 <div class="title">💊 薬未確認</div>
 </div>
 
 <div class="card">
-<div class="num purple">21</div>
+<div id="userCount" class="num purple">0</div>
 <div class="title">👥 登録利用者</div>
 </div>
 
@@ -133,6 +139,44 @@ href="admin.html">
 </a>
 
 </div>
+
+<script>
+
+let help = 0;
+let warn = 0;
+let ok = 0;
+
+const users = 4;
+const medicine = 3;
+
+const statusData = [
+
+'助けてください',
+'困っています',
+'元気です',
+'元気です'
+
+];
+
+statusData.forEach(s=>{
+
+if(s.includes('助け')){
+help++;
+}else if(s.includes('困')){
+warn++;
+}else{
+ok++;
+}
+
+});
+
+document.getElementById('helpCount').innerText = help;
+document.getElementById('warnCount').innerText = warn;
+document.getElementById('okCount').innerText = ok;
+document.getElementById('medicineCount').innerText = medicine;
+document.getElementById('userCount').innerText = users;
+
+</script>
 
 </body>
 </html>
