@@ -47,7 +47,13 @@ box-shadow:0 4px 14px rgba(0,0,0,.10);
 .name{
 font-size:36px;
 font-weight:900;
-margin-bottom:10px;
+margin-bottom:12px;
+}
+
+.area{
+font-size:22px;
+color:#607080;
+margin-bottom:12px;
 }
 
 .status{
@@ -61,17 +67,9 @@ font-size:20px;
 color:#666;
 }
 
-.ok{
-color:#00897b;
-}
-
-.warn{
-color:#ef6c00;
-}
-
-.help{
-color:#d32f2f;
-}
+.ok{color:#00897b}
+.warn{color:#ef6c00}
+.help{color:#d32f2f}
 
 .btn{
 display:block;
@@ -85,8 +83,23 @@ font-size:22px;
 font-weight:900;
 margin-top:20px;
 }
-</style>
 
+@media(max-width:768px){
+
+.header h1{
+font-size:38px;
+}
+
+.name{
+font-size:30px;
+}
+
+.status{
+font-size:24px;
+}
+
+}
+</style>
 </head>
 
 <body>
@@ -99,16 +112,45 @@ margin-top:20px;
 
 <div class="card">
 
+<div
+class="name"
+id="userName">
+
+利用者
+
+</div>
+
+<div
+class="area"
+id="userArea">
+
+地域
+
+</div>
+
+</div>
+
+<div class="card">
+
 <div class="name">
-👤 山田 太郎
+現在の状態
 </div>
 
-<div class="status ok">
+<div
+class="status ok"
+id="userStatus">
+
 😊 元気です
+
 </div>
 
-<div class="time">
-最終確認：2026/06/08 08:12
+<div
+class="time"
+id="statusTime">
+
+最終確認：
+2026/06/08 08:12
+
 </div>
 
 </div>
@@ -120,11 +162,16 @@ margin-top:20px;
 </div>
 
 <div class="status ok">
-朝の薬 確認済み
+
+確認済み
+
 </div>
 
 <div class="time">
-確認時刻：2026/06/08 08:15
+
+最終確認：
+2026/06/08 08:15
+
 </div>
 
 </div>
@@ -138,6 +185,58 @@ href="portal.html">
 </a>
 
 </div>
+
+<script>
+
+const params =
+new URLSearchParams(
+location.search
+);
+
+const userId =
+params.get('id') || 'a001';
+
+const users = {
+
+a001:{
+name:'山田 太郎',
+area:'志木市 本町'
+},
+
+a002:{
+name:'佐藤 花子',
+area:'新座市 東'
+},
+
+a003:{
+name:'鈴木 一郎',
+area:'朝霞市 西原'
+},
+
+a004:{
+name:'高橋 京子',
+area:'和光市 丸山台'
+}
+
+};
+
+const user =
+users[userId] || {
+name:'利用者',
+area:'地域未設定'
+};
+
+document.getElementById(
+'userName'
+).innerHTML =
+'👤 ' + user.name;
+
+document.getElementById(
+'userArea'
+).innerHTML =
+'📍 ' + user.area;
+
+</script>
 
 </body>
 </html>
