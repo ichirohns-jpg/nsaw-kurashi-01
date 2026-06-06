@@ -1,417 +1,145 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>
-薬確認履歴DX
-</title>
-
-<meta property="og:title"
-content="薬確認履歴DX">
-
-<meta property="og:description"
-content="薬確認一覧">
-
-<meta property="og:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/map.jpg">
-
-<meta name="twitter:card"
-content="summary_large_image">
+<title>薬履歴</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
 background:#eef3f8;
-font-family:
-"Hiragino Sans",
-"Yu Gothic",
-sans-serif;
-color:#17324d;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
 }
 
 .wrap{
 max-width:960px;
 margin:auto;
-padding:18px 14px 80px;
+padding:16px;
 }
 
-.topCard{
-background:white;
-border-radius:32px;
-padding:24px;
-margin-bottom:28px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.08);
-}
-
-.pageTitle{
-font-size:58px;
-font-weight:900;
-margin-bottom:18px;
-line-height:1.3;
-}
-
-.backBtn{
-display:inline-block;
-background:#455a64;
+.header{
+background:#00897b;
 color:white;
-text-decoration:none;
-padding:18px 24px;
-border-radius:22px;
-font-size:22px;
-font-weight:900;
-margin-bottom:22px;
-}
-
-.desc{
-font-size:22px;
-line-height:1.9;
-color:#607080;
-}
-
-.alertBox{
-background:#d32f2f;
-color:white;
-padding:24px;
-border-radius:28px;
-margin-bottom:28px;
-font-size:28px;
-font-weight:900;
-line-height:1.8;
-display:none;
-animation:flash 1s infinite;
-}
-
-@keyframes flash{
-
-0%{
-opacity:1;
-}
-
-50%{
-opacity:.4;
-}
-
-100%{
-opacity:1;
-}
-
-}
-
-.medCard{
-background:white;
+padding:30px;
 border-radius:30px;
-padding:24px;
-margin-bottom:24px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.08);
-border-left:14px solid #1565c0;
-}
-
-.morningCard{
-border-left-color:#1565c0;
-}
-
-.noonCard{
-border-left-color:#00897b;
-}
-
-.nightCard{
-border-left-color:#8e24aa;
-}
-
-.medName{
-font-size:34px;
-font-weight:900;
-margin-bottom:14px;
-}
-
-.medStatus{
-font-size:30px;
-font-weight:900;
-margin-bottom:14px;
-}
-
-.medTime{
-font-size:22px;
-line-height:1.8;
-color:#607080;
-}
-
-.morning{
-color:#1565c0;
-}
-
-.noon{
-color:#00897b;
-}
-
-.night{
-color:#8e24aa;
-}
-
-.lastBox{
-background:#f4f7fb;
-padding:18px;
-border-radius:22px;
-margin-top:18px;
-font-size:22px;
-font-weight:900;
-line-height:1.8;
-}
-
-.loading{
-background:white;
-padding:40px;
-border-radius:24px;
-font-size:26px;
-font-weight:900;
 text-align:center;
+margin-bottom:24px;
 }
 
-.footerMenu{
-display:flex;
-justify-content:center;
-gap:12px;
-margin-top:34px;
-margin-bottom:10px;
-flex-wrap:wrap;
-}
-
-.footerBtn{
-text-decoration:none;
-color:white;
-padding:14px 18px;
-border-radius:20px;
-font-size:17px;
-font-weight:900;
-box-shadow:
-0 4px 12px rgba(0,0,0,.2);
-}
-
-@media(max-width:768px){
-
-.pageTitle{
+.header h1{
+margin:0;
 font-size:46px;
 }
 
-.medName{
-font-size:28px;
+.card{
+background:white;
+border-radius:24px;
+padding:24px;
+margin-bottom:18px;
+box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
-.medStatus{
+.name{
+font-size:32px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.time{
+font-size:18px;
+color:#666;
+margin-top:10px;
+}
+
+.ok{
+color:#00897b;
 font-size:24px;
+font-weight:900;
 }
 
-.medTime{
-font-size:18px;
+.ng{
+color:#d32f2f;
+font-size:24px;
+font-weight:900;
 }
 
-.lastBox{
-font-size:18px;
-}
-
-.alertBox{
+.btn{
+display:block;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px;
+border-radius:18px;
+text-align:center;
 font-size:22px;
+font-weight:900;
+margin-top:24px;
 }
-
-}
-
 </style>
-
 </head>
 
 <body>
 
 <div class="wrap">
 
-<div class="topCard">
-
-<div class="pageTitle">
-💊 薬確認履歴DX
+<div class="header">
+<h1>💊 薬履歴</h1>
 </div>
 
-<a
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
-class="backBtn">
+<div id="list"></div>
 
-⬅ トップへ戻る
-
+<a class="btn" href="admin.html">
+⬅ 支援者ページへ戻る
 </a>
-
-<div class="desc">
-朝・昼・夜の薬確認履歴です。
-</div>
-
-</div>
-
-<div
-id="alertBox"
-class="alertBox">
-
-🚨 薬の未確認があります
-
-</div>
-
-<div id="medicineArea">
-
-<div class="loading">
-読み込み中...
-</div>
-
-</div>
-
-<div class="footerMenu">
-
-<a
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
-class="footerBtn"
-style="background:#455a64;">
-
-🏠 トップ
-
-</a>
-
-<a
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/medicine.html"
-class="footerBtn"
-style="background:#1565c0;">
-
-💊 薬確認
-
-</a>
-
-<a
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/watch.html"
-class="footerBtn"
-style="background:#d32f2f;">
-
-🫶 見守り
-
-</a>
-
-</div>
 
 </div>
 
 <script>
 
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const data = [
 
-const url =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=見守り&tqx=out:json';
+{
+name:'山田 太郎',
+status:'確認済み',
+time:'2026/06/08 08:15'
+},
 
-function cell(row,index){
-
-return row.c[index]
-? (row.c[index].f || row.c[index].v || '')
-: '';
-
+{
+name:'佐藤 花子',
+status:'未確認',
+time:'2026/06/08 12:00'
 }
 
-fetch(url)
-.then(res=>res.text())
-.then(text=>{
+];
 
-const json =
-JSON.parse(
-text.substr(47).slice(0,-2)
-);
+let html='';
 
-const rows =
-json.table.rows;
-
-let html = '';
-
-let morningOK = false;
-let noonOK = false;
-let nightOK = false;
-
-const now =
-new Date();
-
-const hour =
-now.getHours();
-
-rows.reverse().forEach(r=>{
-
-const time =
-cell(r,0);
-
-const name =
-cell(r,1);
-
-const status =
-cell(r,2);
-
-if(!status.includes('薬')){
-return;
-}
-
-if(status.includes('朝')){
-morningOK = true;
-}
-
-if(status.includes('昼')){
-noonOK = true;
-}
-
-if(status.includes('夜')){
-nightOK = true;
-}
-
-let statusClass = '';
-let cardClass = '';
-
-if(status.includes('朝')){
-
-statusClass = 'morning';
-cardClass = 'morningCard';
-
-}else
-if(status.includes('昼')){
-
-statusClass = 'noon';
-cardClass = 'noonCard';
-
-}else{
-
-statusClass = 'night';
-cardClass = 'nightCard';
-
-}
+data.forEach(row=>{
 
 html += `
 
-<div class="medCard ${cardClass}">
+<div class="card">
 
-<div class="medName">
-👤 ${name}
+<div class="name">
+👤 ${row.name}
 </div>
 
-<div class="medStatus ${statusClass}">
-${status}
+<div class="${
+row.status==='確認済み'
+?'ok'
+:'ng'
+}">
+
+💊 ${row.status}
+
 </div>
 
-<div class="medTime">
-🕒 ${time}
-</div>
-
-<div class="lastBox">
-最終確認：
-${time}
+<div class="time">
+${row.time}
 </div>
 
 </div>
@@ -420,51 +148,7 @@ ${time}
 
 });
 
-let alerts = [];
-
-if(hour >= 10 && !morningOK){
-
-alerts.push(
-'🚨 朝の薬が未確認です'
-);
-
-}
-
-if(hour >= 15 && !noonOK){
-
-alerts.push(
-'🚨 昼の薬が未確認です'
-);
-
-}
-
-if(hour >= 21 && !nightOK){
-
-alerts.push(
-'🚨 夜の薬が未確認です'
-);
-
-}
-
-if(alerts.length){
-
-document.getElementById(
-'alertBox'
-).style.display = 'block';
-
-document.getElementById(
-'alertBox'
-).innerHTML =
-alerts.join('<br>');
-
-}
-
-document.getElementById(
-'medicineArea'
-).innerHTML =
-html || '<div class="loading">履歴がありません</div>';
-
-});
+document.getElementById('list').innerHTML = html;
 
 </script>
 
