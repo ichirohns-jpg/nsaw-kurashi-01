@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>支援者ページ</title>
+<title>緊急対応ボード</title>
 
 <style>
 *{box-sizing:border-box}
 
 body{
 margin:0;
-background:#eef3f8;
+background:#fff5f5;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
 color:#17324d;
 }
@@ -33,74 +33,85 @@ margin-bottom:24px;
 
 .header h1{
 margin:0;
-font-size:48px;
+font-size:52px;
 }
 
 .header p{
 font-size:22px;
 font-weight:900;
-margin-top:12px;
-line-height:1.8;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
+margin-top:10px;
 }
 
 .card{
 background:white;
-border-radius:28px;
+border-left:14px solid #d32f2f;
+border-radius:24px;
 padding:24px;
-text-align:center;
+margin-bottom:18px;
 box-shadow:0 4px 14px rgba(0,0,0,.10);
 }
 
-.icon{
-font-size:70px;
-margin-bottom:12px;
-}
-
-.title{
-font-size:30px;
+.name{
+font-size:36px;
 font-weight:900;
 margin-bottom:12px;
 }
 
-.desc{
-font-size:18px;
-line-height:1.8;
+.status{
+font-size:30px;
+font-weight:900;
+color:#d32f2f;
+margin-bottom:10px;
+}
+
+.time{
+font-size:22px;
 color:#607080;
-margin-bottom:18px;
+margin-bottom:16px;
 }
 
 .btn{
 display:block;
-width:100%;
-padding:18px;
+background:#1565c0;
 color:white;
 text-decoration:none;
-border-radius:20px;
+padding:18px;
+border-radius:18px;
+text-align:center;
 font-size:22px;
 font-weight:900;
 }
 
-.red{background:#d32f2f}
-.green{background:#00897b}
-.blue{background:#1565c0}
-.orange{background:#ef6c00}
-.gray{background:#455a64}
+.homeBtn{
+display:block;
+margin-top:24px;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px;
+border-radius:18px;
+text-align:center;
+font-size:22px;
+font-weight:900;
+}
 
 @media(max-width:768px){
-.grid{
-grid-template-columns:1fr;
-}
+
 .header h1{
-font-size:38px;
+font-size:40px;
 }
+
+.name{
+font-size:30px;
+}
+
+.status{
+font-size:24px;
+}
+
 }
 </style>
+
 </head>
 
 <body>
@@ -108,73 +119,65 @@ font-size:38px;
 <div class="wrap">
 
 <div class="header">
-<h1>🧑‍⚕️ 支援者ページ</h1>
-<p>見守り・服薬・利用者管理</p>
-</div>
-
-<div class="grid">
-
-<div class="card">
-<div class="icon">🚨</div>
-<div class="title">要対応者一覧</div>
-<div class="desc">
-助けてください・困っていますを確認
-</div>
-<a class="btn red"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/status-board.html">
-開く
-</a>
+<h1>🚨 緊急対応ボード</h1>
+<p>助けてください一覧</p>
 </div>
 
 <div class="card">
-<div class="icon">👥</div>
-<div class="title">担当利用者一覧</div>
-<div class="desc">
-担当利用者とQRコードを管理
+
+<div class="name">
+👤 山田 太郎
 </div>
-<a class="btn blue"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/users.html">
-開く
+
+<div class="status">
+🚨 助けてください
+</div>
+
+<div class="time">
+2026/06/08 15:20
+</div>
+
+<a
+class="btn"
+href="person.html?id=a001">
+
+詳細を見る
+
 </a>
+
 </div>
 
 <div class="card">
-<div class="icon">📋</div>
-<div class="title">見守り履歴</div>
-<div class="desc">
-元気です・困っています・助けてください
-</div>
-<a class="btn orange"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/watch.html">
-開く
-</a>
+
+<div class="name">
+👤 高橋 京子
 </div>
 
-<div class="card">
-<div class="icon">💊</div>
-<div class="title">薬履歴</div>
-<div class="desc">
-朝・昼・夜の服薬確認
-</div>
-<a class="btn green"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/medicine-watch.html">
-開く
-</a>
+<div class="status">
+🚨 助けてください
 </div>
 
-<div class="card">
-<div class="icon">🏠</div>
-<div class="title">地域OS入口</div>
-<div class="desc">
-トップページへ戻る
-</div>
-<a class="btn gray"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/portal.html">
-開く
-</a>
+<div class="time">
+2026/06/08 14:55
 </div>
 
+<a
+class="btn"
+href="person.html?id=a004">
+
+詳細を見る
+
+</a>
+
 </div>
+
+<a
+class="homeBtn"
+href="admin.html">
+
+⬅ 支援者ページへ戻る
+
+</a>
 
 </div>
 
