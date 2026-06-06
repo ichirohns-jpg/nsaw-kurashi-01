@@ -32,15 +32,15 @@ margin-bottom:24px;
 
 .header h1{
 margin:0;
-font-size:48px;
+font-size:46px;
 }
 
 .card{
 background:white;
-border-radius:28px;
+border-radius:24px;
 padding:24px;
 margin-bottom:18px;
-box-shadow:0 4px 14px rgba(0,0,0,.10);
+box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .help{
@@ -62,19 +62,19 @@ margin-bottom:10px;
 }
 
 .status{
-font-size:26px;
+font-size:24px;
 font-weight:900;
 margin-bottom:10px;
 }
 
 .time{
-font-size:20px;
-color:#607080;
+font-size:18px;
+color:#666;
+margin-bottom:14px;
 }
 
 .btn{
 display:block;
-margin-top:16px;
 background:#1565c0;
 color:white;
 text-decoration:none;
@@ -85,7 +85,20 @@ font-size:20px;
 font-weight:900;
 }
 
+.homeBtn{
+display:block;
+margin-top:24px;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px;
+border-radius:18px;
+text-align:center;
+font-size:22px;
+font-weight:900;
+}
 </style>
+
 </head>
 
 <body>
@@ -93,40 +106,98 @@ font-weight:900;
 <div class="wrap">
 
 <div class="header">
-<h1>🚨 要対応者一覧</h1>
+<h1>📊 要対応者一覧</h1>
 </div>
 
-<div class="card help">
-<div class="name">👤 山田 太郎</div>
-<div class="status">🚨 助けてください</div>
-<div class="time">2026/06/08 15:20</div>
-<a class="btn"
-href="person.html?id=a001">
-詳細を見る
+<div id="list"></div>
+
+<a
+class="homeBtn"
+href="admin.html">
+
+⬅ 支援者ページへ戻る
+
 </a>
+
 </div>
 
-<div class="card warn">
-<div class="name">👤 佐藤 花子</div>
-<div class="status">😓 少し困っています</div>
-<div class="time">2026/06/08 14:35</div>
-<a class="btn"
-href="person.html?id=a002">
+<script>
+
+const data = [
+
+{
+id:'a001',
+name:'山田 太郎',
+status:'助けてください',
+time:'15:20'
+},
+
+{
+id:'a002',
+name:'佐藤 花子',
+status:'困っています',
+time:'14:35'
+},
+
+{
+id:'a003',
+name:'鈴木 一郎',
+status:'元気です',
+time:'08:12'
+}
+
+];
+
+let html='';
+
+data.forEach(row=>{
+
+let cls='ok';
+let icon='😊';
+
+if(row.status.includes('助け')){
+cls='help';
+icon='🚨';
+}
+
+else if(row.status.includes('困')){
+cls='warn';
+icon='😓';
+}
+
+html += `
+
+<div class="card ${cls}">
+
+<div class="name">
+👤 ${row.name}
+</div>
+
+<div class="status">
+${icon} ${row.status}
+</div>
+
+<div class="time">
+${row.time}
+</div>
+
+<a
+class="btn"
+href="person.html?id=${row.id}">
+
 詳細を見る
-</a>
-</div>
 
-<div class="card ok">
-<div class="name">👤 鈴木 一郎</div>
-<div class="status">😊 元気です</div>
-<div class="time">2026/06/08 08:12</div>
-<a class="btn"
-href="person.html?id=a003">
-詳細を見る
 </a>
-</div>
 
 </div>
+
+`;
+
+});
+
+document.getElementById('list').innerHTML = html;
+
+</script>
 
 </body>
 </html>
