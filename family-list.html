@@ -53,12 +53,6 @@ font-weight:900;
 margin-bottom:10px;
 }
 
-.area{
-font-size:20px;
-color:#666;
-margin-bottom:10px;
-}
-
 .status{
 font-size:22px;
 font-weight:900;
@@ -114,7 +108,13 @@ font-weight:900;
 <h1>👨‍👩‍👧‍👦 家族一覧</h1>
 </div>
 
-<div id="list"></div>
+<div id="list">
+
+<div class="card">
+読み込み中...
+</div>
+
+</div>
 
 <a
 class="homeBtn"
@@ -128,52 +128,70 @@ href="family-dashboard.html">
 
 <script>
 
-const users = [
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-{
-id:'a001',
-name:'山田 太郎',
-area:'志木市 本町',
-status:'助けてください'
-},
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=見守り&tqx=out:json';
 
-{
-id:'a002',
-name:'佐藤 花子',
-area:'新座市 東',
-status:'困っています'
-},
+function cell(row,index){
 
-{
-id:'a003',
-name:'鈴木 一郎',
-area:'朝霞市 西原',
-status:'元気です'
-},
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
+: '';
 
-{
-id:'a004',
-name:'高橋 京子',
-area:'和光市 丸山台',
-status:'元気です'
 }
 
-];
+fetch(url)
+
+.then(r=>r.text())
+
+.then(t=>{
+
+const json =
+JSON.parse(
+t.substr(47).slice(0,-2)
+);
+
+const rows =
+json.table.rows;
+
+let latest = {};
+
+rows.forEach(row=>{
+
+const name =
+cell(row,2);
+
+const status =
+cell(row,3);
+
+if(!name)return;
+
+latest[name] = status;
+
+});
 
 let html='';
 
-users.forEach(user=>{
+Object.keys(latest).forEach(name=>{
 
 let cls='ok';
 let icon='😊';
 
-if(user.status.includes('助け')){
+if(latest[name].includes('助け')){
+
 cls='help';
 icon='🚨';
+
 }
-else if(user.status.includes('困')){
+else if(latest[name].includes('困')){
+
 cls='warn';
 icon='😓';
+
 }
 
 html += `
@@ -181,24 +199,12 @@ html += `
 <div class="card">
 
 <div class="name">
-👤 ${user.name}
-</div>
-
-<div class="area">
-📍 ${user.area}
+👤 ${name}
 </div>
 
 <div class="status ${cls}">
-${icon} ${user.status}
+${icon} ${latest[name]}
 </div>
-
-<a
-class="btn"
-href="family-board.html?id=${user.id}">
-
-状況を見る
-
-</a>
 
 </div>
 
@@ -207,7 +213,16 @@ href="family-board.html?id=${user.id}">
 });
 
 document.getElementById('list').innerHTML =
-html;
+html || '<div class="card">利用者がいません</div>';
+
+})
+
+.catch(()=>{
+
+document.getElementById('list').innerHTML =
+'<div class="card">読み込みに失敗しました</div>';
+
+});
 
 </script>
 
