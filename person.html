@@ -36,110 +36,59 @@ margin:0;
 font-size:46px;
 }
 
-.header p{
-font-size:22px;
-font-weight:900;
-margin-top:12px;
-line-height:1.8;
-}
-
 .card{
 background:white;
-border-radius:28px;
+border-radius:24px;
 padding:24px;
-margin-bottom:22px;
-box-shadow:0 4px 14px rgba(0,0,0,.10);
+margin-bottom:18px;
+box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .name{
-font-size:40px;
+font-size:38px;
 font-weight:900;
 margin-bottom:10px;
 }
 
 .area{
 font-size:22px;
-color:#607080;
+color:#666;
+}
+
+.status{
+font-size:32px;
 font-weight:900;
-line-height:1.8;
+margin-top:12px;
 }
 
-.sectionTitle{
-font-size:30px;
-font-weight:900;
-color:#1565c0;
-margin-bottom:16px;
-}
-
-.statusBox{
-padding:22px;
-border-radius:24px;
-font-size:30px;
-font-weight:900;
-line-height:1.6;
-}
-
-.ok{
-background:#e8f5e9;
-color:#00897b;
-}
-
-.warn{
-background:#fff3e0;
-color:#ef6c00;
-}
-
-.help{
-background:#ffebee;
-color:#d32f2f;
-}
-
-.text{
-font-size:22px;
-line-height:1.8;
-color:#334;
-}
-
-.qrBox{
-text-align:center;
-}
-
-.qrBox img{
-width:260px;
-max-width:100%;
-background:white;
-padding:12px;
-border-radius:24px;
-box-shadow:0 4px 12px rgba(0,0,0,.12);
-}
-
-.btnGrid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-}
+.ok{color:#00897b}
+.warn{color:#ef6c00}
+.help{color:#d32f2f}
 
 .btn{
 display:block;
-text-decoration:none;
+background:#1565c0;
 color:white;
+text-decoration:none;
 padding:18px;
-border-radius:20px;
-font-size:21px;
-font-weight:900;
+border-radius:18px;
 text-align:center;
+font-size:22px;
+font-weight:900;
+margin-top:12px;
 }
 
-.blue{background:#1565c0}
-.red{background:#d32f2f}
-.green{background:#00897b}
-.gray{background:#455a64}
-
-@media(max-width:768px){
-.header h1{font-size:36px}
-.name{font-size:32px}
-.statusBox{font-size:24px}
-.btnGrid{grid-template-columns:1fr}
+.homeBtn{
+display:block;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px;
+border-radius:18px;
+text-align:center;
+font-size:22px;
+font-weight:900;
+margin-top:24px;
 }
 </style>
 </head>
@@ -150,76 +99,63 @@ text-align:center;
 
 <div class="header">
 <h1>👤 利用者詳細</h1>
-<p>見守り・薬確認・QR管理</p>
 </div>
 
 <div class="card">
-<div class="name" id="userName">利用者</div>
-<div class="area" id="userArea">地域未設定</div>
+
+<div id="userName" class="name">
+利用者
+</div>
+
+<div id="userArea" class="area">
+地域
+</div>
+
 </div>
 
 <div class="card">
-<div class="sectionTitle">現在の状態</div>
-<div id="statusBox" class="statusBox ok">
-読み込み中...
-</div>
+
+<h2>現在状態</h2>
+
+<div id="userStatus" class="status ok">
+😊 元気です
 </div>
 
-<div class="card">
-<div class="sectionTitle">最終確認</div>
-<div class="text" id="lastTime">
-読み込み中...
-</div>
 </div>
 
 <div class="card">
-<div class="sectionTitle">QRコード</div>
-<div class="qrBox" id="qrBox"></div>
+
+<h2>見守り情報</h2>
+
+<p>最終確認：2026/06/08 08:12</p>
+
+<p>服薬確認：済</p>
+
+<p>担当支援者：山口</p>
+
 </div>
 
-<div class="card">
-<div class="sectionTitle">操作</div>
-
-<div class="btnGrid">
-
-<a id="personPageBtn"
-class="btn blue"
-target="_blank">
-📱 本人ページ
+<a
+class="btn"
+href="family-board.html">
+👨‍👩‍👧‍👦 家族ページ
 </a>
 
 <a
-class="btn red"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/watch.html"
-target="_blank">
-📋 見守り履歴
+class="btn"
+href="users.html">
+👥 担当利用者一覧
 </a>
 
 <a
-class="btn green"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/medicine-watch.html"
-target="_blank">
-💊 薬履歴
+class="homeBtn"
+href="admin.html">
+⬅ 支援者ページへ戻る
 </a>
-
-<a
-class="btn gray"
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/admin.html">
-⬅ 支援者ページ
-</a>
-
-</div>
-
-</div>
 
 </div>
 
 <script>
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-
-const SHEET_NAME =
-'見守り';
 
 const params =
 new URLSearchParams(location.search);
@@ -228,124 +164,38 @@ const userId =
 params.get('id') || 'a001';
 
 const users = {
-a001:{name:'山田 太郎',area:'志木市 本町'},
-a002:{name:'佐藤 花子',area:'新座市 東'},
-a003:{name:'鈴木 一郎',area:'朝霞市 西原'},
-a004:{name:'高橋 京子',area:'和光市 丸山台'}
+
+a001:{
+name:'山田 太郎',
+area:'志木市 本町'
+},
+
+a002:{
+name:'佐藤 花子',
+area:'新座市 東'
+},
+
+a003:{
+name:'鈴木 一郎',
+area:'朝霞市 西原'
+},
+
+a004:{
+name:'高橋 京子',
+area:'和光市 丸山台'
+}
+
 };
 
 const user =
-users[userId] || {name:'利用者',area:'地域未設定'};
-
-const personUrl =
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/index.html?id=' +
-userId;
+users[userId] || users.a001;
 
 document.getElementById('userName').innerHTML =
 '👤 ' + user.name;
 
 document.getElementById('userArea').innerHTML =
-'📍 ' + user.area + '<br>ID：' + userId;
+'📍 ' + user.area;
 
-document.getElementById('personPageBtn').href =
-personUrl;
-
-const qr =
-'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' +
-encodeURIComponent(personUrl);
-
-document.getElementById('qrBox').innerHTML =
-'<img src="' + qr + '">';
-
-const url =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=' +
-encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json';
-
-function cell(row,index){
-return row.c[index]
-? (row.c[index].f || row.c[index].v || '')
-: '';
-}
-
-fetch(url)
-.then(res=>res.text())
-.then(text=>{
-
-const json =
-JSON.parse(text.substr(47).slice(0,-2));
-
-const rows =
-json.table.rows;
-
-let latest = null;
-
-rows.forEach(r=>{
-
-const time =
-cell(r,0);
-
-const name =
-cell(r,1);
-
-const status =
-cell(r,2);
-
-if(name === user.name){
-latest = {
-time:time,
-status:status
-};
-}
-
-});
-
-const box =
-document.getElementById('statusBox');
-
-if(!latest){
-
-box.className = 'statusBox warn';
-box.innerHTML = 'まだ記録がありません';
-
-document.getElementById('lastTime').innerHTML =
-'未確認';
-
-return;
-
-}
-
-let cls = 'ok';
-
-if(latest.status.includes('困')){
-cls = 'warn';
-}
-
-if(latest.status.includes('助け')){
-cls = 'help';
-}
-
-box.className =
-'statusBox ' + cls;
-
-box.innerHTML =
-latest.status;
-
-document.getElementById('lastTime').innerHTML =
-latest.time;
-
-})
-.catch(err=>{
-
-document.getElementById('statusBox').innerHTML =
-'読み込みに失敗しました';
-
-document.getElementById('lastTime').innerHTML =
-'確認できません';
-
-});
 </script>
 
 </body>
