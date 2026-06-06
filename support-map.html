@@ -7,7 +7,10 @@
 <title>利用者位置マップ</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
@@ -53,7 +56,25 @@ margin-bottom:10px;
 .area{
 font-size:20px;
 color:#666;
+margin-bottom:10px;
+}
+
+.status{
+font-size:22px;
+font-weight:900;
 margin-bottom:14px;
+}
+
+.ok{
+color:#00897b;
+}
+
+.warn{
+color:#ef6c00;
+}
+
+.help{
+color:#d32f2f;
 }
 
 .btn{
@@ -66,6 +87,7 @@ border-radius:18px;
 text-align:center;
 font-size:20px;
 font-weight:900;
+margin-bottom:10px;
 }
 
 .homeBtn{
@@ -80,7 +102,9 @@ text-align:center;
 font-size:22px;
 font-weight:900;
 }
+
 </style>
+
 </head>
 
 <body>
@@ -92,47 +116,143 @@ font-weight:900;
 </div>
 
 <div class="card">
-<div class="name">👤 山田 太郎</div>
-<div class="area">📍 志木市 本町</div>
-<a class="btn"
+
+<div class="name">
+👤 山田 太郎
+</div>
+
+<div class="area">
+📍 志木市 本町
+</div>
+
+<div class="status help">
+🚨 助けてください
+</div>
+
+<a
+class="btn"
+href="person.html?id=a001">
+
+利用者詳細を見る
+
+</a>
+
+<a
+class="btn"
 href="https://www.google.com/maps/search/?api=1&query=志木市本町"
 target="_blank">
+
 地図を見る
+
 </a>
+
 </div>
 
 <div class="card">
-<div class="name">👤 佐藤 花子</div>
-<div class="area">📍 新座市 東</div>
-<a class="btn"
+
+<div class="name">
+👤 佐藤 花子
+</div>
+
+<div class="area">
+📍 新座市 東
+</div>
+
+<div class="status warn">
+😓 困っています
+</div>
+
+<a
+class="btn"
+href="person.html?id=a002">
+
+利用者詳細を見る
+
+</a>
+
+<a
+class="btn"
 href="https://www.google.com/maps/search/?api=1&query=新座市東"
 target="_blank">
+
 地図を見る
+
 </a>
+
 </div>
 
 <div class="card">
-<div class="name">👤 鈴木 一郎</div>
-<div class="area">📍 朝霞市 西原</div>
-<a class="btn"
+
+<div class="name">
+👤 鈴木 一郎
+</div>
+
+<div class="area">
+📍 朝霞市 西原
+</div>
+
+<div class="status ok">
+😊 元気です
+</div>
+
+<a
+class="btn"
+href="person.html?id=a003">
+
+利用者詳細を見る
+
+</a>
+
+<a
+class="btn"
 href="https://www.google.com/maps/search/?api=1&query=朝霞市西原"
 target="_blank">
+
 地図を見る
+
 </a>
+
 </div>
 
 <div class="card">
-<div class="name">👤 高橋 京子</div>
-<div class="area">📍 和光市 丸山台</div>
-<a class="btn"
-href="https://www.google.com/maps/search/?api=1&query=和光市丸山台"
-target="_blank">
-地図を見る
-</a>
+
+<div class="name">
+👤 高橋 京子
 </div>
 
-<a class="homeBtn" href="admin.html">
+<div class="area">
+📍 和光市 丸山台
+</div>
+
+<div class="status ok">
+😊 元気です
+</div>
+
+<a
+class="btn"
+href="person.html?id=a004">
+
+利用者詳細を見る
+
+</a>
+
+<a
+class="btn"
+href="https://www.google.com/maps/search/?api=1&query=和光市丸山台"
+target="_blank">
+
+地図を見る
+
+</a>
+
+</div>
+
+<a
+class="homeBtn"
+href="admin.html">
+
 ⬅ 支援者ページへ戻る
+
 </a>
 
 </div>
