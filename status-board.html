@@ -13,6 +13,7 @@ body{
 margin:0;
 background:#eef3f8;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+color:#17324d;
 }
 
 .wrap{
@@ -35,6 +36,13 @@ margin:0;
 font-size:46px;
 }
 
+.header p{
+font-size:22px;
+font-weight:900;
+line-height:1.8;
+margin-top:10px;
+}
+
 .card{
 background:white;
 border-radius:24px;
@@ -44,33 +52,37 @@ box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .help{
-border-left:12px solid #d32f2f;
+border-left:14px solid #d32f2f;
+background:#fff5f5;
 }
 
 .warn{
-border-left:12px solid #ef6c00;
+border-left:14px solid #ef6c00;
+background:#fffaf2;
 }
 
 .ok{
-border-left:12px solid #00897b;
+border-left:14px solid #00897b;
+background:#f2fff7;
 }
 
 .name{
-font-size:32px;
+font-size:34px;
 font-weight:900;
 margin-bottom:10px;
 }
 
 .status{
-font-size:24px;
+font-size:28px;
 font-weight:900;
 margin-bottom:10px;
 }
 
 .time{
-font-size:18px;
+font-size:20px;
 color:#666;
 margin-bottom:14px;
+line-height:1.7;
 }
 
 .btn{
@@ -78,10 +90,10 @@ display:block;
 background:#1565c0;
 color:white;
 text-decoration:none;
-padding:16px;
+padding:18px;
 border-radius:18px;
 text-align:center;
-font-size:20px;
+font-size:22px;
 font-weight:900;
 }
 
@@ -97,8 +109,22 @@ text-align:center;
 font-size:22px;
 font-weight:900;
 }
-</style>
 
+.loading{
+background:white;
+border-radius:24px;
+padding:34px;
+font-size:24px;
+font-weight:900;
+text-align:center;
+}
+
+@media(max-width:768px){
+.header h1{font-size:36px}
+.name{font-size:28px}
+.status{font-size:24px}
+}
+</style>
 </head>
 
 <body>
@@ -107,63 +133,130 @@ font-weight:900;
 
 <div class="header">
 <h1>📊 要対応者一覧</h1>
+<p>助けてください・困っています・元気ですを一覧確認</p>
 </div>
 
-<div id="list"></div>
+<div id="list">
+<div class="loading">読み込み中...</div>
+</div>
 
-<a
-class="homeBtn"
-href="admin.html">
-
+<a class="homeBtn" href="admin.html">
 ⬅ 支援者ページへ戻る
-
 </a>
 
 </div>
 
 <script>
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-const data = [
+const SHEET_NAME =
+'見守り';
 
-{
-id:'a001',
-name:'山田 太郎',
-status:'助けてください',
-time:'15:20'
-},
+const users = {
+'山田 太郎':'a001',
+'佐藤 花子':'a002',
+'鈴木 一郎':'a003',
+'高橋 京子':'a004'
+};
 
-{
-id:'a002',
-name:'佐藤 花子',
-status:'困っています',
-time:'14:35'
-},
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json';
 
-{
-id:'a003',
-name:'鈴木 一郎',
-status:'元気です',
-time:'08:12'
+function cell(row,index){
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
+: '';
 }
 
-];
-
-let html='';
-
-data.forEach(row=>{
-
-let cls='ok';
-let icon='😊';
-
-if(row.status.includes('助け')){
-cls='help';
-icon='🚨';
+function getClass(status){
+if(status.includes('助け')){
+return 'help';
+}
+if(status.includes('困')){
+return 'warn';
+}
+return 'ok';
 }
 
-else if(row.status.includes('困')){
-cls='warn';
-icon='😓';
+function getIcon(status){
+if(status.includes('助け')){
+return '🚨';
 }
+if(status.includes('困')){
+return '😓';
+}
+return '😊';
+}
+
+function getRank(status){
+if(status.includes('助け')){
+return 1;
+}
+if(status.includes('困')){
+return 2;
+}
+return 3;
+}
+
+fetch(url)
+.then(res=>res.text())
+.then(text=>{
+
+const json =
+JSON.parse(text.substr(47).slice(0,-2));
+
+const rows =
+json.table.rows;
+
+let latestByName = {};
+
+rows.forEach(r=>{
+
+const time =
+cell(r,0);
+
+const name =
+cell(r,1);
+
+const status =
+cell(r,2);
+
+if(!name || !status){
+return;
+}
+
+latestByName[name] = {
+time:time,
+name:name,
+status:status
+};
+
+});
+
+let list =
+Object.values(latestByName);
+
+list.sort((a,b)=>{
+return getRank(a.status) - getRank(b.status);
+});
+
+let html = '';
+
+list.forEach(row=>{
+
+const id =
+users[row.name] || 'a001';
+
+const cls =
+getClass(row.status);
+
+const icon =
+getIcon(row.status);
 
 html += `
 
@@ -178,12 +271,12 @@ ${icon} ${row.status}
 </div>
 
 <div class="time">
-${row.time}
+最終確認：${row.time}
 </div>
 
 <a
 class="btn"
-href="person.html?id=${row.id}">
+href="person.html?id=${id}">
 
 詳細を見る
 
@@ -195,8 +288,16 @@ href="person.html?id=${row.id}">
 
 });
 
-document.getElementById('list').innerHTML = html;
+document.getElementById('list').innerHTML =
+html || '<div class="loading">見守り記録がありません</div>';
 
+})
+.catch(err=>{
+
+document.getElementById('list').innerHTML =
+'<div class="loading">読み込みに失敗しました</div>';
+
+});
 </script>
 
 </body>
