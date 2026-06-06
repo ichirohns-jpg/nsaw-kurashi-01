@@ -11,7 +11,7 @@
 
 body{
 margin:0;
-background:#eef3f8;
+background:#fffaf2;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
 }
 
@@ -22,7 +22,7 @@ padding:16px;
 }
 
 .header{
-background:#00897b;
+background:#ef6c00;
 color:white;
 padding:30px;
 border-radius:30px;
@@ -32,7 +32,7 @@ margin-bottom:24px;
 
 .header h1{
 margin:0;
-font-size:48px;
+font-size:46px;
 }
 
 .card{
@@ -40,24 +40,31 @@ background:white;
 border-left:12px solid #ef6c00;
 border-radius:24px;
 padding:24px;
-margin-bottom:16px;
-box-shadow:0 4px 14px rgba(0,0,0,.10);
+margin-bottom:18px;
+box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .name{
-font-size:30px;
+font-size:32px;
 font-weight:900;
 margin-bottom:10px;
 }
 
-.text{
-font-size:22px;
-line-height:1.8;
+.status{
+font-size:24px;
+font-weight:900;
+color:#ef6c00;
+margin-bottom:10px;
+}
+
+.time{
+font-size:18px;
+color:#666;
+margin-bottom:14px;
 }
 
 .btn{
 display:block;
-margin-top:16px;
 background:#1565c0;
 color:white;
 text-decoration:none;
@@ -92,35 +99,75 @@ font-weight:900;
 <h1>💊 薬未確認一覧</h1>
 </div>
 
-<div class="card">
-<div class="name">👤 山田 太郎</div>
-<div class="text">
-朝の薬 未確認
-</div>
-<a class="btn"
-href="person.html?id=a001">
-詳細を見る
-</a>
-</div>
-
-<div class="card">
-<div class="name">👤 高橋 京子</div>
-<div class="text">
-昼の薬 未確認
-</div>
-<a class="btn"
-href="person.html?id=a004">
-詳細を見る
-</a>
-</div>
+<div id="list"></div>
 
 <a
 class="homeBtn"
 href="admin.html">
+
 ⬅ 支援者ページへ戻る
+
 </a>
 
 </div>
+
+<script>
+
+const data = [
+
+{
+id:'a001',
+name:'山田 太郎',
+status:'朝の薬 未確認',
+time:'2026/06/08 08:15'
+},
+
+{
+id:'a003',
+name:'鈴木 一郎',
+status:'昼の薬 未確認',
+time:'2026/06/08 12:00'
+}
+
+];
+
+let html='';
+
+data.forEach(row=>{
+
+html += `
+
+<div class="card">
+
+<div class="name">
+👤 ${row.name}
+</div>
+
+<div class="status">
+${row.status}
+</div>
+
+<div class="time">
+${row.time}
+</div>
+
+<a
+class="btn"
+href="person.html?id=${row.id}">
+
+詳細を見る
+
+</a>
+
+</div>
+
+`;
+
+});
+
+document.getElementById('list').innerHTML = html;
+
+</script>
 
 </body>
 </html>
