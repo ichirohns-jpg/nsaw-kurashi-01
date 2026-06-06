@@ -60,11 +60,11 @@ font-size:18px;
 color:#666;
 }
 
-.help{color:#d32f2f}
-.warn{color:#ef6c00}
 .ok{color:#00897b}
+.warn{color:#ef6c00}
+.help{color:#d32f2f}
 
-.btn{
+.homeBtn{
 display:block;
 margin-top:24px;
 background:#455a64;
@@ -87,10 +87,16 @@ font-weight:900;
 <h1>📋 見守り履歴</h1>
 </div>
 
-<div id="list"></div>
+<div id="list">
+<div class="card">読み込み中...</div>
+</div>
 
-<a class="btn" href="admin.html">
+<a
+class="homeBtn"
+href="admin.html">
+
 ⬅ 支援者ページへ戻る
+
 </a>
 
 </div>
@@ -105,14 +111,16 @@ const url =
 SHEET_ID +
 '/gviz/tq?sheet=見守り&tqx=out:json';
 
-function cell(r,i){
-return r.c[i]
-? (r.c[i].f || r.c[i].v || '')
+function cell(row,index){
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
 : '';
 }
 
 fetch(url)
+
 .then(r=>r.text())
+
 .then(t=>{
 
 const json =
@@ -142,6 +150,7 @@ icon='😓';
 }
 
 html += `
+
 <div class="card">
 
 <div class="name">
@@ -153,15 +162,24 @@ ${icon} ${status}
 </div>
 
 <div class="time">
-${time}
+🕒 ${time}
 </div>
 
 </div>
+
 `;
 
 });
 
-document.getElementById('list').innerHTML = html;
+document.getElementById('list').innerHTML =
+html || '<div class="card">履歴がありません</div>';
+
+})
+
+.catch(()=>{
+
+document.getElementById('list').innerHTML =
+'<div class="card">読み込み失敗</div>';
 
 });
 
