@@ -13,6 +13,7 @@ body{
 margin:0;
 background:#fffaf2;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+color:#17324d;
 }
 
 .wrap{
@@ -40,12 +41,12 @@ background:white;
 border-left:12px solid #ef6c00;
 border-radius:24px;
 padding:24px;
-margin-bottom:18px;
+margin-bottom:16px;
 box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .name{
-font-size:32px;
+font-size:30px;
 font-weight:900;
 margin-bottom:10px;
 }
@@ -63,7 +64,7 @@ color:#666;
 margin-bottom:14px;
 }
 
-.btn{
+.btnOpen{
 display:block;
 background:#1565c0;
 color:white;
@@ -88,7 +89,6 @@ font-size:22px;
 font-weight:900;
 }
 </style>
-
 </head>
 
 <body>
@@ -104,26 +104,29 @@ font-weight:900;
 <a
 class="homeBtn"
 href="admin.html">
-
 ⬅ 支援者ページへ戻る
-
 </a>
 
 </div>
 
 <script>
 
+const users = {
+'山田 太郎':'a001',
+'佐藤 花子':'a002',
+'鈴木 一郎':'a003',
+'高橋 京子':'a004'
+};
+
 const data = [
 
 {
-id:'a001',
 name:'山田 太郎',
 status:'朝の薬 未確認',
 time:'2026/06/08 08:15'
 },
 
 {
-id:'a003',
 name:'鈴木 一郎',
 status:'昼の薬 未確認',
 time:'2026/06/08 12:00'
@@ -134,6 +137,9 @@ time:'2026/06/08 12:00'
 let html='';
 
 data.forEach(row=>{
+
+const id =
+users[row.name] || 'a001';
 
 html += `
 
@@ -152,8 +158,8 @@ ${row.time}
 </div>
 
 <a
-class="btn"
-href="person.html?id=${row.id}">
+class="btnOpen"
+href="person.html?id=${id}">
 
 詳細を見る
 
@@ -165,7 +171,8 @@ href="person.html?id=${row.id}">
 
 });
 
-document.getElementById('list').innerHTML = html;
+document.getElementById('list').innerHTML =
+html || '<div class="card"><div class="name">未確認者はいません</div></div>';
 
 </script>
 
