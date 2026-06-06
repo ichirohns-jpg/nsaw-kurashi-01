@@ -110,19 +110,13 @@ font-weight:900;
 </div>
 
 <div id="list">
-
-<div class="card">
-読み込み中...
-</div>
-
+<div class="card">読み込み中...</div>
 </div>
 
 <a
 class="homeBtn"
 href="admin.html">
-
 ⬅ 支援者ページへ戻る
-
 </a>
 
 </div>
@@ -163,6 +157,9 @@ let latest = {};
 
 rows.forEach(row=>{
 
+const id =
+cell(row,1);
+
 const name =
 cell(row,2);
 
@@ -171,7 +168,10 @@ cell(row,3);
 
 if(!name)return;
 
-latest[name] = status;
+latest[name] = {
+id:id,
+status:status
+};
 
 });
 
@@ -182,13 +182,13 @@ Object.keys(latest).forEach(name=>{
 let cls='ok';
 let icon='😊';
 
-if(latest[name].includes('助け')){
+if(latest[name].status.includes('助け')){
 
 cls='help';
 icon='🚨';
 
 }
-else if(latest[name].includes('困')){
+else if(latest[name].status.includes('困')){
 
 cls='warn';
 icon='😓';
@@ -204,12 +204,12 @@ html += `
 </div>
 
 <div class="status ${cls}">
-${icon} ${latest[name]}
+${icon} ${latest[name].status}
 </div>
 
 <a
 class="btn"
-href="person.html">
+href="person.html?id=${latest[name].id}">
 
 利用者詳細
 
