@@ -13,6 +13,7 @@ body{
 margin:0;
 background:#eef3f8;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+color:#17324d;
 }
 
 .wrap{
@@ -56,7 +57,7 @@ border-left:12px solid #00897b;
 }
 
 .name{
-font-size:32px;
+font-size:30px;
 font-weight:900;
 margin-bottom:10px;
 }
@@ -74,6 +75,7 @@ color:#666;
 
 .btn{
 display:block;
+margin-top:24px;
 background:#455a64;
 color:white;
 text-decoration:none;
@@ -82,7 +84,6 @@ border-radius:18px;
 text-align:center;
 font-size:22px;
 font-weight:900;
-margin-top:24px;
 }
 </style>
 </head>
@@ -95,29 +96,108 @@ margin-top:24px;
 <h1>📅 本日の状況</h1>
 </div>
 
-<div class="card help">
-<div class="name">👤 山田 太郎</div>
-<div class="status">🚨 助けてください</div>
-<div class="time">15:20</div>
-</div>
-
-<div class="card warn">
-<div class="name">👤 佐藤 花子</div>
-<div class="status">😓 困っています</div>
-<div class="time">14:35</div>
-</div>
-
-<div class="card ok">
-<div class="name">👤 鈴木 一郎</div>
-<div class="status">😊 元気です</div>
-<div class="time">08:12</div>
-</div>
+<div id="list"></div>
 
 <a class="btn" href="admin.html">
 ⬅ 支援者ページへ戻る
 </a>
 
 </div>
+
+<script>
+
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=見守り&tqx=out:json';
+
+function cell(r,i){
+return r.c[i]
+? (r.c[i].f || r.c[i].v || '')
+: '';
+}
+
+fetch(url)
+.then(r=>r.text())
+.then(t=>{
+
+const json =
+JSON.parse(t.substr(47).slice(0,-2));
+
+const rows =
+json.table.rows;
+
+let latest = {};
+
+rows.forEach(row=>{
+
+const time = cell(row,0);
+const name = cell(row,2);
+const status = cell(row,3);
+
+if(!name)return;
+
+latest[name] = {
+time:time,
+name:name,
+status:status
+};
+
+});
+
+let html='';
+
+Object.values(latest).forEach(row=>{
+
+let cls='ok';
+let icon='😊';
+
+if(row.status.includes('助け')){
+cls='help';
+icon='🚨';
+}
+else if(row.status.includes('困')){
+cls='warn';
+icon='😓';
+}
+
+html += `
+
+<div class="card ${cls}">
+
+<div class="name">
+👤 ${row.name}
+</div>
+
+<div class="status">
+${icon} ${row.status}
+</div>
+
+<div class="time">
+${row.time}
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById('list').innerHTML =
+html || '<div class="card">データがありません</div>';
+
+})
+.catch(()=>{
+
+document.getElementById('list').innerHTML =
+'<div class="card">読み込みに失敗しました</div>';
+
+});
+
+</script>
 
 </body>
 </html>
