@@ -7,7 +7,10 @@
 <title>利用者詳細</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
@@ -50,20 +53,29 @@ font-weight:900;
 margin-bottom:10px;
 }
 
-.area{
-font-size:22px;
-color:#666;
-}
-
 .status{
-font-size:32px;
+font-size:28px;
 font-weight:900;
-margin-top:12px;
+margin-top:10px;
 }
 
-.ok{color:#00897b}
-.warn{color:#ef6c00}
-.help{color:#d32f2f}
+.ok{
+color:#00897b;
+}
+
+.warn{
+color:#ef6c00;
+}
+
+.help{
+color:#d32f2f;
+}
+
+.time{
+font-size:20px;
+color:#666;
+margin-top:10px;
+}
 
 .btn{
 display:block;
@@ -78,19 +90,8 @@ font-weight:900;
 margin-top:12px;
 }
 
-.homeBtn{
-display:block;
-background:#455a64;
-color:white;
-text-decoration:none;
-padding:18px;
-border-radius:18px;
-text-align:center;
-font-size:22px;
-font-weight:900;
-margin-top:24px;
-}
 </style>
+
 </head>
 
 <body>
@@ -101,56 +102,20 @@ margin-top:24px;
 <h1>👤 利用者詳細</h1>
 </div>
 
-<div class="card">
-
-<div id="userName" class="name">
-利用者
-</div>
-
-<div id="userArea" class="area">
-地域
-</div>
-
-</div>
+<div id="detail">
 
 <div class="card">
-
-<h2>現在状態</h2>
-
-<div id="userStatus" class="status ok">
-😊 元気です
+読み込み中...
 </div>
 
 </div>
-
-<div class="card">
-
-<h2>見守り情報</h2>
-
-<p>最終確認：2026/06/08 08:12</p>
-
-<p>服薬確認：済</p>
-
-<p>担当支援者：山口</p>
-
-</div>
-
-<a
-class="btn"
-href="family-board.html">
-👨‍👩‍👧‍👦 家族ページ
-</a>
 
 <a
 class="btn"
 href="users.html">
-👥 担当利用者一覧
-</a>
 
-<a
-class="homeBtn"
-href="admin.html">
-⬅ 支援者ページへ戻る
+⬅ 利用者一覧へ戻る
+
 </a>
 
 </div>
@@ -160,41 +125,118 @@ href="admin.html">
 const params =
 new URLSearchParams(location.search);
 
-const userId =
-params.get('id') || 'a001';
+const targetId =
+params.get('id') || '';
 
-const users = {
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-a001:{
-name:'山田 太郎',
-area:'志木市 本町'
-},
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=見守り&tqx=out:json';
 
-a002:{
-name:'佐藤 花子',
-area:'新座市 東'
-},
+function cell(row,index){
 
-a003:{
-name:'鈴木 一郎',
-area:'朝霞市 西原'
-},
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
+: '';
 
-a004:{
-name:'高橋 京子',
-area:'和光市 丸山台'
 }
 
+fetch(url)
+
+.then(r=>r.text())
+
+.then(t=>{
+
+const json =
+JSON.parse(
+t.substr(47).slice(0,-2)
+);
+
+const rows =
+json.table.rows;
+
+let target = null;
+
+rows.forEach(row=>{
+
+const time =
+cell(row,0);
+
+const id =
+cell(row,1);
+
+const name =
+cell(row,2);
+
+const status =
+cell(row,3);
+
+if(id === targetId){
+
+target = {
+time,
+id,
+name,
+status
 };
 
-const user =
-users[userId] || users.a001;
+}
 
-document.getElementById('userName').innerHTML =
-'👤 ' + user.name;
+});
 
-document.getElementById('userArea').innerHTML =
-'📍 ' + user.area;
+if(!target){
+
+document.getElementById('detail').innerHTML =
+'<div class="card">利用者が見つかりません</div>';
+
+return;
+
+}
+
+let cls='ok';
+let icon='😊';
+
+if(target.status.includes('助け')){
+cls='help';
+icon='🚨';
+}
+else if(target.status.includes('困')){
+cls='warn';
+icon='😓';
+}
+
+document.getElementById('detail').innerHTML = `
+
+<div class="card">
+
+<div class="name">
+👤 ${target.name}
+</div>
+
+<div class="status ${cls}">
+${icon} ${target.status}
+</div>
+
+<div class="time">
+最終確認：
+${target.time}
+</div>
+
+</div>
+
+`;
+
+})
+
+.catch(()=>{
+
+document.getElementById('detail').innerHTML =
+'<div class="card">読み込み失敗</div>';
+
+});
 
 </script>
 
