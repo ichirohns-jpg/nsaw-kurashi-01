@@ -7,6 +7,7 @@
 <title>利用者位置マップ</title>
 
 <style>
+
 *{
 box-sizing:border-box;
 }
@@ -38,39 +39,6 @@ margin:0;
 font-size:46px;
 }
 
-.filterBox{
-display:grid;
-grid-template-columns:1fr 1fr 1fr 1fr;
-gap:10px;
-margin-bottom:20px;
-}
-
-.filterBtn{
-border:none;
-padding:14px;
-border-radius:16px;
-font-size:18px;
-font-weight:900;
-color:white;
-cursor:pointer;
-}
-
-.allBtn{
-background:#455a64;
-}
-
-.helpBtn{
-background:#d32f2f;
-}
-
-.warnBtn{
-background:#ef6c00;
-}
-
-.okBtn{
-background:#00897b;
-}
-
 .card{
 background:white;
 border-radius:24px;
@@ -80,34 +48,27 @@ box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .name{
-font-size:32px;
+font-size:30px;
 font-weight:900;
-margin-bottom:10px;
-}
-
-.area{
-font-size:20px;
-color:#666;
 margin-bottom:10px;
 }
 
 .status{
 font-size:22px;
 font-weight:900;
-margin-bottom:14px;
-line-height:1.8;
+margin-bottom:10px;
 }
 
-.ok{
-color:#00897b;
+.help{
+color:#d32f2f;
 }
 
 .warn{
 color:#ef6c00;
 }
 
-.help{
-color:#d32f2f;
+.ok{
+color:#00897b;
 }
 
 .btn{
@@ -120,7 +81,7 @@ border-radius:18px;
 text-align:center;
 font-size:20px;
 font-weight:900;
-margin-bottom:10px;
+margin-top:10px;
 }
 
 .homeBtn{
@@ -136,14 +97,6 @@ font-size:22px;
 font-weight:900;
 }
 
-@media(max-width:768px){
-
-.filterBox{
-grid-template-columns:1fr 1fr;
-}
-
-}
-
 </style>
 
 </head>
@@ -156,98 +109,90 @@ grid-template-columns:1fr 1fr;
 <h1>📍 利用者位置マップ</h1>
 </div>
 
-<div class="filterBox">
+<div id="list">
 
-<button
-class="filterBtn allBtn"
-onclick="showAll()">
-全員
-</button>
-
-<button
-class="filterBtn helpBtn"
-onclick="showHelp()">
-🚨 緊急
-</button>
-
-<button
-class="filterBtn warnBtn"
-onclick="showWarn()">
-😓 注意
-</button>
-
-<button
-class="filterBtn okBtn"
-onclick="showOk()">
-😊 元気
-</button>
-
+<div class="card">
+読み込み中...
 </div>
 
-<div id="userList"></div>
+</div>
 
 <a
 class="homeBtn"
 href="admin.html">
+
 ⬅ 支援者ページへ戻る
+
 </a>
 
 </div>
 
 <script>
 
-const users = [
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-{
-id:'a001',
-name:'山田 太郎',
-area:'志木市 本町',
-status:'助けてください',
-time:'15:20'
-},
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=見守り&tqx=out:json';
 
-{
-id:'a002',
-name:'佐藤 花子',
-area:'新座市 東',
-status:'困っています',
-time:'14:35'
-},
+function cell(row,index){
 
-{
-id:'a003',
-name:'鈴木 一郎',
-area:'朝霞市 西原',
-status:'元気です',
-time:'08:12'
-},
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
+: '';
 
-{
-id:'a004',
-name:'高橋 京子',
-area:'和光市 丸山台',
-status:'元気です',
-time:'07:55'
 }
 
-];
+fetch(url)
 
-function draw(list){
+.then(r=>r.text())
+
+.then(t=>{
+
+const json =
+JSON.parse(
+t.substr(47).slice(0,-2)
+);
+
+const rows =
+json.table.rows;
+
+let latest = {};
+
+rows.forEach(row=>{
+
+const name =
+cell(row,2);
+
+const status =
+cell(row,3);
+
+if(!name)return;
+
+latest[name] = status;
+
+});
 
 let html='';
 
-list.forEach(u=>{
+Object.keys(latest).forEach(name=>{
 
 let cls='ok';
 let icon='😊';
 
-if(u.status.includes('助け')){
+if(latest[name].includes('助け')){
+
 cls='help';
 icon='🚨';
+
 }
-else if(u.status.includes('困')){
+else if(latest[name].includes('困')){
+
 cls='warn';
 icon='😓';
+
 }
 
 html += `
@@ -255,30 +200,19 @@ html += `
 <div class="card">
 
 <div class="name">
-👤 ${u.name}
-</div>
-
-<div class="area">
-📍 ${u.area}
+👤 ${name}
 </div>
 
 <div class="status ${cls}">
-${icon} ${u.status}
-<br>
-🕒 ${u.time}
+${icon} ${latest[name]}
 </div>
 
 <a
 class="btn"
-href="person.html?id=${u.id}">
-利用者詳細を見る
-</a>
+href="person.html">
 
-<a
-class="btn"
-href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(u.area)}"
-target="_blank">
-地図を見る
+利用者詳細
+
 </a>
 
 </div>
@@ -287,40 +221,17 @@ target="_blank">
 
 });
 
-document.getElementById('userList').innerHTML =
-html;
+document.getElementById('list').innerHTML =
+html || '<div class="card">利用者がいません</div>';
 
-}
+})
 
-function showAll(){
-draw(users);
-}
+.catch(()=>{
 
-function showHelp(){
-draw(
-users.filter(
-u=>u.status.includes('助け')
-)
-);
-}
+document.getElementById('list').innerHTML =
+'<div class="card">読み込みに失敗しました</div>';
 
-function showWarn(){
-draw(
-users.filter(
-u=>u.status.includes('困')
-)
-);
-}
-
-function showOk(){
-draw(
-users.filter(
-u=>u.status.includes('元気')
-)
-);
-}
-
-showAll();
+});
 
 </script>
 
