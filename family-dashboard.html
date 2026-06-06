@@ -7,12 +7,16 @@
 <title>家族ダッシュボード</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
 background:#eef3f8;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+color:#17324d;
 }
 
 .wrap{
@@ -60,10 +64,10 @@ font-size:24px;
 font-weight:900;
 }
 
-.green{color:#00897b}
-.orange{color:#ef6c00}
-.red{color:#d32f2f}
-.blue{color:#1565c0}
+.green{color:#00897b;}
+.orange{color:#ef6c00;}
+.red{color:#d32f2f;}
+.blue{color:#1565c0;}
 
 .btn{
 display:block;
@@ -102,7 +106,9 @@ font-size:38px;
 }
 
 }
+
 </style>
+
 </head>
 
 <body>
@@ -116,22 +122,22 @@ font-size:38px;
 <div class="grid">
 
 <div class="card">
-<div class="num green">2</div>
+<div id="okCount" class="num green">0</div>
 <div class="title">😊 元気です</div>
 </div>
 
 <div class="card">
-<div class="num orange">1</div>
+<div id="warnCount" class="num orange">0</div>
 <div class="title">😓 困っています</div>
 </div>
 
 <div class="card">
-<div class="num red">1</div>
+<div id="helpCount" class="num red">0</div>
 <div class="title">🚨 助けてください</div>
 </div>
 
 <div class="card">
-<div class="num blue">4</div>
+<div id="userCount" class="num blue">0</div>
 <div class="title">👥 登録利用者</div>
 </div>
 
@@ -158,6 +164,87 @@ font-size:38px;
 </a>
 
 </div>
+
+<script>
+
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=見守り&tqx=out:json';
+
+function cell(r,i){
+return r.c[i]
+? (r.c[i].f || r.c[i].v || '')
+: '';
+}
+
+fetch(url)
+.then(r=>r.text())
+.then(t=>{
+
+const json =
+JSON.parse(t.substr(47).slice(0,-2));
+
+const rows =
+json.table.rows;
+
+let latest = {};
+
+rows.forEach(row=>{
+
+const name = cell(row,2);
+const status = cell(row,3);
+
+if(!name)return;
+
+latest[name] = status;
+
+});
+
+let ok = 0;
+let warn = 0;
+let help = 0;
+
+Object.values(latest).forEach(status=>{
+
+if(status.includes('助け')){
+help++;
+}
+else if(status.includes('困')){
+warn++;
+}
+else{
+ok++;
+}
+
+});
+
+document.getElementById('okCount').innerText =
+ok;
+
+document.getElementById('warnCount').innerText =
+warn;
+
+document.getElementById('helpCount').innerText =
+help;
+
+document.getElementById('userCount').innerText =
+Object.keys(latest).length;
+
+})
+.catch(()=>{
+
+document.getElementById('okCount').innerText='-';
+document.getElementById('warnCount').innerText='-';
+document.getElementById('helpCount').innerText='-';
+document.getElementById('userCount').innerText='-';
+
+});
+
+</script>
 
 </body>
 </html>
