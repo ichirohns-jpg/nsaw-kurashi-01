@@ -32,19 +32,31 @@ margin-bottom:24px;
 
 .header h1{
 margin:0;
-font-size:48px;
+font-size:46px;
 }
 
 .card{
 background:white;
 border-radius:24px;
-padding:20px;
+padding:24px;
 margin-bottom:16px;
-box-shadow:0 4px 14px rgba(0,0,0,.10);
+box-shadow:0 4px 12px rgba(0,0,0,.10);
+}
+
+.help{
+border-left:12px solid #d32f2f;
+}
+
+.warn{
+border-left:12px solid #ef6c00;
+}
+
+.ok{
+border-left:12px solid #00897b;
 }
 
 .name{
-font-size:30px;
+font-size:32px;
 font-weight:900;
 margin-bottom:10px;
 }
@@ -52,24 +64,12 @@ margin-bottom:10px;
 .status{
 font-size:24px;
 font-weight:900;
+margin-bottom:10px;
 }
 
 .time{
 font-size:18px;
 color:#666;
-margin-top:8px;
-}
-
-.ok{
-border-left:12px solid #00897b;
-}
-
-.warn{
-border-left:12px solid #ef6c00;
-}
-
-.help{
-border-left:12px solid #d32f2f;
 }
 
 .btn{
@@ -103,7 +103,7 @@ margin-top:24px;
 
 <div class="card warn">
 <div class="name">👤 佐藤 花子</div>
-<div class="status">😓 少し困っています</div>
+<div class="status">😓 困っています</div>
 <div class="time">14:35</div>
 </div>
 
@@ -113,8 +113,7 @@ margin-top:24px;
 <div class="time">08:12</div>
 </div>
 
-<a class="btn"
-href="admin.html">
+<a class="btn" href="admin.html">
 ⬅ 支援者ページへ戻る
 </a>
 
