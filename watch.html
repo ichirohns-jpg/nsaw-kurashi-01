@@ -1,268 +1,97 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>
-支援者用 見守りDX
-</title>
-
-<meta property="og:title"
-content="支援者用 見守りDX">
-
-<meta property="og:description"
-content="地域見守り状況一覧">
-
-<meta property="og:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/map.jpg">
-
-<meta name="twitter:card"
-content="summary_large_image">
+<title>見守り履歴</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
 background:#eef3f8;
-font-family:
-"Hiragino Sans",
-"Yu Gothic",
-sans-serif;
-color:#17324d;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
 }
 
 .wrap{
 max-width:960px;
 margin:auto;
-padding:18px 14px 80px;
+padding:16px;
 }
 
-.topCard{
-background:white;
-border-radius:32px;
-padding:24px;
-margin-bottom:28px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.08);
-}
-
-.pageTitle{
-font-size:58px;
-font-weight:900;
-margin-bottom:18px;
-line-height:1.3;
-}
-
-.backBtn{
-display:inline-block;
-background:#455a64;
-color:white;
-text-decoration:none;
-padding:18px 24px;
-border-radius:22px;
-font-size:22px;
-font-weight:900;
-margin-bottom:22px;
-}
-
-.desc{
-font-size:22px;
-line-height:1.9;
-color:#607080;
-}
-
-.alertBox{
-background:#d32f2f;
-color:white;
-padding:24px;
-border-radius:28px;
-margin-bottom:28px;
-font-size:30px;
-font-weight:900;
-text-align:center;
-animation:flash 1s infinite;
-display:none;
-}
-
-@keyframes flash{
-
-0%{
-opacity:1;
-}
-
-50%{
-opacity:.4;
-}
-
-100%{
-opacity:1;
-}
-
-}
-
-.watchCard{
-background:white;
-border-radius:30px;
-padding:24px;
-margin-bottom:24px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.08);
-border-left:14px solid #1565c0;
-}
-
-.okCard{
-border-left-color:#00897b;
-}
-
-.warnCard{
-border-left-color:#ef6c00;
-}
-
-.helpCard{
-border-left-color:#d32f2f;
-background:#fff5f5;
-}
-
-.watchName{
-font-size:34px;
-font-weight:900;
-margin-bottom:14px;
-}
-
-.watchStatus{
-font-size:30px;
-font-weight:900;
-margin-bottom:14px;
-}
-
-.watchTime{
-font-size:22px;
-line-height:1.8;
-color:#607080;
-}
-
-.ok{
-color:#00897b;
-}
-
-.warn{
-color:#ef6c00;
-}
-
-.help{
-color:#d32f2f;
-}
-
-.lastBox{
+.header{
 background:#1565c0;
 color:white;
-padding:18px;
-border-radius:22px;
-margin-top:18px;
-font-size:22px;
-font-weight:900;
-line-height:1.8;
-}
-
-.mapBtn{
-display:inline-block;
-background:white;
-color:#1565c0;
-text-decoration:none;
-padding:14px 18px;
-border-radius:18px;
-font-size:18px;
-font-weight:900;
-margin-top:12px;
-}
-
-.loading{
-background:white;
-padding:40px;
-border-radius:24px;
-font-size:26px;
-font-weight:900;
+padding:30px;
+border-radius:30px;
 text-align:center;
+margin-bottom:24px;
 }
 
-@media(max-width:768px){
-
-.pageTitle{
+.header h1{
+margin:0;
 font-size:46px;
 }
 
-.watchName{
-font-size:28px;
+.card{
+background:white;
+border-radius:24px;
+padding:24px;
+margin-bottom:16px;
+box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
-.watchStatus{
+.name{
+font-size:30px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.status{
 font-size:24px;
+font-weight:900;
+margin-bottom:10px;
 }
 
-.watchTime{
+.time{
 font-size:18px;
+color:#666;
 }
 
-.lastBox{
-font-size:18px;
-}
+.help{color:#d32f2f}
+.warn{color:#ef6c00}
+.ok{color:#00897b}
 
-.alertBox{
-font-size:24px;
+.btn{
+display:block;
+margin-top:24px;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px;
+border-radius:18px;
+text-align:center;
+font-size:22px;
+font-weight:900;
 }
-
-}
-
 </style>
-
 </head>
 
 <body>
 
 <div class="wrap">
 
-<div class="topCard">
-
-<div class="pageTitle">
-🫶 支援者用 見守りDX
+<div class="header">
+<h1>📋 見守り履歴</h1>
 </div>
 
-<a
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
-class="backBtn">
+<div id="list"></div>
 
-⬅ トップへ戻る
-
+<a class="btn" href="admin.html">
+⬅ 支援者ページへ戻る
 </a>
-
-<div class="desc">
-地域見守りボタンの最新状況です。
-</div>
-
-</div>
-
-<div
-id="alertBox"
-class="alertBox">
-
-🚨 助けてください が送信されています
-
-</div>
-
-<div id="watchArea">
-
-<div class="loading">
-読み込み中...
-</div>
-
-</div>
 
 </div>
 
@@ -276,130 +105,63 @@ const url =
 SHEET_ID +
 '/gviz/tq?sheet=見守り&tqx=out:json';
 
-function cell(row,index){
-
-return row.c[index]
-? (row.c[index].f || row.c[index].v || '')
+function cell(r,i){
+return r.c[i]
+? (r.c[i].f || r.c[i].v || '')
 : '';
-
 }
 
 fetch(url)
-.then(res=>res.text())
-.then(text=>{
+.then(r=>r.text())
+.then(t=>{
 
 const json =
-JSON.parse(
-text.substr(47).slice(0,-2)
-);
+JSON.parse(t.substr(47).slice(0,-2));
 
 const rows =
-json.table.rows;
+json.table.rows.reverse();
 
-let html = '';
+let html='';
 
-let dangerFound = false;
+rows.forEach(row=>{
 
-rows.reverse().forEach(r=>{
+const time = cell(row,0);
+const name = cell(row,2);
+const status = cell(row,3);
 
-const time =
-cell(r,0);
+let cls='ok';
+let icon='😊';
 
-const name =
-cell(r,1);
-
-const status =
-cell(r,2);
-
-const lat =
-cell(r,4);
-
-const lng =
-cell(r,5);
-
-let statusClass = '';
-let cardClass = '';
-
-if(status.includes('元気')){
-
-statusClass = 'ok';
-cardClass = 'okCard';
-
-}else
-if(status.includes('困')){
-
-statusClass = 'warn';
-cardClass = 'warnCard';
-
-}else{
-
-statusClass = 'help';
-cardClass = 'helpCard';
-
-dangerFound = true;
-
+if(status.includes('助け')){
+cls='help';
+icon='🚨';
+}
+else if(status.includes('困')){
+cls='warn';
+icon='😓';
 }
 
 html += `
+<div class="card">
 
-<div class="watchCard ${cardClass}">
-
-<div class="watchName">
+<div class="name">
 👤 ${name}
 </div>
 
-<div class="watchStatus ${statusClass}">
-${status}
+<div class="status ${cls}">
+${icon} ${status}
 </div>
 
-<div class="watchTime">
-🕒 ${time}
-</div>
-
-<div class="lastBox">
-
-最終確認：
+<div class="time">
 ${time}
-
-${
-lat && lng
-? `
-
-<br><br>
-
-<a
-target="_blank"
-href="https://www.google.com/maps?q=${lat},${lng}"
-class="mapBtn">
-
-📍 地図を見る
-
-</a>
-
-`
-: ''
-}
-
 </div>
 
 </div>
-
 `;
 
 });
 
-if(dangerFound){
-
-document.getElementById(
-'alertBox'
-).style.display = 'block';
-
-}
-
-document.getElementById(
-'watchArea'
-).innerHTML =
-html || '<div class="loading">履歴がありません</div>';
+document.getElementById('list').innerHTML = html;
 
 });
 
