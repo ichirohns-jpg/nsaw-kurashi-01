@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>緊急対応ボード</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:#fff5f5;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+color:#17324d;
+}
+
+.wrap{
+max-width:960px;
+margin:auto;
+padding:16px;
+}
+
+.header{
+background:#d32f2f;
+color:white;
+padding:30px;
+border-radius:30px;
+text-align:center;
+margin-bottom:24px;
+}
+
+.header h1{
+margin:0;
+font-size:52px;
+}
+
+.header p{
+font-size:22px;
+font-weight:900;
+margin-top:10px;
+}
+
+.card{
+background:white;
+border-left:14px solid #d32f2f;
+border-radius:24px;
+padding:24px;
+margin-bottom:18px;
+box-shadow:0 4px 14px rgba(0,0,0,.10);
+}
+
+.name{
+font-size:36px;
+font-weight:900;
+margin-bottom:12px;
+}
+
+.status{
+font-size:30px;
+font-weight:900;
+color:#d32f2f;
+margin-bottom:10px;
+}
+
+.time{
+font-size:22px;
+color:#607080;
+margin-bottom:16px;
+}
+
+.btn{
+display:block;
+background:#1565c0;
+color:white;
+text-decoration:none;
+padding:18px;
+border-radius:18px;
+text-align:center;
+font-size:22px;
+font-weight:900;
+}
+
+.homeBtn{
+display:block;
+margin-top:24px;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px;
+border-radius:18px;
+text-align:center;
+font-size:22px;
+font-weight:900;
+}
+
+@media(max-width:768px){
+
+.header h1{
+font-size:40px;
+}
+
+.name{
+font-size:30px;
+}
+
+.status{
+font-size:24px;
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="header">
+<h1>🚨 緊急対応ボード</h1>
+<p>助けてください一覧</p>
+</div>
+
+<div class="card">
+
+<div class="name">
+👤 山田 太郎
+</div>
+
+<div class="status">
+🚨 助けてください
+</div>
+
+<div class="time">
+2026/06/08 15:20
+</div>
+
+<a
+class="btn"
+href="person.html?id=a001">
+
+詳細を見る
+
+</a>
+
+</div>
+
+<div class="card">
+
+<div class="name">
+👤 高橋 京子
+</div>
+
+<div class="status">
+🚨 助けてください
+</div>
+
+<div class="time">
+2026/06/08 14:55
+</div>
+
+<a
+class="btn"
+href="person.html?id=a004">
+
+詳細を見る
+
+</a>
+
+</div>
+
+<a
+class="homeBtn"
+href="admin.html">
+
+⬅ 支援者ページへ戻る
+
+</a>
+
+</div>
+
+</body>
+</html>
