@@ -13,6 +13,7 @@ body{
 margin:0;
 background:#eef3f8;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+color:#17324d;
 }
 
 .wrap{
@@ -39,36 +40,31 @@ font-size:46px;
 background:white;
 border-radius:24px;
 padding:24px;
-margin-bottom:18px;
+margin-bottom:16px;
 box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .name{
-font-size:32px;
+font-size:30px;
 font-weight:900;
+margin-bottom:10px;
+}
+
+.status{
+font-size:24px;
+font-weight:900;
+color:#00897b;
 margin-bottom:10px;
 }
 
 .time{
 font-size:18px;
 color:#666;
-margin-top:10px;
-}
-
-.ok{
-color:#00897b;
-font-size:24px;
-font-weight:900;
-}
-
-.ng{
-color:#d32f2f;
-font-size:24px;
-font-weight:900;
 }
 
 .btn{
 display:block;
+margin-top:24px;
 background:#455a64;
 color:white;
 text-decoration:none;
@@ -77,7 +73,6 @@ border-radius:18px;
 text-align:center;
 font-size:22px;
 font-weight:900;
-margin-top:24px;
 }
 </style>
 </head>
@@ -100,55 +95,69 @@ margin-top:24px;
 
 <script>
 
-const data = [
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-{
-name:'山田 太郎',
-status:'確認済み',
-time:'2026/06/08 08:15'
-},
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=服薬&tqx=out:json';
 
-{
-name:'佐藤 花子',
-status:'未確認',
-time:'2026/06/08 12:00'
+function cell(r,i){
+return r.c[i]
+? (r.c[i].f || r.c[i].v || '')
+: '';
 }
 
-];
+fetch(url)
+.then(r=>r.text())
+.then(t=>{
+
+const json =
+JSON.parse(t.substr(47).slice(0,-2));
+
+const rows =
+json.table.rows.reverse();
 
 let html='';
 
-data.forEach(row=>{
+rows.forEach(row=>{
+
+const time = cell(row,0);
+const id = cell(row,1);
+const name = cell(row,2);
+const status = cell(row,3);
 
 html += `
-
 <div class="card">
 
 <div class="name">
-👤 ${row.name}
+👤 ${name}
 </div>
 
-<div class="${
-row.status==='確認済み'
-?'ok'
-:'ng'
-}">
-
-💊 ${row.status}
-
+<div class="status">
+💊 ${status}
 </div>
 
 <div class="time">
-${row.time}
+${time}
 </div>
 
 </div>
-
 `;
 
 });
 
-document.getElementById('list').innerHTML = html;
+document.getElementById('list').innerHTML =
+html || '<div class="card"><div class="name">薬履歴はまだありません</div></div>';
+
+})
+.catch(()=>{
+
+document.getElementById('list').innerHTML =
+'<div class="card"><div class="name">読み込みに失敗しました</div></div>';
+
+});
 
 </script>
 
