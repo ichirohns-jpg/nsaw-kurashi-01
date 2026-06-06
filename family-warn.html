@@ -7,6 +7,7 @@
 <title>困っています一覧</title>
 
 <style>
+
 *{box-sizing:border-box}
 
 body{
@@ -41,18 +42,18 @@ background:white;
 border-left:12px solid #ef6c00;
 border-radius:24px;
 padding:24px;
-margin-bottom:18px;
+margin-bottom:16px;
 box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .name{
-font-size:32px;
+font-size:30px;
 font-weight:900;
 margin-bottom:10px;
 }
 
 .status{
-font-size:26px;
+font-size:24px;
 font-weight:900;
 color:#ef6c00;
 margin-bottom:10px;
@@ -61,7 +62,6 @@ margin-bottom:10px;
 .time{
 font-size:18px;
 color:#666;
-margin-bottom:14px;
 }
 
 .btn{
@@ -74,6 +74,7 @@ border-radius:18px;
 text-align:center;
 font-size:20px;
 font-weight:900;
+margin-top:12px;
 }
 
 .homeBtn{
@@ -88,7 +89,9 @@ text-align:center;
 font-size:22px;
 font-weight:900;
 }
+
 </style>
+
 </head>
 
 <body>
@@ -99,51 +102,11 @@ font-weight:900;
 <h1>😓 困っています一覧</h1>
 </div>
 
-<div class="card">
-
-<div class="name">
-👤 佐藤 花子
-</div>
-
-<div class="status">
-😓 少し困っています
-</div>
-
-<div class="time">
-2026/06/08 14:35
-</div>
-
-<a
-class="btn"
-href="family-board.html?id=a002">
-
-状況を見る
-
-</a>
-
-</div>
+<div id="list">
 
 <div class="card">
-
-<div class="name">
-👤 鈴木 一郎
+読み込み中...
 </div>
-
-<div class="status">
-😓 困っています
-</div>
-
-<div class="time">
-2026/06/08 10:20
-</div>
-
-<a
-class="btn"
-href="family-board.html?id=a003">
-
-状況を見る
-
-</a>
 
 </div>
 
@@ -156,6 +119,109 @@ href="family-dashboard.html">
 </a>
 
 </div>
+
+<script>
+
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+
+const url =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=見守り&tqx=out:json';
+
+function cell(row,index){
+
+return row.c[index]
+? (row.c[index].f || row.c[index].v || '')
+: '';
+
+}
+
+fetch(url)
+
+.then(r=>r.text())
+
+.then(t=>{
+
+const json =
+JSON.parse(t.substr(47).slice(0,-2));
+
+const rows =
+json.table.rows;
+
+let latest = {};
+
+rows.forEach(row=>{
+
+const time = cell(row,0);
+const id = cell(row,1);
+const name = cell(row,2);
+const status = cell(row,3);
+
+if(!name)return;
+
+latest[name] = {
+id:id,
+time:time,
+status:status
+};
+
+});
+
+let html='';
+
+Object.keys(latest).forEach(name=>{
+
+const item = latest[name];
+
+if(!item.status.includes('困')){
+return;
+}
+
+html += `
+
+<div class="card">
+
+<div class="name">
+👤 ${name}
+</div>
+
+<div class="status">
+😓 ${item.status}
+</div>
+
+<div class="time">
+🕒 ${item.time}
+</div>
+
+<a
+class="btn"
+href="family-board.html?id=${item.id}">
+
+詳細を見る
+
+</a>
+
+</div>
+
+`;
+
+});
+
+document.getElementById('list').innerHTML =
+html || '<div class="card">該当者はいません</div>';
+
+})
+
+.catch(()=>{
+
+document.getElementById('list').innerHTML =
+'<div class="card">読み込み失敗</div>';
+
+});
+
+</script>
 
 </body>
 </html>
