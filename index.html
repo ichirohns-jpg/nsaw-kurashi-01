@@ -56,6 +56,7 @@ margin-bottom:10px;
 .area{
 font-size:22px;
 color:#666;
+line-height:1.8;
 }
 
 .bigBtn{
@@ -200,22 +201,30 @@ const users = {
 
 a001:{
 name:'山田 太郎',
-area:'志木市 本町'
+area:'志木市 本町',
+family:'長男 山田次郎',
+phone:'090-1111-1111'
 },
 
 a002:{
 name:'佐藤 花子',
-area:'新座市 東'
+area:'新座市 東',
+family:'長女 佐藤美香',
+phone:'090-2222-2222'
 },
 
 a003:{
 name:'鈴木 一郎',
-area:'朝霞市 西原'
+area:'朝霞市 西原',
+family:'次男 鈴木健',
+phone:'090-3333-3333'
 },
 
 a004:{
 name:'高橋 京子',
-area:'和光市 丸山台'
+area:'和光市 丸山台',
+family:'長女 高橋由美',
+phone:'090-4444-4444'
 }
 
 };
@@ -227,7 +236,11 @@ document.getElementById('userName').innerHTML =
 '👤 ' + user.name;
 
 document.getElementById('userArea').innerHTML =
-'📍 ' + user.area;
+'📍 ' + user.area +
+'<br><br>' +
+'👨‍👩‍👧 家族：' + user.family +
+'<br>' +
+'📞 連絡先：' + user.phone;
 
 function nowString(){
 
