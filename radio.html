@@ -22,38 +22,39 @@ padding:16px 14px 60px;
 }
 
 .header{
-background:linear-gradient(135deg,#1565c0,#1e88e5);
-color:white;
-padding:36px 24px;
+background:white;
 border-radius:34px;
-text-align:center;
+padding:34px 24px;
 margin-bottom:22px;
-box-shadow:0 10px 26px rgba(21,101,192,.25);
+box-shadow:0 10px 26px rgba(0,0,0,.08);
 }
 
 .header h1{
-margin:0;
+margin:0 0 20px;
 font-size:42px;
-line-height:1.3;
+line-height:1.35;
+font-weight:900;
+color:#17324d;
+}
+
+.backBtn{
+display:inline-block;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:18px 28px;
+border-radius:22px;
+font-size:23px;
+font-weight:900;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
 .header p{
-font-size:20px;
-font-weight:900;
+font-size:21px;
+font-weight:800;
 line-height:1.8;
-margin:12px 0 0;
-}
-
-.note{
-background:white;
-border-radius:26px;
-padding:20px;
-font-size:20px;
-font-weight:900;
-line-height:1.8;
-margin-bottom:20px;
-box-shadow:0 5px 16px rgba(0,0,0,.08);
-text-align:center;
+color:#607080;
+margin:24px 0 0;
 }
 
 .card{
@@ -154,9 +155,7 @@ cursor:pointer;
 box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
-.hidden{
-display:none;
-}
+.hidden{display:none}
 
 .loading{
 background:white;
@@ -193,11 +192,14 @@ line-height:1.7;
 
 <div class="header">
 <h1>🌅 朝の3分<br>地域ラジオ</h1>
-<p>志木・新座・朝霞・和光 暮らし情報</p>
-</div>
 
-<div class="note">
-4市の暮らし情報を、短く聞ける地域ラジオです。
+<a class="backBtn" href="portal.html">
+⬅ トップへ戻る
+</a>
+
+<p>
+志木・新座・朝霞・和光の暮らし情報を短く聞ける地域ラジオです。
+</p>
 </div>
 
 <div id="latestArea">
@@ -249,6 +251,7 @@ return String(text || '')
 }
 
 function makeCard(item,index){
+
 const shareUrl = PAGE_URL + '?radio=' + encodeURIComponent(index + 1);
 const safeTitle = escapeHtml(item.title);
 const youtubeId = getYouTubeId(item.youtubeURL);
@@ -354,6 +357,7 @@ alert(shareUrl);
 }
 
 function toggleArchive(){
+
 const area = document.getElementById('archiveArea');
 const btn = document.getElementById('archiveButton');
 
@@ -364,6 +368,7 @@ btn.innerHTML = '📕 アーカイブを閉じる';
 area.classList.add('hidden');
 btn.innerHTML = '📚 アーカイブを見る';
 }
+
 }
 
 fetch(url)
