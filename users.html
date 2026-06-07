@@ -3,8 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>利用者一覧DX</title>
 
@@ -65,6 +64,14 @@ font-weight:900;
 margin-bottom:12px;
 }
 
+.userInfo{
+font-size:19px;
+font-weight:900;
+color:#607080;
+line-height:1.7;
+margin-bottom:14px;
+}
+
 .status{
 font-size:22px;
 font-weight:900;
@@ -74,6 +81,7 @@ margin-bottom:16px;
 .help{color:#d32f2f}
 .warn{color:#ef6c00}
 .ok{color:#00897b}
+.none{color:#607080}
 
 .btnGrid{
 display:grid;
@@ -131,11 +139,11 @@ box-shadow:0 5px 14px rgba(0,0,0,.16);
 </div>
 
 <div class="note">
-利用者の状態と各ページへの入口を確認します。
+利用者シートに登録された人を表示します。
 </div>
 
 <div id="userArea">
-読み込み中...
+<div class="userCard">読み込み中...</div>
 </div>
 
 <a class="homeBtn" href="admin.html">
@@ -149,36 +157,62 @@ box-shadow:0 5px 14px rgba(0,0,0,.16);
 const SHEET_ID =
 '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-const url =
+const USER_URL =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent('利用者シート') +
+'&tqx=out:json';
+
+const STATUS_URL =
 'https://docs.google.com/spreadsheets/d/' +
 SHEET_ID +
 '/gviz/tq?sheet=見守り&tqx=out:json';
 
 function cell(row,index){
-
 return row.c[index]
 ? (row.c[index].f || row.c[index].v || '')
 : '';
-
 }
 
-fetch(url)
+Promise.all([
+fetch(USER_URL).then(r=>r.text()),
+fetch(STATUS_URL).then(r=>r.text())
+])
 
-.then(r=>r.text())
+.then(([userText,statusText])=>{
 
-.then(t=>{
+const userJson =
+JSON.parse(userText.substr(47).slice(0,-2));
 
-const json =
-JSON.parse(
-t.substr(47).slice(0,-2)
-);
+const statusJson =
+JSON.parse(statusText.substr(47).slice(0,-2));
 
-const rows =
-json.table.rows;
+const userRows =
+userJson.table.rows;
+
+const statusRows =
+statusJson.table.rows;
 
 let latest = {};
 
-rows.forEach(row=>{
+statusRows.forEach(row=>{
+
+const id =
+cell(row,1);
+
+const status =
+cell(row,3);
+
+if(id){
+latest[id] = status;
+}
+
+});
+
+let html='';
+
+userRows.forEach(row=>{
 
 const id =
 cell(row,1);
@@ -186,32 +220,34 @@ cell(row,1);
 const name =
 cell(row,2);
 
-const status =
+const area =
 cell(row,3);
 
-if(!name)return;
+const family =
+cell(row,4);
 
-latest[name] = {
-id:id,
-status:status
-};
+const phone =
+cell(row,5);
 
-});
+if(!id || !name)return;
 
-let html='';
+const status =
+latest[id] || '未確認';
 
-Object.keys(latest).forEach(name=>{
+let cls='none';
+let icon='⭕';
 
-let cls='ok';
-let icon='😊';
-
-if(latest[name].status.includes('助け')){
+if(status.includes('助け')){
 cls='help';
 icon='🚨';
 }
-else if(latest[name].status.includes('困')){
+else if(status.includes('困')){
 cls='warn';
 icon='😓';
+}
+else if(status.includes('元気')){
+cls='ok';
+icon='😊';
 }
 
 html += `
@@ -222,27 +258,34 @@ html += `
 👤 ${name}
 </div>
 
+<div class="userInfo">
+ID：${id}<br>
+📍 ${area || '住所未登録'}<br>
+👨‍👩‍👧 ${family || '家族未登録'}<br>
+📞 ${phone || '電話未登録'}
+</div>
+
 <div class="status ${cls}">
-${icon} ${latest[name].status}
+${icon} ${status}
 </div>
 
 <div class="btnGrid">
 
 <a
 class="bigBtn blue"
-href="index.html?id=${latest[name].id}">
+href="index.html?id=${id}">
 📱 本人ページ
 </a>
 
 <a
 class="bigBtn green"
-href="person.html?id=${latest[name].id}">
+href="person.html?id=${id}">
 👤 利用者詳細
 </a>
 
 <a
 class="bigBtn red"
-href="family-board.html?id=${latest[name].id}">
+href="family-board.html?id=${id}">
 👨‍👩‍👧 家族ページ
 </a>
 
@@ -261,7 +304,7 @@ href="support-map.html">
 });
 
 document.getElementById('userArea').innerHTML =
-html || '<div class="userCard">利用者がいません</div>';
+html || '<div class="userCard">利用者が登録されていません</div>';
 
 })
 
