@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>利用者登録</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:linear-gradient(180deg,#eaf4ff 0%,#f7fbff 100%);
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+color:#17324d;
+}
+
+.wrap{
+max-width:760px;
+margin:auto;
+padding:16px 14px 60px;
+}
+
+.header{
+background:linear-gradient(135deg,#1565c0,#1e88e5);
+color:white;
+padding:36px 24px;
+border-radius:34px;
+text-align:center;
+margin-bottom:22px;
+box-shadow:0 10px 26px rgba(21,101,192,.25);
+}
+
+.header h1{
+margin:0;
+font-size:42px;
+}
+
+.note{
+background:white;
+border-radius:26px;
+padding:20px;
+font-size:20px;
+font-weight:900;
+line-height:1.8;
+margin-bottom:20px;
+box-shadow:0 5px 16px rgba(0,0,0,.08);
+text-align:center;
+}
+
+.card{
+background:white;
+border-radius:30px;
+padding:24px;
+box-shadow:0 7px 20px rgba(0,0,0,.10);
+}
+
+label{
+display:block;
+font-size:20px;
+font-weight:900;
+margin:18px 0 8px;
+}
+
+input,textarea{
+width:100%;
+font-size:22px;
+padding:16px;
+border:2px solid #d7e3ee;
+border-radius:18px;
+font-family:inherit;
+}
+
+textarea{
+min-height:110px;
+}
+
+.btn{
+width:100%;
+border:none;
+background:#00897b;
+color:white;
+padding:22px;
+border-radius:22px;
+font-size:24px;
+font-weight:900;
+margin-top:24px;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
+}
+
+.backBtn{
+display:block;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:20px;
+border-radius:22px;
+text-align:center;
+font-size:23px;
+font-weight:900;
+margin-top:22px;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="header">
+<h1>👤 利用者登録</h1>
+</div>
+
+<div class="note">
+見守りDXで使う利用者情報を登録します。
+</div>
+
+<div class="card">
+
+<label>利用者ID</label>
+<input id="userId" placeholder="例：a005">
+
+<label>氏名</label>
+<input id="name" placeholder="例：山田 太郎">
+
+<label>住所・地域</label>
+<input id="area" placeholder="例：志木市 本町">
+
+<label>家族・連絡先</label>
+<input id="family" placeholder="例：長男 山田次郎">
+
+<label>電話番号</label>
+<input id="phone" placeholder="例：090-0000-0000">
+
+<label>メモ</label>
+<textarea id="memo" placeholder="注意点・支援メモなど"></textarea>
+
+<button class="btn" onclick="sendUser()">
+登録する
+</button>
+
+</div>
+
+<a class="backBtn" href="admin.html">
+⬅ 支援者ページへ戻る
+</a>
+
+</div>
+
+<script>
+
+const GAS_URL =
+'https://script.google.com/macros/s/AKfycbwF42-3JwuoBglGVuPZzLyAKFV-0scKlh1Q7yrI17UaUgFB2JUig-fQIJjRlZiDs264/exec';
+
+function v(id){
+return document.getElementById(id).value.trim();
+}
+
+function sendUser(){
+
+const userId = v('userId');
+const name = v('name');
+
+if(!userId || !name){
+alert('利用者IDと氏名は必須です');
+return;
+}
+
+const url =
+GAS_URL +
+'?mode=user_register' +
+'&id=' + encodeURIComponent(userId) +
+'&name=' + encodeURIComponent(name) +
+'&area=' + encodeURIComponent(v('area')) +
+'&family=' + encodeURIComponent(v('family')) +
+'&phone=' + encodeURIComponent(v('phone')) +
+'&memo=' + encodeURIComponent(v('memo'));
+
+fetch(url)
+.then(r=>r.text())
+.then(()=>{
+
+alert('利用者を登録しました');
+
+document.getElementById('userId').value='';
+document.getElementById('name').value='';
+document.getElementById('area').value='';
+document.getElementById('family').value='';
+document.getElementById('phone').value='';
+document.getElementById('memo').value='';
+
+})
+.catch(()=>{
+alert('登録に失敗しました');
+});
+
+}
+
+</script>
+
+</body>
+</html>
