@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>朝の3分 地域ラジオ</title>
 
 <style>
@@ -11,85 +10,104 @@
 
 body{
 margin:0;
-background:#eef3f8;
-font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+background:linear-gradient(180deg,#eaf4ff 0%,#f7fbff 100%);
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 color:#17324d;
 }
 
 .wrap{
-max-width:900px;
+max-width:920px;
 margin:auto;
-padding:16px;
+padding:16px 14px 60px;
 }
 
 .header{
-background:#1565c0;
+background:linear-gradient(135deg,#1565c0,#1e88e5);
 color:white;
-padding:28px;
-border-radius:28px;
+padding:36px 24px;
+border-radius:34px;
 text-align:center;
-margin-bottom:24px;
+margin-bottom:22px;
+box-shadow:0 10px 26px rgba(21,101,192,.25);
 }
 
 .header h1{
 margin:0;
 font-size:42px;
+line-height:1.3;
 }
 
 .header p{
 font-size:20px;
-margin-top:10px;
+font-weight:900;
+line-height:1.8;
+margin:12px 0 0;
+}
+
+.note{
+background:white;
+border-radius:26px;
+padding:20px;
+font-size:20px;
+font-weight:900;
+line-height:1.8;
+margin-bottom:20px;
+box-shadow:0 5px 16px rgba(0,0,0,.08);
+text-align:center;
 }
 
 .card{
 background:white;
-border-radius:24px;
+border-radius:30px;
 padding:24px;
-margin-bottom:20px;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
+margin-bottom:22px;
+box-shadow:0 7px 20px rgba(0,0,0,.10);
 }
 
 .date{
 font-size:20px;
 font-weight:900;
 color:#1565c0;
-margin-bottom:12px;
+margin-bottom:10px;
 }
 
 .title{
-font-size:34px;
+font-size:30px;
 font-weight:900;
-line-height:1.5;
-margin-bottom:18px;
+line-height:1.45;
+margin-bottom:14px;
 }
 
-.text{
-font-size:22px;
+.desc{
+font-size:21px;
 line-height:1.9;
 white-space:pre-wrap;
-margin-bottom:20px;
+margin-bottom:16px;
+color:#334;
+font-weight:700;
 }
 
 .tags{
-font-size:20px;
+font-size:18px;
 font-weight:900;
 color:#607080;
 line-height:1.8;
-margin-bottom:20px;
 white-space:pre-wrap;
-}
-
-.youtubeBox{
-position:relative;
-width:100%;
-padding-top:56.25%;
-border-radius:22px;
-overflow:hidden;
-background:#000;
 margin-bottom:18px;
 }
 
-.youtubeBox iframe{
+.video{
+position:relative;
+width:100%;
+padding-top:56.25%;
+background:#000;
+border-radius:24px;
+overflow:hidden;
+margin:18px 0;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
+}
+
+.video iframe{
 position:absolute;
 top:0;
 left:0;
@@ -98,17 +116,46 @@ height:100%;
 border:0;
 }
 
-.btn{
-display:block;
-width:100%;
-padding:20px;
-background:#d32f2f;
+.snsGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:18px;
+}
+
+.snsBtn{
+border:none;
 color:white;
-text-decoration:none;
-border-radius:20px;
-font-size:24px;
+padding:18px;
+border-radius:22px;
+font-size:20px;
 font-weight:900;
 text-align:center;
+cursor:pointer;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
+}
+
+.facebook{background:#1877f2}
+.line{background:#06c755}
+.x{background:#000}
+.copy{background:#455a64}
+
+.archiveBtn{
+width:100%;
+border:none;
+background:#1565c0;
+color:white;
+padding:20px;
+border-radius:22px;
+font-size:23px;
+font-weight:900;
+margin:10px 0 24px;
+cursor:pointer;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
+}
+
+.hidden{
+display:none;
 }
 
 .loading{
@@ -118,20 +165,24 @@ border-radius:24px;
 font-size:26px;
 font-weight:900;
 text-align:center;
+box-shadow:0 7px 20px rgba(0,0,0,.10);
 }
 
 .footer{
 text-align:center;
 font-size:18px;
+font-weight:900;
 margin-top:30px;
-color:#666;
+color:#607080;
+line-height:1.7;
 }
 
 @media(max-width:768px){
-.header h1{font-size:34px}
-.title{font-size:28px}
-.text{font-size:19px}
-.btn{font-size:20px}
+.header h1{font-size:36px}
+.title{font-size:27px}
+.desc{font-size:19px}
+.tags{font-size:17px}
+.snsGrid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -141,26 +192,35 @@ color:#666;
 <div class="wrap">
 
 <div class="header">
-<h1>🌅 朝の3分 地域ラジオ</h1>
+<h1>🌅 朝の3分<br>地域ラジオ</h1>
 <p>志木・新座・朝霞・和光 暮らし情報</p>
 </div>
 
-<div id="radioArea">
+<div class="note">
+4市の暮らし情報を、短く聞ける地域ラジオです。
+</div>
+
+<div id="latestArea">
 <div class="loading">読み込み中...</div>
 </div>
 
+<button id="archiveButton" class="archiveBtn hidden" onclick="toggleArchive()">
+📚 アーカイブを見る
+</button>
+
+<div id="archiveArea" class="hidden"></div>
+
 <div class="footer">
-NSAW 暮らし情報局
+NSAW 暮らし情報局<br>
+朝の3分 地域ラジオ
 </div>
 
 </div>
 
 <script>
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-
-const SHEET_NAME =
-'地域ラジオ';
+const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const SHEET_NAME = '地域ラジオ';
+const PAGE_URL = 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html';
 
 const url =
 'https://docs.google.com/spreadsheets/d/' +
@@ -170,61 +230,34 @@ encodeURIComponent(SHEET_NAME) +
 '&tqx=out:json';
 
 function cell(row,index){
-return row.c[index]
-? (row.c[index].f || row.c[index].v || '')
-: '';
+return row.c[index] ? (row.c[index].f || row.c[index].v || '') : '';
 }
 
-function getYouTubeId(url){
-if(!url) return '';
-const m = url.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+function getYouTubeId(youtubeURL){
+if(!youtubeURL) return '';
+const m = youtubeURL.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
 return m ? m[1] : '';
 }
 
-fetch(url)
-.then(res=>res.text())
-.then(text=>{
-
-const json =
-JSON.parse(text.substr(47).slice(0,-2));
-
-const rows =
-json.table.rows.filter(r=>{
-return cell(r,0) || cell(r,1) || cell(r,2);
-});
-
-if(!rows.length){
-document.getElementById('radioArea').innerHTML =
-'<div class="loading">地域ラジオがありません</div>';
-return;
+function escapeHtml(text){
+return String(text || '')
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/"/g,'&quot;')
+.replace(/'/g,'&#039;');
 }
 
-const r =
-rows[rows.length - 1];
+function makeCard(item,index){
+const shareUrl = PAGE_URL + '?radio=' + encodeURIComponent(index + 1);
+const safeTitle = escapeHtml(item.title);
+const youtubeId = getYouTubeId(item.youtubeURL);
 
-const date =
-cell(r,0);
-
-const youtubeURL =
-cell(r,1);
-
-const title =
-cell(r,2);
-
-const description =
-cell(r,3);
-
-const hashtags =
-cell(r,4);
-
-const youtubeId =
-getYouTubeId(youtubeURL);
-
-let movieHtml = '';
+let videoHtml = '';
 
 if(youtubeId){
-movieHtml = `
-<div class="youtubeBox">
+videoHtml = `
+<div class="video">
 <iframe
 src="https://www.youtube.com/embed/${youtubeId}"
 allowfullscreen>
@@ -233,45 +266,164 @@ allowfullscreen>
 `;
 }
 
-document.getElementById('radioArea').innerHTML = `
-
+return `
 <div class="card">
 
-${movieHtml}
-
 <div class="date">
-${date}
+${escapeHtml(item.date)}
 </div>
 
 <div class="title">
-${title}
+${safeTitle}
 </div>
 
-<div class="text">
-${description}
+<div class="desc">
+${escapeHtml(item.desc)}
 </div>
 
 <div class="tags">
-${hashtags}
+${escapeHtml(item.tags)}
 </div>
 
-<a
-class="btn"
-href="${youtubeURL}"
-target="_blank">
+${videoHtml}
 
-▶ YouTubeで見る
+<div class="snsGrid">
 
-</a>
+<button
+class="snsBtn facebook"
+onclick="shareFacebook('${shareUrl}')">
+Facebook
+</button>
+
+<button
+class="snsBtn line"
+onclick="shareLine('${shareUrl}')">
+LINE
+</button>
+
+<button
+class="snsBtn x"
+onclick="shareX('${shareUrl}','${safeTitle}')">
+X
+</button>
+
+<button
+class="snsBtn copy"
+onclick="copyUrl('${shareUrl}')">
+URLコピー
+</button>
 
 </div>
 
+</div>
 `;
+}
+
+function shareFacebook(shareUrl){
+window.open(
+'https://www.facebook.com/sharer/sharer.php?u=' +
+encodeURIComponent(shareUrl),
+'_blank'
+);
+}
+
+function shareLine(shareUrl){
+window.open(
+'https://social-plugins.line.me/lineit/share?url=' +
+encodeURIComponent(shareUrl),
+'_blank'
+);
+}
+
+function shareX(shareUrl,title){
+window.open(
+'https://twitter.com/intent/tweet?text=' +
+encodeURIComponent(title) +
+'&url=' +
+encodeURIComponent(shareUrl),
+'_blank'
+);
+}
+
+function copyUrl(shareUrl){
+navigator.clipboard.writeText(shareUrl).then(function(){
+alert('URLをコピーしました');
+}).catch(function(){
+alert(shareUrl);
+});
+}
+
+function toggleArchive(){
+const area = document.getElementById('archiveArea');
+const btn = document.getElementById('archiveButton');
+
+if(area.classList.contains('hidden')){
+area.classList.remove('hidden');
+btn.innerHTML = '📕 アーカイブを閉じる';
+}else{
+area.classList.add('hidden');
+btn.innerHTML = '📚 アーカイブを見る';
+}
+}
+
+fetch(url)
+.then(res=>res.text())
+.then(text=>{
+
+const json = JSON.parse(text.substr(47).slice(0,-2));
+const rows = json.table.rows;
+
+let items = [];
+
+rows.forEach(r=>{
+
+const date = cell(r,0);
+const youtubeURL = cell(r,1);
+const title = cell(r,2);
+const desc = cell(r,3);
+const tags = cell(r,4);
+
+if(!date && !youtubeURL && !title) return;
+
+items.push({
+date:date,
+youtubeURL:youtubeURL,
+title:title,
+desc:desc,
+tags:tags
+});
+
+});
+
+items.reverse();
+
+let latestHtml = '';
+let archiveHtml = '';
+
+items.forEach((item,index)=>{
+
+if(index < 5){
+latestHtml += makeCard(item,index);
+}else{
+archiveHtml += makeCard(item,index);
+}
+
+});
+
+document.getElementById('latestArea').innerHTML =
+latestHtml || '<div class="loading">地域ラジオがありません</div>';
+
+document.getElementById('archiveArea').innerHTML =
+archiveHtml;
+
+if(archiveHtml){
+document.getElementById('archiveButton').classList.remove('hidden');
+}
 
 })
 .catch(err=>{
 
-document.getElementById('radioArea').innerHTML =
+document.getElementById('latestArea').innerHTML =
 '<div class="loading">読み込みに失敗しました</div>';
 
 });
