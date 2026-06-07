@@ -7,79 +7,92 @@
 <title>家族ダッシュボード</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
-background:#eef3f8;
-font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+background:linear-gradient(180deg,#eaf4ff 0%,#f7fbff 100%);
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 color:#17324d;
 }
 
 .wrap{
-max-width:960px;
+max-width:920px;
 margin:auto;
-padding:16px;
+padding:16px 14px 60px;
 }
 
 .header{
-background:#1976d2;
+background:linear-gradient(135deg,#1976d2,#42a5f5);
 color:white;
-padding:30px;
-border-radius:30px;
+padding:36px 24px;
+border-radius:34px;
 text-align:center;
-margin-bottom:24px;
+margin-bottom:22px;
+box-shadow:0 10px 26px rgba(25,118,210,.25);
 }
 
 .header h1{
 margin:0;
-font-size:46px;
+font-size:42px;
+line-height:1.3;
+}
+
+.note{
+background:white;
+border-radius:26px;
+padding:20px;
+font-size:20px;
+font-weight:900;
+line-height:1.8;
+margin-bottom:20px;
+box-shadow:0 5px 16px rgba(0,0,0,.08);
+text-align:center;
 }
 
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:18px;
+gap:16px;
+margin-bottom:20px;
 }
 
 .card{
 background:white;
-border-radius:24px;
+border-radius:30px;
 padding:24px;
 text-align:center;
-box-shadow:0 4px 12px rgba(0,0,0,.10);
+box-shadow:0 7px 20px rgba(0,0,0,.10);
 }
 
 .num{
-font-size:56px;
+font-size:58px;
 font-weight:900;
 margin-bottom:10px;
 }
 
 .title{
-font-size:24px;
+font-size:22px;
 font-weight:900;
 }
 
-.green{color:#00897b;}
-.orange{color:#ef6c00;}
-.red{color:#d32f2f;}
-.blue{color:#1565c0;}
+.green{color:#00897b}
+.orange{color:#ef6c00}
+.red{color:#d32f2f}
+.blue{color:#1565c0}
 
 .btn{
 display:block;
 background:#1976d2;
 color:white;
 text-decoration:none;
-padding:18px;
-border-radius:18px;
+padding:20px;
+border-radius:22px;
 text-align:center;
 font-size:22px;
 font-weight:900;
 margin-top:12px;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
 .homeBtn{
@@ -88,25 +101,25 @@ margin-top:24px;
 background:#455a64;
 color:white;
 text-decoration:none;
-padding:18px;
-border-radius:18px;
+padding:20px;
+border-radius:22px;
 text-align:center;
-font-size:22px;
+font-size:23px;
 font-weight:900;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
-@media(max-width:768px){
-
+@media(max-width:640px){
 .grid{
-grid-template-columns:1fr;
+grid-template-columns:1fr 1fr;
 }
-
 .header h1{
-font-size:38px;
+font-size:36px;
 }
-
+.num{
+font-size:50px;
 }
-
+}
 </style>
 
 </head>
@@ -117,6 +130,10 @@ font-size:38px;
 
 <div class="header">
 <h1>👨‍👩‍👧‍👦 家族ダッシュボード</h1>
+</div>
+
+<div class="note">
+ご家族の見守り状況を確認するページです。
 </div>
 
 <div class="grid">
@@ -222,15 +239,9 @@ ok++;
 
 });
 
-document.getElementById('okCount').innerText =
-ok;
-
-document.getElementById('warnCount').innerText =
-warn;
-
-document.getElementById('helpCount').innerText =
-help;
-
+document.getElementById('okCount').innerText = ok;
+document.getElementById('warnCount').innerText = warn;
+document.getElementById('helpCount').innerText = help;
 document.getElementById('userCount').innerText =
 Object.keys(latest).length;
 
