@@ -3,62 +3,44 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<title>4市瓦版</title>
 
-<title>
-4市瓦版
-</title>
-
-<meta property="og:title"
-content="4市瓦版">
-
-<meta property="og:description"
-content="志木・新座・朝霞・和光の地域ニュース">
-
-<meta property="og:image"
-content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg">
-
-<meta name="twitter:card"
-content="summary_large_image">
+<meta property="og:title" content="4市瓦版">
+<meta property="og:description" content="志木・新座・朝霞・和光の地域ニュース">
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg">
+<meta name="twitter:card" content="summary_large_image">
 
 <style>
-
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
-background:#eef3f8;
-font-family:
-"Hiragino Sans",
-"Yu Gothic",
-sans-serif;
+background:linear-gradient(180deg,#eaf4ff 0%,#f7fbff 100%);
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 color:#17324d;
 }
 
 .wrap{
 max-width:920px;
 margin:auto;
-padding:18px 14px 80px;
+padding:16px 14px 60px;
 }
 
 .topCard{
 background:white;
-border-radius:32px;
-padding:24px;
-margin-bottom:28px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.08);
+border-radius:34px;
+padding:34px 24px;
+margin-bottom:22px;
+box-shadow:0 10px 26px rgba(0,0,0,.08);
 }
 
 .pageTitle{
-font-size:58px;
+font-size:42px;
 font-weight:900;
-margin-bottom:18px;
-line-height:1.3;
+margin-bottom:20px;
+line-height:1.35;
 }
 
 .backBtn{
@@ -66,26 +48,27 @@ display:inline-block;
 background:#455a64;
 color:white;
 text-decoration:none;
-padding:18px 24px;
+padding:18px 28px;
 border-radius:22px;
-font-size:22px;
+font-size:23px;
 font-weight:900;
-margin-bottom:22px;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
 .desc{
-font-size:22px;
-line-height:1.9;
+font-size:21px;
+line-height:1.8;
 color:#607080;
+font-weight:800;
+margin-top:24px;
 }
 
 .newsCard{
 background:white;
 border-radius:30px;
-padding:22px;
-margin-bottom:26px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.08);
+padding:24px;
+margin-bottom:22px;
+box-shadow:0 7px 20px rgba(0,0,0,.10);
 }
 
 .newsImage{
@@ -93,27 +76,30 @@ width:100%;
 display:block;
 border-radius:24px;
 margin-bottom:18px;
+box-shadow:0 5px 14px rgba(0,0,0,.12);
 }
 
 .newsDate{
-font-size:18px;
+font-size:20px;
 font-weight:900;
 color:#1565c0;
 margin-bottom:10px;
 }
 
 .newsTitle{
-font-size:34px;
+font-size:30px;
 font-weight:900;
-line-height:1.4;
+line-height:1.45;
 margin-bottom:14px;
 }
 
 .newsText{
-font-size:22px;
+font-size:21px;
 line-height:1.9;
 color:#506070;
+font-weight:700;
 margin-bottom:20px;
+white-space:pre-wrap;
 }
 
 .cityGrid{
@@ -129,58 +115,57 @@ text-decoration:none;
 color:white;
 padding:18px;
 border-radius:22px;
-font-size:22px;
+font-size:21px;
 font-weight:900;
 text-align:center;
-box-shadow:
-0 4px 12px rgba(0,0,0,.12);
+line-height:1.5;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
-.shiki{
-background:#1565c0;
-}
+.shiki{background:#1565c0}
+.niiza{background:#00897b}
+.asaka{background:#ef6c00}
+.wako{background:#8e24aa}
 
-.niiza{
-background:#00897b;
-}
-
-.asaka{
-background:#ef6c00;
-}
-
-.wako{
-background:#8e24aa;
-}
-
-.snsRow{
-display:flex;
-gap:10px;
-margin-top:22px;
-flex-wrap:wrap;
+.snsGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:20px;
 }
 
 .snsBtn{
-flex:1;
-text-decoration:none;
+border:none;
 color:white;
-padding:14px;
-border-radius:16px;
-font-size:18px;
+padding:18px;
+border-radius:22px;
+font-size:20px;
 font-weight:900;
 text-align:center;
+cursor:pointer;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
-.copyBtn{
+.facebook{background:#1877f2}
+.line{background:#06c755}
+.x{background:#000}
+.copy{background:#455a64}
+
+.archiveBtn{
 width:100%;
 border:none;
-background:#455a64;
+background:#1565c0;
 color:white;
-padding:16px;
-border-radius:18px;
-font-size:18px;
+padding:20px;
+border-radius:22px;
+font-size:23px;
 font-weight:900;
-margin-top:12px;
+margin:10px 0 24px;
+cursor:pointer;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
+
+.hidden{display:none}
 
 .loading{
 background:white;
@@ -189,16 +174,26 @@ border-radius:24px;
 font-size:26px;
 font-weight:900;
 text-align:center;
+box-shadow:0 7px 20px rgba(0,0,0,.10);
+}
+
+.footer{
+text-align:center;
+font-size:18px;
+font-weight:900;
+margin-top:30px;
+color:#607080;
+line-height:1.7;
 }
 
 @media(max-width:768px){
 
 .pageTitle{
-font-size:46px;
+font-size:36px;
 }
 
 .newsTitle{
-font-size:28px;
+font-size:27px;
 }
 
 .newsText{
@@ -207,6 +202,10 @@ font-size:19px;
 
 .cityGrid{
 grid-template-columns:1fr;
+}
+
+.snsGrid{
+grid-template-columns:1fr 1fr;
 }
 
 .cityBtn{
@@ -229,7 +228,7 @@ font-size:20px;
 </div>
 
 <a
-href="https://ichirohns-jpg.github.io/nsaw-kurashi-01/"
+href="portal.html"
 class="backBtn">
 
 ⬅ トップへ戻る
@@ -237,17 +236,36 @@ class="backBtn">
 </a>
 
 <div class="desc">
-志木・新座・朝霞・和光の地域ニュース
+志木・新座・朝霞・和光の地域ニュースをまとめて確認できます。
 </div>
 
 </div>
 
-<div id="newsArea">
+<div id="latestArea">
 
 <div class="loading">
 読み込み中...
 </div>
 
+</div>
+
+<button
+id="archiveButton"
+class="archiveBtn hidden"
+onclick="toggleArchive()">
+
+📚 アーカイブを見る
+
+</button>
+
+<div
+id="archiveArea"
+class="hidden">
+</div>
+
+<div class="footer">
+NSAW 暮らし情報局<br>
+4市瓦版
 </div>
 
 </div>
@@ -259,6 +277,9 @@ const SHEET_ID =
 
 const SHEET_NAME =
 '4市瓦版';
+
+const PAGE_URL =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html';
 
 const url =
 'https://docs.google.com/spreadsheets/d/' +
@@ -275,6 +296,222 @@ return row.c[index]
 
 }
 
+function escapeHtml(text){
+
+return String(text || '')
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/"/g,'&quot;')
+.replace(/'/g,'&#039;');
+
+}
+
+function convertImage(image){
+
+if(
+image &&
+image.includes('drive.google.com/file/d/')
+){
+
+const fileId =
+image.split('/d/')[1].split('/')[0];
+
+return 'https://drive.google.com/thumbnail?id=' +
+fileId +
+'&sz=w2000';
+
+}
+
+return image;
+
+}
+
+function makeCard(item,index){
+
+const shareUrl =
+PAGE_URL + '?kawaraban=' + encodeURIComponent(index + 1);
+
+let imageHtml = '';
+
+if(item.image){
+
+imageHtml = `
+
+<img
+src="${escapeHtml(item.image)}"
+class="newsImage">
+
+`;
+
+}
+
+return `
+
+<div class="newsCard">
+
+${imageHtml}
+
+<div class="newsDate">
+${escapeHtml(item.date)}
+</div>
+
+<div class="newsTitle">
+${escapeHtml(item.title)}
+</div>
+
+<div class="newsText">
+${escapeHtml(item.text)}
+</div>
+
+<div class="cityGrid">
+
+<a
+class="cityBtn shiki"
+href="${escapeHtml(item.shikiURL)}"
+target="_blank">
+
+志木市<br>
+${escapeHtml(item.shikiTitle)}
+
+</a>
+
+<a
+class="cityBtn niiza"
+href="${escapeHtml(item.niizaURL)}"
+target="_blank">
+
+新座市<br>
+${escapeHtml(item.niizaTitle)}
+
+</a>
+
+<a
+class="cityBtn asaka"
+href="${escapeHtml(item.asakaURL)}"
+target="_blank">
+
+朝霞市<br>
+${escapeHtml(item.asakaTitle)}
+
+</a>
+
+<a
+class="cityBtn wako"
+href="${escapeHtml(item.wakoURL)}"
+target="_blank">
+
+和光市<br>
+${escapeHtml(item.wakoTitle)}
+
+</a>
+
+</div>
+
+<div class="snsGrid">
+
+<button
+class="snsBtn facebook"
+onclick="shareFacebook('${shareUrl}')">
+Facebook
+</button>
+
+<button
+class="snsBtn line"
+onclick="shareLine('${shareUrl}')">
+LINE
+</button>
+
+<button
+class="snsBtn x"
+onclick="shareX('${shareUrl}','${escapeHtml(item.title)}')">
+X
+</button>
+
+<button
+class="snsBtn copy"
+onclick="copyUrl('${shareUrl}')">
+URLコピー
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+function shareFacebook(shareUrl){
+
+window.open(
+'https://www.facebook.com/sharer/sharer.php?u=' +
+encodeURIComponent(shareUrl),
+'_blank'
+);
+
+}
+
+function shareLine(shareUrl){
+
+window.open(
+'https://social-plugins.line.me/lineit/share?url=' +
+encodeURIComponent(shareUrl),
+'_blank'
+);
+
+}
+
+function shareX(shareUrl,title){
+
+window.open(
+'https://twitter.com/intent/tweet?text=' +
+encodeURIComponent(title) +
+'&url=' +
+encodeURIComponent(shareUrl),
+'_blank'
+);
+
+}
+
+function copyUrl(shareUrl){
+
+navigator.clipboard.writeText(shareUrl)
+.then(function(){
+
+alert('URLをコピーしました');
+
+})
+.catch(function(){
+
+alert(shareUrl);
+
+});
+
+}
+
+function toggleArchive(){
+
+const area =
+document.getElementById('archiveArea');
+
+const btn =
+document.getElementById('archiveButton');
+
+if(area.classList.contains('hidden')){
+
+area.classList.remove('hidden');
+btn.innerHTML = '📕 アーカイブを閉じる';
+
+}else{
+
+area.classList.add('hidden');
+btn.innerHTML = '📚 アーカイブを見る';
+
+}
+
+}
+
 fetch(url)
 .then(res=>res.text())
 .then(text=>{
@@ -287,15 +524,17 @@ text.substr(47).slice(0,-2)
 const rows =
 json.table.rows;
 
-let html = '';
+let items = [];
 
-rows.reverse().forEach(r=>{
+rows.forEach(r=>{
 
 const date =
 cell(r,0);
 
 let image =
-cell(r,1);
+convertImage(
+cell(r,1)
+);
 
 const title =
 cell(r,2);
@@ -328,147 +567,68 @@ const wakoURL =
 cell(r,11);
 
 if(
-image &&
-image.includes('drive.google.com/file/d/')
+!date &&
+!image &&
+!title
 ){
-
-const fileId =
-image.split('/d/')[1].split('/')[0];
-
-image =
-'https://drive.google.com/thumbnail?id=' +
-fileId +
-'&sz=w2000';
-
+return;
 }
 
-html += `
-
-<div class="newsCard">
-
-<img
-src="${image}"
-class="newsImage">
-
-<div class="newsDate">
-${date}
-</div>
-
-<div class="newsTitle">
-${title}
-</div>
-
-<div class="newsText">
-${text}
-</div>
-
-<div class="cityGrid">
-
-<a
-class="cityBtn shiki"
-href="${shikiURL}"
-target="_blank">
-
-志木市<br>
-${shikiTitle}
-
-</a>
-
-<a
-class="cityBtn niiza"
-href="${niizaURL}"
-target="_blank">
-
-新座市<br>
-${niizaTitle}
-
-</a>
-
-<a
-class="cityBtn asaka"
-href="${asakaURL}"
-target="_blank">
-
-朝霞市<br>
-${asakaTitle}
-
-</a>
-
-<a
-class="cityBtn wako"
-href="${wakoURL}"
-target="_blank">
-
-和光市<br>
-${wakoTitle}
-
-</a>
-
-</div>
-
-<div class="snsRow">
-
-<a
-class="snsBtn"
-style="background:#1877f2;"
-target="_blank"
-href="https://www.facebook.com/sharer/sharer.php?u=https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-001.html">
-
-Facebook
-
-</a>
-
-<a
-class="snsBtn"
-style="background:#06c755;"
-target="_blank"
-href="https://social-plugins.line.me/lineit/share?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-001.html">
-
-LINE
-
-</a>
-
-<a
-class="snsBtn"
-style="background:#000;"
-target="_blank"
-href="https://twitter.com/intent/tweet?url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-001.html">
-
-X
-
-</a>
-
-</div>
-
-<button
-class="copyBtn"
-onclick="copyURL()">
-
-🔗 URLコピー
-
-</button>
-
-</div>
-
-`;
+items.push({
+date:date,
+image:image,
+title:title,
+text:text,
+shikiTitle:shikiTitle,
+shikiURL:shikiURL,
+niizaTitle:niizaTitle,
+niizaURL:niizaURL,
+asakaTitle:asakaTitle,
+asakaURL:asakaURL,
+wakoTitle:wakoTitle,
+wakoURL:wakoURL
+});
 
 });
 
-document.getElementById(
-'newsArea'
-).innerHTML = html;
+items.reverse();
+
+let latestHtml = '';
+let archiveHtml = '';
+
+items.forEach((item,index)=>{
+
+if(index < 5){
+
+latestHtml += makeCard(item,index);
+
+}else{
+
+archiveHtml += makeCard(item,index);
+
+}
 
 });
 
-function copyURL(){
+document.getElementById('latestArea').innerHTML =
+latestHtml || '<div class="loading">4市瓦版がありません</div>';
 
-navigator.clipboard.writeText(
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-001.html'
-);
+document.getElementById('archiveArea').innerHTML =
+archiveHtml;
 
-alert('URLをコピーしました');
+if(archiveHtml){
+
+document.getElementById('archiveButton').classList.remove('hidden');
 
 }
+
+})
+.catch(err=>{
+
+document.getElementById('latestArea').innerHTML =
+'<div class="loading">読み込みに失敗しました</div>';
+
+});
 
 </script>
 
