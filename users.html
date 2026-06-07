@@ -6,89 +6,79 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
-<title>
-利用者一覧DX
-</title>
+<title>利用者一覧DX</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
-background:#eef3f8;
-font-family:
-"Hiragino Sans",
-"Yu Gothic",
-sans-serif;
+background:linear-gradient(180deg,#eaf4ff 0%,#f7fbff 100%);
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 color:#17324d;
 }
 
 .wrap{
-max-width:960px;
+max-width:920px;
 margin:auto;
-padding:18px 14px 80px;
+padding:16px 14px 60px;
 }
 
-.topCard{
-background:#1565c0;
+.header{
+background:linear-gradient(135deg,#1565c0,#1e88e5);
 color:white;
-padding:30px 24px;
+padding:36px 24px;
 border-radius:34px;
-margin-bottom:28px;
 text-align:center;
+margin-bottom:22px;
+box-shadow:0 10px 26px rgba(21,101,192,.25);
 }
 
-.pageTitle{
-font-size:56px;
-font-weight:900;
+.header h1{
+margin:0;
+font-size:42px;
 }
 
-.pageText{
-font-size:22px;
+.note{
+background:white;
+border-radius:26px;
+padding:20px;
+font-size:20px;
 font-weight:900;
-margin-top:10px;
+line-height:1.8;
+margin-bottom:20px;
+box-shadow:0 5px 16px rgba(0,0,0,.08);
+text-align:center;
 }
 
 .userCard{
 background:white;
 border-radius:30px;
 padding:24px;
-margin-bottom:24px;
-box-shadow:
-0 6px 18px rgba(0,0,0,.08);
+margin-bottom:18px;
+box-shadow:0 7px 20px rgba(0,0,0,.10);
 }
 
 .userName{
-font-size:36px;
+font-size:30px;
 font-weight:900;
 margin-bottom:12px;
 }
 
 .status{
-font-size:24px;
+font-size:22px;
 font-weight:900;
 margin-bottom:16px;
 }
 
-.help{
-color:#d32f2f;
-}
-
-.warn{
-color:#ef6c00;
-}
-
-.ok{
-color:#00897b;
-}
+.help{color:#d32f2f}
+.warn{color:#ef6c00}
+.ok{color:#00897b}
 
 .btnGrid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:14px;
+gap:12px;
 }
 
 .bigBtn{
@@ -100,24 +90,34 @@ border-radius:22px;
 font-size:20px;
 font-weight:900;
 text-align:center;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
-.blue{
-background:#1565c0;
+.blue{background:#1565c0}
+.green{background:#00897b}
+.red{background:#d32f2f}
+.purple{background:#8e24aa}
+.gray{background:#455a64}
+
+.homeBtn{
+display:block;
+margin-top:24px;
+background:#455a64;
+color:white;
+text-decoration:none;
+padding:20px;
+border-radius:22px;
+text-align:center;
+font-size:23px;
+font-weight:900;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
-.green{
-background:#00897b;
+@media(max-width:640px){
+.header h1{font-size:36px}
+.userName{font-size:28px}
+.btnGrid{grid-template-columns:1fr}
 }
-
-.red{
-background:#d32f2f;
-}
-
-.purple{
-background:#8e24aa;
-}
-
 </style>
 
 </head>
@@ -126,21 +126,21 @@ background:#8e24aa;
 
 <div class="wrap">
 
-<div class="topCard">
-
-<div class="pageTitle">
-🧑‍🤝‍🧑 利用者一覧DX
+<div class="header">
+<h1>👥 利用者一覧DX</h1>
 </div>
 
-<div class="pageText">
-見守り状況一覧
-</div>
-
+<div class="note">
+利用者の状態と各ページへの入口を確認します。
 </div>
 
 <div id="userArea">
 読み込み中...
 </div>
+
+<a class="homeBtn" href="admin.html">
+⬅ 支援者ページへ戻る
+</a>
 
 </div>
 
@@ -261,14 +261,14 @@ href="support-map.html">
 });
 
 document.getElementById('userArea').innerHTML =
-html;
+html || '<div class="userCard">利用者がいません</div>';
 
 })
 
 .catch(()=>{
 
 document.getElementById('userArea').innerHTML =
-'読み込み失敗';
+'<div class="userCard">読み込み失敗</div>';
 
 });
 
