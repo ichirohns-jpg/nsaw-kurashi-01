@@ -36,14 +36,12 @@ box-shadow:0 10px 26px rgba(21,101,192,.25);
 font-size:22px;
 font-weight:900;
 letter-spacing:.08em;
-opacity:.95;
 margin-bottom:12px;
 }
 
 .hero h1{
 margin:0;
 font-size:46px;
-line-height:1.25;
 font-weight:900;
 }
 
@@ -100,6 +98,7 @@ flex:0 0 auto;
 .supportIcon{background:#ffebee}
 .newsIcon{background:#fff3e0}
 .radioIcon{background:#ede7f6}
+.movieIcon{background:#fce4ec}
 
 .text{
 flex:1;
@@ -137,6 +136,7 @@ box-shadow:0 5px 14px rgba(0,0,0,.16);
 .red{background:#d32f2f}
 .orange{background:#ef6c00}
 .purple{background:#6a1b9a}
+.pink{background:#c2185b}
 
 .footer{
 text-align:center;
@@ -148,17 +148,24 @@ margin-top:30px;
 }
 
 @media(max-width:640px){
+
 .hero h1{font-size:38px}
 .hero p{font-size:19px}
-.cardInner{align-items:flex-start}
+
+.cardInner{
+align-items:flex-start;
+}
+
 .icon{
 width:72px;
 height:72px;
 font-size:40px;
 }
+
 .title{font-size:27px}
 .desc{font-size:18px}
 .btn{font-size:22px}
+
 }
 </style>
 </head>
@@ -168,12 +175,18 @@ font-size:40px;
 <div class="wrap">
 
 <div class="hero">
-<div class="logo">NSAW</div>
+
+<div class="logo">
+NSAW
+</div>
+
 <h1>地域OS</h1>
+
 <p>
 志木・新座・朝霞・和光<br>
 暮らし情報と見守りの入口
 </p>
+
 </div>
 
 <div class="note">
@@ -183,65 +196,204 @@ font-size:40px;
 <div class="grid">
 
 <div class="card">
+
 <div class="cardInner">
-<div class="icon personIcon">👤</div>
+
+<div class="icon personIcon">
+👤
+</div>
+
 <div class="text">
-<div class="title">本人入口</div>
-<div class="desc">元気です・困っています・助けてください・薬確認</div>
+
+<div class="title">
+利用者一覧
 </div>
+
+<div class="desc">
+利用者を選んで本人ページを開きます
 </div>
-<a class="btn green" href="index.html?id=a001">本人ページを開く</a>
+
+</div>
+
+</div>
+
+<a
+class="btn green"
+href="users.html">
+
+👥 利用者一覧を開く
+
+</a>
+
 </div>
 
 <div class="card">
+
 <div class="cardInner">
-<div class="icon familyIcon">👨‍👩‍👧‍👦</div>
+
+<div class="icon familyIcon">
+👨‍👩‍👧‍👦
+</div>
+
 <div class="text">
-<div class="title">家族入口</div>
-<div class="desc">家族が見守り状況を確認するページ</div>
+
+<div class="title">
+家族入口
 </div>
+
+<div class="desc">
+家族が見守り状況を確認するページ
 </div>
-<a class="btn blue" href="family-dashboard.html">家族ページを開く</a>
+
+</div>
+
+</div>
+
+<a
+class="btn blue"
+href="family-dashboard.html">
+
+家族ページを開く
+
+</a>
+
 </div>
 
 <div class="card">
+
 <div class="cardInner">
-<div class="icon supportIcon">🧑‍⚕️</div>
+
+<div class="icon supportIcon">
+🧑‍⚕️
+</div>
+
 <div class="text">
-<div class="title">支援者入口</div>
-<div class="desc">見守り・服薬・利用者管理を確認</div>
+
+<div class="title">
+支援者入口
 </div>
+
+<div class="desc">
+見守り・服薬・利用者管理を確認
 </div>
-<a class="btn red" href="admin.html">支援者ページを開く</a>
+
+</div>
+
+</div>
+
+<a
+class="btn red"
+href="admin.html">
+
+支援者ページを開く
+
+</a>
+
 </div>
 
 <div class="card">
+
 <div class="cardInner">
-<div class="icon newsIcon">📰</div>
+
+<div class="icon newsIcon">
+📰
+</div>
+
 <div class="text">
-<div class="title">4市瓦版</div>
-<div class="desc">志木・新座・朝霞・和光の暮らし情報</div>
+
+<div class="title">
+4市瓦版
 </div>
+
+<div class="desc">
+志木・新座・朝霞・和光の暮らし情報
 </div>
-<a class="btn orange" href="kawaraban.html">瓦版を見る</a>
+
+</div>
+
+</div>
+
+<a
+class="btn orange"
+href="kawaraban.html">
+
+瓦版を見る
+
+</a>
+
 </div>
 
 <div class="card">
+
 <div class="cardInner">
-<div class="icon radioIcon">🌅</div>
+
+<div class="icon radioIcon">
+🌅
+</div>
+
 <div class="text">
-<div class="title">朝の3分 地域ラジオ</div>
-<div class="desc">毎朝の地域情報を短く聞くページ</div>
+
+<div class="title">
+朝の3分 地域ラジオ
 </div>
+
+<div class="desc">
+毎朝の地域情報を短く聞くページ
 </div>
-<a class="btn purple" href="radio2.html">地域ラジオを聞く</a>
+
+</div>
+
+</div>
+
+<a
+class="btn purple"
+href="radio.html">
+
+地域ラジオを聞く
+
+</a>
+
+</div>
+
+<div class="card">
+
+<div class="cardInner">
+
+<div class="icon movieIcon">
+🎬
+</div>
+
+<div class="text">
+
+<div class="title">
+お楽しみ動画
+</div>
+
+<div class="desc">
+昭和歌謡・懐かしい映像・娯楽動画
+</div>
+
+</div>
+
+</div>
+
+<a
+class="btn pink"
+href="fun.html">
+
+お楽しみ動画を見る
+
+</a>
+
 </div>
 
 </div>
 
 <div class="footer">
+
 NSAW 地域OS<br>
 押すだけ・見るだけ・迷わない地域DX
+
 </div>
 
 </div>
