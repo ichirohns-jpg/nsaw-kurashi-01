@@ -3,278 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>本人ページ</title>
+<title>NSAW 暮らし情報局</title>
 
 <style>
-*{box-sizing:border-box}
-
 body{
 margin:0;
-background:linear-gradient(180deg,#eaf4ff 0%,#f7fbff 100%);
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#17324d;
-}
-
-.wrap{
-max-width:760px;
-margin:auto;
-padding:16px 14px 60px;
-}
-
-.header{
-background:linear-gradient(135deg,#1565c0,#1e88e5);
-color:white;
-padding:34px 22px;
-border-radius:34px;
+font-family:sans-serif;
+background:#eef4f8;
 text-align:center;
-margin-bottom:22px;
-box-shadow:0 10px 26px rgba(21,101,192,.25);
+padding:40px 16px;
 }
 
-.header h1{
-margin:0;
-font-size:42px;
-}
-
-.card{
-background:white;
-border-radius:30px;
-padding:24px;
-margin-bottom:18px;
-box-shadow:0 6px 18px rgba(0,0,0,.10);
-}
-
-.name{
-font-size:38px;
+h1{
+font-size:40px;
 font-weight:900;
-margin-bottom:12px;
+margin-bottom:20px;
 }
 
-.area{
-font-size:22px;
-color:#607080;
-line-height:1.8;
-font-weight:800;
-}
-
-.note{
-font-size:22px;
-font-weight:900;
-line-height:1.8;
-text-align:center;
-color:#17324d;
-}
-
-.bigBtn{
+.btn{
 display:block;
-width:100%;
-border:none;
-padding:26px;
-margin-bottom:16px;
-border-radius:26px;
-font-size:30px;
-font-weight:900;
-color:white;
-cursor:pointer;
-box-shadow:0 6px 16px rgba(0,0,0,.16);
-}
-
-.green{background:#00897b}
-.orange{background:#ef6c00}
-.red{background:#d32f2f}
-.blue{background:#1565c0}
-
-.statusBox{
-background:#f4f7fb;
-border-radius:24px;
+max-width:400px;
+margin:12px auto;
 padding:22px;
-font-size:25px;
+font-size:24px;
 font-weight:900;
-text-align:center;
-line-height:1.7;
-}
-
-.time{
-margin-top:14px;
-font-size:19px;
-color:#607080;
-text-align:center;
-font-weight:900;
-}
-
-.backBtn{
-display:block;
-background:#455a64;
 color:white;
-text-decoration:none;
-padding:18px;
 border-radius:20px;
-text-align:center;
-font-size:22px;
-font-weight:900;
-margin-top:18px;
+text-decoration:none;
 }
+
+.a{background:#1976d2;}
+.b{background:#2e7d32;}
+.c{background:#ef6c00;}
+.d{background:#6a1b9a;}
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
+<h1>NSAW 暮らし情報局</h1>
 
-<div class="header">
-<h1>🫶 本人ページ</h1>
-</div>
-
-<div class="card">
-<div id="userName" class="name">👤 利用者</div>
-<div id="userArea" class="area">地域</div>
-</div>
-
-<div class="card">
-<div class="note">
-下のボタンを押すだけで、家族と支援者へ状況が共有されます。
-</div>
-</div>
-
-<div class="card">
-
-<button class="bigBtn green" onclick="saveStatus('元気です')">
-😊 元気です
-</button>
-
-<button class="bigBtn orange" onclick="saveStatus('困っています')">
-😓 少し困っています
-</button>
-
-<button class="bigBtn red" onclick="saveStatus('助けてください')">
-🚨 助けてください
-</button>
-
-<button class="bigBtn blue" onclick="saveMedicine()">
-💊 薬を飲みました
-</button>
-
-</div>
-
-<div class="card">
-<div id="currentStatus" class="statusBox">
-現在状態：未送信
-</div>
-
-<div id="currentTime" class="time">
-最終確認：未送信
-</div>
-</div>
-
-<a class="backBtn" href="portal.html">
-🏠 地域OSへ戻る
-</a>
-
-</div>
-
-<script>
-
-const GAS_URL =
-'https://script.google.com/macros/s/AKfycbwF42-3JwuoBglGVuPZzLyAKFV-0scKlh1Q7yrI17UaUgFB2JUig-fQIJjRlZiDs264/exec';
-
-const params = new URLSearchParams(location.search);
-const userId = params.get('id') || 'a001';
-
-const users = {
-a001:{
-name:'山田 太郎',
-area:'志木市 本町',
-family:'長男 山田次郎',
-phone:'090-1111-1111'
-},
-a002:{
-name:'佐藤 花子',
-area:'新座市 東',
-family:'長女 佐藤美香',
-phone:'090-2222-2222'
-},
-a003:{
-name:'鈴木 一郎',
-area:'朝霞市 西原',
-family:'次男 鈴木健',
-phone:'090-3333-3333'
-},
-a004:{
-name:'高橋 京子',
-area:'和光市 丸山台',
-family:'長女 高橋由美',
-phone:'090-4444-4444'
-}
-};
-
-const user = users[userId] || users.a001;
-
-document.getElementById('userName').innerHTML =
-'👤 ' + user.name;
-
-document.getElementById('userArea').innerHTML =
-'📍 ' + user.area +
-'<br><br>' +
-'👨‍👩‍👧 家族：' + user.family +
-'<br>' +
-'📞 連絡先：' + user.phone;
-
-function nowString(){
-const d = new Date();
-return d.getFullYear() + '/' +
-String(d.getMonth()+1).padStart(2,'0') + '/' +
-String(d.getDate()).padStart(2,'0') + ' ' +
-String(d.getHours()).padStart(2,'0') + ':' +
-String(d.getMinutes()).padStart(2,'0');
-}
-
-function saveStatus(status){
-
-fetch(
-GAS_URL +
-'?mode=status' +
-'&id=' + encodeURIComponent(userId) +
-'&name=' + encodeURIComponent(user.name) +
-'&status=' + encodeURIComponent(status)
-)
-.then(r=>r.text())
-.then(()=>{
-
-document.getElementById('currentStatus').innerHTML =
-'現在状態：' + status;
-
-document.getElementById('currentTime').innerHTML =
-'最終確認：' + nowString();
-
-alert(status + ' を送信しました');
-
-})
-.catch(()=>{
-alert('送信に失敗しました');
-});
-
-}
-
-function saveMedicine(){
-
-fetch(
-GAS_URL +
-'?mode=medicine' +
-'&id=' + encodeURIComponent(userId) +
-'&name=' + encodeURIComponent(user.name)
-)
-.then(r=>r.text())
-.then(()=>{
-alert('服薬を記録しました');
-})
-.catch(()=>{
-alert('送信に失敗しました');
-});
-
-}
-
-</script>
+<a class="btn a" href="kawaraban.html">瓦版を見る</a>
+<a class="btn b" href="radio.html?radio=1">ラジオ1</a>
+<a class="btn c" href="radio.html?radio=2">ラジオ2</a>
+<a class="btn d" href="app.html?id=1">記事を見る</a>
 
 </body>
 </html>
