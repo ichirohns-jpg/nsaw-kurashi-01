@@ -3,392 +3,397 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NSAW地域ラジオ</title>
+<title>地域ラジオ</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
-  margin:0;
-  background:#eef5fb;
-  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-  color:#1f2d3d;
+margin:0;
+background:#eef4fb;
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+color:#17324d;
 }
+
 .wrap{
-  max-width:760px;
-  margin:0 auto;
-  padding:18px 14px 44px;
+max-width:900px;
+margin:auto;
+padding:16px;
 }
+
 .header{
-  background:linear-gradient(135deg,#2f70c9,#64a9f2);
-  color:#fff;
-  border-radius:26px;
-  padding:30px 18px;
-  text-align:center;
-  margin-bottom:18px;
+background:linear-gradient(135deg,#1976d2,#42a5f5);
+color:#fff;
+padding:24px;
+border-radius:24px;
+text-align:center;
+font-size:34px;
+font-weight:900;
+margin-bottom:20px;
+box-shadow:0 6px 18px rgba(0,0,0,.12);
 }
-.header h1{
-  margin:0;
-  font-size:34px;
-  line-height:1.3;
-  font-weight:900;
-}
-.header p{
-  margin:14px 0 0;
-  font-size:20px;
-  line-height:1.7;
-  font-weight:700;
-}
-.topNav{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:12px;
-  margin-bottom:18px;
-}
-.bigBtn{
-  display:block;
-  width:100%;
-  border:0;
-  border-radius:20px;
-  padding:18px 12px;
-  font-size:22px;
-  font-weight:900;
-  color:#fff;
-  text-align:center;
-  text-decoration:none;
-  cursor:pointer;
-}
-.gray{background:#6f8490}
-.blue{background:#3478d4}
-.green{background:#51c65f}
-.black{background:#111}
-.orange{background:#ef8427}
+
 .card{
-  background:#fff;
-  border-radius:26px;
-  padding:20px;
-  margin-bottom:22px;
-  box-shadow:0 8px 24px rgba(0,0,0,.12);
+background:#fff;
+border-radius:24px;
+padding:18px;
+margin-bottom:20px;
+box-shadow:0 6px 18px rgba(0,0,0,.10);
 }
+
 .date{
-  display:inline-block;
-  background:#e3f2fd;
-  color:#2f70c9;
-  border-radius:999px;
-  padding:9px 15px;
-  font-size:18px;
-  font-weight:900;
-  margin-bottom:14px;
+display:inline-block;
+background:#e3f2fd;
+color:#1565c0;
+padding:8px 16px;
+border-radius:999px;
+font-size:16px;
+font-weight:900;
+margin-bottom:12px;
 }
+
 .title{
-  font-size:27px;
-  font-weight:900;
-  line-height:1.45;
-  margin-bottom:14px;
+font-size:28px;
+font-weight:900;
+line-height:1.4;
+margin-bottom:14px;
 }
+
+.thumb{
+width:100%;
+border-radius:18px;
+display:block;
+margin-bottom:16px;
+}
+
+.script{
+font-size:21px;
+line-height:1.9;
+font-weight:700;
+white-space:pre-wrap;
+margin-top:12px;
+}
+
 .videoBox{
-  position:relative;
-  width:100%;
-  padding-top:56.25%;
-  background:#000;
-  border-radius:20px;
-  overflow:hidden;
-  margin:14px 0;
+position:relative;
+padding-bottom:56.25%;
+height:0;
+overflow:hidden;
+border-radius:18px;
+margin-top:18px;
+background:#000;
 }
+
 .videoBox iframe{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  border:0;
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+border:0;
 }
-.desc{
-  font-size:19px;
-  line-height:1.85;
-  white-space:pre-wrap;
-  color:#24415f;
-  margin-top:14px;
+
+.sns{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:20px;
 }
-.tags{
-  font-size:17px;
-  line-height:1.7;
-  white-space:pre-wrap;
-  color:#2f70c9;
-  font-weight:900;
-  margin-top:14px;
+
+.sns button{
+border:0;
+border-radius:18px;
+padding:16px;
+font-size:20px;
+font-weight:900;
+color:white;
+cursor:pointer;
 }
-.snsGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:18px;
+
+.fb{background:#1877f2}
+.line{background:#06c755}
+.x{background:#111}
+.copy{background:#ff9800}
+
+.archive{
+background:#fff;
+border-radius:24px;
+padding:18px;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
-.snsBtn{
-  border:0;
-  border-radius:15px;
-  padding:14px 8px;
-  color:#fff;
-  font-size:17px;
-  font-weight:900;
-  cursor:pointer;
+
+.archiveTitle{
+font-size:28px;
+font-weight:900;
+margin-bottom:12px;
 }
-.loading{
-  background:#fff;
-  border-radius:24px;
-  padding:28px 18px;
-  text-align:center;
-  font-size:20px;
-  font-weight:900;
+
+.archive a{
+display:block;
+padding:14px;
+background:#f4f7fb;
+border-radius:14px;
+margin-bottom:10px;
+text-decoration:none;
+color:#17324d;
+font-size:19px;
+font-weight:900;
 }
-.archiveBtn{
-  display:none;
-  width:100%;
-  border:0;
-  border-radius:20px;
-  background:#546e7a;
-  color:#fff;
-  padding:18px;
-  font-size:21px;
-  font-weight:900;
-  margin:10px 0 24px;
-}
-.hidden{display:none}
-@media(max-width:520px){
-  .header h1{font-size:30px}
-  .header p{font-size:18px}
-  .title{font-size:25px}
-  .snsGrid{grid-template-columns:1fr 1fr}
+
+.backBtn{
+display:block;
+text-align:center;
+text-decoration:none;
+background:#455a64;
+color:#fff;
+padding:16px;
+border-radius:18px;
+font-size:20px;
+font-weight:900;
+margin-bottom:18px;
 }
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
 
-  <div class="header">
-    <h1>NSAW地域ラジオ</h1>
-    <p>志木・新座・朝霞・和光の暮らし情報を、ラジオ風にお届けします。</p>
-  </div>
+<div class="header">
+NSAW 地域ラジオ
+</div>
 
-  <div class="topNav">
-    <a class="bigBtn gray" href="portal.html">ポータルへ戻る</a>
-    <a class="bigBtn blue" href="index.html">トップへ戻る</a>
-  </div>
-
-  <div id="latestArea" class="loading">読み込み中...</div>
-
-  <button id="archiveButton" class="archiveBtn" onclick="toggleArchive()">アーカイブを見る</button>
-  <div id="archiveArea" class="hidden"></div>
+<div id="app">読み込み中...</div>
 
 </div>
 
 <script>
-const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-const SHEET_NAME = '地域ラジオ';
-const PAGE_URL = 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html';
 
-const DATA_URL =
-  'https://docs.google.com/spreadsheets/d/' +
-  SHEET_ID +
-  '/gviz/tq?sheet=' +
-  encodeURIComponent(SHEET_NAME) +
-  '&tqx=out:json';
+const SHEET_ID='149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const SHEET_NAME='地域ラジオ';
 
-function $(id){
-  return document.getElementById(id);
+const url=
+'https://docs.google.com/spreadsheets/d/'+
+SHEET_ID+
+'/gviz/tq?sheet='+
+encodeURIComponent(SHEET_NAME)+
+'&tqx=out:json';
+
+function cell(r,i){
+return r.c && r.c[i]
+? (r.c[i].f || r.c[i].v || '')
+: '';
 }
 
-function cell(row,index){
-  if(!row || !row.c || !row.c[index]) return '';
-  const c = row.c[index];
-  return c.f || c.v || '';
+function getYoutubeId(url){
+
+if(!url) return '';
+
+let m=url.match(/v=([^&]+)/);
+if(m) return m[1];
+
+m=url.match(/youtu\.be\/([^?]+)/);
+if(m) return m[1];
+
+m=url.match(/embed\/([^?]+)/);
+if(m) return m[1];
+
+return '';
 }
 
-function escapeHtml(text){
-  return String(text || '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
+function shareUrl(id){
+return 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-radio.html?id='+id;
 }
 
-function formatDate(value){
-  const s = String(value || '');
+function openShare(type,id){
 
-  const m = s.match(/^Date\((\d+),(\d+),(\d+)\)$/);
-  if(m){
-    const y = Number(m[1]);
-    const mo = Number(m[2]) + 1;
-    const d = Number(m[3]);
-    return y + '/' + String(mo).padStart(2,'0') + '/' + String(d).padStart(2,'0');
-  }
+const s=shareUrl(id);
 
-  return s;
+if(type==='facebook'){
+window.open(
+'https://www.facebook.com/sharer/sharer.php?u='+
+encodeURIComponent(s),
+'_blank'
+);
 }
 
-function dateTime(value){
-  const s = formatDate(value);
-  const t = new Date(s).getTime();
-  return isNaN(t) ? 0 : t;
+if(type==='line'){
+window.open(
+'https://social-plugins.line.me/lineit/share?url='+
+encodeURIComponent(s),
+'_blank'
+);
 }
 
-function getYouTubeId(url){
-  if(!url) return '';
-  const text = String(url);
-  let m = text.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
-  if(m) return m[1];
-  m = text.match(/([A-Za-z0-9_-]{11})/);
-  return m ? m[1] : '';
+if(type==='x'){
+window.open(
+'https://twitter.com/intent/tweet?url='+
+encodeURIComponent(s),
+'_blank'
+);
 }
 
-function makeCard(item,index){
-  const shareUrl = PAGE_URL + '?id=' + encodeURIComponent(index + 1);
-  const youtubeId = getYouTubeId(item.youtubeURL);
-
-  let videoHtml = '';
-  if(youtubeId){
-    videoHtml =
-      '<div class="videoBox">' +
-      '<iframe src="https://www.youtube.com/embed/' + youtubeId + '" allowfullscreen></iframe>' +
-      '</div>';
-  }
-
-  return `
-    <div class="card">
-      <div class="date">${escapeHtml(formatDate(item.date))}</div>
-      <div class="title">${escapeHtml(item.title)}</div>
-
-      ${videoHtml}
-
-      <div class="desc">${escapeHtml(item.desc)}</div>
-      <div class="tags">${escapeHtml(item.tags)}</div>
-
-      <div class="snsGrid">
-        <button class="snsBtn blue" onclick="shareFacebook('${shareUrl}')">Facebook</button>
-        <button class="snsBtn green" onclick="shareLine('${shareUrl}')">LINE</button>
-        <button class="snsBtn black" onclick="shareX('${shareUrl}','${escapeHtml(item.title)}')">X</button>
-        <button class="snsBtn orange" onclick="copyUrl('${shareUrl}')">URLコピー</button>
-      </div>
-    </div>
-  `;
 }
 
-function shareFacebook(shareUrl){
-  window.open(
-    'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl),
-    '_blank'
-  );
+function copyUrl(id){
+
+navigator.clipboard.writeText(
+shareUrl(id)
+);
+
+alert('URLをコピーしました');
+
 }
 
-function shareLine(shareUrl){
-  window.open(
-    'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(shareUrl),
-    '_blank'
-  );
+fetch(url)
+.then(r=>r.text())
+.then(t=>{
+
+const json=JSON.parse(
+t.substring(
+t.indexOf('{'),
+t.lastIndexOf('}')+1
+)
+);
+
+let rows=json.table.rows || [];
+
+let items=rows.map((r,i)=>({
+
+id:i+1,
+date:cell(r,0),
+radioNo:cell(r,1),
+title:cell(r,2),
+image:cell(r,3),
+script:cell(r,4),
+youtube:cell(r,5),
+bgm:cell(r,6)
+
+}));
+
+items=items.filter(x=>x.title);
+
+items.reverse();
+
+const params=new URLSearchParams(location.search);
+const id=params.get('radio');
+
+const app=document.getElementById('app');
+
+if(id){
+
+const item=items[Number(id)-1];
+
+if(!item){
+app.innerHTML='記事が見つかりません';
+return;
 }
 
-function shareX(shareUrl,title){
-  window.open(
-    'https://twitter.com/intent/tweet?text=' + encodeURIComponent(title) +
-    '&url=' + encodeURIComponent(shareUrl),
-    '_blank'
-  );
+const yid=getYoutubeId(item.youtube);
+
+app.innerHTML=`
+
+<a class="backBtn" href="radio.html">
+一覧へ戻る
+</a>
+
+<div class="card">
+
+<div class="date">${item.date}</div>
+
+<div class="title">${item.title}</div>
+
+${item.image?`<img class="thumb" src="${item.image}">`:''}
+
+<div class="script">${item.script}</div>
+
+${yid?`
+<div class="videoBox">
+<iframe
+src="https://www.youtube.com/embed/${yid}"
+allowfullscreen>
+</iframe>
+</div>
+`:''}
+
+<div class="sns">
+<button class="fb" onclick="openShare('facebook','${id}')">Facebook</button>
+<button class="line" onclick="openShare('line','${id}')">LINE</button>
+<button class="x" onclick="openShare('x','${id}')">X</button>
+<button class="copy" onclick="copyUrl('${id}')">URLコピー</button>
+</div>
+
+</div>
+`;
+
+return;
 }
 
-function copyUrl(shareUrl){
-  navigator.clipboard.writeText(shareUrl).then(function(){
-    alert('URLをコピーしました');
-  }).catch(function(){
-    alert(shareUrl);
-  });
-}
+let html='';
 
-function toggleArchive(){
-  const area = $('archiveArea');
-  const btn = $('archiveButton');
+items.slice(0,5).forEach((item,index)=>{
 
-  if(area.classList.contains('hidden')){
-    area.classList.remove('hidden');
-    btn.textContent = 'アーカイブを閉じる';
-  }else{
-    area.classList.add('hidden');
-    btn.textContent = 'アーカイブを見る';
-  }
-}
+html+=`
 
-fetch(DATA_URL)
-.then(res => res.text())
-.then(text => {
-  const start = text.indexOf('{');
-  const end = text.lastIndexOf('}') + 1;
-  const json = JSON.parse(text.substring(start,end));
-  const rows = json.table.rows || [];
+<div class="card">
 
-  let items = [];
+<div class="date">${item.date}</div>
 
-  rows.forEach(row => {
-    const date = cell(row,0);
-    const youtubeURL = cell(row,1);
-    const title = cell(row,2);
-    const desc = cell(row,3);
-    const tags = cell(row,4);
+<div class="title">
+<a href="radio.html?radio=${index+1}"
+style="text-decoration:none;color:#17324d">
+${item.title}
+</a>
+</div>
 
-    if(title === '動画タイトル' || youtubeURL === 'YouTube動画URL') return;
-    if(!date && !youtubeURL && !title && !desc && !tags) return;
+${item.image?`<img class="thumb" src="${item.image}">`:''}
 
-    items.push({
-      date:date,
-      youtubeURL:youtubeURL,
-      title:title,
-      desc:desc,
-      tags:tags
-    });
-  });
+<div class="script">
+${item.script.substring(0,120)}...
+</div>
 
-  items.sort((a,b) => dateTime(b.date) - dateTime(a.date));
+<div class="sns">
+<button class="fb" onclick="openShare('facebook','${index+1}')">Facebook</button>
+<button class="line" onclick="openShare('line','${index+1}')">LINE</button>
+<button class="x" onclick="openShare('x','${index+1}')">X</button>
+<button class="copy" onclick="copyUrl('${index+1}')">URLコピー</button>
+</div>
 
-  const idParam = new URLSearchParams(location.search).get('id');
+</div>
 
-  let latestHtml = '';
-  let archiveHtml = '';
+`;
 
-  if(idParam){
-    const idx = parseInt(idParam,10) - 1;
-
-    if(idx >= 0 && idx < items.length){
-      latestHtml = makeCard(items[idx],idx);
-    }else{
-      latestHtml = '<div class="loading">指定されたラジオが見つかりません</div>';
-    }
-
-    $('archiveButton').style.display = 'none';
-
-  }else{
-    items.forEach((item,index) => {
-      if(index < 5){
-        latestHtml += makeCard(item,index);
-      }else{
-        archiveHtml += makeCard(item,index);
-      }
-    });
-
-    if(archiveHtml){
-      $('archiveButton').style.display = 'block';
-    }
-  }
-
-  $('latestArea').className = '';
-  $('latestArea').innerHTML =
-    latestHtml || '<div class="loading">地域ラジオがありません</div>';
-
-  $('archiveArea').innerHTML = archiveHtml;
-})
-.catch(error => {
-  console.error(error);
-  $('latestArea').className = '';
-  $('latestArea').innerHTML =
-    '<div class="loading">読み込みに失敗しました</div>';
 });
+
+if(items.length>5){
+
+html+=`
+<div class="archive">
+<div class="archiveTitle">アーカイブ</div>
+`;
+
+items.slice(5).forEach((item,index)=>{
+
+html+=`
+<a href="radio.html?radio=${index+6}">
+${item.date}　${item.title}
+</a>
+`;
+
+});
+
+html+=`</div>`;
+}
+
+app.innerHTML=html;
+
+})
+.catch(()=>{
+
+document.getElementById('app').innerHTML='読み込み失敗';
+
+});
+
 </script>
 
 </body>
