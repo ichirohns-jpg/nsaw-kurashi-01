@@ -1,24 +1,54 @@
 // ==========================================
-// NSAW暮らし情報局 共通データ配信・制御コアロジック
-// 対象: kawaraban.html / radio.html / app.html
+// NSAW地域ラジオ専用 安定版ロジック
 // ==========================================
 
 const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-const SHEET_NAME = '4市瓦版'; // ※各ページの対象シート名に書き換えて共通利用
-const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=' + encodeURIComponent(SHEET_NAME) + '&tqx=out:json';
+const SHEET_NAME = '地域ラジオ';
 
-function cell(r, i) {
-  return r.c[i] ? (r.c[i].v || r.c[i].f || '') : '';
+const url =
+  'https://docs.google.com/spreadsheets/d/' +
+  SHEET_ID +
+  '/gviz/tq?sheet=' +
+  encodeURIComponent(SHEET_NAME) +
+  '&tqx=out:json';
+
+function $(id) {
+  return document.getElementById(id);
 }
 
-// カードHTML生成共通関数
+function cell(r, i) {
+  return r.c && r.c[i] ? (r.c[i].v ?? r.c[i].f ?? '') : '';
+}
+
+// YouTube ID抽出
+function getYouTubeId(url) {
+  if (!url) return '';
+  const match = url.match(/(?:youtu\.be\/|v=|shorts\/)([a-zA-Z0-9_-]{6,})/);
+  return match ? match[1] : '';
+}
+
+// カード生成（ラジオ用）
 function makeCard(item) {
+  const videoId = getYouTubeId(item.url);
+
   return `
     <div class="newsCard">
-      <img src="${item.image}" class="newsImage">
-      <div class="newsDate">${item.date}</div>
-      <div class="newsTitle">${item.title}</div>
-      <div class="newsText">${item.text}</div>
+
+      <div class="newsDate">${item.date || ''}</div>
+      <div class="newsTitle">${item.title || ''}</div>
+
+      ${videoId ? `
+        <iframe width="100%" height="220"
+          src="https://www.youtube.com/embed/${videoId}"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
+      ` : ''}
+
+      <div class="newsText">${item.text || ''}</div>
+
+      <div class="newsTag">${item.tag || ''}</div>
+
     </div>
   `;
 }
@@ -27,62 +57,48 @@ fetch(url)
   .then(res => res.text())
   .then(text => {
     const json = JSON.parse(text.substring(47).slice(0, -2));
-    const rows = json.table.rows;
+    const rows = json.table.rows || [];
 
     let items = [];
 
-    rows.forEach((r) => {
-      // 主要データがすべて空の不正行・空行を完全に除外
-      if (!cell(r, 0) && !cell(r, 2) && !cell(r, 3)) return;
+    rows.forEach(r => {
+      const date = cell(r, 0);
+      const url = cell(r, 1);
+      const title = cell(r, 2);
+      const text = cell(r, 3);
+      const tag = cell(r, 4);
 
-      items.push({
-        date: cell(r, 0),
-        image: cell(r, 1),
-        title: cell(r, 2),
-        text: cell(r, 3)
-      });
+      if (!date && !title && !url) return;
+
+      items.push({ date, url, title, text, tag });
     });
 
-    // 【② データ順統一】reverse禁止。指定のミリ秒変換による安全日付降順ソート
-    items.sort((a, b) => {
-      const aTime = Number(new Date(a.date || ''));
-      const bTime = Number(new Date(b.date || ''));
-      return (isNaN(bTime) ? 0 : bTime) - (isNaN(aTime) ? 0 : aTime);
-    });
+    // 日付ソート（安全）
+    items.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
-    // 【① URLルール統一】パラメータはすべて「id」に完全統一
     const idParam = new URLSearchParams(location.search).get("id");
-
     let target = null;
 
     if (idParam) {
-      // 配列インデックス（-1）アクセスに統一（find / originalIndexは禁止）
       const idx = parseInt(idParam, 10) - 1;
-      
-      // 範囲外チェック
-      if (idx >= 0 && idx < items.length) {
+      if (!isNaN(idx) && idx >= 0 && idx < items.length) {
         target = items[idx];
       }
     }
 
-    // パラメータ指定はあるが、該当データが存在しない（範囲外）場合
-    if (idParam && !target) {
-      document.getElementById('latestArea').innerHTML = `
-        <div class="newsCard">
-          <div class="newsText">指定された記事が見つかりません</div>
-        </div>
-      `;
-      return;
-    }
+    const el = $('latestArea');
+    if (!el) return;
 
-    // 表示ルール統一（targetがあれば1件表示、なければ全件表示）
-    document.getElementById('latestArea').innerHTML = target
+    el.innerHTML = target
       ? makeCard(target)
-      : items.map(i => makeCard(i)).join('');
+      : items.map(makeCard).join('');
 
   })
   .catch(() => {
-    document.getElementById('latestArea').innerHTML = `
+    const el = $('latestArea');
+    if (!el) return;
+
+    el.innerHTML = `
       <div class="newsCard">
         <div class="newsText">読み込みに失敗しました</div>
       </div>
