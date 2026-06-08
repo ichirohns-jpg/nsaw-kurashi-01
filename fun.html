@@ -6,13 +6,20 @@
 <title>お楽しみ動画</title>
 
 <style>
-*{box-sizing:border-box}
-
 body{
 margin:0;
-background:#eef4fb;
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#1f2d3d;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+background:#f4f7fb;
+color:#1e2a3a;
+}
+
+header{
+background:linear-gradient(135deg,#1976d2,#42a5f5);
+color:#fff;
+padding:26px;
+text-align:center;
+font-size:32px;
+font-weight:900;
 }
 
 .wrap{
@@ -21,148 +28,89 @@ margin:auto;
 padding:16px;
 }
 
-.header{
-background:linear-gradient(135deg,#1976d2,#42a5f5);
-color:white;
-padding:26px;
-border-radius:26px;
-text-align:center;
-font-size:34px;
-font-weight:900;
-margin-bottom:18px;
-box-shadow:0 8px 24px rgba(0,0,0,.12);
-}
-
+/* カード */
 .card{
-background:white;
-border-radius:28px;
-padding:18px;
-margin-bottom:22px;
-box-shadow:0 6px 18px rgba(0,0,0,.10);
-}
-
-.date{
-display:inline-block;
-background:#e8f5e9;
-color:#2e7d32;
-padding:10px 18px;
-border-radius:999px;
-font-size:18px;
-font-weight:900;
-margin-bottom:14px;
-}
-
-.title{
-font-size:28px;
-font-weight:900;
-line-height:1.4;
+background:#fff;
+border-radius:20px;
+overflow:hidden;
 margin-bottom:18px;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
 
-.thumb{
+.card img{
 width:100%;
-border-radius:18px;
-margin-bottom:14px;
 display:block;
 }
 
+/* 日付 */
+.date{
+display:inline-block;
+margin:12px;
+padding:6px 14px;
+background:#e3f2fd;
+color:#1565c0;
+border-radius:999px;
+font-weight:900;
+}
+
+/* タイトル */
+.title{
+font-size:26px;
+font-weight:900;
+padding:0 12px;
+}
+
+/* 説明 */
 .desc{
-font-size:22px;
-line-height:1.8;
-font-weight:700;
-color:#1976d2;
-margin:16px 0;
+padding:12px;
+font-size:18px;
+line-height:1.7;
+white-space:pre-wrap;
 }
 
-.videoBox{
-position:relative;
-padding-bottom:56.25%;
-height:0;
-overflow:hidden;
-border-radius:18px;
-margin-top:12px;
-margin-bottom:18px;
-background:#000;
-}
-
-.videoBox iframe{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-border:0;
-}
-
+/* SNS */
 .sns{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:18px;
+gap:10px;
+padding:12px;
 }
 
 .sns button{
 border:0;
-border-radius:18px;
-padding:18px;
-font-size:22px;
+padding:12px;
+border-radius:12px;
 font-weight:900;
-color:white;
-cursor:pointer;
+color:#fff;
+font-size:16px;
 }
 
 .fb{background:#1877f2}
 .line{background:#06c755}
-.x{background:#000}
-.copy{background:#ef6c00}
+.x{background:#111}
+.copy{background:#ff9800}
 
-.archive{
-background:white;
-padding:18px;
-border-radius:24px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
-}
-
-.archiveTitle{
-font-size:28px;
-font-weight:900;
-margin-bottom:12px;
-}
-
+/* アーカイブ */
 .archive a{
 display:block;
-padding:14px;
+padding:12px;
+background:#fff;
 margin-bottom:10px;
-background:#f3f6fa;
-border-radius:14px;
+border-radius:12px;
 text-decoration:none;
-color:#17324d;
-font-size:20px;
+color:#1e2a3a;
 font-weight:900;
-}
-
-.backBtn{
-display:block;
-text-align:center;
-text-decoration:none;
-background:#455a64;
-color:white;
-padding:16px;
-border-radius:18px;
-font-size:20px;
-font-weight:900;
-margin-bottom:18px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
-
-<div class="header">
+<header>
 お楽しみ動画
-</div>
+</header>
+
+<div class="wrap">
 
 <div id="app">読み込み中...</div>
 
@@ -170,7 +118,7 @@ margin-bottom:18px;
 
 <script>
 
-const SHEET_ID='1vWJ0x5fYVqN9z3rLJm2h0q9N8v0r5cQ7'; 
+const SHEET_ID='149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 const SHEET_NAME='お楽しみ動画';
 
 const url=
@@ -180,77 +128,47 @@ SHEET_ID+
 encodeURIComponent(SHEET_NAME)+
 '&tqx=out:json';
 
-function getCell(row,index){
-if(!row.c||!row.c[index]) return '';
-return row.c[index].f||row.c[index].v||'';
+function cell(r,i){
+return r.c && r.c[i]
+? (r.c[i].v || r.c[i].f || '')
+: '';
 }
 
-function youtubeId(url){
-
-if(!url) return '';
-
-let m=url.match(/v=([^&]+)/);
-if(m) return m[1];
-
-m=url.match(/youtu\.be\/([^?]+)/);
-if(m) return m[1];
-
-m=url.match(/embed\/([^?]+)/);
-if(m) return m[1];
-
-return '';
-}
-
+/* シェアURL */
 function shareUrl(id){
 return 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun.html?id='+id;
 }
 
+/* SNS */
 function openShare(type,id){
 
 const s=shareUrl(id);
 
 if(type==='facebook'){
-window.open(
-'https://www.facebook.com/sharer/sharer.php?u='+
-encodeURIComponent(s)
-);
+window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(s));
 }
 
 if(type==='line'){
-window.open(
-'https://social-plugins.line.me/lineit/share?url='+
-encodeURIComponent(s)
-);
+window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(s));
 }
 
 if(type==='x'){
-window.open(
-'https://twitter.com/intent/tweet?url='+
-encodeURIComponent(s)
-);
+window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(s));
 }
-
 }
 
 function copyUrl(id){
-
-navigator.clipboard.writeText(
-shareUrl(id)
-);
-
-alert('URLをコピーしました');
-
+navigator.clipboard.writeText(shareUrl(id));
+alert('URLコピーしました');
 }
 
+/* データ */
 fetch(url)
 .then(r=>r.text())
 .then(t=>{
 
 const json=JSON.parse(
-t.substring(
-t.indexOf('{'),
-t.lastIndexOf('}')+1
-)
+t.substring(t.indexOf('{'),t.lastIndexOf('}')+1)
 );
 
 let rows=json.table.rows||[];
@@ -258,61 +176,36 @@ let rows=json.table.rows||[];
 let items=rows.map((r,i)=>({
 
 id:i+1,
-date:getCell(r,0),
-videoId:getCell(r,1),
-title:getCell(r,2),
-thumb:getCell(r,3),
-desc:getCell(r,4),
-video:getCell(r,5),
-bgm:getCell(r,6),
-genre:getCell(r,7)
+date:cell(r,0),
+title:cell(r,2),
+image:cell(r,3),
+desc:cell(r,4),
+video:cell(r,5)
 
 }));
 
 items=items.filter(x=>x.title);
-
 items.reverse();
 
+const app=document.getElementById('app');
 const params=new URLSearchParams(location.search);
 const id=params.get('id');
 
-const app=document.getElementById('app');
-
+/* 詳細 */
 if(id){
 
-const item=items[Number(id)-1];
-
-if(!item){
-app.innerHTML='記事が見つかりません';
-return;
-}
-
-const yid=youtubeId(item.video);
+const item=items[id-1];
 
 app.innerHTML=`
-
-<a class="backBtn" href="fun.html">
-一覧へ戻る
-</a>
-
 <div class="card">
+
+<img src="${item.image || 'https://ichirohns-jpg/nsaw-kurashi-01/kawaraban-ogp.jpg'}">
 
 <div class="date">${item.date}</div>
 
 <div class="title">${item.title}</div>
 
-${item.thumb?`<img class="thumb" src="${item.thumb}">`:''}
-
 <div class="desc">${item.desc}</div>
-
-${yid?`
-<div class="videoBox">
-<iframe
-src="https://www.youtube.com/embed/${yid}"
-allowfullscreen>
-</iframe>
-</div>
-`:''}
 
 <div class="sns">
 <button class="fb" onclick="openShare('facebook','${id}')">Facebook</button>
@@ -327,23 +220,25 @@ allowfullscreen>
 return;
 }
 
+/* 一覧 */
 let html='';
 
 items.slice(0,5).forEach((item,index)=>{
 
 html+=`
-
 <div class="card">
+
+<a href="fun.html?id=${index+1}">
+<img src="${item.image || 'https://ichirohns-jpg/nsaw-kurashi-01/kawaraban-ogp.jpg'}">
+</a>
 
 <div class="date">${item.date}</div>
 
 <div class="title">
-<a href="fun.html?id=${index+1}" style="text-decoration:none;color:#17324d">
+<a href="fun.html?id=${index+1}">
 ${item.title}
 </a>
 </div>
-
-${item.thumb?`<img class="thumb" src="${item.thumb}">`:''}
 
 <div class="desc">${item.desc}</div>
 
@@ -355,34 +250,13 @@ ${item.thumb?`<img class="thumb" src="${item.thumb}">`:''}
 </div>
 
 </div>
-
 `;
-
 });
-
-if(items.length>5){
-
-html+=`<div class="archive">
-<div class="archiveTitle">アーカイブ</div>`;
-
-items.slice(5).forEach((item,index)=>{
-
-html+=`
-<a href="fun.html?id=${index+6}">
-${item.date}　${item.title}
-</a>
-`;
-
-});
-
-html+=`</div>`;
-
-}
 
 app.innerHTML=html;
 
 })
-.catch(e=>{
+.catch(()=>{
 document.getElementById('app').innerHTML='読み込み失敗';
 });
 
