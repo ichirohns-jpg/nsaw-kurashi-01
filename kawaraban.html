@@ -1,100 +1,86 @@
-<script>
+// ==========================================
+// NSAW暮らし情報局 共通データ配信・制御コアロジック
+// 対象: kawaraban.html / radio.html / app.html
+// ==========================================
 
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const SHEET_NAME = '4市瓦版'; // ※各ページの対象シート名に書き換えて共通利用
+const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=' + encodeURIComponent(SHEET_NAME) + '&tqx=out:json';
 
-const SHEET_NAME =
-'4市瓦版';
-
-const url =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=' +
-encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json';
-
-function cell(r,i){
-return r.c[i]
-? (r.c[i].v || r.c[i].f || '')
-: '';
+function cell(r, i) {
+  return r.c[i] ? (r.c[i].v || r.c[i].f || '') : '';
 }
 
-function makeCard(item){
-return `
-<div class="newsCard">
-
-<img src="${item.image}" class="newsImage">
-
-<div class="newsDate">${item.date}</div>
-<div class="newsTitle">${item.title}</div>
-<div class="newsText">${item.text}</div>
-
-</div>
-`;
+// カードHTML生成共通関数
+function makeCard(item) {
+  return `
+    <div class="newsCard">
+      <img src="${item.image}" class="newsImage">
+      <div class="newsDate">${item.date}</div>
+      <div class="newsTitle">${item.title}</div>
+      <div class="newsText">${item.text}</div>
+    </div>
+  `;
 }
 
 fetch(url)
-.then(res=>res.text())
-.then(text=>{
+  .then(res => res.text())
+  .then(text => {
+    const json = JSON.parse(text.substring(47).slice(0, -2));
+    const rows = json.table.rows;
 
-const json = JSON.parse(text.substring(47).slice(0,-2));
-const rows = json.table.rows;
+    let items = [];
 
-let items = [];
+    rows.forEach((r) => {
+      // 主要データがすべて空の不正行・空行を完全に除外
+      if (!cell(r, 0) && !cell(r, 2) && !cell(r, 3)) return;
 
-rows.forEach((r, index)=>{
-if(
-!cell(r,0) &&
-!cell(r,1) &&
-!cell(r,2) &&
-!cell(r,3)
-) return;
+      items.push({
+        date: cell(r, 0),
+        image: cell(r, 1),
+        title: cell(r, 2),
+        text: cell(r, 3)
+      });
+    });
 
-items.push({
-date:cell(r,0),
-image:cell(r,1),
-title:cell(r,2),
-text:cell(r,3),
-originalIndex:index
-});
-});
+    // 【④ 並び順統一】reverse禁止。日付降順ソート
+    items.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-items.reverse();
+    // 【① URLパラメータ統一】すべて「id」に統一
+    const idParam = new URLSearchParams(location.search).get("id");
 
-// ★URLパラメータ
-const kawarabanParam =
-new URLSearchParams(location.search)
-.get("kawaraban");
+    let target = null;
 
-// ★1件 or 全件
-let target;
+    if (idParam) {
+      // 【② データ参照方式統一】find禁止。配列インデックス（-1）アクセスに統一
+      const idx = parseInt(idParam, 10) - 1;
+      
+      // 範囲外チェック
+      if (idx >= 0 && idx < items.length) {
+        target = items[idx];
+      }
+    }
 
-if(kawarabanParam){
-const targetIndex = parseInt(kawarabanParam, 10) - 1;
-target = items.find(item => item.originalIndex === targetIndex);
-}
+    // パラメータ指定はあるが、該当データが存在しない（範囲外）場合
+    if (idParam && !target) {
+      document.getElementById('latestArea').innerHTML = `
+        <div class="newsCard">
+          <div class="newsText">指定された記事が見つかりません</div>
+        </div>
+      `;
+      return;
+    }
 
-if(kawarabanParam && !target){
+    // 【⑤ 表示ルール統一】同一配列による1件表示 / 全件表示の切り替え
+    document.getElementById('latestArea').innerHTML = target
+      ? makeCard(target)
+      : items.map(i => makeCard(i)).join('');
 
-document.getElementById('latestArea').innerHTML =
-'<div class="newsCard"><div class="newsText">指定された記事が見つかりません</div></div>';
-
-return;
-
-}
-
-// ★表示
-document.getElementById('latestArea').innerHTML =
-target
-? makeCard(target)
-: items.map(i=>makeCard(i)).join('');
-
-})
-.catch(()=>{
-
-document.getElementById('latestArea').innerHTML =
-'<div class="newsCard"><div class="newsText">読み込みに失敗しました</div></div>';
-
-});
-
-</script>
+  })
+  .catch(() => {
+    document.getElementById('latestArea').innerHTML = `
+      <div class="newsCard">
+        <div class="newsText">読み込みに失敗しました</div>
+      </div>
+    `;
+  });
