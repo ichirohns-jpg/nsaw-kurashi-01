@@ -2,441 +2,370 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>4市瓦版｜NSAW暮らし情報局</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>4市瓦版</title>
 
 <style>
 *{box-sizing:border-box}
 
 body{
-  margin:0;
-  background:#eef5fb;
-  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-  color:#17324d;
+margin:0;
+background:#eef4fb;
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+color:#17324d;
 }
 
 .wrap{
-  max-width:720px;
-  margin:0 auto;
-  padding:18px 14px 40px;
+max-width:900px;
+margin:auto;
+padding:16px;
 }
 
 .header{
-  background:linear-gradient(135deg,#1e88e5,#42a5f5);
-  color:white;
-  border-radius:24px;
-  padding:24px 18px;
-  text-align:center;
-  box-shadow:0 8px 22px rgba(30,136,229,.25);
-  margin-bottom:18px;
-}
-
-.header h1{
-  margin:0;
-  font-size:30px;
-  font-weight:900;
-  line-height:1.3;
-}
-
-.header p{
-  margin:10px 0 0;
-  font-size:17px;
-  font-weight:700;
-  line-height:1.6;
-}
-
-.nav{
-  display:flex;
-  gap:10px;
-  margin:14px 0 20px;
-}
-
-.nav a{
-  flex:1;
-  text-align:center;
-  text-decoration:none;
-  background:white;
-  color:#1565c0;
-  font-size:16px;
-  font-weight:900;
-  padding:14px 8px;
-  border-radius:16px;
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-
-.sectionTitle{
-  font-size:22px;
-  font-weight:900;
-  margin:24px 4px 12px;
-  color:#0d47a1;
+background:linear-gradient(135deg,#1976d2,#42a5f5);
+color:#fff;
+padding:24px;
+border-radius:24px;
+text-align:center;
+font-size:34px;
+font-weight:900;
+margin-bottom:20px;
+box-shadow:0 6px 18px rgba(0,0,0,.12);
 }
 
 .card{
-  background:white;
-  border-radius:24px;
-  overflow:hidden;
-  margin-bottom:22px;
-  box-shadow:0 8px 22px rgba(0,0,0,.10);
-}
-
-.card img{
-  width:100%;
-  display:block;
-  background:#dbeaf7;
-}
-
-.cardBody{
-  padding:18px;
+background:#fff;
+border-radius:24px;
+padding:18px;
+margin-bottom:20px;
+box-shadow:0 6px 18px rgba(0,0,0,.10);
 }
 
 .date{
-  display:inline-block;
-  background:#e3f2fd;
-  color:#1565c0;
-  font-size:15px;
-  font-weight:900;
-  padding:7px 12px;
-  border-radius:999px;
-  margin-bottom:10px;
+display:inline-block;
+background:#e3f2fd;
+color:#1565c0;
+padding:8px 16px;
+border-radius:999px;
+font-size:16px;
+font-weight:900;
+margin-bottom:12px;
 }
 
 .title{
-  font-size:25px;
-  font-weight:900;
-  line-height:1.35;
-  margin:4px 0 12px;
-  color:#17324d;
+font-size:30px;
+font-weight:900;
+line-height:1.4;
+margin-bottom:14px;
+}
+
+.thumb{
+width:100%;
+border-radius:18px;
+display:block;
+margin-bottom:16px;
 }
 
 .desc{
-  font-size:18px;
-  font-weight:700;
-  line-height:1.75;
-  white-space:pre-wrap;
-  margin-bottom:16px;
-  color:#26394d;
+font-size:21px;
+line-height:1.8;
+font-weight:700;
+white-space:pre-wrap;
+margin-top:12px;
 }
 
-.cityButtons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin:16px 0;
+.citys{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:18px;
 }
 
-.cityButtons a{
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  color:white;
-  font-size:17px;
-  font-weight:900;
-  padding:14px 8px;
-  border-radius:16px;
+.citys a{
+display:block;
+text-decoration:none;
+text-align:center;
+padding:14px;
+border-radius:16px;
+font-size:18px;
+font-weight:900;
+color:white;
 }
 
 .shiki{background:#1976d2}
-.niiza{background:#2e7d32}
-.asaka{background:#ef6c00}
-.wako{background:#6a1b9a}
+.niiza{background:#43a047}
+.asaka{background:#fb8c00}
+.wako{background:#8e24aa}
 
 .sns{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:16px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:20px;
 }
 
-.sns button,
-.sns a{
-  border:0;
-  text-decoration:none;
-  text-align:center;
-  color:white;
-  font-size:16px;
-  font-weight:900;
-  padding:13px 8px;
-  border-radius:15px;
-  cursor:pointer;
-  font-family:inherit;
+.sns button{
+border:0;
+border-radius:18px;
+padding:16px;
+font-size:20px;
+font-weight:900;
+color:white;
+cursor:pointer;
 }
 
 .fb{background:#1877f2}
 .line{background:#06c755}
 .x{background:#111}
-.copy{background:#607d8b}
+.copy{background:#ff9800}
 
 .archive{
-  margin-top:26px;
+background:#fff;
+border-radius:24px;
+padding:18px;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
 
-.archiveItem{
-  display:block;
-  background:white;
-  text-decoration:none;
-  color:#17324d;
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:12px;
-  box-shadow:0 5px 14px rgba(0,0,0,.08);
+.archiveTitle{
+font-size:28px;
+font-weight:900;
+margin-bottom:12px;
 }
 
-.archiveItem .aDate{
-  font-size:14px;
-  font-weight:900;
-  color:#1565c0;
-  margin-bottom:6px;
-}
-
-.archiveItem .aTitle{
-  font-size:19px;
-  font-weight:900;
-  line-height:1.4;
-}
-
-.loading,
-.error{
-  background:white;
-  border-radius:22px;
-  padding:24px;
-  text-align:center;
-  font-size:20px;
-  font-weight:900;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
+.archive a{
+display:block;
+padding:14px;
+background:#f4f7fb;
+border-radius:14px;
+margin-bottom:10px;
+text-decoration:none;
+color:#17324d;
+font-size:19px;
+font-weight:900;
 }
 
 .backBtn{
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  background:#455a64;
-  color:white;
-  font-size:18px;
-  font-weight:900;
-  padding:15px;
-  border-radius:18px;
-  margin-bottom:18px;
-}
-
-@media(max-width:480px){
-  .header h1{font-size:26px}
-  .title{font-size:23px}
-  .desc{font-size:17px}
-  .cityButtons{grid-template-columns:1fr}
+display:block;
+text-align:center;
+text-decoration:none;
+background:#455a64;
+color:#fff;
+padding:16px;
+border-radius:18px;
+font-size:20px;
+font-weight:900;
+margin-bottom:18px;
 }
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
 
-  <div class="header">
-    <h1>4市瓦版</h1>
-    <p>志木・新座・朝霞・和光の暮らし情報を見やすくお届けします。</p>
-  </div>
+<div class="header">
+4市瓦版
+</div>
 
-  <div class="nav">
-    <a href="index.html">トップ</a>
-    <a href="radio.html">地域ラジオ</a>
-    <a href="fun.html">お楽しみ</a>
-  </div>
-
-  <div id="app" class="loading">読み込み中です</div>
+<div id="app">読み込み中...</div>
 
 </div>
 
 <script>
-const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-const SHEET_NAME = '4市瓦版';
-const PAGE_URL = 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html';
 
-const url =
-  'https://docs.google.com/spreadsheets/d/' +
-  SHEET_ID +
-  '/gviz/tq?sheet=' +
-  encodeURIComponent(SHEET_NAME) +
-  '&tqx=out:json';
+const SHEET_ID='149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const SHEET_NAME='4市瓦版';
 
-function $(id){
-  return document.getElementById(id);
+const url=
+'https://docs.google.com/spreadsheets/d/'+
+SHEET_ID+
+'/gviz/tq?sheet='+
+encodeURIComponent(SHEET_NAME)+
+'&tqx=out:json';
+
+function cell(r,i){
+return r.c&&r.c[i]
+?(r.c[i].f||r.c[i].v||'')
+:'';
 }
 
-function cell(row,index){
-  if(!row.c || !row.c[index]) return '';
-  return row.c[index].f || row.c[index].v || '';
-}
-
-function esc(str){
-  return String(str || '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
-}
-
-function makeShareUrl(item){
-  return PAGE_URL + '?id=' + item.id;
+function shareUrl(id){
+return 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-kawaraban.html?id='+id;
 }
 
 function openShare(type,id){
-  const item = window.ALL_ITEMS.find(x => String(x.id) === String(id));
-  if(!item) return;
 
-  const shareUrl = makeShareUrl(item);
-  const text = item.title || '4市瓦版';
+const s=shareUrl(id);
 
-  let url = '';
+if(type==='facebook'){
+window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(s));
+}
 
-  if(type === 'facebook'){
-    url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl);
-  }
+if(type==='line'){
+window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(s));
+}
 
-  if(type === 'line'){
-    url = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(shareUrl);
-  }
-
-  if(type === 'x'){
-    url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(shareUrl);
-  }
-
-  window.open(url,'_blank');
+if(type==='x'){
+window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(s));
+}
 }
 
 function copyUrl(id){
-  const item = window.ALL_ITEMS.find(x => String(x.id) === String(id));
-  if(!item) return;
-
-  const shareUrl = makeShareUrl(item);
-
-  navigator.clipboard.writeText(shareUrl).then(() => {
-    alert('URLをコピーしました');
-  }).catch(() => {
-    prompt('このURLをコピーしてください', shareUrl);
-  });
-}
-
-function cityButton(title,url,className){
-  if(!title || !url) return '';
-  return `<a class="${className}" href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a>`;
-}
-
-function makeCard(item,detailMode){
-  return `
-    <div class="card">
-      ${item.image ? `<img src="${esc(item.image)}" alt="">` : ''}
-      <div class="cardBody">
-        <div class="date">${esc(item.date)}</div>
-        <div class="title">${esc(item.title)}</div>
-        <div class="desc">${esc(item.desc)}</div>
-
-        <div class="cityButtons">
-          ${cityButton(item.shikiTitle,item.shikiUrl,'shiki')}
-          ${cityButton(item.niizaTitle,item.niizaUrl,'niiza')}
-          ${cityButton(item.asakaTitle,item.asakaUrl,'asaka')}
-          ${cityButton(item.wakoTitle,item.wakoUrl,'wako')}
-        </div>
-
-        <div class="sns">
-          <button class="fb" onclick="openShare('facebook','${item.id}')">Facebook</button>
-          <button class="line" onclick="openShare('line','${item.id}')">LINE</button>
-          <button class="x" onclick="openShare('x','${item.id}')">X</button>
-          <button class="copy" onclick="copyUrl('${item.id}')">URLコピー</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function renderList(items){
-  const latest = items.slice(0,5);
-  const archive = items.slice(5);
-
-  let html = '';
-
-  html += `<div class="sectionTitle">最新の瓦版</div>`;
-  latest.forEach(item => {
-    html += makeCard(item,false);
-  });
-
-  if(archive.length){
-    html += `<div class="archive">`;
-    html += `<div class="sectionTitle">アーカイブ</div>`;
-    archive.forEach(item => {
-      html += `
-        <a class="archiveItem" href="kawaraban.html?id=${item.id}">
-          <div class="aDate">${esc(item.date)}</div>
-          <div class="aTitle">${esc(item.title)}</div>
-        </a>
-      `;
-    });
-    html += `</div>`;
-  }
-
-  $('app').className = '';
-  $('app').innerHTML = html;
-}
-
-function renderDetail(items,id){
-  const item = items.find(x => String(x.id) === String(id));
-
-  if(!item){
-    $('app').className = 'error';
-    $('app').innerHTML = '記事が見つかりません';
-    return;
-  }
-
-  $('app').className = '';
-  $('app').innerHTML =
-    `<a class="backBtn" href="kawaraban.html">瓦版一覧へ戻る</a>` +
-    makeCard(item,true);
+navigator.clipboard.writeText(shareUrl(id));
+alert('URLをコピーしました');
 }
 
 fetch(url)
-  .then(res => res.text())
-  .then(text => {
-    const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
-    const rows = json.table.rows || [];
+.then(r=>r.text())
+.then(t=>{
 
-    let items = rows.map((r,i) => ({
-      id: i + 1,
-      originalIndex: i + 1,
-      date: cell(r,0),
-      image: cell(r,1),
-      title: cell(r,2),
-      desc: cell(r,3),
-      shikiTitle: cell(r,4),
-      shikiUrl: cell(r,5),
-      niizaTitle: cell(r,6),
-      niizaUrl: cell(r,7),
-      asakaTitle: cell(r,8),
-      asakaUrl: cell(r,9),
-      wakoTitle: cell(r,10),
-      wakoUrl: cell(r,11)
-    })).filter(item => item.title || item.desc || item.image);
+const json=JSON.parse(
+t.substring(t.indexOf('{'),t.lastIndexOf('}')+1)
+);
 
-    items.reverse();
+let rows=json.table.rows||[];
 
-    items = items.map((item,index) => {
-      item.id = index + 1;
-      return item;
-    });
+let items=rows.map((r,i)=>({
 
-    window.ALL_ITEMS = items;
+id:i+1,
+date:cell(r,0),
+image:cell(r,1),
+title:cell(r,2),
+desc:cell(r,3),
 
-    const params = new URLSearchParams(location.search);
-    const id = params.get('id');
+shikiTitle:cell(r,4),
+shikiUrl:cell(r,5),
 
-    if(id){
-      renderDetail(items,id);
-    }else{
-      renderList(items);
-    }
-  })
-  .catch(err => {
-    $('app').className = 'error';
-    $('app').innerHTML = '読み込みに失敗しました';
-  });
+niizaTitle:cell(r,6),
+niizaUrl:cell(r,7),
+
+asakaTitle:cell(r,8),
+asakaUrl:cell(r,9),
+
+wakoTitle:cell(r,10),
+wakoUrl:cell(r,11)
+
+}));
+
+items=items.filter(x=>x.title);
+items.reverse();
+
+const app=document.getElementById('app');
+
+const params=new URLSearchParams(location.search);
+const id=params.get('id');
+
+if(id){
+
+const item=items[Number(id)-1];
+
+app.innerHTML=`
+
+<a class="backBtn" href="kawaraban.html">
+一覧へ戻る
+</a>
+
+<div class="card">
+
+<div class="date">${item.date}</div>
+
+<div class="title">${item.title}</div>
+
+<img
+class="thumb"
+src="${item.image}"
+onerror="this.src='https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban-ogp.jpg';">
+
+<div class="desc">${item.desc}</div>
+
+<div class="citys">
+
+<a class="shiki" href="${item.shikiUrl}" target="_blank">${item.shikiTitle}</a>
+
+<a class="niiza" href="${item.niizaUrl}" target="_blank">${item.niizaTitle}</a>
+
+<a class="asaka" href="${item.asakaUrl}" target="_blank">${item.asakaTitle}</a>
+
+<a class="wako" href="${item.wakoUrl}" target="_blank">${item.wakoTitle}</a>
+
+</div>
+
+<div class="sns">
+<button class="fb" onclick="openShare('facebook','${id}')">Facebook</button>
+<button class="line" onclick="openShare('line','${id}')">LINE</button>
+<button class="x" onclick="openShare('x','${id}')">X</button>
+<button class="copy" onclick="copyUrl('${id}')">URLコピー</button>
+</div>
+
+</div>
+`;
+
+return;
+}
+
+let html='';
+
+items.slice(0,5).forEach((item,index)=>{
+
+html+=`
+
+<div class="card">
+
+<div class="date">${item.date}</div>
+
+<div class="title">
+<a href="kawaraban.html?id=${index+1}" style="text-decoration:none;color:#17324d">
+${item.title}
+</a>
+</div>
+
+<img
+class="thumb"
+src="${item.image}"
+onerror="this.src='https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban-ogp.jpg';">
+
+<div class="desc">
+${(item.desc||'').substring(0,150)}...
+</div>
+
+<div class="sns">
+<button class="fb" onclick="openShare('facebook','${index+1}')">Facebook</button>
+<button class="line" onclick="openShare('line','${index+1}')">LINE</button>
+<button class="x" onclick="openShare('x','${index+1}')">X</button>
+<button class="copy" onclick="copyUrl('${index+1}')">URLコピー</button>
+</div>
+
+</div>
+`;
+
+});
+
+if(items.length>5){
+
+html+=`<div class="archive"><div class="archiveTitle">アーカイブ</div>`;
+
+items.slice(5).forEach((item,index)=>{
+
+html+=`
+<a href="kawaraban.html?id=${index+6}">
+${item.date}　${item.title}
+</a>
+`;
+
+});
+
+html+=`</div>`;
+}
+
+app.innerHTML=html;
+
+})
+.catch(()=>{
+
+document.getElementById('app').innerHTML='読み込み失敗';
+
+});
+
 </script>
 
 </body>
