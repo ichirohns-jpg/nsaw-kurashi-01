@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NSAW修正版</title>
+<title>地域ラジオ</title>
 
 <style>
 body{margin:0;font-family:sans-serif;background:#f4f7fb;color:#1e2a3a}
@@ -11,44 +11,47 @@ header{background:#1976d2;color:#fff;padding:22px;text-align:center;font-size:26
 .wrap{max-width:900px;margin:auto;padding:16px}
 .card{background:#fff;margin-bottom:16px;border-radius:14px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08)}
 img{width:100%;display:block}
+.date{padding:6px 10px;margin:10px;background:#e3f2fd;border-radius:999px;display:inline-block;font-weight:900}
 .title{font-size:20px;font-weight:900;padding:10px}
 .desc{padding:10px;font-size:15px;line-height:1.6}
-.date{padding:6px 10px;margin:10px;background:#e3f2fd;border-radius:999px;display:inline-block;font-weight:900}
 </style>
 </head>
 
 <body>
 
-<header>NSAW</header>
+<header>地域ラジオ</header>
 
 <div class="wrap">
-<div id="app"></div>
+<div id="app">読み込み中...</div>
 </div>
 
 <script>
 
-const SHEET_ID='149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const SHEET_ID="149lAFx3oPGjB0UqDpPWZJqt_rfc6LXQgoc";
 
 function cell(r,i){
-return r.c && r.c[i] ? (r.c[i].v || '') : '';
+return r.c && r.c[i] ? (r.c[i].v || "") : "";
 }
 
-function getImg(r){
-if(!r.c) return '';
+/* 画像取得（安定版） */
+function getImage(r){
+if(!r.c) return "";
+
 for(let i=0;i<r.c.length;i++){
-let v=r.c[i]?r.c[i].v:'';
-if(typeof v==='string' && v.includes('http')) return v;
-}
-return '';
+let v=r.c[i]?r.c[i].v:"";
+if(typeof v==="string" && v.includes("http")) return v;
 }
 
-function load(sheet){
+return "";
+}
 
-const url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?sheet='+encodeURIComponent(sheet)+'&tqx=out:json';
+const url=
+"https://docs.google.com/spreadsheets/d/"+SHEET_ID+
+"/gviz/tq?sheet="+encodeURIComponent("地域ラジオ")+"&tqx=out:json";
 
 fetch(url).then(r=>r.text()).then(t=>{
 
-const json=JSON.parse(t.substring(t.indexOf('{'),t.lastIndexOf('}')+1));
+const json=JSON.parse(t.substring(t.indexOf("{"),t.lastIndexOf("}")+1));
 
 let rows=json.table.rows||[];
 
@@ -56,11 +59,11 @@ let items=rows.map((r,i)=>({
 id:i+1,
 date:cell(r,0),
 title:cell(r,2),
-image:getImg(r),
+image:getImage(r),
 desc:cell(r,4)
-})).reverse();
+})).filter(x=>x.title).reverse();
 
-let html='';
+let html="";
 
 items.forEach(i=>{
 html+=`
@@ -72,17 +75,9 @@ html+=`
 </div>`;
 });
 
-document.getElementById('app').innerHTML=html;
+document.getElementById("app").innerHTML=html;
 
 });
-
-}
-
-let page = location.pathname;
-
-if(page.includes('radio')) load('地域ラジオ');
-if(page.includes('fun')) load('お楽しみ動画');
-if(page.includes('kawaraban')) load('4市瓦版');
 
 </script>
 
