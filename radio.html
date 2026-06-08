@@ -6,21 +6,63 @@
 <title>地域ラジオ</title>
 
 <style>
-body{margin:0;font-family:sans-serif;background:#f4f7fb;color:#1e2a3a}
-header{background:#1976d2;color:#fff;padding:22px;text-align:center;font-size:26px;font-weight:900}
-.wrap{max-width:900px;margin:auto;padding:16px}
-.card{background:#fff;margin-bottom:16px;border-radius:14px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08)}
-img{width:100%;display:block}
-.title{font-size:20px;font-weight:900;padding:10px}
-.desc{padding:10px;font-size:15px;line-height:1.6}
-.date{padding:6px 10px;margin:10px 10px;background:#e3f2fd;border-radius:999px;font-weight:900;display:inline-block}
-.sns{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
-button{border:0;padding:10px;border-radius:10px;color:#fff;font-weight:900}
-.fb{background:#1877f2}
-.line{background:#06c755}
-.x{background:#111}
-.copy{background:#ff9800}
+body{
+margin:0;
+font-family:sans-serif;
+background:#f4f7fb;
+color:#1e2a3a;
+}
+
+header{
+background:#1976d2;
+color:#fff;
+padding:22px;
+text-align:center;
+font-size:26px;
+font-weight:900;
+}
+
+.wrap{
+max-width:900px;
+margin:auto;
+padding:16px;
+}
+
+.card{
+background:#fff;
+margin-bottom:16px;
+border-radius:14px;
+overflow:hidden;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+img{
+width:100%;
+display:block;
+}
+
+.date{
+padding:6px 10px;
+margin:10px;
+background:#e3f2fd;
+border-radius:999px;
+display:inline-block;
+font-weight:900;
+}
+
+.title{
+font-size:20px;
+font-weight:900;
+padding:10px;
+}
+
+.desc{
+padding:10px;
+font-size:15px;
+line-height:1.6;
+}
 </style>
+
 </head>
 
 <body>
@@ -33,59 +75,52 @@ button{border:0;padding:10px;border-radius:10px;color:#fff;font-weight:900}
 
 <script>
 
-const SHEET_ID='149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-const SHEET_NAME='地域ラジオ';
+const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const SHEET_NAME = '地域ラジオ';
 
-const url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?sheet='+encodeURIComponent(SHEET_NAME)+'&tqx=out:json';
+const url =
+  'https://docs.google.com/spreadsheets/d/' +
+  SHEET_ID +
+  '/gviz/tq?sheet=' +
+  encodeURIComponent(SHEET_NAME) +
+  '&tqx=out:json';
 
-function cell(r,i){
-return r.c && r.c[i] ? (r.c[i].v || '') : '';
+function cell(r, i){
+  return r.c && r.c[i] ? (r.c[i].v || '') : '';
 }
 
-/* ★画像自動取得（これが正解） */
-function getImg(r){
-if(!r.c) return '';
-for(let i=0;i<r.c.length;i++){
-const v=r.c[i]?r.c[i].v:'';
-if(typeof v==='string' && v.includes('http')){
-return v;
-}
-}
-return 'https://ichirohns-jpg/nsaw-kurashi-01/noimage.jpg';
-}
+fetch(url)
+.then(res => res.text())
+.then(text => {
 
-fetch(url).then(r=>r.text()).then(t=>{
+  const json = JSON.parse(
+    text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1)
+  );
 
-const json=JSON.parse(t.substring(t.indexOf('{'),t.lastIndexOf('}')+1));
+  let rows = json.table.rows || [];
 
-let rows=json.table.rows||[];
+  let items = rows.map((r, i) => ({
+    id: i + 1,
+    date: cell(r, 0),
+    title: cell(r, 2),
+    image: cell(r, 3) || 'https://ichirohns-jpg/nsaw-kurashi-01/noimage.jpg',
+    desc: cell(r, 4)
+  })).filter(x => x.title).reverse();
 
-let items=rows.map((r,i)=>({
-id:i+1,
-date:cell(r,0),
-title:cell(r,2),
-image:getImg(r),
-desc:cell(r,4)
-})).filter(x=>x.title).reverse();
+  let html = '';
 
-const app=document.getElementById('app');
+  items.forEach(i => {
+    html += `
+      <div class="card">
+        <img src="${i.image}">
+        <div class="date">${i.date}</div>
+        <div class="title">${i.title}</div>
+        <div class="desc">${i.desc}</div>
+      </div>
+    `;
+  });
 
-let html='';
-
-items.forEach(i=>{
-html+=`
-<div class="card">
-
-<img src="${i.image}">
-
-<div class="date">${i.date}</div>
-<div class="title">${i.title}</div>
-<div class="desc">${i.desc}</div>
-
-</div>`;
-});
-
-app.innerHTML=html;
+  document.getElementById('app').innerHTML = html;
 
 });
 
