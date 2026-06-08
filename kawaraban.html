@@ -3,16 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>4市瓦版</title>
+<title>4市瓦版｜NSAW暮らし情報局</title>
 
 <style>
-*{box-sizing:border-box}
-
 body{
 margin:0;
-background:#eef4fb;
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#17324d;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+background:#f4f7fb;
+color:#1e2a3a;
+}
+
+header{
+background:linear-gradient(135deg,#1976d2,#42a5f5);
+color:#fff;
+padding:24px;
+text-align:center;
+font-size:32px;
+font-weight:900;
 }
 
 .wrap{
@@ -21,75 +28,61 @@ margin:auto;
 padding:16px;
 }
 
-.header{
-background:linear-gradient(135deg,#1976d2,#42a5f5);
-color:#fff;
-padding:24px;
-border-radius:24px;
-text-align:center;
-font-size:34px;
-font-weight:900;
-margin-bottom:20px;
-box-shadow:0 6px 18px rgba(0,0,0,.12);
-}
-
+/* カード */
 .card{
 background:#fff;
-border-radius:24px;
-padding:18px;
+border-radius:20px;
+overflow:hidden;
 margin-bottom:20px;
-box-shadow:0 6px 18px rgba(0,0,0,.10);
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
 
+.card img{
+width:100%;
+display:block;
+}
+
+/* 日付 */
 .date{
 display:inline-block;
+margin:14px;
+padding:6px 14px;
 background:#e3f2fd;
 color:#1565c0;
-padding:8px 16px;
 border-radius:999px;
-font-size:16px;
 font-weight:900;
-margin-bottom:12px;
 }
 
+/* タイトル */
 .title{
-font-size:30px;
+font-size:26px;
 font-weight:900;
-line-height:1.4;
-margin-bottom:14px;
+padding:0 14px;
 }
 
-.thumb{
-width:100%;
-border-radius:18px;
-display:block;
-margin-bottom:16px;
-}
-
+/* 説明 */
 .desc{
-font-size:21px;
-line-height:1.8;
-font-weight:700;
+padding:14px;
+font-size:18px;
+line-height:1.7;
 white-space:pre-wrap;
-margin-top:12px;
 }
 
-.citys{
+/* ボタン */
+.city{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
-margin-top:18px;
+padding:14px;
 }
 
-.citys a{
-display:block;
-text-decoration:none;
+.city a{
 text-align:center;
-padding:14px;
-border-radius:16px;
-font-size:18px;
+padding:12px;
+border-radius:12px;
+color:#fff;
+text-decoration:none;
 font-weight:900;
-color:white;
 }
 
 .shiki{background:#1976d2}
@@ -97,21 +90,21 @@ color:white;
 .asaka{background:#fb8c00}
 .wako{background:#8e24aa}
 
+/* SNS */
 .sns{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:20px;
+gap:10px;
+padding:14px;
 }
 
 .sns button{
 border:0;
-border-radius:18px;
-padding:16px;
-font-size:20px;
+padding:12px;
+border-radius:12px;
 font-weight:900;
-color:white;
-cursor:pointer;
+color:#fff;
+font-size:16px;
 }
 
 .fb{background:#1877f2}
@@ -119,53 +112,21 @@ cursor:pointer;
 .x{background:#111}
 .copy{background:#ff9800}
 
-.archive{
-background:#fff;
-border-radius:24px;
-padding:18px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
-}
-
-.archiveTitle{
-font-size:28px;
-font-weight:900;
-margin-bottom:12px;
-}
-
-.archive a{
-display:block;
-padding:14px;
-background:#f4f7fb;
-border-radius:14px;
-margin-bottom:10px;
+a{
+color:inherit;
 text-decoration:none;
-color:#17324d;
-font-size:19px;
-font-weight:900;
 }
 
-.backBtn{
-display:block;
-text-align:center;
-text-decoration:none;
-background:#455a64;
-color:#fff;
-padding:16px;
-border-radius:18px;
-font-size:20px;
-font-weight:900;
-margin-bottom:18px;
-}
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
-
-<div class="header">
+<header>
 4市瓦版
-</div>
+</header>
+
+<div class="wrap">
 
 <div id="app">読み込み中...</div>
 
@@ -184,37 +145,38 @@ encodeURIComponent(SHEET_NAME)+
 '&tqx=out:json';
 
 function cell(r,i){
-return r.c&&r.c[i]
-?(r.c[i].f||r.c[i].v||'')
-:'';
+return r.c && r.c[i] ? (r.c[i].v || r.c[i].f || '') : '';
 }
 
+/* シェアURL */
 function shareUrl(id){
 return 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-kawaraban.html?id='+id;
 }
 
+/* SNS */
 function openShare(type,id){
 
-const s=shareUrl(id);
+const urlShare=shareUrl(id);
 
 if(type==='facebook'){
-window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(s));
+window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(urlShare));
 }
 
 if(type==='line'){
-window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(s));
+window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(urlShare));
 }
 
 if(type==='x'){
-window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(s));
+window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(urlShare));
 }
 }
 
 function copyUrl(id){
 navigator.clipboard.writeText(shareUrl(id));
-alert('URLをコピーしました');
+alert('コピーしました');
 }
 
+/* データ取得 */
 fetch(url)
 .then(r=>r.text())
 .then(t=>{
@@ -223,7 +185,7 @@ const json=JSON.parse(
 t.substring(t.indexOf('{'),t.lastIndexOf('}')+1)
 );
 
-let rows=json.table.rows||[];
+let rows=json.table.rows || [];
 
 let items=rows.map((r,i)=>({
 
@@ -255,39 +217,27 @@ const app=document.getElementById('app');
 const params=new URLSearchParams(location.search);
 const id=params.get('id');
 
+/* 詳細 */
 if(id){
 
-const item=items[Number(id)-1];
+const item=items[id-1];
 
 app.innerHTML=`
-
-<a class="backBtn" href="kawaraban.html">
-一覧へ戻る
-</a>
-
 <div class="card">
+
+<img src="${item.image || 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban-ogp.jpg'}">
 
 <div class="date">${item.date}</div>
 
 <div class="title">${item.title}</div>
 
-<img
-class="thumb"
-src="${item.image}"
-onerror="this.src='https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban-ogp.jpg';">
-
 <div class="desc">${item.desc}</div>
 
-<div class="citys">
-
+<div class="city">
 <a class="shiki" href="${item.shikiUrl}" target="_blank">${item.shikiTitle}</a>
-
 <a class="niiza" href="${item.niizaUrl}" target="_blank">${item.niizaTitle}</a>
-
 <a class="asaka" href="${item.asakaUrl}" target="_blank">${item.asakaTitle}</a>
-
 <a class="wako" href="${item.wakoUrl}" target="_blank">${item.wakoTitle}</a>
-
 </div>
 
 <div class="sns">
@@ -303,30 +253,27 @@ onerror="this.src='https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban-ogp
 return;
 }
 
+/* 一覧 */
 let html='';
 
 items.slice(0,5).forEach((item,index)=>{
 
 html+=`
-
 <div class="card">
+
+<a href="kawaraban.html?id=${index+1}">
+<img src="${item.image || 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban-ogp.jpg'}">
+</a>
 
 <div class="date">${item.date}</div>
 
 <div class="title">
-<a href="kawaraban.html?id=${index+1}" style="text-decoration:none;color:#17324d">
+<a href="kawaraban.html?id=${index+1}">
 ${item.title}
 </a>
 </div>
 
-<img
-class="thumb"
-src="${item.image}"
-onerror="this.src='https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban-ogp.jpg';">
-
-<div class="desc">
-${(item.desc||'').substring(0,150)}...
-</div>
+<div class="desc">${item.desc}</div>
 
 <div class="sns">
 <button class="fb" onclick="openShare('facebook','${index+1}')">Facebook</button>
@@ -337,33 +284,13 @@ ${(item.desc||'').substring(0,150)}...
 
 </div>
 `;
-
 });
-
-if(items.length>5){
-
-html+=`<div class="archive"><div class="archiveTitle">アーカイブ</div>`;
-
-items.slice(5).forEach((item,index)=>{
-
-html+=`
-<a href="kawaraban.html?id=${index+6}">
-${item.date}　${item.title}
-</a>
-`;
-
-});
-
-html+=`</div>`;
-}
 
 app.innerHTML=html;
 
 })
 .catch(()=>{
-
 document.getElementById('app').innerHTML='読み込み失敗';
-
 });
 
 </script>
