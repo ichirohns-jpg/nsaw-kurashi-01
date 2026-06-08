@@ -7,104 +7,93 @@
 
 <style>
 *{box-sizing:border-box}
-
 body{
   margin:0;
   background:#eef5fb;
   font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-  color:#1d2b3a;
+  color:#1f2d3d;
 }
-
 .wrap{
   max-width:760px;
   margin:0 auto;
-  padding:18px 14px 40px;
+  padding:18px 14px 44px;
 }
-
 .header{
-  background:linear-gradient(135deg,#1565c0,#42a5f5);
-  color:white;
-  border-radius:24px;
-  padding:24px 18px;
-  margin-bottom:18px;
+  background:linear-gradient(135deg,#2f70c9,#64a9f2);
+  color:#fff;
+  border-radius:26px;
+  padding:30px 18px;
   text-align:center;
-  box-shadow:0 8px 22px rgba(0,0,0,.16);
+  margin-bottom:18px;
 }
-
 .header h1{
   margin:0;
-  font-size:30px;
-  line-height:1.35;
+  font-size:34px;
+  line-height:1.3;
+  font-weight:900;
 }
-
 .header p{
-  margin:10px 0 0;
-  font-size:16px;
+  margin:14px 0 0;
+  font-size:20px;
   line-height:1.7;
+  font-weight:700;
 }
-
-.nav{
+.topNav{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+  grid-template-columns:1fr;
+  gap:12px;
   margin-bottom:18px;
 }
-
-.btn{
+.bigBtn{
   display:block;
+  width:100%;
+  border:0;
+  border-radius:20px;
+  padding:18px 12px;
+  font-size:22px;
+  font-weight:900;
+  color:#fff;
   text-align:center;
   text-decoration:none;
-  border:none;
-  border-radius:16px;
-  padding:14px 10px;
-  font-size:17px;
-  font-weight:900;
-  color:white;
-  background:#1976d2;
   cursor:pointer;
 }
-
-.btn.green{background:#06c755}
-.btn.black{background:#111}
-.btn.gray{background:#607d8b}
-.btn.orange{background:#f57c00}
-
-.newsCard{
-  background:white;
-  border-radius:24px;
-  padding:18px;
-  margin-bottom:18px;
-  box-shadow:0 6px 18px rgba(0,0,0,.1);
+.gray{background:#6f8490}
+.blue{background:#3478d4}
+.green{background:#51c65f}
+.black{background:#111}
+.orange{background:#ef8427}
+.card{
+  background:#fff;
+  border-radius:26px;
+  padding:20px;
+  margin-bottom:22px;
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
 }
-
-.newsDate{
+.date{
   display:inline-block;
   background:#e3f2fd;
-  color:#1565c0;
+  color:#2f70c9;
   border-radius:999px;
-  padding:7px 12px;
-  font-size:14px;
+  padding:9px 15px;
+  font-size:18px;
   font-weight:900;
-  margin-bottom:12px;
+  margin-bottom:14px;
 }
-
-.newsTitle{
-  font-size:24px;
+.title{
+  font-size:27px;
   font-weight:900;
   line-height:1.45;
   margin-bottom:14px;
 }
-
 .videoBox{
   position:relative;
   width:100%;
   padding-top:56.25%;
-  border-radius:18px;
-  overflow:hidden;
   background:#000;
-  margin:12px 0 14px;
+  border-radius:20px;
+  overflow:hidden;
+  margin:14px 0;
 }
-
 .videoBox iframe{
   position:absolute;
   inset:0;
@@ -112,36 +101,62 @@ body{
   height:100%;
   border:0;
 }
-
-.newsText{
-  font-size:17px;
+.desc{
+  font-size:19px;
   line-height:1.85;
   white-space:pre-wrap;
-  margin-top:12px;
+  color:#24415f;
+  margin-top:14px;
 }
-
-.newsTag{
-  font-size:16px;
-  line-height:1.8;
-  color:#1565c0;
+.tags{
+  font-size:17px;
+  line-height:1.7;
+  white-space:pre-wrap;
+  color:#2f70c9;
   font-weight:900;
   margin-top:14px;
-  white-space:pre-wrap;
 }
-
-.loading{
-  background:white;
-  border-radius:22px;
-  padding:22px;
-  text-align:center;
+.snsGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:18px;
+}
+.snsBtn{
+  border:0;
+  border-radius:15px;
+  padding:14px 8px;
+  color:#fff;
+  font-size:17px;
   font-weight:900;
-  color:#555;
+  cursor:pointer;
 }
-
+.loading{
+  background:#fff;
+  border-radius:24px;
+  padding:28px 18px;
+  text-align:center;
+  font-size:20px;
+  font-weight:900;
+}
+.archiveBtn{
+  display:none;
+  width:100%;
+  border:0;
+  border-radius:20px;
+  background:#546e7a;
+  color:#fff;
+  padding:18px;
+  font-size:21px;
+  font-weight:900;
+  margin:10px 0 24px;
+}
+.hidden{display:none}
 @media(max-width:520px){
-  .header h1{font-size:26px}
-  .newsTitle{font-size:22px}
-  .nav{grid-template-columns:1fr}
+  .header h1{font-size:30px}
+  .header p{font-size:18px}
+  .title{font-size:25px}
+  .snsGrid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -154,22 +169,22 @@ body{
     <p>志木・新座・朝霞・和光の暮らし情報を、ラジオ風にお届けします。</p>
   </div>
 
-  <div class="nav">
-    <a class="btn gray" href="portal.html">ポータルへ戻る</a>
-    <a class="btn" href="index.html">トップへ戻る</a>
-    <button class="btn" onclick="shareFacebook()">Facebook</button>
-    <button class="btn green" onclick="shareLine()">LINE</button>
-    <button class="btn black" onclick="shareX()">X</button>
-    <button class="btn orange" onclick="copyUrl()">URLコピー</button>
+  <div class="topNav">
+    <a class="bigBtn gray" href="portal.html">ポータルへ戻る</a>
+    <a class="bigBtn blue" href="index.html">トップへ戻る</a>
   </div>
 
   <div id="latestArea" class="loading">読み込み中...</div>
+
+  <button id="archiveButton" class="archiveBtn" onclick="toggleArchive()">アーカイブを見る</button>
+  <div id="archiveArea" class="hidden"></div>
 
 </div>
 
 <script>
 const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 const SHEET_NAME = '地域ラジオ';
+const PAGE_URL = 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html';
 
 const DATA_URL =
   'https://docs.google.com/spreadsheets/d/' +
@@ -184,138 +199,196 @@ function $(id){
 
 function cell(row,index){
   if(!row || !row.c || !row.c[index]) return '';
-  return row.c[index].v ?? row.c[index].f ?? '';
+  const c = row.c[index];
+  return c.f || c.v || '';
 }
 
-function escapeHtml(str){
-  return String(str || '')
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'","&#039;");
+function escapeHtml(text){
+  return String(text || '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+}
+
+function formatDate(value){
+  const s = String(value || '');
+
+  const m = s.match(/^Date\((\d+),(\d+),(\d+)\)$/);
+  if(m){
+    const y = Number(m[1]);
+    const mo = Number(m[2]) + 1;
+    const d = Number(m[3]);
+    return y + '/' + String(mo).padStart(2,'0') + '/' + String(d).padStart(2,'0');
+  }
+
+  return s;
+}
+
+function dateTime(value){
+  const s = formatDate(value);
+  const t = new Date(s).getTime();
+  return isNaN(t) ? 0 : t;
 }
 
 function getYouTubeId(url){
   if(!url) return '';
   const text = String(url);
-  const match = text.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([a-zA-Z0-9_-]{6,})/);
-  return match ? match[1] : '';
+  let m = text.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) return m[1];
+  m = text.match(/([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : '';
 }
 
-function toTime(dateText){
-  const t = new Date(dateText).getTime();
-  return isNaN(t) ? 0 : t;
-}
+function makeCard(item,index){
+  const shareUrl = PAGE_URL + '?id=' + encodeURIComponent(index + 1);
+  const youtubeId = getYouTubeId(item.youtubeURL);
 
-function makeCard(item){
-  const videoId = getYouTubeId(item.url);
+  let videoHtml = '';
+  if(youtubeId){
+    videoHtml =
+      '<div class="videoBox">' +
+      '<iframe src="https://www.youtube.com/embed/' + youtubeId + '" allowfullscreen></iframe>' +
+      '</div>';
+  }
 
   return `
-    <div class="newsCard">
-      <div class="newsDate">${escapeHtml(item.date)}</div>
-      <div class="newsTitle">${escapeHtml(item.title)}</div>
+    <div class="card">
+      <div class="date">${escapeHtml(formatDate(item.date))}</div>
+      <div class="title">${escapeHtml(item.title)}</div>
 
-      ${videoId ? `
-        <div class="videoBox">
-          <iframe
-            src="https://www.youtube.com/embed/${videoId}"
-            allowfullscreen>
-          </iframe>
-        </div>
-      ` : ''}
+      ${videoHtml}
 
-      <div class="newsText">${escapeHtml(item.text)}</div>
-      <div class="newsTag">${escapeHtml(item.tag)}</div>
+      <div class="desc">${escapeHtml(item.desc)}</div>
+      <div class="tags">${escapeHtml(item.tags)}</div>
+
+      <div class="snsGrid">
+        <button class="snsBtn blue" onclick="shareFacebook('${shareUrl}')">Facebook</button>
+        <button class="snsBtn green" onclick="shareLine('${shareUrl}')">LINE</button>
+        <button class="snsBtn black" onclick="shareX('${shareUrl}','${escapeHtml(item.title)}')">X</button>
+        <button class="snsBtn orange" onclick="copyUrl('${shareUrl}')">URLコピー</button>
+      </div>
     </div>
   `;
+}
+
+function shareFacebook(shareUrl){
+  window.open(
+    'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl),
+    '_blank'
+  );
+}
+
+function shareLine(shareUrl){
+  window.open(
+    'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(shareUrl),
+    '_blank'
+  );
+}
+
+function shareX(shareUrl,title){
+  window.open(
+    'https://twitter.com/intent/tweet?text=' + encodeURIComponent(title) +
+    '&url=' + encodeURIComponent(shareUrl),
+    '_blank'
+  );
+}
+
+function copyUrl(shareUrl){
+  navigator.clipboard.writeText(shareUrl).then(function(){
+    alert('URLをコピーしました');
+  }).catch(function(){
+    alert(shareUrl);
+  });
+}
+
+function toggleArchive(){
+  const area = $('archiveArea');
+  const btn = $('archiveButton');
+
+  if(area.classList.contains('hidden')){
+    area.classList.remove('hidden');
+    btn.textContent = 'アーカイブを閉じる';
+  }else{
+    area.classList.add('hidden');
+    btn.textContent = 'アーカイブを見る';
+  }
 }
 
 fetch(DATA_URL)
 .then(res => res.text())
 .then(text => {
-  const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
-  const json = JSON.parse(jsonText);
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}') + 1;
+  const json = JSON.parse(text.substring(start,end));
   const rows = json.table.rows || [];
 
-  const items = [];
+  let items = [];
 
   rows.forEach(row => {
     const date = cell(row,0);
-    const url = cell(row,1);
+    const youtubeURL = cell(row,1);
     const title = cell(row,2);
-    const text = cell(row,3);
-    const tag = cell(row,4);
+    const desc = cell(row,3);
+    const tags = cell(row,4);
 
-    if(!date && !url && !title && !text && !tag) return;
+    if(title === '動画タイトル' || youtubeURL === 'YouTube動画URL') return;
+    if(!date && !youtubeURL && !title && !desc && !tags) return;
 
-    items.push({date,url,title,text,tag});
+    items.push({
+      date:date,
+      youtubeURL:youtubeURL,
+      title:title,
+      desc:desc,
+      tags:tags
+    });
   });
 
-  items.sort((a,b) => toTime(b.date) - toTime(a.date));
+  items.sort((a,b) => dateTime(b.date) - dateTime(a.date));
 
   const idParam = new URLSearchParams(location.search).get('id');
-  let target = null;
+
+  let latestHtml = '';
+  let archiveHtml = '';
 
   if(idParam){
     const idx = parseInt(idParam,10) - 1;
-    if(!isNaN(idx) && idx >= 0 && idx < items.length){
-      target = items[idx];
+
+    if(idx >= 0 && idx < items.length){
+      latestHtml = makeCard(items[idx],idx);
+    }else{
+      latestHtml = '<div class="loading">指定されたラジオが見つかりません</div>';
+    }
+
+    $('archiveButton').style.display = 'none';
+
+  }else{
+    items.forEach((item,index) => {
+      if(index < 5){
+        latestHtml += makeCard(item,index);
+      }else{
+        archiveHtml += makeCard(item,index);
+      }
+    });
+
+    if(archiveHtml){
+      $('archiveButton').style.display = 'block';
     }
   }
 
-  if(idParam && !target){
-    $('latestArea').className = '';
-    $('latestArea').innerHTML = `
-      <div class="newsCard">
-        <div class="newsText">指定されたラジオが見つかりません。</div>
-      </div>
-    `;
-    return;
-  }
-
   $('latestArea').className = '';
-  $('latestArea').innerHTML = target
-    ? makeCard(target)
-    : items.map(makeCard).join('');
+  $('latestArea').innerHTML =
+    latestHtml || '<div class="loading">地域ラジオがありません</div>';
 
+  $('archiveArea').innerHTML = archiveHtml;
 })
 .catch(error => {
   console.error(error);
   $('latestArea').className = '';
-  $('latestArea').innerHTML = `
-    <div class="newsCard">
-      <div class="newsText">読み込みに失敗しました。</div>
-    </div>
-  `;
+  $('latestArea').innerHTML =
+    '<div class="loading">読み込みに失敗しました</div>';
 });
-
-function shareFacebook(){
-  window.open(
-    'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href),
-    '_blank'
-  );
-}
-
-function shareLine(){
-  window.open(
-    'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(location.href),
-    '_blank'
-  );
-}
-
-function shareX(){
-  window.open(
-    'https://twitter.com/intent/tweet?url=' + encodeURIComponent(location.href),
-    '_blank'
-  );
-}
-
-function copyUrl(){
-  navigator.clipboard.writeText(location.href).then(function(){
-    alert('URLをコピーしました');
-  });
-}
 </script>
 
 </body>
