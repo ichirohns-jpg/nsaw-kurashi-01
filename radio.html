@@ -6,13 +6,20 @@
 <title>NSAW地域ラジオ</title>
 
 <style>
-*{box-sizing:border-box}
-
 body{
 margin:0;
-background:#eef4fb;
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#17324d;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+background:#f4f7fb;
+color:#1e2a3a;
+}
+
+header{
+background:linear-gradient(135deg,#1976d2,#42a5f5);
+color:#fff;
+padding:26px;
+text-align:center;
+font-size:32px;
+font-weight:900;
 }
 
 .wrap{
@@ -21,67 +28,52 @@ margin:auto;
 padding:16px;
 }
 
-.header{
-background:linear-gradient(135deg,#1976d2,#42a5f5);
-color:#fff;
-padding:24px;
-border-radius:24px;
-text-align:center;
-font-size:34px;
-font-weight:900;
-margin-bottom:20px;
-box-shadow:0 6px 18px rgba(0,0,0,.12);
-}
-
+/* カード */
 .card{
 background:#fff;
-border-radius:24px;
-padding:18px;
-margin-bottom:20px;
-box-shadow:0 6px 18px rgba(0,0,0,.10);
+border-radius:20px;
+overflow:hidden;
+margin-bottom:18px;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
 
+.card img{
+width:100%;
+display:block;
+}
+
+/* 日付 */
 .date{
 display:inline-block;
+margin:12px;
+padding:6px 14px;
 background:#e3f2fd;
 color:#1565c0;
-padding:8px 16px;
 border-radius:999px;
-font-size:16px;
 font-weight:900;
-margin-bottom:12px;
 }
 
+/* タイトル */
 .title{
-font-size:30px;
+font-size:26px;
 font-weight:900;
-line-height:1.4;
-margin-bottom:14px;
+padding:0 12px;
 }
 
-.thumb{
-width:100%;
-border-radius:18px;
-display:block;
-margin-bottom:16px;
-}
-
+/* 本文 */
 .script{
-font-size:21px;
-line-height:1.9;
-font-weight:700;
+padding:12px;
+font-size:18px;
+line-height:1.8;
 white-space:pre-wrap;
-margin-top:12px;
 }
 
+/* 動画 */
 .videoBox{
 position:relative;
 padding-bottom:56.25%;
 height:0;
 overflow:hidden;
-border-radius:18px;
-margin-top:18px;
-background:#000;
 }
 
 .videoBox iframe{
@@ -93,21 +85,20 @@ height:100%;
 border:0;
 }
 
+/* SNS */
 .sns{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:20px;
+gap:10px;
+padding:12px;
 }
 
 .sns button{
 border:0;
-border-radius:18px;
-padding:16px;
-font-size:20px;
+padding:12px;
+border-radius:12px;
 font-weight:900;
-color:white;
-cursor:pointer;
+color:#fff;
 }
 
 .fb{background:#1877f2}
@@ -115,56 +106,28 @@ cursor:pointer;
 .x{background:#111}
 .copy{background:#ff9800}
 
-.archive{
-background:#fff;
-border-radius:24px;
-padding:18px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
-}
-
-.archiveTitle{
-font-size:28px;
-font-weight:900;
-margin-bottom:12px;
-}
-
+/* アーカイブ */
 .archive a{
 display:block;
-padding:14px;
-background:#f4f7fb;
-border-radius:14px;
+padding:12px;
+background:#fff;
 margin-bottom:10px;
+border-radius:12px;
 text-decoration:none;
-color:#17324d;
-font-size:19px;
+color:#1e2a3a;
 font-weight:900;
-}
-
-.backBtn{
-display:block;
-text-align:center;
-text-decoration:none;
-background:#455a64;
-color:#fff;
-padding:16px;
-border-radius:18px;
-font-size:20px;
-font-weight:900;
-margin-bottom:18px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
-
-<div class="header">
+<header>
 NSAW 地域ラジオ
-</div>
+</header>
 
+<div class="wrap">
 <div id="app">読み込み中...</div>
-
 </div>
 
 <script>
@@ -172,51 +135,36 @@ NSAW 地域ラジオ
 const SHEET_ID='149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 const SHEET_NAME='地域ラジオ';
 
-const url=
-'https://docs.google.com/spreadsheets/d/'+
-SHEET_ID+
-'/gviz/tq?sheet='+
-encodeURIComponent(SHEET_NAME)+
-'&tqx=out:json';
+const url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?sheet='+encodeURIComponent(SHEET_NAME)+'&tqx=out:json';
 
 function cell(r,i){
-return r.c&&r.c[i]
-?(r.c[i].f||r.c[i].v||'')
-:'';
+return r.c && r.c[i] ? (r.c[i].v || r.c[i].f || '') : '';
 }
 
-function youtubeId(url){
-
-if(!url)return'';
-
+/* YouTubeID */
+function yt(url){
+if(!url) return '';
 let m=url.match(/v=([^&]+)/);
-if(m)return m[1];
-
+if(m) return m[1];
 m=url.match(/youtu\.be\/([^?]+)/);
-if(m)return m[1];
-
-m=url.match(/embed\/([^?]+)/);
-if(m)return m[1];
-
-return'';
+if(m) return m[1];
+return '';
 }
 
+/* シェアURL */
 function shareUrl(id){
 return 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-radio.html?id='+id;
 }
 
 function openShare(type,id){
-
 const s=shareUrl(id);
 
 if(type==='facebook'){
 window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(s));
 }
-
 if(type==='line'){
 window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(s));
 }
-
 if(type==='x'){
 window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(s));
 }
@@ -224,69 +172,54 @@ window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(s));
 
 function copyUrl(id){
 navigator.clipboard.writeText(shareUrl(id));
-alert('URLをコピーしました');
+alert('コピーしました');
 }
 
+/* データ取得 */
 fetch(url)
 .then(r=>r.text())
 .then(t=>{
 
-const json=JSON.parse(
-t.substring(t.indexOf('{'),t.lastIndexOf('}')+1)
-);
+const json=JSON.parse(t.substring(t.indexOf('{'),t.lastIndexOf('}')+1));
 
 let rows=json.table.rows||[];
 
 let items=rows.map((r,i)=>({
-
 id:i+1,
 date:cell(r,0),
 title:cell(r,2),
 image:cell(r,3),
 script:cell(r,4),
-youtube:cell(r,5)
-
+video:cell(r,5)
 }));
 
 items=items.filter(x=>x.title);
 items.reverse();
 
 const app=document.getElementById('app');
-
 const params=new URLSearchParams(location.search);
 const id=params.get('radio');
 
+/* 詳細 */
 if(id){
 
-const item=items[Number(id)-1];
-
-const yid=youtubeId(item.youtube);
+const item = items.find(x=>String(x.id)===String(id));
+const yid = yt(item.video);
 
 app.innerHTML=`
-
-<a class="backBtn" href="radio.html">
-一覧へ戻る
-</a>
-
 <div class="card">
 
 <div class="date">${item.date}</div>
 
 <div class="title">${item.title}</div>
 
-<img
-class="thumb"
-src="${item.image}"
-onerror="this.src='https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio-ogp.jpg';">
+<img src="${item.image || 'https://ichirohns-jpg/nsaw-kurashi-01/radio-ogp.jpg'}">
 
 <div class="script">${item.script}</div>
 
 ${yid?`
 <div class="videoBox">
-<iframe
-src="https://www.youtube.com/embed/${yid}"
-allowfullscreen>
-</iframe>
+<iframe src="https://www.youtube.com/embed/${yid}" allowfullscreen></iframe>
 </div>
 `:''}
 
@@ -299,34 +232,30 @@ allowfullscreen>
 
 </div>
 `;
-
 return;
 }
 
+/* 一覧 */
 let html='';
 
 items.slice(0,5).forEach((item,index)=>{
 
 html+=`
-
 <div class="card">
+
+<a href="radio.html?radio=${index+1}">
+<img src="${item.image || 'https://ichirohns-jpg/nsaw-kurashi-01/radio-ogp.jpg'}">
+</a>
 
 <div class="date">${item.date}</div>
 
 <div class="title">
-<a href="radio.html?radio=${index+1}" style="text-decoration:none;color:#17324d">
+<a href="radio.html?radio=${index+1}">
 ${item.title}
 </a>
 </div>
 
-<img
-class="thumb"
-src="${item.image}"
-onerror="this.src='https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio-ogp.jpg';">
-
-<div class="script">
-${(item.script||'').substring(0,150)}...
-</div>
+<div class="script">${(item.script||'').substring(0,120)}...</div>
 
 <div class="sns">
 <button class="fb" onclick="openShare('facebook','${index+1}')">Facebook</button>
@@ -337,33 +266,13 @@ ${(item.script||'').substring(0,150)}...
 
 </div>
 `;
-
 });
-
-if(items.length>5){
-
-html+=`<div class="archive"><div class="archiveTitle">アーカイブ</div>`;
-
-items.slice(5).forEach((item,index)=>{
-
-html+=`
-<a href="radio.html?radio=${index+6}">
-${item.date}　${item.title}
-</a>
-`;
-
-});
-
-html+=`</div>`;
-}
 
 app.innerHTML=html;
 
 })
 .catch(()=>{
-
 document.getElementById('app').innerHTML='読み込み失敗';
-
 });
 
 </script>
