@@ -103,6 +103,31 @@ font-weight:900;
 box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
+/* 追加の共通メニューボタン（大きな文字・縦並び・角丸） */
+.menu-btn{
+display:block;
+color:white;
+text-decoration:none;
+padding:20px;
+border-radius:22px;
+text-align:center;
+font-size:23px;
+font-weight:900;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
+margin-top:16px;
+border:none;
+width:100%;
+cursor:pointer;
+}
+
+.btn-portal{ background:#2e7d32 }
+.btn-app{ background:#ef6c00 }
+.btn-radio{ background:#00acc1 }
+.btn-fb{ background:#1877f2 }
+.btn-line{ background:#06c755 }
+.btn-x{ background:#111111 }
+.btn-copy{ background:#546e7a }
+
 .homeBtn{
 display:block;
 margin-top:24px;
@@ -136,6 +161,14 @@ box-shadow:0 5px 14px rgba(0,0,0,.16);
 <div id="list">
 <div class="card">読み込み中...</div>
 </div>
+
+<a class="menu-btn btn-portal" href="portal.html">🏠 地域ポータルへ戻る</a>
+<a class="menu-btn btn-app" href="app.html">📰 地域記事を見る</a>
+<a class="menu-btn btn-radio" href="radio.html">📻 地域ラジオを聞く</a>
+<button class="menu-btn btn-fb" onclick="shareFacebook()">👥 Facebookで伝える</button>
+<button class="menu-btn btn-line" onclick="shareLINE()">💬 LINEで送る</button>
+<button class="menu-btn btn-x" onclick="shareX()">🐦 X(旧Twitter)で共有</button>
+<button class="menu-btn btn-copy" onclick="copyURL()">📋 画面のURLをコピー</button>
 
 <a class="homeBtn" href="admin.html">
 ⬅ 支援者ページへ戻る
@@ -310,6 +343,32 @@ document.getElementById('list').innerHTML =
 '<div class="card">読み込みに失敗しました</div>';
 
 });
+
+/* SNSシェアとURLコピーの実行処理（404を防止する仕組み） */
+function shareFacebook() {
+  const currentUrl = encodeURIComponent(window.location.href);
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`, '_blank');
+}
+
+function shareLINE() {
+  const currentUrl = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent(document.title);
+  window.open(`https://social-plugins.line.me/lineit/share?url=${currentUrl}&text=${text}`, '_blank');
+}
+
+function shareX() {
+  const currentUrl = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent(document.title);
+  window.open(`https://x.com/intent/tweet?url=${currentUrl}&text=${text}`, '_blank');
+}
+
+function copyURL() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    alert('この画面のURLをコピーしました！メールやLINEに貼り付けて送ることができます。');
+  }).catch(() => {
+    alert('コピーに失敗しました。画面上部のURL欄から直接コピーしてください。');
+  });
+}
 
 </script>
 
