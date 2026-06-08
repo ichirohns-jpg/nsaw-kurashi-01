@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>4市瓦版｜NSAW暮らし情報局</title>
+<title>4市瓦版</title>
 
 <style>
 body{
@@ -16,7 +16,7 @@ color:#1e2a3a;
 header{
 background:linear-gradient(135deg,#1976d2,#42a5f5);
 color:#fff;
-padding:24px;
+padding:26px;
 text-align:center;
 font-size:32px;
 font-weight:900;
@@ -33,7 +33,7 @@ padding:16px;
 background:#fff;
 border-radius:20px;
 overflow:hidden;
-margin-bottom:20px;
+margin-bottom:18px;
 box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
 
@@ -45,7 +45,7 @@ display:block;
 /* 日付 */
 .date{
 display:inline-block;
-margin:14px;
+margin:12px;
 padding:6px 14px;
 background:#e3f2fd;
 color:#1565c0;
@@ -57,23 +57,23 @@ font-weight:900;
 .title{
 font-size:26px;
 font-weight:900;
-padding:0 14px;
+padding:0 12px;
 }
 
 /* 説明 */
 .desc{
-padding:14px;
+padding:12px;
 font-size:18px;
 line-height:1.7;
 white-space:pre-wrap;
 }
 
-/* ボタン */
+/* 市ボタン */
 .city{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
-padding:14px;
+padding:12px;
 }
 
 .city a{
@@ -95,7 +95,7 @@ font-weight:900;
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
-padding:14px;
+padding:12px;
 }
 
 .sns button{
@@ -112,11 +112,17 @@ font-size:16px;
 .x{background:#111}
 .copy{background:#ff9800}
 
-a{
-color:inherit;
+/* アーカイブ */
+.archive a{
+display:block;
+padding:12px;
+background:#fff;
+margin-bottom:10px;
+border-radius:12px;
 text-decoration:none;
+color:#1e2a3a;
+font-weight:900;
 }
-
 </style>
 </head>
 
@@ -145,35 +151,37 @@ encodeURIComponent(SHEET_NAME)+
 '&tqx=out:json';
 
 function cell(r,i){
-return r.c && r.c[i] ? (r.c[i].v || r.c[i].f || '') : '';
+return r.c && r.c[i]
+? (r.c[i].v || r.c[i].f || '')
+: '';
 }
 
 /* シェアURL */
 function shareUrl(id){
-return 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-kawaraban.html?id='+id;
+return 'https://ichirohns-jpg.nsaw-kurashi-01/share-kawaraban.html?id='+id;
 }
 
 /* SNS */
 function openShare(type,id){
 
-const urlShare=shareUrl(id);
+const s=shareUrl(id);
 
 if(type==='facebook'){
-window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(urlShare));
+window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(s));
 }
 
 if(type==='line'){
-window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(urlShare));
+window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(s));
 }
 
 if(type==='x'){
-window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(urlShare));
+window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(s));
 }
 }
 
 function copyUrl(id){
 navigator.clipboard.writeText(shareUrl(id));
-alert('コピーしました');
+alert('URLコピーしました');
 }
 
 /* データ取得 */
@@ -197,13 +205,10 @@ desc:cell(r,3),
 
 shikiTitle:cell(r,4),
 shikiUrl:cell(r,5),
-
 niizaTitle:cell(r,6),
 niizaUrl:cell(r,7),
-
 asakaTitle:cell(r,8),
 asakaUrl:cell(r,9),
-
 wakoTitle:cell(r,10),
 wakoUrl:cell(r,11)
 
@@ -213,7 +218,6 @@ items=items.filter(x=>x.title);
 items.reverse();
 
 const app=document.getElementById('app');
-
 const params=new URLSearchParams(location.search);
 const id=params.get('id');
 
@@ -225,7 +229,7 @@ const item=items[id-1];
 app.innerHTML=`
 <div class="card">
 
-<img src="${item.image || 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban-ogp.jpg'}">
+<img src="${item.image || 'https://ichirohns-jpg/nsaw-kurashi-01/kawaraban-ogp.jpg'}">
 
 <div class="date">${item.date}</div>
 
@@ -262,7 +266,7 @@ html+=`
 <div class="card">
 
 <a href="kawaraban.html?id=${index+1}">
-<img src="${item.image || 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban-ogp.jpg'}">
+<img src="${item.image || 'https://ichirohns-jpg/nsaw-kurashi-01/kawaraban-ogp.jpg'}">
 </a>
 
 <div class="date">${item.date}</div>
