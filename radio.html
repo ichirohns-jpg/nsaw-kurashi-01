@@ -3,126 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>地域ラジオ</title>
+<title>NSAW修正版</title>
 
 <style>
-body{
-margin:0;
-font-family:sans-serif;
-background:#f4f7fb;
-color:#1e2a3a;
-}
-
-header{
-background:#1976d2;
-color:#fff;
-padding:22px;
-text-align:center;
-font-size:26px;
-font-weight:900;
-}
-
-.wrap{
-max-width:900px;
-margin:auto;
-padding:16px;
-}
-
-.card{
-background:#fff;
-margin-bottom:16px;
-border-radius:14px;
-overflow:hidden;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-
-img{
-width:100%;
-display:block;
-}
-
-.date{
-padding:6px 10px;
-margin:10px;
-background:#e3f2fd;
-border-radius:999px;
-display:inline-block;
-font-weight:900;
-}
-
-.title{
-font-size:20px;
-font-weight:900;
-padding:10px;
-}
-
-.desc{
-padding:10px;
-font-size:15px;
-line-height:1.6;
-}
+body{margin:0;font-family:sans-serif;background:#f4f7fb;color:#1e2a3a}
+header{background:#1976d2;color:#fff;padding:22px;text-align:center;font-size:26px;font-weight:900}
+.wrap{max-width:900px;margin:auto;padding:16px}
+.card{background:#fff;margin-bottom:16px;border-radius:14px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+img{width:100%;display:block}
+.title{font-size:20px;font-weight:900;padding:10px}
+.desc{padding:10px;font-size:15px;line-height:1.6}
+.date{padding:6px 10px;margin:10px;background:#e3f2fd;border-radius:999px;display:inline-block;font-weight:900}
 </style>
-
 </head>
 
 <body>
 
-<header>地域ラジオ</header>
+<header>NSAW</header>
 
 <div class="wrap">
-<div id="app">読み込み中...</div>
+<div id="app"></div>
 </div>
 
 <script>
 
-const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-const SHEET_NAME = '地域ラジオ';
+const SHEET_ID='149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-const url =
-  'https://docs.google.com/spreadsheets/d/' +
-  SHEET_ID +
-  '/gviz/tq?sheet=' +
-  encodeURIComponent(SHEET_NAME) +
-  '&tqx=out:json';
-
-function cell(r, i){
-  return r.c && r.c[i] ? (r.c[i].v || '') : '';
+function cell(r,i){
+return r.c && r.c[i] ? (r.c[i].v || '') : '';
 }
 
-fetch(url)
-.then(res => res.text())
-.then(text => {
+function getImg(r){
+if(!r.c) return '';
+for(let i=0;i<r.c.length;i++){
+let v=r.c[i]?r.c[i].v:'';
+if(typeof v==='string' && v.includes('http')) return v;
+}
+return '';
+}
 
-  const json = JSON.parse(
-    text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1)
-  );
+function load(sheet){
 
-  let rows = json.table.rows || [];
+const url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?sheet='+encodeURIComponent(sheet)+'&tqx=out:json';
 
-  let items = rows.map((r, i) => ({
-    id: i + 1,
-    date: cell(r, 0),
-    title: cell(r, 2),
-    image: cell(r, 3) || 'https://ichirohns-jpg/nsaw-kurashi-01/noimage.jpg',
-    desc: cell(r, 4)
-  })).filter(x => x.title).reverse();
+fetch(url).then(r=>r.text()).then(t=>{
 
-  let html = '';
+const json=JSON.parse(t.substring(t.indexOf('{'),t.lastIndexOf('}')+1));
 
-  items.forEach(i => {
-    html += `
-      <div class="card">
-        <img src="${i.image}">
-        <div class="date">${i.date}</div>
-        <div class="title">${i.title}</div>
-        <div class="desc">${i.desc}</div>
-      </div>
-    `;
-  });
+let rows=json.table.rows||[];
 
-  document.getElementById('app').innerHTML = html;
+let items=rows.map((r,i)=>({
+id:i+1,
+date:cell(r,0),
+title:cell(r,2),
+image:getImg(r),
+desc:cell(r,4)
+})).reverse();
+
+let html='';
+
+items.forEach(i=>{
+html+=`
+<div class="card">
+<img src="${i.image}">
+<div class="date">${i.date}</div>
+<div class="title">${i.title}</div>
+<div class="desc">${i.desc}</div>
+</div>`;
+});
+
+document.getElementById('app').innerHTML=html;
 
 });
+
+}
+
+let page = location.pathname;
+
+if(page.includes('radio')) load('地域ラジオ');
+if(page.includes('fun')) load('お楽しみ動画');
+if(page.includes('kawaraban')) load('4市瓦版');
 
 </script>
 
