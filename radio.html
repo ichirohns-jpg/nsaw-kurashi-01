@@ -1,224 +1,3 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>朝の3分 地域ラジオ</title>
-
-<style>
-*{box-sizing:border-box}
-
-body{
-margin:0;
-background:linear-gradient(180deg,#eaf4ff 0%,#f7fbff 100%);
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#17324d;
-}
-
-.wrap{
-max-width:920px;
-margin:auto;
-padding:16px 14px 60px;
-}
-
-.header{
-background:white;
-border-radius:34px;
-padding:34px 24px;
-margin-bottom:22px;
-box-shadow:0 10px 26px rgba(0,0,0,.08);
-}
-
-.header h1{
-margin:0 0 20px;
-font-size:42px;
-line-height:1.35;
-font-weight:900;
-color:#17324d;
-}
-
-.backBtn{
-display:inline-block;
-background:#455a64;
-color:white;
-text-decoration:none;
-padding:18px 28px;
-border-radius:22px;
-font-size:23px;
-font-weight:900;
-box-shadow:0 5px 14px rgba(0,0,0,.16);
-}
-
-.header p{
-font-size:21px;
-font-weight:800;
-line-height:1.8;
-color:#607080;
-margin:24px 0 0;
-}
-
-.card{
-background:white;
-border-radius:30px;
-padding:24px;
-margin-bottom:22px;
-box-shadow:0 7px 20px rgba(0,0,0,.10);
-}
-
-.date{
-font-size:20px;
-font-weight:900;
-color:#1565c0;
-margin-bottom:10px;
-}
-
-.title{
-font-size:30px;
-font-weight:900;
-line-height:1.45;
-margin-bottom:14px;
-}
-
-.desc{
-font-size:21px;
-line-height:1.9;
-white-space:pre-wrap;
-margin-bottom:16px;
-color:#334;
-font-weight:700;
-}
-
-.tags{
-font-size:18px;
-font-weight:900;
-color:#607080;
-line-height:1.8;
-white-space:pre-wrap;
-margin-bottom:18px;
-}
-
-.video{
-position:relative;
-width:100%;
-padding-top:56.25%;
-background:#000;
-border-radius:24px;
-overflow:hidden;
-margin:18px 0;
-box-shadow:0 5px 14px rgba(0,0,0,.16);
-}
-
-.video iframe{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-border:0;
-}
-
-.snsGrid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:18px;
-}
-
-.snsBtn{
-border:none;
-color:white;
-padding:18px;
-border-radius:22px;
-font-size:20px;
-font-weight:900;
-text-align:center;
-cursor:pointer;
-box-shadow:0 5px 14px rgba(0,0,0,.16);
-}
-
-.facebook{background:#1877f2}
-.line{background:#06c755}
-.x{background:#000}
-.copy{background:#455a64}
-
-.archiveBtn{
-width:100%;
-border:none;
-background:#1565c0;
-color:white;
-padding:20px;
-border-radius:22px;
-font-size:23px;
-font-weight:900;
-margin:10px 0 24px;
-cursor:pointer;
-box-shadow:0 5px 14px rgba(0,0,0,.16);
-}
-
-.hidden{display:none}
-
-.loading{
-background:white;
-padding:40px;
-border-radius:24px;
-font-size:26px;
-font-weight:900;
-text-align:center;
-box-shadow:0 7px 20px rgba(0,0,0,.10);
-}
-
-.footer{
-text-align:center;
-font-size:18px;
-font-weight:900;
-margin-top:30px;
-color:#607080;
-line-height:1.7;
-}
-
-@media(max-width:768px){
-.header h1{font-size:36px}
-.title{font-size:27px}
-.desc{font-size:19px}
-.tags{font-size:17px}
-.snsGrid{grid-template-columns:1fr 1fr}
-}
-</style>
-</head>
-
-<body>
-
-<div class="wrap">
-
-<div class="header">
-<h1>🌅 朝の3分<br>地域ラジオ</h1>
-
-<a class="backBtn" href="portal.html">
-⬅ トップへ戻る
-</a>
-
-<p>
-志木・新座・朝霞・和光の暮らし情報を短く聞ける地域ラジオです。
-</p>
-</div>
-
-<div id="latestArea">
-<div class="loading">読み込み中...</div>
-</div>
-
-<button id="archiveButton" class="archiveBtn hidden" onclick="toggleArchive()">
-📚 アーカイブを見る
-</button>
-
-<div id="archiveArea" class="hidden"></div>
-
-<div class="footer">
-NSAW 暮らし情報局<br>
-朝の3分 地域ラジオ
-</div>
-
-</div>
-
 <script>
 const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 const SHEET_NAME = '地域ラジオ';
@@ -400,20 +179,40 @@ tags:tags
 
 });
 
+// 個別指定用に、配列を反転させる前の元データの順番（1からの連番）をIDとして各アイテムに持たせる
+items = items.map((item, index) => ({ ...item, originalIndex: index }));
+
+// 最新順にするために配列を反転
 items.reverse();
+
+// URLのパラメータから ?radio= の値を取得
+const urlParams = new URLSearchParams(window.location.search);
+const radioParam = urlParams.get('radio');
 
 let latestHtml = '';
 let archiveHtml = '';
 
-items.forEach((item,index)=>{
+if (radioParam) {
+// radioパラメータがある場合（個別記事表示）
+const targetIndex = parseInt(radioParam, 10) - 1;
+// originalIndexが一致する該当記事を検索
+const matchedItem = items.find(item => item.originalIndex === targetIndex);
 
-if(index < 5){
-latestHtml += makeCard(item,index);
-}else{
-archiveHtml += makeCard(item,index);
+if (matchedItem) {
+latestHtml = makeCard(matchedItem, matchedItem.originalIndex);
+} else {
+latestHtml = '<div class="loading">指定されたラジオが見つかりません</div>';
 }
-
+} else {
+// radioパラメータがない場合（通常の一覧表示）
+items.forEach((item, index) => {
+if (index < 5) {
+latestHtml += makeCard(item, item.originalIndex);
+} else {
+archiveHtml += makeCard(item, item.originalIndex);
+}
 });
+}
 
 document.getElementById('latestArea').innerHTML =
 latestHtml || '<div class="loading">地域ラジオがありません</div>';
@@ -421,7 +220,8 @@ latestHtml || '<div class="loading">地域ラジオがありません</div>';
 document.getElementById('archiveArea').innerHTML =
 archiveHtml;
 
-if(archiveHtml){
+// 通常一覧表示かつアーカイブがある場合のみ、アーカイブボタンを表示
+if (archiveHtml && !radioParam) {
 document.getElementById('archiveButton').classList.remove('hidden');
 }
 
@@ -433,6 +233,3 @@ document.getElementById('latestArea').innerHTML =
 
 });
 </script>
-
-</body>
-</html>
