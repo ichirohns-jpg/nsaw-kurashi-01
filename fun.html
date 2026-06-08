@@ -3,143 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>お楽しみ動画</title>
+<title>ラジオ</title>
 
 <style>
-body{
-margin:0;
-font-family:"Hiragino Sans","Yu Gothic",sans-serif;
-background:#f4f7fb;
-color:#1e2a3a;
-}
-
-header{
-background:#1e88e5;
-color:#fff;
-padding:24px;
-text-align:center;
-font-size:28px;
-font-weight:900;
-}
-
-.wrap{
-max-width:900px;
-margin:auto;
-padding:16px;
-}
-
-.card{
-background:#fff;
-border-radius:16px;
-overflow:hidden;
-margin-bottom:16px;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-
-img{
-width:100%;
-display:block;
-}
-
-.date{
-margin:10px 12px;
-padding:6px 12px;
-background:#e3f2fd;
-border-radius:999px;
-font-weight:900;
-display:inline-block;
-}
-
-.title{
-font-size:22px;
-font-weight:900;
-padding:0 12px;
-}
-
-.desc{
-padding:12px;
-font-size:16px;
-line-height:1.6;
-}
-
-.sns{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-padding:12px;
-}
-
-button{
-border:0;
-padding:12px;
-border-radius:10px;
-font-weight:900;
-color:#fff;
-}
-
-.fb{background:#1877f2}
-.line{background:#06c755}
-.x{background:#111}
-.copy{background:#ff9800}
+body{margin:0;font-family:sans-serif;background:#f4f7fb}
+header{background:#1976d2;color:#fff;padding:20px;text-align:center;font-size:24px;font-weight:900}
+.wrap{max-width:900px;margin:auto;padding:16px}
+.card{background:#fff;margin-bottom:16px;border-radius:12px;overflow:hidden}
+img{width:100%;display:block}
+.title{font-size:20px;font-weight:900;padding:10px}
+.desc{padding:10px}
+.date{padding:6px 10px;background:#e3f2fd;margin:10px;border-radius:999px;display:inline-block;font-weight:900}
 </style>
-</head>
 
+</head>
 <body>
 
-<header>お楽しみ動画</header>
-
-<div class="wrap">
-<div id="app">読み込み中...</div>
-</div>
+<header>地域ラジオ</header>
+<div class="wrap"><div id="app"></div></div>
 
 <script>
 
 const SHEET_ID='149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-const SHEET_NAME='お楽しみ動画';
+const SHEET_NAME='地域ラジオ';
 
-const url=
-'https://docs.google.com/spreadsheets/d/'+SHEET_ID+
-'/gviz/tq?sheet='+encodeURIComponent(SHEET_NAME)+
-'&tqx=out:json';
+const url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?sheet='+encodeURIComponent(SHEET_NAME)+'&tqx=out:json';
 
 function cell(r,i){
-return r.c && r.c[i] ? (r.c[i].v || r.c[i].f || '') : '';
+return r.c && r.c[i] ? (r.c[i].v || '') : '';
 }
 
-/* ★画像安定化 */
-function safeImg(img){
-if(!img) return '';
-if(img.includes('drive.google')) return '';
-return img;
+function getImg(r){
+if(!r.c) return '';
+for(let i=0;i<r.c.length;i++){
+const v=r.c[i]?r.c[i].v:'';
+if(typeof v==='string' && v.includes('http')) return v;
+}
+return 'https://ichirohns-jpg/nsaw-kurashi-01/noimage.jpg';
 }
 
-/* share統一 */
-function shareUrl(id){
-return 'https://ichirohns-jpg/nsaw-kurashi-01/share.html?id='+id+'&type=fun';
-}
-
-function openShare(type,id){
-const s=shareUrl(id);
-
-if(type==='facebook')
-window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(s));
-
-if(type==='line')
-window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(s));
-
-if(type==='x')
-window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(s));
-}
-
-function copyUrl(id){
-navigator.clipboard.writeText(shareUrl(id));
-alert('コピーしました');
-}
-
-/* データ */
-fetch(url)
-.then(r=>r.text())
-.then(t=>{
+fetch(url).then(r=>r.text()).then(t=>{
 
 const json=JSON.parse(t.substring(t.indexOf('{'),t.lastIndexOf('}')+1));
 
@@ -147,72 +50,23 @@ let rows=json.table.rows||[];
 
 let items=rows.map((r,i)=>({
 id:i+1,
-date:cell(r,0),
 title:cell(r,2),
-image:safeImg(cell(r,3)),
+image:getImg(r),
 desc:cell(r,4)
-}));
+})).filter(x=>x.title).reverse();
 
-items=items.filter(x=>x.title).reverse();
-
-const app=document.getElementById('app');
-const params=new URLSearchParams(location.search);
-const id=params.get('id');
-
-/* 詳細 */
-if(id){
-
-const item=items.find(x=>String(x.id)===String(id));
-
-app.innerHTML=`
-<div class="card">
-
-<img src="${item.image || 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun-ogp.jpg'}">
-
-<div class="date">${item.date}</div>
-<div class="title">${item.title}</div>
-<div class="desc">${item.desc}</div>
-
-<div class="sns">
-<button class="fb" onclick="openShare('facebook','${id}')">Facebook</button>
-<button class="line" onclick="openShare('line','${id}')">LINE</button>
-<button class="x" onclick="openShare('x','${id}')">X</button>
-<button class="copy" onclick="copyUrl('${id}')">URLコピー</button>
-</div>
-
-</div>
-`;
-return;
-}
-
-/* 一覧 */
 let html='';
 
-items.slice(0,5).forEach(item=>{
-
+items.forEach(i=>{
 html+=`
 <div class="card">
-
-<a href="fun.html?id=${item.id}">
-<img src="${item.image || 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun-ogp.jpg'}">
-</a>
-
-<div class="date">${item.date}</div>
-<div class="title">${item.title}</div>
-<div class="desc">${item.desc}</div>
-
-<div class="sns">
-<button class="fb" onclick="openShare('facebook','${item.id}')">Facebook</button>
-<button class="line" onclick="openShare('line','${item.id}')">LINE</button>
-<button class="x" onclick="openShare('x','${item.id}')">X</button>
-<button class="copy" onclick="copyUrl('${item.id}')">URLコピー</button>
-</div>
-
-</div>
-`;
+<img src="${i.image}">
+<div class="title">${i.title}</div>
+<div class="desc">${i.desc}</div>
+</div>`;
 });
 
-app.innerHTML=html;
+document.getElementById('app').innerHTML=html;
 
 });
 
