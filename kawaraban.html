@@ -1,632 +1,69 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>4市瓦版</title>
-
-<meta property="og:title" content="4市瓦版">
-<meta property="og:description" content="志木・新座・朝霞・和光の地域ニュース">
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/img/shiki.jpg">
-<meta name="twitter:card" content="summary_large_image">
+<title>瓦版詳細</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-margin:0;
-background:linear-gradient(180deg,#eaf4ff 0%,#f7fbff 100%);
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#17324d;
-}
-
-.wrap{
-max-width:920px;
-margin:auto;
-padding:16px 14px 60px;
-}
-
-.topCard{
-background:white;
-border-radius:34px;
-padding:34px 24px;
-margin-bottom:22px;
-box-shadow:0 10px 26px rgba(0,0,0,.08);
-}
-
-.pageTitle{
-font-size:42px;
-font-weight:900;
-margin-bottom:20px;
-line-height:1.35;
-}
-
-.backBtn{
-display:inline-block;
-background:#455a64;
-color:white;
-text-decoration:none;
-padding:18px 28px;
-border-radius:22px;
-font-size:23px;
-font-weight:900;
-box-shadow:0 5px 14px rgba(0,0,0,.16);
-}
-
-.desc{
-font-size:21px;
-line-height:1.8;
-color:#607080;
-font-weight:800;
-margin-top:24px;
-}
-
-.newsCard{
-background:white;
-border-radius:30px;
-padding:24px;
-margin-bottom:22px;
-box-shadow:0 7px 20px rgba(0,0,0,.10);
-}
-
-.newsImage{
-width:100%;
-display:block;
-border-radius:24px;
-margin-bottom:18px;
-box-shadow:0 5px 14px rgba(0,0,0,.12);
-}
-
-.newsDate{
-font-size:20px;
-font-weight:900;
-color:#1565c0;
-margin-bottom:10px;
-}
-
-.newsTitle{
-font-size:30px;
-font-weight:900;
-line-height:1.45;
-margin-bottom:14px;
-}
-
-.newsText{
-font-size:21px;
-line-height:1.9;
-color:#506070;
-font-weight:700;
-margin-bottom:20px;
-white-space:pre-wrap;
-}
-
-.cityGrid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-margin-top:18px;
-}
-
-.cityBtn{
-display:block;
-text-decoration:none;
-color:white;
-padding:18px;
-border-radius:22px;
-font-size:21px;
-font-weight:900;
-text-align:center;
-line-height:1.5;
-box-shadow:0 5px 14px rgba(0,0,0,.16);
-}
-
-.shiki{background:#1565c0}
-.niiza{background:#00897b}
-.asaka{background:#ef6c00}
-.wako{background:#8e24aa}
-
-.snsGrid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:20px;
-}
-
-.snsBtn{
-border:none;
-color:white;
-padding:18px;
-border-radius:22px;
-font-size:20px;
-font-weight:900;
-text-align:center;
-cursor:pointer;
-box-shadow:0 5px 14px rgba(0,0,0,.16);
-}
-
-.facebook{background:#1877f2}
-.line{background:#06c755}
-.x{background:#000}
-.copy{background:#455a64}
-
-.archiveBtn{
-width:100%;
-border:none;
-background:#1565c0;
-color:white;
-padding:20px;
-border-radius:22px;
-font-size:23px;
-font-weight:900;
-margin:10px 0 24px;
-cursor:pointer;
-box-shadow:0 5px 14px rgba(0,0,0,.16);
-}
-
-.hidden{display:none}
-
-.loading{
-background:white;
-padding:40px;
-border-radius:24px;
-font-size:26px;
-font-weight:900;
-text-align:center;
-box-shadow:0 7px 20px rgba(0,0,0,.10);
-}
-
-.footer{
-text-align:center;
-font-size:18px;
-font-weight:900;
-margin-top:30px;
-color:#607080;
-line-height:1.7;
-}
-
-@media(max-width:768px){
-
-.pageTitle{
-font-size:36px;
-}
-
-.newsTitle{
-font-size:27px;
-}
-
-.newsText{
-font-size:19px;
-}
-
-.cityGrid{
-grid-template-columns:1fr;
-}
-
-.snsGrid{
-grid-template-columns:1fr 1fr;
-}
-
-.cityBtn{
-font-size:20px;
-}
-
-}
-
+body{font-family:sans-serif;margin:0;padding:16px;background:#eef4f8}
+.card{background:#fff;padding:20px;border-radius:20px}
+.title{font-size:28px;font-weight:900}
+.text{font-size:18px;line-height:1.7;white-space:pre-wrap}
+img{width:100%;border-radius:16px;margin-top:12px}
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
-
-<div class="topCard">
-
-<div class="pageTitle">
-📰 4市瓦版
-</div>
-
-<a
-href="portal.html"
-class="backBtn">
-
-⬅ トップへ戻る
-
-</a>
-
-<div class="desc">
-志木・新座・朝霞・和光の地域ニュースをまとめて確認できます。
-</div>
-
-</div>
-
-<div id="latestArea">
-
-<div class="loading">
-読み込み中...
-</div>
-
-</div>
-
-<button
-id="archiveButton"
-class="archiveBtn hidden"
-onclick="toggleArchive()">
-
-📚 アーカイブを見る
-
-</button>
-
-<div
-id="archiveArea"
-class="hidden">
-</div>
-
-<div class="footer">
-NSAW 暮らし情報局<br>
-4市瓦版
-</div>
-
-</div>
+<div id="app">読み込み中...</div>
 
 <script>
 
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const id = new URLSearchParams(location.search).get("kawaraban");
 
-const SHEET_NAME =
-'4市瓦版';
-
-const PAGE_URL =
-'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html';
+const SHEET_ID = "149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc";
+const SHEET_NAME = "4市瓦版";
 
 const url =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=' +
-encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json';
-
-function cell(row,index){
-
-return row.c[index]
-? (row.c[index].f || row.c[index].v || '')
-: '';
-
-}
-
-function escapeHtml(text){
-
-return String(text || '')
-.replace(/&/g,'&amp;')
-.replace(/</g,'&lt;')
-.replace(/>/g,'&gt;')
-.replace(/"/g,'&quot;')
-.replace(/'/g,'&#039;');
-
-}
-
-function convertImage(image){
-
-if(
-image &&
-image.includes('drive.google.com/file/d/')
-){
-
-const fileId =
-image.split('/d/')[1].split('/')[0];
-
-return 'https://drive.google.com/thumbnail?id=' +
-fileId +
-'&sz=w2000';
-
-}
-
-return image;
-
-}
-
-function makeCard(item,index){
-
-const shareUrl =
-PAGE_URL + '?kawaraban=' + encodeURIComponent(index + 1);
-
-let imageHtml = '';
-
-if(item.image){
-
-imageHtml = `
-
-<img
-src="${escapeHtml(item.image)}"
-class="newsImage">
-
-`;
-
-}
-
-return `
-
-<div class="newsCard">
-
-${imageHtml}
-
-<div class="newsDate">
-${escapeHtml(item.date)}
-</div>
-
-<div class="newsTitle">
-${escapeHtml(item.title)}
-</div>
-
-<div class="newsText">
-${escapeHtml(item.text)}
-</div>
-
-<div class="cityGrid">
-
-<a
-class="cityBtn shiki"
-href="${escapeHtml(item.shikiURL)}"
-target="_blank">
-
-志木市<br>
-${escapeHtml(item.shikiTitle)}
-
-</a>
-
-<a
-class="cityBtn niiza"
-href="${escapeHtml(item.niizaURL)}"
-target="_blank">
-
-新座市<br>
-${escapeHtml(item.niizaTitle)}
-
-</a>
-
-<a
-class="cityBtn asaka"
-href="${escapeHtml(item.asakaURL)}"
-target="_blank">
-
-朝霞市<br>
-${escapeHtml(item.asakaTitle)}
-
-</a>
-
-<a
-class="cityBtn wako"
-href="${escapeHtml(item.wakoURL)}"
-target="_blank">
-
-和光市<br>
-${escapeHtml(item.wakoTitle)}
-
-</a>
-
-</div>
-
-<div class="snsGrid">
-
-<button
-class="snsBtn facebook"
-onclick="shareFacebook('${shareUrl}')">
-Facebook
-</button>
-
-<button
-class="snsBtn line"
-onclick="shareLine('${shareUrl}')">
-LINE
-</button>
-
-<button
-class="snsBtn x"
-onclick="shareX('${shareUrl}','${escapeHtml(item.title)}')">
-X
-</button>
-
-<button
-class="snsBtn copy"
-onclick="copyUrl('${shareUrl}')">
-URLコピー
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}
-
-function shareFacebook(shareUrl){
-
-window.open(
-'https://www.facebook.com/sharer/sharer.php?u=' +
-encodeURIComponent(shareUrl),
-'_blank'
-);
-
-}
-
-function shareLine(shareUrl){
-
-window.open(
-'https://social-plugins.line.me/lineit/share?url=' +
-encodeURIComponent(shareUrl),
-'_blank'
-);
-
-}
-
-function shareX(shareUrl,title){
-
-window.open(
-'https://twitter.com/intent/tweet?text=' +
-encodeURIComponent(title) +
-'&url=' +
-encodeURIComponent(shareUrl),
-'_blank'
-);
-
-}
-
-function copyUrl(shareUrl){
-
-navigator.clipboard.writeText(shareUrl)
-.then(function(){
-
-alert('URLをコピーしました');
-
-})
-.catch(function(){
-
-alert(shareUrl);
-
-});
-
-}
-
-function toggleArchive(){
-
-const area =
-document.getElementById('archiveArea');
-
-const btn =
-document.getElementById('archiveButton');
-
-if(area.classList.contains('hidden')){
-
-area.classList.remove('hidden');
-btn.innerHTML = '📕 アーカイブを閉じる';
-
-}else{
-
-area.classList.add('hidden');
-btn.innerHTML = '📚 アーカイブを見る';
-
-}
-
-}
+"https://docs.google.com/spreadsheets/d/"+SHEET_ID+
+"/gviz/tq?sheet="+encodeURIComponent(SHEET_NAME)+
+"&tqx=out:json";
 
 fetch(url)
 .then(res=>res.text())
 .then(text=>{
 
-const json =
-JSON.parse(
-text.substr(47).slice(0,-2)
-);
+const json = JSON.parse(text.substring(47).slice(0,-2));
+const rows = json.table.rows;
 
-const rows =
-json.table.rows;
+let item = null;
 
-let items = [];
+for(let r of rows){
 
-rows.forEach(r=>{
+const rowId = r.c[0]?.v;
 
-const date =
-cell(r,0);
-
-let image =
-convertImage(
-cell(r,1)
-);
-
-const title =
-cell(r,2);
-
-const text =
-cell(r,3);
-
-const shikiTitle =
-cell(r,4);
-
-const shikiURL =
-cell(r,5);
-
-const niizaTitle =
-cell(r,6);
-
-const niizaURL =
-cell(r,7);
-
-const asakaTitle =
-cell(r,8);
-
-const asakaURL =
-cell(r,9);
-
-const wakoTitle =
-cell(r,10);
-
-const wakoURL =
-cell(r,11);
-
-if(
-!date &&
-!image &&
-!title
-){
-return;
+if(String(rowId) == String(id)){
+item = {
+title:r.c[2]?.v,
+text:r.c[3]?.v,
+image:r.c[1]?.v
+};
+break;
 }
-
-items.push({
-date:date,
-image:image,
-title:title,
-text:text,
-shikiTitle:shikiTitle,
-shikiURL:shikiURL,
-niizaTitle:niizaTitle,
-niizaURL:niizaURL,
-asakaTitle:asakaTitle,
-asakaURL:asakaURL,
-wakoTitle:wakoTitle,
-wakoURL:wakoURL
-});
-
-});
-
-items.reverse();
-
-let latestHtml = '';
-let archiveHtml = '';
-
-items.forEach((item,index)=>{
-
-if(index < 5){
-
-latestHtml += makeCard(item,index);
-
-}else{
-
-archiveHtml += makeCard(item,index);
 
 }
 
-});
-
-document.getElementById('latestArea').innerHTML =
-latestHtml || '<div class="loading">4市瓦版がありません</div>';
-
-document.getElementById('archiveArea').innerHTML =
-archiveHtml;
-
-if(archiveHtml){
-
-document.getElementById('archiveButton').classList.remove('hidden');
-
-}
-
-})
-.catch(err=>{
-
-document.getElementById('latestArea').innerHTML =
-'<div class="loading">読み込みに失敗しました</div>';
+document.getElementById("app").innerHTML =
+item
+? `
+<div class="card">
+<div class="title">${item.title}</div>
+<div class="text">${item.text}</div>
+${item.image ? `<img src="${item.image}">` : ""}
+</div>
+`
+: "記事なし";
 
 });
 
