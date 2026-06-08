@@ -10,100 +10,79 @@
 
 body{
 margin:0;
-background:#eef5fb;
+background:#eef4fb;
 font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 color:#1f2d3d;
 }
 
 .wrap{
-max-width:760px;
-margin:0 auto;
-padding:18px 14px 44px;
+max-width:900px;
+margin:auto;
+padding:16px;
 }
 
 .header{
-background:linear-gradient(135deg,#8e24aa,#ba68c8);
-color:#fff;
+background:linear-gradient(135deg,#1976d2,#42a5f5);
+color:white;
+padding:26px;
 border-radius:26px;
-padding:30px 18px;
 text-align:center;
-margin-bottom:18px;
-}
-
-.header h1{
-margin:0;
 font-size:34px;
 font-weight:900;
-}
-
-.header p{
-margin:12px 0 0;
-font-size:18px;
-line-height:1.7;
-font-weight:700;
-}
-
-.topNav{
-display:grid;
-grid-template-columns:1fr;
-gap:12px;
 margin-bottom:18px;
+box-shadow:0 8px 24px rgba(0,0,0,.12);
 }
-
-.bigBtn{
-display:block;
-width:100%;
-padding:18px;
-border-radius:18px;
-text-decoration:none;
-text-align:center;
-font-size:22px;
-font-weight:900;
-color:#fff;
-border:0;
-cursor:pointer;
-}
-
-.gray{background:#607d8b}
-.blue{background:#1976d2}
-.green{background:#06c755}
-.black{background:#111}
-.orange{background:#ef6c00}
 
 .card{
-background:#fff;
-border-radius:24px;
-padding:20px;
+background:white;
+border-radius:28px;
+padding:18px;
 margin-bottom:22px;
-box-shadow:0 6px 20px rgba(0,0,0,.10);
+box-shadow:0 6px 18px rgba(0,0,0,.10);
 }
 
 .date{
 display:inline-block;
 background:#e8f5e9;
 color:#2e7d32;
-padding:8px 14px;
+padding:10px 18px;
 border-radius:999px;
-font-size:16px;
+font-size:18px;
 font-weight:900;
-margin-bottom:12px;
+margin-bottom:14px;
 }
 
 .title{
 font-size:28px;
 font-weight:900;
-line-height:1.45;
+line-height:1.4;
+margin-bottom:18px;
+}
+
+.thumb{
+width:100%;
+border-radius:18px;
 margin-bottom:14px;
+display:block;
+}
+
+.desc{
+font-size:22px;
+line-height:1.8;
+font-weight:700;
+color:#1976d2;
+margin:16px 0;
 }
 
 .videoBox{
 position:relative;
-width:100%;
-padding-top:56.25%;
-border-radius:18px;
+padding-bottom:56.25%;
+height:0;
 overflow:hidden;
+border-radius:18px;
+margin-top:12px;
+margin-bottom:18px;
 background:#000;
-margin:12px 0 16px;
 }
 
 .videoBox iframe{
@@ -115,70 +94,64 @@ height:100%;
 border:0;
 }
 
-.desc{
-font-size:18px;
-line-height:1.8;
-white-space:pre-wrap;
-margin-top:12px;
-}
-
-.tags{
-font-size:16px;
-line-height:1.7;
-color:#1976d2;
-font-weight:900;
-margin-top:14px;
-white-space:pre-wrap;
-}
-
-.snsGrid{
+.sns{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:10px;
+gap:12px;
 margin-top:18px;
 }
 
-.snsBtn{
-border:0;
-border-radius:14px;
-padding:14px 8px;
-font-size:17px;
-font-weight:900;
-color:#fff;
-cursor:pointer;
-}
-
-.archiveBtn{
-display:none;
-width:100%;
-padding:18px;
-margin:10px 0 22px;
+.sns button{
 border:0;
 border-radius:18px;
-background:#546e7a;
-color:#fff;
-font-size:20px;
+padding:18px;
+font-size:22px;
 font-weight:900;
+color:white;
 cursor:pointer;
 }
 
-.hidden{
-display:none;
+.fb{background:#1877f2}
+.line{background:#06c755}
+.x{background:#000}
+.copy{background:#ef6c00}
+
+.archive{
+background:white;
+padding:18px;
+border-radius:24px;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
 
-.loading{
-background:#fff;
-border-radius:22px;
-padding:28px;
-text-align:center;
+.archiveTitle{
+font-size:28px;
+font-weight:900;
+margin-bottom:12px;
+}
+
+.archive a{
+display:block;
+padding:14px;
+margin-bottom:10px;
+background:#f3f6fa;
+border-radius:14px;
+text-decoration:none;
+color:#17324d;
 font-size:20px;
 font-weight:900;
 }
 
-@media(max-width:520px){
-.title{
-font-size:24px;
-}
+.backBtn{
+display:block;
+text-align:center;
+text-decoration:none;
+background:#455a64;
+color:white;
+padding:16px;
+border-radius:18px;
+font-size:20px;
+font-weight:900;
+margin-bottom:18px;
 }
 </style>
 </head>
@@ -188,32 +161,17 @@ font-size:24px;
 <div class="wrap">
 
 <div class="header">
-<h1>お楽しみ動画</h1>
-<p>懐かしい時代劇や名作動画をお楽しみください。</p>
+お楽しみ動画
 </div>
 
-<div class="topNav">
-<a class="bigBtn gray" href="portal.html">ポータルへ戻る</a>
-<a class="bigBtn blue" href="index.html">トップへ戻る</a>
-</div>
-
-<div id="latestArea">
-<div class="loading">読み込み中...</div>
-</div>
-
-<button id="archiveButton" class="archiveBtn" onclick="toggleArchive()">
-📚 アーカイブを見る
-</button>
-
-<div id="archiveArea" class="hidden"></div>
+<div id="app">読み込み中...</div>
 
 </div>
 
 <script>
 
-const SHEET_ID='149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const SHEET_ID='1vWJ0x5fYVqN9z3rLJm2h0q9N8v0r5cQ7'; 
 const SHEET_NAME='お楽しみ動画';
-const PAGE_URL='https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html';
 
 const url=
 'https://docs.google.com/spreadsheets/d/'+
@@ -222,288 +180,210 @@ SHEET_ID+
 encodeURIComponent(SHEET_NAME)+
 '&tqx=out:json';
 
-function $(id){
-return document.getElementById(id);
+function getCell(row,index){
+if(!row.c||!row.c[index]) return '';
+return row.c[index].f||row.c[index].v||'';
 }
 
-function cell(row,index){
-if(!row||!row.c||!row.c[index]) return '';
-const c=row.c[index];
-return c.f||c.v||'';
-}
-
-function escapeHtml(text){
-return String(text||'')
-.replace(/&/g,'&amp;')
-.replace(/</g,'&lt;')
-.replace(/>/g,'&gt;')
-.replace(/"/g,'&quot;')
-.replace(/'/g,'&#039;');
-}
-
-function formatDate(value){
-
-const s=String(value||'');
-
-const m=s.match(/^Date\((\d+),(\d+),(\d+)\)$/);
-
-if(m){
-const y=Number(m[1]);
-const mo=Number(m[2])+1;
-const d=Number(m[3]);
-
-return y+'/'+
-String(mo).padStart(2,'0')+'/'+
-String(d).padStart(2,'0');
-}
-
-return s;
-}
-
-function dateTime(value){
-const t=new Date(formatDate(value)).getTime();
-return isNaN(t)?0:t;
-}
-
-function getYouTubeId(url){
+function youtubeId(url){
 
 if(!url) return '';
 
-const text=String(url);
-
-let m=text.match(
-/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/
-);
-
+let m=url.match(/v=([^&]+)/);
 if(m) return m[1];
 
-m=text.match(/([A-Za-z0-9_-]{11})/);
+m=url.match(/youtu\.be\/([^?]+)/);
+if(m) return m[1];
 
-return m?m[1]:'';
+m=url.match(/embed\/([^?]+)/);
+if(m) return m[1];
+
+return '';
 }
 
-function makeCard(item,index){
-
-const shareUrl=
-PAGE_URL+'?id='+encodeURIComponent(index+1);
-
-const youtubeId=
-getYouTubeId(item.youtubeURL);
-
-let videoHtml='';
-
-if(youtubeId){
-
-videoHtml=
-'<div class="videoBox">'+
-'<iframe src="https://www.youtube.com/embed/'+
-youtubeId+
-'" allowfullscreen></iframe>'+
-'</div>';
-
+function shareUrl(id){
+return 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun.html?id='+id;
 }
 
-return `
-<div class="card">
+function openShare(type,id){
 
-<div class="date">
-${escapeHtml(formatDate(item.date))}
-</div>
+const s=shareUrl(id);
 
-<div class="title">
-${escapeHtml(item.title)}
-</div>
-
-${videoHtml}
-
-<div class="desc">
-${escapeHtml(item.desc)}
-</div>
-
-<div class="tags">
-${escapeHtml(item.tags)}
-</div>
-
-<div class="snsGrid">
-
-<button
-class="snsBtn blue"
-onclick="shareFacebook('${shareUrl}')">
-Facebook
-</button>
-
-<button
-class="snsBtn green"
-onclick="shareLine('${shareUrl}')">
-LINE
-</button>
-
-<button
-class="snsBtn black"
-onclick="shareX('${shareUrl}','${escapeHtml(item.title)}')">
-X
-</button>
-
-<button
-class="snsBtn orange"
-onclick="copyUrl('${shareUrl}')">
-URLコピー
-</button>
-
-</div>
-
-</div>
-`;
-}
-
-function shareFacebook(url){
+if(type==='facebook'){
 window.open(
 'https://www.facebook.com/sharer/sharer.php?u='+
-encodeURIComponent(url),
-'_blank'
+encodeURIComponent(s)
 );
 }
 
-function shareLine(url){
+if(type==='line'){
 window.open(
 'https://social-plugins.line.me/lineit/share?url='+
-encodeURIComponent(url),
-'_blank'
+encodeURIComponent(s)
 );
 }
 
-function shareX(url,title){
+if(type==='x'){
 window.open(
-'https://twitter.com/intent/tweet?text='+
-encodeURIComponent(title)+
-'&url='+
-encodeURIComponent(url),
-'_blank'
+'https://twitter.com/intent/tweet?url='+
+encodeURIComponent(s)
 );
 }
 
-function copyUrl(url){
+}
 
-navigator.clipboard.writeText(url)
-.then(function(){
+function copyUrl(id){
+
+navigator.clipboard.writeText(
+shareUrl(id)
+);
+
 alert('URLをコピーしました');
-})
-.catch(function(){
-alert(url);
-});
-
-}
-
-function toggleArchive(){
-
-const area=$('archiveArea');
-const btn=$('archiveButton');
-
-if(area.classList.contains('hidden')){
-area.classList.remove('hidden');
-btn.textContent='📕 アーカイブを閉じる';
-}else{
-area.classList.add('hidden');
-btn.textContent='📚 アーカイブを見る';
-}
 
 }
 
 fetch(url)
-.then(res=>res.text())
-.then(text=>{
+.then(r=>r.text())
+.then(t=>{
 
-const start=text.indexOf('{');
-const end=text.lastIndexOf('}')+1;
-
-const json=
-JSON.parse(text.substring(start,end));
-
-const rows=json.table.rows||[];
-
-let items=[];
-
-rows.forEach(row=>{
-
-const date=cell(row,0);
-const youtubeURL=cell(row,1);
-const title=cell(row,2);
-const desc=cell(row,3);
-const tags=cell(row,4);
-
-if(!date&&!youtubeURL&&!title) return;
-
-items.push({
-date:date,
-youtubeURL:youtubeURL,
-title:title,
-desc:desc,
-tags:tags
-});
-
-});
-
-items.sort(
-(a,b)=>
-dateTime(b.date)-dateTime(a.date)
+const json=JSON.parse(
+t.substring(
+t.indexOf('{'),
+t.lastIndexOf('}')+1
+)
 );
 
-const idParam=
-new URLSearchParams(location.search).get('id');
+let rows=json.table.rows||[];
 
-let latestHtml='';
-let archiveHtml='';
+let items=rows.map((r,i)=>({
 
-if(idParam){
+id:i+1,
+date:getCell(r,0),
+videoId:getCell(r,1),
+title:getCell(r,2),
+thumb:getCell(r,3),
+desc:getCell(r,4),
+video:getCell(r,5),
+bgm:getCell(r,6),
+genre:getCell(r,7)
 
-const idx=
-parseInt(idParam,10)-1;
+}));
 
-if(idx>=0&&idx<items.length){
+items=items.filter(x=>x.title);
 
-latestHtml=
-makeCard(items[idx],idx);
+items.reverse();
 
-}else{
+const params=new URLSearchParams(location.search);
+const id=params.get('id');
 
-latestHtml=
-'<div class="loading">指定された動画が見つかりません</div>';
+const app=document.getElementById('app');
 
+if(id){
+
+const item=items[Number(id)-1];
+
+if(!item){
+app.innerHTML='記事が見つかりません';
+return;
 }
 
-$('archiveButton').style.display='none';
+const yid=youtubeId(item.video);
 
-}else{
+app.innerHTML=`
 
-items.forEach((item,index)=>{
+<a class="backBtn" href="fun.html">
+一覧へ戻る
+</a>
 
-if(index<5){
-latestHtml+=makeCard(item,index);
-}else{
-archiveHtml+=makeCard(item,index);
+<div class="card">
+
+<div class="date">${item.date}</div>
+
+<div class="title">${item.title}</div>
+
+${item.thumb?`<img class="thumb" src="${item.thumb}">`:''}
+
+<div class="desc">${item.desc}</div>
+
+${yid?`
+<div class="videoBox">
+<iframe
+src="https://www.youtube.com/embed/${yid}"
+allowfullscreen>
+</iframe>
+</div>
+`:''}
+
+<div class="sns">
+<button class="fb" onclick="openShare('facebook','${id}')">Facebook</button>
+<button class="line" onclick="openShare('line','${id}')">LINE</button>
+<button class="x" onclick="openShare('x','${id}')">X</button>
+<button class="copy" onclick="copyUrl('${id}')">URLコピー</button>
+</div>
+
+</div>
+`;
+
+return;
 }
+
+let html='';
+
+items.slice(0,5).forEach((item,index)=>{
+
+html+=`
+
+<div class="card">
+
+<div class="date">${item.date}</div>
+
+<div class="title">
+<a href="fun.html?id=${index+1}" style="text-decoration:none;color:#17324d">
+${item.title}
+</a>
+</div>
+
+${item.thumb?`<img class="thumb" src="${item.thumb}">`:''}
+
+<div class="desc">${item.desc}</div>
+
+<div class="sns">
+<button class="fb" onclick="openShare('facebook','${index+1}')">Facebook</button>
+<button class="line" onclick="openShare('line','${index+1}')">LINE</button>
+<button class="x" onclick="openShare('x','${index+1}')">X</button>
+<button class="copy" onclick="copyUrl('${index+1}')">URLコピー</button>
+</div>
+
+</div>
+
+`;
 
 });
 
-if(archiveHtml){
-$('archiveButton').style.display='block';
-}
+if(items.length>5){
+
+html+=`<div class="archive">
+<div class="archiveTitle">アーカイブ</div>`;
+
+items.slice(5).forEach((item,index)=>{
+
+html+=`
+<a href="fun.html?id=${index+6}">
+${item.date}　${item.title}
+</a>
+`;
+
+});
+
+html+=`</div>`;
 
 }
 
-$('latestArea').innerHTML=
-latestHtml||
-'<div class="loading">動画がありません</div>';
-
-$('archiveArea').innerHTML=
-archiveHtml;
+app.innerHTML=html;
 
 })
-.catch(function(){
-
-$('latestArea').innerHTML=
-'<div class="loading">読み込みに失敗しました</div>';
-
+.catch(e=>{
+document.getElementById('app').innerHTML='読み込み失敗';
 });
 
 </script>
