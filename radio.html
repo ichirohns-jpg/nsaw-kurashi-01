@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>地域ラジオ</title>
+<title>NSAW地域ラジオ</title>
 
 <style>
 *{box-sizing:border-box}
@@ -53,7 +53,7 @@ margin-bottom:12px;
 }
 
 .title{
-font-size:28px;
+font-size:30px;
 font-weight:900;
 line-height:1.4;
 margin-bottom:14px;
@@ -180,25 +180,25 @@ encodeURIComponent(SHEET_NAME)+
 '&tqx=out:json';
 
 function cell(r,i){
-return r.c && r.c[i]
-? (r.c[i].f || r.c[i].v || '')
-: '';
+return r.c&&r.c[i]
+?(r.c[i].f||r.c[i].v||'')
+:'';
 }
 
-function getYoutubeId(url){
+function youtubeId(url){
 
-if(!url) return '';
+if(!url)return'';
 
 let m=url.match(/v=([^&]+)/);
-if(m) return m[1];
+if(m)return m[1];
 
 m=url.match(/youtu\.be\/([^?]+)/);
-if(m) return m[1];
+if(m)return m[1];
 
 m=url.match(/embed\/([^?]+)/);
-if(m) return m[1];
+if(m)return m[1];
 
-return '';
+return'';
 }
 
 function shareUrl(id){
@@ -210,39 +210,21 @@ function openShare(type,id){
 const s=shareUrl(id);
 
 if(type==='facebook'){
-window.open(
-'https://www.facebook.com/sharer/sharer.php?u='+
-encodeURIComponent(s),
-'_blank'
-);
+window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(s));
 }
 
 if(type==='line'){
-window.open(
-'https://social-plugins.line.me/lineit/share?url='+
-encodeURIComponent(s),
-'_blank'
-);
+window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(s));
 }
 
 if(type==='x'){
-window.open(
-'https://twitter.com/intent/tweet?url='+
-encodeURIComponent(s),
-'_blank'
-);
+window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(s));
 }
-
 }
 
 function copyUrl(id){
-
-navigator.clipboard.writeText(
-shareUrl(id)
-);
-
+navigator.clipboard.writeText(shareUrl(id));
 alert('URLをコピーしました');
-
 }
 
 fetch(url)
@@ -250,46 +232,35 @@ fetch(url)
 .then(t=>{
 
 const json=JSON.parse(
-t.substring(
-t.indexOf('{'),
-t.lastIndexOf('}')+1
-)
+t.substring(t.indexOf('{'),t.lastIndexOf('}')+1)
 );
 
-let rows=json.table.rows || [];
+let rows=json.table.rows||[];
 
 let items=rows.map((r,i)=>({
 
 id:i+1,
 date:cell(r,0),
-radioNo:cell(r,1),
 title:cell(r,2),
 image:cell(r,3),
 script:cell(r,4),
-youtube:cell(r,5),
-bgm:cell(r,6)
+youtube:cell(r,5)
 
 }));
 
 items=items.filter(x=>x.title);
-
 items.reverse();
+
+const app=document.getElementById('app');
 
 const params=new URLSearchParams(location.search);
 const id=params.get('radio');
-
-const app=document.getElementById('app');
 
 if(id){
 
 const item=items[Number(id)-1];
 
-if(!item){
-app.innerHTML='記事が見つかりません';
-return;
-}
-
-const yid=getYoutubeId(item.youtube);
+const yid=youtubeId(item.youtube);
 
 app.innerHTML=`
 
@@ -303,7 +274,10 @@ app.innerHTML=`
 
 <div class="title">${item.title}</div>
 
-${item.image?`<img class="thumb" src="${item.image}">`:''}
+<img
+class="thumb"
+src="${item.image}"
+onerror="this.src='https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio-ogp.jpg';">
 
 <div class="script">${item.script}</div>
 
@@ -340,16 +314,18 @@ html+=`
 <div class="date">${item.date}</div>
 
 <div class="title">
-<a href="radio.html?radio=${index+1}"
-style="text-decoration:none;color:#17324d">
+<a href="radio.html?radio=${index+1}" style="text-decoration:none;color:#17324d">
 ${item.title}
 </a>
 </div>
 
-${item.image?`<img class="thumb" src="${item.image}">`:''}
+<img
+class="thumb"
+src="${item.image}"
+onerror="this.src='https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio-ogp.jpg';">
 
 <div class="script">
-${item.script.substring(0,120)}...
+${(item.script||'').substring(0,150)}...
 </div>
 
 <div class="sns">
@@ -360,17 +336,13 @@ ${item.script.substring(0,120)}...
 </div>
 
 </div>
-
 `;
 
 });
 
 if(items.length>5){
 
-html+=`
-<div class="archive">
-<div class="archiveTitle">アーカイブ</div>
-`;
+html+=`<div class="archive"><div class="archiveTitle">アーカイブ</div>`;
 
 items.slice(5).forEach((item,index)=>{
 
