@@ -83,16 +83,29 @@ function cell(r,i){
 return r.c && r.c[i] ? (r.c[i].v || "") : "";
 }
 
-/* YouTube ID抽出 → embed化（これが本体） */
-function getYoutubeEmbed(url){
+/* YouTube → embed変換（確実版） */
+function toEmbed(url){
 if(!url) return "";
 
 let id = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{6,})/);
+
 if(id){
 return "https://www.youtube.com/embed/" + id[1];
 }
 
-return url;
+return "";
+}
+
+/* GViz 安定パース（ここが重要修正） */
+function parseGViz(t){
+try{
+let s = t.indexOf("{");
+let e = t.lastIndexOf("}");
+return JSON.parse(t.substring(s,e+1));
+}catch(e){
+console.log("parse error", e);
+return {table:{rows:[]}};
+}
 }
 
 /* 読み込み */
@@ -107,19 +120,18 @@ fetch(url)
 .then(r=>r.text())
 .then(t=>{
 
-const json = JSON.parse(t.substring(t.indexOf("{"), t.lastIndexOf("}") + 1));
+const json = parseGViz(t);
 
 let rows = json.table.rows || [];
 
 let items = rows.map((r,i)=>({
 
-id:i+1,
 date:cell(r,0),
 title:cell(r,2),
-video:getYoutubeEmbed(cell(r,3)),
+video:toEmbed(cell(r,3)),
 desc:cell(r,4)
 
-})).filter(x=>x.title).reverse();
+})).filter(x=>x.title && x.video).reverse();
 
 let html = "";
 
