@@ -14,7 +14,7 @@ color:#1e2a3a;
 }
 
 header{
-background:linear-gradient(135deg,#1976d2,#42a5f5);
+background:linear-gradient(135deg,#1e88e5,#42a5f5);
 color:#fff;
 padding:26px;
 text-align:center;
@@ -28,13 +28,12 @@ margin:auto;
 padding:16px;
 }
 
-/* カード */
 .card{
 background:#fff;
-border-radius:20px;
+border-radius:18px;
 overflow:hidden;
 margin-bottom:18px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
+box-shadow:0 6px 16px rgba(0,0,0,.08);
 }
 
 .card img{
@@ -42,7 +41,6 @@ width:100%;
 display:block;
 }
 
-/* 日付 */
 .date{
 display:inline-block;
 margin:12px;
@@ -53,14 +51,12 @@ border-radius:999px;
 font-weight:900;
 }
 
-/* タイトル */
 .title{
 font-size:26px;
 font-weight:900;
 padding:0 12px;
 }
 
-/* 説明 */
 .desc{
 padding:12px;
 font-size:18px;
@@ -68,7 +64,6 @@ line-height:1.7;
 white-space:pre-wrap;
 }
 
-/* SNS */
 .sns{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -89,18 +84,6 @@ font-size:16px;
 .line{background:#06c755}
 .x{background:#111}
 .copy{background:#ff9800}
-
-/* アーカイブ */
-.archive a{
-display:block;
-padding:12px;
-background:#fff;
-margin-bottom:10px;
-border-radius:12px;
-text-decoration:none;
-color:#1e2a3a;
-font-weight:900;
-}
 </style>
 </head>
 
@@ -111,9 +94,7 @@ font-weight:900;
 </header>
 
 <div class="wrap">
-
 <div id="app">読み込み中...</div>
-
 </div>
 
 <script>
@@ -129,17 +110,14 @@ encodeURIComponent(SHEET_NAME)+
 '&tqx=out:json';
 
 function cell(r,i){
-return r.c && r.c[i]
-? (r.c[i].v || r.c[i].f || '')
-: '';
+return r.c && r.c[i] ? (r.c[i].v || r.c[i].f || '') : '';
 }
 
-/* シェアURL */
+/* シェア統一 */
 function shareUrl(id){
-return 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun.html?id='+id;
+return 'https://ichirohns-jpg/nsaw-kurashi-01/share.html?id='+id+'&type=fun';
 }
 
-/* SNS */
 function openShare(type,id){
 
 const s=shareUrl(id);
@@ -194,12 +172,12 @@ const id=params.get('id');
 /* 詳細 */
 if(id){
 
-const item=items[id-1];
+const item=items.find(x=>String(x.id)===String(id));
 
 app.innerHTML=`
 <div class="card">
 
-<img src="${item.image || 'https://ichirohns-jpg/nsaw-kurashi-01/kawaraban-ogp.jpg'}">
+<img src="${item.image || 'https://ichirohns-jpg/nsaw-kurashi-01/radio-ogp.jpg'}">
 
 <div class="date">${item.date}</div>
 
@@ -228,14 +206,14 @@ items.slice(0,5).forEach((item,index)=>{
 html+=`
 <div class="card">
 
-<a href="fun.html?id=${index+1}">
-<img src="${item.image || 'https://ichirohns-jpg/nsaw-kurashi-01/kawaraban-ogp.jpg'}">
+<a href="fun.html?id=${item.id}">
+<img src="${item.image || 'https://ichirohns-jpg/nsaw-kurashi-01/radio-ogp.jpg'}">
 </a>
 
 <div class="date">${item.date}</div>
 
 <div class="title">
-<a href="fun.html?id=${index+1}">
+<a href="fun.html?id=${item.id}">
 ${item.title}
 </a>
 </div>
@@ -243,10 +221,10 @@ ${item.title}
 <div class="desc">${item.desc}</div>
 
 <div class="sns">
-<button class="fb" onclick="openShare('facebook','${index+1}')">Facebook</button>
-<button class="line" onclick="openShare('line','${index+1}')">LINE</button>
-<button class="x" onclick="openShare('x','${index+1}')">X</button>
-<button class="copy" onclick="copyUrl('${index+1}')">URLコピー</button>
+<button class="fb" onclick="openShare('facebook','${item.id}')">Facebook</button>
+<button class="line" onclick="openShare('line','${item.id}')">LINE</button>
+<button class="x" onclick="openShare('x','${item.id}')">X</button>
+<button class="copy" onclick="copyUrl('${item.id}')">URLコピー</button>
 </div>
 
 </div>
