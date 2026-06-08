@@ -1,235 +1,90 @@
-<script>
+// ==========================================
+// NSAW暮らし情報局 共通データ配信・制御コアロジック
+// 対象: kawaraban.html / radio.html / app.html
+// ==========================================
+
 const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-const SHEET_NAME = '地域ラジオ';
-const PAGE_URL = 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio.html';
+const SHEET_NAME = '4市瓦版'; // ※各ページの対象シート名に書き換えて共通利用
+const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=' + encodeURIComponent(SHEET_NAME) + '&tqx=out:json';
 
-const url =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=' +
-encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json';
-
-function cell(row,index){
-return row.c[index] ? (row.c[index].f || row.c[index].v || '') : '';
+function cell(r, i) {
+  return r.c[i] ? (r.c[i].v || r.c[i].f || '') : '';
 }
 
-function getYouTubeId(youtubeURL){
-if(!youtubeURL) return '';
-const m = youtubeURL.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
-return m ? m[1] : '';
-}
-
-function escapeHtml(text){
-return String(text || '')
-.replace(/&/g,'&amp;')
-.replace(/</g,'&lt;')
-.replace(/>/g,'&gt;')
-.replace(/"/g,'&quot;')
-.replace(/'/g,'&#039;');
-}
-
-function makeCard(item,index){
-
-const shareUrl = PAGE_URL + '?radio=' + encodeURIComponent(index + 1);
-const safeTitle = escapeHtml(item.title);
-const youtubeId = getYouTubeId(item.youtubeURL);
-
-let videoHtml = '';
-
-if(youtubeId){
-videoHtml = `
-<div class="video">
-<iframe
-src="https://www.youtube.com/embed/${youtubeId}"
-allowfullscreen>
-</iframe>
-</div>
-`;
-}
-
-return `
-<div class="card">
-
-<div class="date">
-${escapeHtml(item.date)}
-</div>
-
-<div class="title">
-${safeTitle}
-</div>
-
-<div class="desc">
-${escapeHtml(item.desc)}
-</div>
-
-<div class="tags">
-${escapeHtml(item.tags)}
-</div>
-
-${videoHtml}
-
-<div class="snsGrid">
-
-<button
-class="snsBtn facebook"
-onclick="shareFacebook('${shareUrl}')">
-Facebook
-</button>
-
-<button
-class="snsBtn line"
-onclick="shareLine('${shareUrl}')">
-LINE
-</button>
-
-<button
-class="snsBtn x"
-onclick="shareX('${shareUrl}','${safeTitle}')">
-X
-</button>
-
-<button
-class="snsBtn copy"
-onclick="copyUrl('${shareUrl}')">
-URLコピー
-</button>
-
-</div>
-
-</div>
-`;
-}
-
-function shareFacebook(shareUrl){
-window.open(
-'https://www.facebook.com/sharer/sharer.php?u=' +
-encodeURIComponent(shareUrl),
-'_blank'
-);
-}
-
-function shareLine(shareUrl){
-window.open(
-'https://social-plugins.line.me/lineit/share?url=' +
-encodeURIComponent(shareUrl),
-'_blank'
-);
-}
-
-function shareX(shareUrl,title){
-window.open(
-'https://twitter.com/intent/tweet?text=' +
-encodeURIComponent(title) +
-'&url=' +
-encodeURIComponent(shareUrl),
-'_blank'
-);
-}
-
-function copyUrl(shareUrl){
-navigator.clipboard.writeText(shareUrl).then(function(){
-alert('URLをコピーしました');
-}).catch(function(){
-alert(shareUrl);
-});
-}
-
-function toggleArchive(){
-
-const area = document.getElementById('archiveArea');
-const btn = document.getElementById('archiveButton');
-
-if(area.classList.contains('hidden')){
-area.classList.remove('hidden');
-btn.innerHTML = '📕 アーカイブを閉じる';
-}else{
-area.classList.add('hidden');
-btn.innerHTML = '📚 アーカイブを見る';
-}
-
+// カードHTML生成共通関数
+function makeCard(item) {
+  return `
+    <div class="newsCard">
+      <img src="${item.image}" class="newsImage">
+      <div class="newsDate">${item.date}</div>
+      <div class="newsTitle">${item.title}</div>
+      <div class="newsText">${item.text}</div>
+    </div>
+  `;
 }
 
 fetch(url)
-.then(res=>res.text())
-.then(text=>{
+  .then(res => res.text())
+  .then(text => {
+    const json = JSON.parse(text.substring(47).slice(0, -2));
+    const rows = json.table.rows;
 
-const json = JSON.parse(text.substr(47).slice(0,-2));
-const rows = json.table.rows;
+    let items = [];
 
-let items = [];
+    rows.forEach((r) => {
+      // 主要データがすべて空の不正行・空行を完全に除外
+      if (!cell(r, 0) && !cell(r, 2) && !cell(r, 3)) return;
 
-rows.forEach(r=>{
+      items.push({
+        date: cell(r, 0),
+        image: cell(r, 1),
+        title: cell(r, 2),
+        text: cell(r, 3)
+      });
+    });
 
-const date = cell(r,0);
-const youtubeURL = cell(r,1);
-const title = cell(r,2);
-const desc = cell(r,3);
-const tags = cell(r,4);
+    // 【② データ順統一】reverse禁止。指定のミリ秒変換による安全日付降順ソート
+    items.sort((a, b) => {
+      const aTime = Number(new Date(a.date || ''));
+      const bTime = Number(new Date(b.date || ''));
+      return (isNaN(bTime) ? 0 : bTime) - (isNaN(aTime) ? 0 : aTime);
+    });
 
-if(!date && !youtubeURL && !title) return;
+    // 【① URLルール統一】パラメータはすべて「id」に完全統一
+    const idParam = new URLSearchParams(location.search).get("id");
 
-items.push({
-date:date,
-youtubeURL:youtubeURL,
-title:title,
-desc:desc,
-tags:tags
-});
+    let target = null;
 
-});
+    if (idParam) {
+      // 配列インデックス（-1）アクセスに統一（find / originalIndexは禁止）
+      const idx = parseInt(idParam, 10) - 1;
+      
+      // 範囲外チェック
+      if (idx >= 0 && idx < items.length) {
+        target = items[idx];
+      }
+    }
 
-// 個別指定用に、配列を反転させる前の元データの順番（1からの連番）をIDとして各アイテムに持たせる
-items = items.map((item, index) => ({ ...item, originalIndex: index }));
+    // パラメータ指定はあるが、該当データが存在しない（範囲外）場合
+    if (idParam && !target) {
+      document.getElementById('latestArea').innerHTML = `
+        <div class="newsCard">
+          <div class="newsText">指定された記事が見つかりません</div>
+        </div>
+      `;
+      return;
+    }
 
-// 最新順にするために配列を反転
-items.reverse();
+    // 表示ルール統一（targetがあれば1件表示、なければ全件表示）
+    document.getElementById('latestArea').innerHTML = target
+      ? makeCard(target)
+      : items.map(i => makeCard(i)).join('');
 
-// URLのパラメータから ?radio= の値を取得
-const urlParams = new URLSearchParams(window.location.search);
-const radioParam = urlParams.get('radio');
-
-let latestHtml = '';
-let archiveHtml = '';
-
-if (radioParam) {
-// radioパラメータがある場合（個別記事表示）
-const targetIndex = parseInt(radioParam, 10) - 1;
-// originalIndexが一致する該当記事を検索
-const matchedItem = items.find(item => item.originalIndex === targetIndex);
-
-if (matchedItem) {
-latestHtml = makeCard(matchedItem, matchedItem.originalIndex);
-} else {
-latestHtml = '<div class="loading">指定されたラジオが見つかりません</div>';
-}
-} else {
-// radioパラメータがない場合（通常の一覧表示）
-items.forEach((item, index) => {
-if (index < 5) {
-latestHtml += makeCard(item, item.originalIndex);
-} else {
-archiveHtml += makeCard(item, item.originalIndex);
-}
-});
-}
-
-document.getElementById('latestArea').innerHTML =
-latestHtml || '<div class="loading">地域ラジオがありません</div>';
-
-document.getElementById('archiveArea').innerHTML =
-archiveHtml;
-
-// 通常一覧表示かつアーカイブがある場合のみ、アーカイブボタンを表示
-if (archiveHtml && !radioParam) {
-document.getElementById('archiveButton').classList.remove('hidden');
-}
-
-})
-.catch(err=>{
-
-document.getElementById('latestArea').innerHTML =
-'<div class="loading">読み込みに失敗しました</div>';
-
-});
-</script>
+  })
+  .catch(() => {
+    document.getElementById('latestArea').innerHTML = `
+      <div class="newsCard">
+        <div class="newsText">読み込みに失敗しました</div>
+      </div>
+    `;
+  });
