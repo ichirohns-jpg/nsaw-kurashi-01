@@ -1,3 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お楽しみ動画</title>
+
+<style>
+body{
+  margin:0;
+  padding:16px;
+  background:#f5f5f5;
+  font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+}
+.card{
+  background:#fff;
+  padding:16px;
+  margin-bottom:20px;
+  border-radius:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+.video{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  margin-bottom:12px;
+}
+.video iframe{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+.date{color:#666;font-size:14px;margin-bottom:6px;}
+.title{font-size:20px;font-weight:bold;margin-bottom:8px;}
+.desc{font-size:15px;line-height:1.6;white-space:pre-wrap;margin-bottom:8px;}
+.tags{font-size:14px;color:#1877f2;margin-bottom:12px;}
+.snsGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+.snsBtn{
+  padding:10px;
+  border:0;
+  border-radius:8px;
+  color:white;
+  font-weight:bold;
+}
+.facebook{background:#1877f2;}
+.line{background:#06c755;}
+.x{background:#000;}
+.copy{background:#666;}
+.hidden{display:none!important;}
+.loading{
+  padding:30px;
+  text-align:center;
+  color:#666;
+}
+#archiveButton{
+  width:100%;
+  padding:14px;
+  margin:20px 0;
+  border:1px solid #ccc;
+  border-radius:10px;
+  background:white;
+  font-weight:bold;
+  font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="latestArea"><div class="loading">読み込み中...</div></div>
+<button id="archiveButton" class="hidden" onclick="toggleArchive()">📚 アーカイブを見る</button>
+<div id="archiveArea" class="hidden"></div>
+
 <script>
 const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 const SHEET_NAME = 'お楽しみ動画';
@@ -11,252 +91,161 @@ encodeURIComponent(SHEET_NAME) +
 '&tqx=out:json';
 
 function cell(row,index){
-return row.c[index] ? (row.c[index].f || row.c[index].v || '') : '';
-}
-
-function allCellText(row){
-let text = '';
-(row.c || []).forEach(c=>{
-if(c){
-text += ' ' + (c.v || '') + ' ' + (c.f || '');
-}
-});
-return text;
-}
-
-function findYouTubeUrl(row){
-const text = allCellText(row);
-const m = text.match(/https?:\/\/[^\s"'<>]*(youtube\.com|youtu\.be)[^\s"'<>]*/);
-return m ? m[0] : '';
+  if(!row || !row.c || !row.c[index]) return '';
+  const c = row.c[index];
+  return c.f || c.v || '';
 }
 
 function getYouTubeId(youtubeURL){
-if(!youtubeURL) return '';
-
-let m =
-youtubeURL.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
-
-if(m) return m[1];
-
-m =
-youtubeURL.match(/([A-Za-z0-9_-]{11})/);
-
-return m ? m[1] : '';
+  if(!youtubeURL) return '';
+  const text = String(youtubeURL);
+  let m = text.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) return m[1];
+  m = text.match(/([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : '';
 }
 
 function escapeHtml(text){
-return String(text || '')
-.replace(/&/g,'&amp;')
-.replace(/</g,'&lt;')
-.replace(/>/g,'&gt;')
-.replace(/"/g,'&quot;')
-.replace(/'/g,'&#039;');
+  return String(text || '')
+  .replace(/&/g,'&amp;')
+  .replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;')
+  .replace(/"/g,'&quot;')
+  .replace(/'/g,'&#039;');
 }
 
 function makeCard(item,index){
+  const shareUrl = PAGE_URL + '?fun=' + encodeURIComponent(index + 1);
+  const youtubeId = getYouTubeId(item.youtubeURL);
 
-const shareUrl = PAGE_URL + '?fun=' + encodeURIComponent(index + 1);
-const safeTitle = escapeHtml(item.title);
-const youtubeId = getYouTubeId(item.youtubeURL);
+  let videoHtml = '';
+  if(youtubeId){
+    videoHtml = `
+      <div class="video">
+        <iframe src="https://www.youtube.com/embed/${youtubeId}" allowfullscreen></iframe>
+      </div>
+    `;
+  }
 
-let videoHtml = '';
+  return `
+    <div class="card">
+      ${videoHtml}
+      <div class="date">${escapeHtml(item.date)}</div>
+      <div class="title">${escapeHtml(item.title)}</div>
+      <div class="desc">${escapeHtml(item.desc)}</div>
+      <div class="tags">${escapeHtml(item.tags)}</div>
 
-if(youtubeId){
-videoHtml = `
-<div class="video">
-<iframe
-src="https://www.youtube.com/embed/${youtubeId}"
-allowfullscreen>
-</iframe>
-</div>
-`;
-}
-
-return `
-<div class="card">
-
-${videoHtml}
-
-<div class="date">
-${escapeHtml(item.date)}
-</div>
-
-<div class="title">
-${safeTitle}
-</div>
-
-<div class="desc">
-${escapeHtml(item.desc)}
-</div>
-
-<div class="tags">
-${escapeHtml(item.tags)}
-</div>
-
-<div class="snsGrid">
-
-<button
-class="snsBtn facebook"
-onclick="shareFacebook('${shareUrl}')">
-Facebook
-</button>
-
-<button
-class="snsBtn line"
-onclick="shareLine('${shareUrl}')">
-LINE
-</button>
-
-<button
-class="snsBtn x"
-onclick="shareX('${shareUrl}','${safeTitle}')">
-X
-</button>
-
-<button
-class="snsBtn copy"
-onclick="copyUrl('${shareUrl}')">
-URLコピー
-</button>
-
-</div>
-
-</div>
-`;
+      <div class="snsGrid">
+        <button class="snsBtn facebook" onclick="shareFacebook('${shareUrl}')">Facebook</button>
+        <button class="snsBtn line" onclick="shareLine('${shareUrl}')">LINE</button>
+        <button class="snsBtn x" onclick="shareX('${shareUrl}','${escapeHtml(item.title)}')">X</button>
+        <button class="snsBtn copy" onclick="copyUrl('${shareUrl}')">URLコピー</button>
+      </div>
+    </div>
+  `;
 }
 
 function shareFacebook(shareUrl){
-window.open(
-'https://www.facebook.com/sharer/sharer.php?u=' +
-encodeURIComponent(shareUrl),
-'_blank'
-);
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl),'_blank');
 }
 
 function shareLine(shareUrl){
-window.open(
-'https://social-plugins.line.me/lineit/share?url=' +
-encodeURIComponent(shareUrl),
-'_blank'
-);
+  window.open('https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(shareUrl),'_blank');
 }
 
 function shareX(shareUrl,title){
-window.open(
-'https://twitter.com/intent/tweet?text=' +
-encodeURIComponent(title) +
-'&url=' +
-encodeURIComponent(shareUrl),
-'_blank'
-);
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(shareUrl),'_blank');
 }
 
 function copyUrl(shareUrl){
-navigator.clipboard.writeText(shareUrl).then(function(){
-alert('URLをコピーしました');
-}).catch(function(){
-alert(shareUrl);
-});
+  navigator.clipboard.writeText(shareUrl).then(function(){
+    alert('URLをコピーしました');
+  }).catch(function(){
+    alert(shareUrl);
+  });
 }
 
 function toggleArchive(){
-const area = document.getElementById('archiveArea');
-const btn = document.getElementById('archiveButton');
+  const area = document.getElementById('archiveArea');
+  const btn = document.getElementById('archiveButton');
 
-if(area.classList.contains('hidden')){
-area.classList.remove('hidden');
-btn.innerHTML = '📕 アーカイブを閉じる';
-}else{
-area.classList.add('hidden');
-btn.innerHTML = '📚 アーカイブを見る';
-}
+  if(area.classList.contains('hidden')){
+    area.classList.remove('hidden');
+    btn.innerHTML = '📕 アーカイブを閉じる';
+  }else{
+    area.classList.add('hidden');
+    btn.innerHTML = '📚 アーカイブを見る';
+  }
 }
 
 fetch(url)
-.then(res=>res.text())
-.then(text=>{
+.then(res => res.text())
+.then(text => {
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}') + 1;
+  const json = JSON.parse(text.substring(start,end));
+  const rows = json.table.rows || [];
 
-const json = JSON.parse(text.substr(47).slice(0,-2));
-const rows = json.table.rows;
+  let items = [];
 
-let items = [];
+  rows.forEach((r)=>{
+    const date = cell(r,0);
+    const youtubeURL = cell(r,1);
+    const title = cell(r,2);
+    const desc = cell(r,3);
+    const tags = cell(r,4);
 
-rows.forEach((r, index)=>{
+    if(title === '動画タイトル' || youtubeURL === 'YouTube動画URL') return;
+    if(!date && !youtubeURL && !title) return;
 
-const date = cell(r,0);
-const title = cell(r,2) || cell(r,1);
-const desc = cell(r,3);
-const tags = cell(r,4);
-const youtubeURL = findYouTubeUrl(r);
+    items.push({
+      date:date,
+      youtubeURL:youtubeURL,
+      title:title,
+      desc:desc,
+      tags:tags
+    });
+  });
 
-if(!date && !youtubeURL && !title) return;
+  const funParam = new URLSearchParams(location.search).get('fun');
 
-items.push({
-date:date,
-youtubeURL:youtubeURL,
-title:title,
-desc:desc,
-tags:tags,
-originalIndex:index
-});
+  let latestHtml = '';
+  let archiveHtml = '';
 
-});
+  if(funParam){
+    const idx = parseInt(funParam,10) - 1;
 
-items.reverse();
+    if(idx >= 0 && idx < items.length){
+      latestHtml = makeCard(items[idx],idx);
+    }else{
+      latestHtml = '<div class="loading">指定された動画が見つかりません</div>';
+    }
 
-const funParam =
-new URLSearchParams(location.search)
-.get("fun");
+    document.getElementById('archiveButton').classList.add('hidden');
+  }else{
+    items.forEach((item,index)=>{
+      if(index < 5){
+        latestHtml += makeCard(item,index);
+      }else{
+        archiveHtml += makeCard(item,index);
+      }
+    });
 
-let latestHtml = '';
-let archiveHtml = '';
+    if(archiveHtml){
+      document.getElementById('archiveButton').classList.remove('hidden');
+    }
+  }
 
-if (funParam) {
-const targetIndex =
-parseInt(funParam,10)-1;
+  document.getElementById('latestArea').innerHTML =
+    latestHtml || '<div class="loading">お楽しみ動画がありません</div>';
 
-const matchedItem =
-items.find(
-item =>
-item.originalIndex === targetIndex
-);
-
-if (matchedItem) {
-latestHtml =
-makeCard(
-matchedItem,
-matchedItem.originalIndex
-);
-} else {
-latestHtml = '<div class="loading">指定された動画が見つかりません</div>';
-}
-} else {
-items.forEach((item,index)=>{
-
-if(index < 5){
-latestHtml += makeCard(item,item.originalIndex);
-}else{
-archiveHtml += makeCard(item,item.originalIndex);
-}
-
-});
-}
-
-document.getElementById('latestArea').innerHTML =
-latestHtml || '<div class="loading">お楽しみ動画がありません</div>';
-
-document.getElementById('archiveArea').innerHTML =
-archiveHtml;
-
-if(archiveHtml && !funParam){
-document.getElementById('archiveButton').classList.remove('hidden');
-}
-
+  document.getElementById('archiveArea').innerHTML = archiveHtml;
 })
-.catch(err=>{
-
-document.getElementById('latestArea').innerHTML =
-'<div class="loading">読み込みに失敗しました</div>';
-
+.catch(()=>{
+  document.getElementById('latestArea').innerHTML =
+  '<div class="loading">読み込みに失敗しました</div>';
 });
 </script>
+
+</body>
+</html>
