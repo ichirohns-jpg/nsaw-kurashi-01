@@ -43,52 +43,40 @@ return r.c && r.c[i] ? (r.c[i].v || r.c[i].f || '') : '';
 }
 
 /* ★画像強制安定 */
-function fixImg(url){
-if(!url) return '';
-if(url.includes('drive.google')) return '';
-return url;
+function safeImg(img){
+if(!img) return '';
+if(img.includes('drive.google')) return '';
+return img;
 }
 
-/* share統一 */
 function shareUrl(id){
 return 'https://ichirohns-jpg/nsaw-kurashi-01/share.html?id='+id+'&type=radio';
 }
 
 function openShare(type,id){
 const s=shareUrl(id);
-
-if(type==='facebook')
-window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(s));
-
-if(type==='line')
-window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(s));
-
-if(type==='x')
-window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(s));
+if(type==='facebook')window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(s));
+if(type==='line')window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(s));
+if(type==='x')window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(s));
 }
 
 function copyUrl(id){
 navigator.clipboard.writeText(shareUrl(id));
-alert('コピーしました');
+alert('コピー');
 }
 
-/* データ */
-fetch(url)
-.then(r=>r.text())
-.then(t=>{
+fetch(url).then(r=>r.text()).then(t=>{
 
 const json=JSON.parse(t.substring(t.indexOf('{'),t.lastIndexOf('}')+1));
 
 let rows=json.table.rows||[];
 
 let items=rows.map((r,i)=>({
-
 id:i+1,
 date:cell(r,0),
 title:cell(r,2),
-image:fixImg(cell(r,3)),
+image:safeImg(cell(r,3)),
 desc:cell(r,4)
-
 }));
 
 items=items.filter(x=>x.title).reverse();
@@ -97,7 +85,6 @@ const app=document.getElementById('app');
 const params=new URLSearchParams(location.search);
 const id=params.get('radio');
 
-/* 詳細 */
 if(id){
 
 const item=items.find(x=>String(x.id)===String(id));
@@ -108,9 +95,7 @@ app.innerHTML=`
 <img src="${item.image || 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/radio-ogp.jpg'}">
 
 <div class="date">${item.date}</div>
-
 <div class="title">${item.title}</div>
-
 <div class="desc">${item.desc}</div>
 
 <div class="sns">
@@ -125,11 +110,9 @@ app.innerHTML=`
 return;
 }
 
-/* 一覧 */
 let html='';
 
 items.slice(0,5).forEach(item=>{
-
 html+=`
 <div class="card">
 
@@ -138,9 +121,7 @@ html+=`
 </a>
 
 <div class="date">${item.date}</div>
-
 <div class="title">${item.title}</div>
-
 <div class="desc">${item.desc}</div>
 
 <div class="sns">
