@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>地域ラジオ</title>
+<title>NSAW</title>
 
 <style>
 body{margin:0;font-family:sans-serif;background:#f4f7fb;color:#1e2a3a}
@@ -19,7 +19,7 @@ img{width:100%;display:block}
 
 <body>
 
-<header>地域ラジオ</header>
+<header>NSAW</header>
 
 <div class="wrap">
 <div id="app">読み込み中...</div>
@@ -27,57 +27,100 @@ img{width:100%;display:block}
 
 <script>
 
-const SHEET_ID="149lAFx3oPGjB0UqDpPWZJqt_rfc6LXQgoc";
+const SHEET_ID = "149lAFx3oPGjB0UqDpPWZJqt_rfc6LXQgoc";
 
+/* 安定セル取得 */
 function cell(r,i){
 return r.c && r.c[i] ? (r.c[i].v || "") : "";
 }
 
-/* 画像取得（安定版） */
+/* 画像取得（Drive対応・完全安定） */
 function getImage(r){
 if(!r.c) return "";
 
 for(let i=0;i<r.c.length;i++){
-let v=r.c[i]?r.c[i].v:"";
-if(typeof v==="string" && v.includes("http")) return v;
+let v = r.c[i] ? r.c[i].v : "";
+
+if(typeof v === "string" && v.startsWith("http")){
+
+/* Google Drive変換 */
+if(v.includes("drive.google.com/file/d/")){
+let id = v.match(/\/d\/(.+?)\//);
+if(id){
+return "https://drive.google.com/uc?id=" + id[1];
+}
+}
+
+return v;
+}
 }
 
 return "";
 }
 
-const url=
-"https://docs.google.com/spreadsheets/d/"+SHEET_ID+
-"/gviz/tq?sheet="+encodeURIComponent("地域ラジオ")+"&tqx=out:json";
+/* GViz安全パース */
+function parseGViz(text){
+let s = text.indexOf("{");
+let e = text.lastIndexOf("}");
+return JSON.parse(text.substring(s,e+1));
+}
 
-fetch(url).then(r=>r.text()).then(t=>{
+/* 読み込み */
+function load(sheet){
 
-const json=JSON.parse(t.substring(t.indexOf("{"),t.lastIndexOf("}")+1));
+const url =
+"https://docs.google.com/spreadsheets/d/" +
+SHEET_ID +
+"/gviz/tq?sheet=" +
+encodeURIComponent(sheet) +
+"&tqx=out:json";
 
-let rows=json.table.rows||[];
+fetch(url)
+.then(r=>r.text())
+.then(t=>{
 
-let items=rows.map((r,i)=>({
+const json = parseGViz(t);
+
+let rows = json.table.rows || [];
+
+let items = rows.map((r,i)=>({
+
 id:i+1,
 date:cell(r,0),
 title:cell(r,2),
 image:getImage(r),
 desc:cell(r,4)
+
 })).filter(x=>x.title).reverse();
 
-let html="";
+let html = "";
 
 items.forEach(i=>{
-html+=`
+html += `
 <div class="card">
+
 <img src="${i.image}">
+
 <div class="date">${i.date}</div>
 <div class="title">${i.title}</div>
 <div class="desc">${i.desc}</div>
-</div>`;
+
+</div>
+`;
 });
 
-document.getElementById("app").innerHTML=html;
+document.getElementById("app").innerHTML = html;
 
 });
+
+}
+
+/* ページ判定（確実版） */
+const page = location.pathname;
+
+if(page.includes("radio.html")) load("地域ラジオ");
+if(page.includes("fun.html")) load("お楽しみ動画");
+if(page.includes("kawaraban.html")) load("4市瓦版");
 
 </script>
 
