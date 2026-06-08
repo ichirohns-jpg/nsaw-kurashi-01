@@ -1,90 +1,443 @@
-// ==========================================
-// NSAW暮らし情報局 共通データ配信・制御コアロジック
-// 対象: kawaraban.html / radio.html / app.html
-// ==========================================
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>4市瓦版｜NSAW暮らし情報局</title>
 
-const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-const SHEET_NAME = '4市瓦版'; // ※各ページの対象シート名に書き換えて共通利用
-const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=' + encodeURIComponent(SHEET_NAME) + '&tqx=out:json';
+<style>
+*{box-sizing:border-box}
 
-function cell(r, i) {
-  return r.c[i] ? (r.c[i].v || r.c[i].f || '') : '';
+body{
+  margin:0;
+  background:#eef5fb;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+  color:#17324d;
 }
 
-// カードHTML生成共通関数
-function makeCard(item) {
+.wrap{
+  max-width:720px;
+  margin:0 auto;
+  padding:18px 14px 40px;
+}
+
+.header{
+  background:linear-gradient(135deg,#1e88e5,#42a5f5);
+  color:white;
+  border-radius:24px;
+  padding:24px 18px;
+  text-align:center;
+  box-shadow:0 8px 22px rgba(30,136,229,.25);
+  margin-bottom:18px;
+}
+
+.header h1{
+  margin:0;
+  font-size:30px;
+  font-weight:900;
+  line-height:1.3;
+}
+
+.header p{
+  margin:10px 0 0;
+  font-size:17px;
+  font-weight:700;
+  line-height:1.6;
+}
+
+.nav{
+  display:flex;
+  gap:10px;
+  margin:14px 0 20px;
+}
+
+.nav a{
+  flex:1;
+  text-align:center;
+  text-decoration:none;
+  background:white;
+  color:#1565c0;
+  font-size:16px;
+  font-weight:900;
+  padding:14px 8px;
+  border-radius:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.sectionTitle{
+  font-size:22px;
+  font-weight:900;
+  margin:24px 4px 12px;
+  color:#0d47a1;
+}
+
+.card{
+  background:white;
+  border-radius:24px;
+  overflow:hidden;
+  margin-bottom:22px;
+  box-shadow:0 8px 22px rgba(0,0,0,.10);
+}
+
+.card img{
+  width:100%;
+  display:block;
+  background:#dbeaf7;
+}
+
+.cardBody{
+  padding:18px;
+}
+
+.date{
+  display:inline-block;
+  background:#e3f2fd;
+  color:#1565c0;
+  font-size:15px;
+  font-weight:900;
+  padding:7px 12px;
+  border-radius:999px;
+  margin-bottom:10px;
+}
+
+.title{
+  font-size:25px;
+  font-weight:900;
+  line-height:1.35;
+  margin:4px 0 12px;
+  color:#17324d;
+}
+
+.desc{
+  font-size:18px;
+  font-weight:700;
+  line-height:1.75;
+  white-space:pre-wrap;
+  margin-bottom:16px;
+  color:#26394d;
+}
+
+.cityButtons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:16px 0;
+}
+
+.cityButtons a{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  color:white;
+  font-size:17px;
+  font-weight:900;
+  padding:14px 8px;
+  border-radius:16px;
+}
+
+.shiki{background:#1976d2}
+.niiza{background:#2e7d32}
+.asaka{background:#ef6c00}
+.wako{background:#6a1b9a}
+
+.sns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+}
+
+.sns button,
+.sns a{
+  border:0;
+  text-decoration:none;
+  text-align:center;
+  color:white;
+  font-size:16px;
+  font-weight:900;
+  padding:13px 8px;
+  border-radius:15px;
+  cursor:pointer;
+  font-family:inherit;
+}
+
+.fb{background:#1877f2}
+.line{background:#06c755}
+.x{background:#111}
+.copy{background:#607d8b}
+
+.archive{
+  margin-top:26px;
+}
+
+.archiveItem{
+  display:block;
+  background:white;
+  text-decoration:none;
+  color:#17324d;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:0 5px 14px rgba(0,0,0,.08);
+}
+
+.archiveItem .aDate{
+  font-size:14px;
+  font-weight:900;
+  color:#1565c0;
+  margin-bottom:6px;
+}
+
+.archiveItem .aTitle{
+  font-size:19px;
+  font-weight:900;
+  line-height:1.4;
+}
+
+.loading,
+.error{
+  background:white;
+  border-radius:22px;
+  padding:24px;
+  text-align:center;
+  font-size:20px;
+  font-weight:900;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+}
+
+.backBtn{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  background:#455a64;
+  color:white;
+  font-size:18px;
+  font-weight:900;
+  padding:15px;
+  border-radius:18px;
+  margin-bottom:18px;
+}
+
+@media(max-width:480px){
+  .header h1{font-size:26px}
+  .title{font-size:23px}
+  .desc{font-size:17px}
+  .cityButtons{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>4市瓦版</h1>
+    <p>志木・新座・朝霞・和光の暮らし情報を見やすくお届けします。</p>
+  </div>
+
+  <div class="nav">
+    <a href="index.html">トップ</a>
+    <a href="radio.html">地域ラジオ</a>
+    <a href="fun.html">お楽しみ</a>
+  </div>
+
+  <div id="app" class="loading">読み込み中です</div>
+
+</div>
+
+<script>
+const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
+const SHEET_NAME = '4市瓦版';
+const PAGE_URL = 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html';
+
+const url =
+  'https://docs.google.com/spreadsheets/d/' +
+  SHEET_ID +
+  '/gviz/tq?sheet=' +
+  encodeURIComponent(SHEET_NAME) +
+  '&tqx=out:json';
+
+function $(id){
+  return document.getElementById(id);
+}
+
+function cell(row,index){
+  if(!row.c || !row.c[index]) return '';
+  return row.c[index].f || row.c[index].v || '';
+}
+
+function esc(str){
+  return String(str || '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+}
+
+function makeShareUrl(item){
+  return PAGE_URL + '?id=' + item.id;
+}
+
+function openShare(type,id){
+  const item = window.ALL_ITEMS.find(x => String(x.id) === String(id));
+  if(!item) return;
+
+  const shareUrl = makeShareUrl(item);
+  const text = item.title || '4市瓦版';
+
+  let url = '';
+
+  if(type === 'facebook'){
+    url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl);
+  }
+
+  if(type === 'line'){
+    url = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(shareUrl);
+  }
+
+  if(type === 'x'){
+    url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(shareUrl);
+  }
+
+  window.open(url,'_blank');
+}
+
+function copyUrl(id){
+  const item = window.ALL_ITEMS.find(x => String(x.id) === String(id));
+  if(!item) return;
+
+  const shareUrl = makeShareUrl(item);
+
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    alert('URLをコピーしました');
+  }).catch(() => {
+    prompt('このURLをコピーしてください', shareUrl);
+  });
+}
+
+function cityButton(title,url,className){
+  if(!title || !url) return '';
+  return `<a class="${className}" href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a>`;
+}
+
+function makeCard(item,detailMode){
   return `
-    <div class="newsCard">
-      <img src="${item.image}" class="newsImage">
-      <div class="newsDate">${item.date}</div>
-      <div class="newsTitle">${item.title}</div>
-      <div class="newsText">${item.text}</div>
+    <div class="card">
+      ${item.image ? `<img src="${esc(item.image)}" alt="">` : ''}
+      <div class="cardBody">
+        <div class="date">${esc(item.date)}</div>
+        <div class="title">${esc(item.title)}</div>
+        <div class="desc">${esc(item.desc)}</div>
+
+        <div class="cityButtons">
+          ${cityButton(item.shikiTitle,item.shikiUrl,'shiki')}
+          ${cityButton(item.niizaTitle,item.niizaUrl,'niiza')}
+          ${cityButton(item.asakaTitle,item.asakaUrl,'asaka')}
+          ${cityButton(item.wakoTitle,item.wakoUrl,'wako')}
+        </div>
+
+        <div class="sns">
+          <button class="fb" onclick="openShare('facebook','${item.id}')">Facebook</button>
+          <button class="line" onclick="openShare('line','${item.id}')">LINE</button>
+          <button class="x" onclick="openShare('x','${item.id}')">X</button>
+          <button class="copy" onclick="copyUrl('${item.id}')">URLコピー</button>
+        </div>
+      </div>
     </div>
   `;
+}
+
+function renderList(items){
+  const latest = items.slice(0,5);
+  const archive = items.slice(5);
+
+  let html = '';
+
+  html += `<div class="sectionTitle">最新の瓦版</div>`;
+  latest.forEach(item => {
+    html += makeCard(item,false);
+  });
+
+  if(archive.length){
+    html += `<div class="archive">`;
+    html += `<div class="sectionTitle">アーカイブ</div>`;
+    archive.forEach(item => {
+      html += `
+        <a class="archiveItem" href="kawaraban.html?id=${item.id}">
+          <div class="aDate">${esc(item.date)}</div>
+          <div class="aTitle">${esc(item.title)}</div>
+        </a>
+      `;
+    });
+    html += `</div>`;
+  }
+
+  $('app').className = '';
+  $('app').innerHTML = html;
+}
+
+function renderDetail(items,id){
+  const item = items.find(x => String(x.id) === String(id));
+
+  if(!item){
+    $('app').className = 'error';
+    $('app').innerHTML = '記事が見つかりません';
+    return;
+  }
+
+  $('app').className = '';
+  $('app').innerHTML =
+    `<a class="backBtn" href="kawaraban.html">瓦版一覧へ戻る</a>` +
+    makeCard(item,true);
 }
 
 fetch(url)
   .then(res => res.text())
   .then(text => {
-    const json = JSON.parse(text.substring(47).slice(0, -2));
-    const rows = json.table.rows;
+    const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+    const rows = json.table.rows || [];
 
-    let items = [];
+    let items = rows.map((r,i) => ({
+      id: i + 1,
+      originalIndex: i + 1,
+      date: cell(r,0),
+      image: cell(r,1),
+      title: cell(r,2),
+      desc: cell(r,3),
+      shikiTitle: cell(r,4),
+      shikiUrl: cell(r,5),
+      niizaTitle: cell(r,6),
+      niizaUrl: cell(r,7),
+      asakaTitle: cell(r,8),
+      asakaUrl: cell(r,9),
+      wakoTitle: cell(r,10),
+      wakoUrl: cell(r,11)
+    })).filter(item => item.title || item.desc || item.image);
 
-    rows.forEach((r) => {
-      // 主要データがすべて空の不正行・空行を完全に除外
-      if (!cell(r, 0) && !cell(r, 2) && !cell(r, 3)) return;
+    items.reverse();
 
-      items.push({
-        date: cell(r, 0),
-        image: cell(r, 1),
-        title: cell(r, 2),
-        text: cell(r, 3)
-      });
+    items = items.map((item,index) => {
+      item.id = index + 1;
+      return item;
     });
 
-    // 【② データ並び順統一】reverse禁止。指定のミリ秒変換による安全日付降順ソート
-    items.sort((a, b) => {
-      const aTime = Number(new Date(a.date || ''));
-      const bTime = Number(new Date(b.date || ''));
-      return (isNaN(bTime) ? 0 : bTime) - (isNaN(aTime) ? 0 : aTime);
-    });
+    window.ALL_ITEMS = items;
 
-    // 【① URLパラメータ統一】すべて「id」に完全統一
-    const idParam = new URLSearchParams(location.search).get("id");
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
 
-    let target = null;
-
-    if (idParam) {
-      // 配列インデックス（-1）アクセスに統一（find / originalIndexは禁止）
-      const idx = parseInt(idParam, 10) - 1;
-      
-      // 範囲外チェック
-      if (idx >= 0 && idx < items.length) {
-        target = items[idx];
-      }
+    if(id){
+      renderDetail(items,id);
+    }else{
+      renderList(items);
     }
-
-    // パラメータ指定はあるが、該当データが存在しない（範囲外）場合
-    if (idParam && !target) {
-      document.getElementById('latestArea').innerHTML = `
-        <div class="newsCard">
-          <div class="newsText">指定された記事が見つかりません</div>
-        </div>
-      `;
-      return;
-    }
-
-    // 表示ルール統一（targetがあれば1件表示、なければ全件表示）
-    document.getElementById('latestArea').innerHTML = target
-      ? makeCard(target)
-      : items.map(i => makeCard(i)).join('');
-
   })
-  .catch(() => {
-    document.getElementById('latestArea').innerHTML = `
-      <div class="newsCard">
-        <div class="newsText">読み込みに失敗しました</div>
-      </div>
-    `;
+  .catch(err => {
+    $('app').className = 'error';
+    $('app').innerHTML = '読み込みに失敗しました';
   });
+</script>
+
+</body>
+</html>
