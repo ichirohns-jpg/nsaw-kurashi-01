@@ -1,106 +1,322 @@
-// ==========================================
-// NSAW地域ラジオ専用 安定版ロジック
-// ==========================================
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NSAW地域ラジオ</title>
 
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#eef5fb;
+  font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+  color:#1d2b3a;
+}
+
+.wrap{
+  max-width:760px;
+  margin:0 auto;
+  padding:18px 14px 40px;
+}
+
+.header{
+  background:linear-gradient(135deg,#1565c0,#42a5f5);
+  color:white;
+  border-radius:24px;
+  padding:24px 18px;
+  margin-bottom:18px;
+  text-align:center;
+  box-shadow:0 8px 22px rgba(0,0,0,.16);
+}
+
+.header h1{
+  margin:0;
+  font-size:30px;
+  line-height:1.35;
+}
+
+.header p{
+  margin:10px 0 0;
+  font-size:16px;
+  line-height:1.7;
+}
+
+.nav{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.btn{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  border:none;
+  border-radius:16px;
+  padding:14px 10px;
+  font-size:17px;
+  font-weight:900;
+  color:white;
+  background:#1976d2;
+  cursor:pointer;
+}
+
+.btn.green{background:#06c755}
+.btn.black{background:#111}
+.btn.gray{background:#607d8b}
+.btn.orange{background:#f57c00}
+
+.newsCard{
+  background:white;
+  border-radius:24px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.1);
+}
+
+.newsDate{
+  display:inline-block;
+  background:#e3f2fd;
+  color:#1565c0;
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:14px;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+.newsTitle{
+  font-size:24px;
+  font-weight:900;
+  line-height:1.45;
+  margin-bottom:14px;
+}
+
+.videoBox{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  border-radius:18px;
+  overflow:hidden;
+  background:#000;
+  margin:12px 0 14px;
+}
+
+.videoBox iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+.newsText{
+  font-size:17px;
+  line-height:1.85;
+  white-space:pre-wrap;
+  margin-top:12px;
+}
+
+.newsTag{
+  font-size:16px;
+  line-height:1.8;
+  color:#1565c0;
+  font-weight:900;
+  margin-top:14px;
+  white-space:pre-wrap;
+}
+
+.loading{
+  background:white;
+  border-radius:22px;
+  padding:22px;
+  text-align:center;
+  font-weight:900;
+  color:#555;
+}
+
+@media(max-width:520px){
+  .header h1{font-size:26px}
+  .newsTitle{font-size:22px}
+  .nav{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>NSAW地域ラジオ</h1>
+    <p>志木・新座・朝霞・和光の暮らし情報を、ラジオ風にお届けします。</p>
+  </div>
+
+  <div class="nav">
+    <a class="btn gray" href="portal.html">ポータルへ戻る</a>
+    <a class="btn" href="index.html">トップへ戻る</a>
+    <button class="btn" onclick="shareFacebook()">Facebook</button>
+    <button class="btn green" onclick="shareLine()">LINE</button>
+    <button class="btn black" onclick="shareX()">X</button>
+    <button class="btn orange" onclick="copyUrl()">URLコピー</button>
+  </div>
+
+  <div id="latestArea" class="loading">読み込み中...</div>
+
+</div>
+
+<script>
 const SHEET_ID = '149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 const SHEET_NAME = '地域ラジオ';
 
-const url =
+const DATA_URL =
   'https://docs.google.com/spreadsheets/d/' +
   SHEET_ID +
   '/gviz/tq?sheet=' +
   encodeURIComponent(SHEET_NAME) +
   '&tqx=out:json';
 
-function $(id) {
+function $(id){
   return document.getElementById(id);
 }
 
-function cell(r, i) {
-  return r.c && r.c[i] ? (r.c[i].v ?? r.c[i].f ?? '') : '';
+function cell(row,index){
+  if(!row || !row.c || !row.c[index]) return '';
+  return row.c[index].v ?? row.c[index].f ?? '';
 }
 
-// YouTube ID抽出
-function getYouTubeId(url) {
-  if (!url) return '';
-  const match = url.match(/(?:youtu\.be\/|v=|shorts\/)([a-zA-Z0-9_-]{6,})/);
+function escapeHtml(str){
+  return String(str || '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'","&#039;");
+}
+
+function getYouTubeId(url){
+  if(!url) return '';
+  const text = String(url);
+  const match = text.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([a-zA-Z0-9_-]{6,})/);
   return match ? match[1] : '';
 }
 
-// カード生成（ラジオ用）
-function makeCard(item) {
+function toTime(dateText){
+  const t = new Date(dateText).getTime();
+  return isNaN(t) ? 0 : t;
+}
+
+function makeCard(item){
   const videoId = getYouTubeId(item.url);
 
   return `
     <div class="newsCard">
-
-      <div class="newsDate">${item.date || ''}</div>
-      <div class="newsTitle">${item.title || ''}</div>
+      <div class="newsDate">${escapeHtml(item.date)}</div>
+      <div class="newsTitle">${escapeHtml(item.title)}</div>
 
       ${videoId ? `
-        <iframe width="100%" height="220"
-          src="https://www.youtube.com/embed/${videoId}"
-          frameborder="0"
-          allowfullscreen>
-        </iframe>
+        <div class="videoBox">
+          <iframe
+            src="https://www.youtube.com/embed/${videoId}"
+            allowfullscreen>
+          </iframe>
+        </div>
       ` : ''}
 
-      <div class="newsText">${item.text || ''}</div>
-
-      <div class="newsTag">${item.tag || ''}</div>
-
+      <div class="newsText">${escapeHtml(item.text)}</div>
+      <div class="newsTag">${escapeHtml(item.tag)}</div>
     </div>
   `;
 }
 
-fetch(url)
-  .then(res => res.text())
-  .then(text => {
-    const json = JSON.parse(text.substring(47).slice(0, -2));
-    const rows = json.table.rows || [];
+fetch(DATA_URL)
+.then(res => res.text())
+.then(text => {
+  const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+  const json = JSON.parse(jsonText);
+  const rows = json.table.rows || [];
 
-    let items = [];
+  const items = [];
 
-    rows.forEach(r => {
-      const date = cell(r, 0);
-      const url = cell(r, 1);
-      const title = cell(r, 2);
-      const text = cell(r, 3);
-      const tag = cell(r, 4);
+  rows.forEach(row => {
+    const date = cell(row,0);
+    const url = cell(row,1);
+    const title = cell(row,2);
+    const text = cell(row,3);
+    const tag = cell(row,4);
 
-      if (!date && !title && !url) return;
+    if(!date && !url && !title && !text && !tag) return;
 
-      items.push({ date, url, title, text, tag });
-    });
+    items.push({date,url,title,text,tag});
+  });
 
-    // 日付ソート（安全）
-    items.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+  items.sort((a,b) => toTime(b.date) - toTime(a.date));
 
-    const idParam = new URLSearchParams(location.search).get("id");
-    let target = null;
+  const idParam = new URLSearchParams(location.search).get('id');
+  let target = null;
 
-    if (idParam) {
-      const idx = parseInt(idParam, 10) - 1;
-      if (!isNaN(idx) && idx >= 0 && idx < items.length) {
-        target = items[idx];
-      }
+  if(idParam){
+    const idx = parseInt(idParam,10) - 1;
+    if(!isNaN(idx) && idx >= 0 && idx < items.length){
+      target = items[idx];
     }
+  }
 
-    const el = $('latestArea');
-    if (!el) return;
-
-    el.innerHTML = target
-      ? makeCard(target)
-      : items.map(makeCard).join('');
-
-  })
-  .catch(() => {
-    const el = $('latestArea');
-    if (!el) return;
-
-    el.innerHTML = `
+  if(idParam && !target){
+    $('latestArea').className = '';
+    $('latestArea').innerHTML = `
       <div class="newsCard">
-        <div class="newsText">読み込みに失敗しました</div>
+        <div class="newsText">指定されたラジオが見つかりません。</div>
       </div>
     `;
+    return;
+  }
+
+  $('latestArea').className = '';
+  $('latestArea').innerHTML = target
+    ? makeCard(target)
+    : items.map(makeCard).join('');
+
+})
+.catch(error => {
+  console.error(error);
+  $('latestArea').className = '';
+  $('latestArea').innerHTML = `
+    <div class="newsCard">
+      <div class="newsText">読み込みに失敗しました。</div>
+    </div>
+  `;
+});
+
+function shareFacebook(){
+  window.open(
+    'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href),
+    '_blank'
+  );
+}
+
+function shareLine(){
+  window.open(
+    'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(location.href),
+    '_blank'
+  );
+}
+
+function shareX(){
+  window.open(
+    'https://twitter.com/intent/tweet?url=' + encodeURIComponent(location.href),
+    '_blank'
+  );
+}
+
+function copyUrl(){
+  navigator.clipboard.writeText(location.href).then(function(){
+    alert('URLをコピーしました');
   });
+}
+</script>
+
+</body>
+</html>
