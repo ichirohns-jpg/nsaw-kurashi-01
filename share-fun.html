@@ -4,49 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>お楽しみ動画</title>
+<title>NSAW 暮らし情報局</title>
 
 <meta property="og:title" content="NSAW 暮らし情報局">
 <meta property="og:description" content="お楽しみ動画">
-<meta property="og:image" content="https://drive.google.com/uc?export=view&id=17myT3nZaqJhnGKDAoVwu-oiujuv8NVSH">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun-ogp.jpg">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="NSAW 暮らし情報局">
 <meta name="twitter:description" content="お楽しみ動画">
-<meta name="twitter:image" content="https://drive.google.com/uc?export=view&id=17myT3nZaqJhnGKDAoVwu-oiujuv8NVSH">
+<meta name="twitter:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun-ogp.jpg">
 
 <script>
 const id = new URLSearchParams(location.search).get('id') || '1';
 
-document.write(`
-<meta http-equiv="refresh"
-content="0;url=https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html?id=${id}">
-`);
+window.location.replace(
+  'https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html?id=' + id
+);
 </script>
 
 <style>
 body{
 margin:0;
+font-family:sans-serif;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
-font-family:sans-serif;
-background:#f4f8fc;
-}
-.box{
-text-align:center;
+background:#f5f7fb;
 }
 </style>
 
 </head>
 <body>
-
-<div class="box">
-<h2>NSAW 暮らし情報局</h2>
-<p>移動中...</p>
-</div>
-
+移動中...
 </body>
 </html>
