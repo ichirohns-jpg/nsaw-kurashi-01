@@ -43,16 +43,20 @@ fetch(url)
       });
     });
 
-    // 【④ 並び順統一】reverse禁止。日付降順ソート
-    items.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // 【② データ並び順統一】reverse禁止。指定のミリ秒変換による安全日付降順ソート
+    items.sort((a, b) => {
+      const aTime = Number(new Date(a.date || ''));
+      const bTime = Number(new Date(b.date || ''));
+      return (isNaN(bTime) ? 0 : bTime) - (isNaN(aTime) ? 0 : aTime);
+    });
 
-    // 【① URLパラメータ統一】すべて「id」に統一
+    // 【① URLパラメータ統一】すべて「id」に完全統一
     const idParam = new URLSearchParams(location.search).get("id");
 
     let target = null;
 
     if (idParam) {
-      // 【② データ参照方式統一】find禁止。配列インデックス（-1）アクセスに統一
+      // 配列インデックス（-1）アクセスに統一（find / originalIndexは禁止）
       const idx = parseInt(idParam, 10) - 1;
       
       // 範囲外チェック
@@ -71,7 +75,7 @@ fetch(url)
       return;
     }
 
-    // 【⑤ 表示ルール統一】同一配列による1件表示 / 全件表示の切り替え
+    // 表示ルール統一（targetがあれば1件表示、なければ全件表示）
     document.getElementById('latestArea').innerHTML = target
       ? makeCard(target)
       : items.map(i => makeCard(i)).join('');
