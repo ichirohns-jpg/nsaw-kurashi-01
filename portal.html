@@ -10,10 +10,6 @@
 box-sizing:border-box;
 }
 
-html{
-scroll-behavior:smooth;
-}
-
 body{
 margin:0;
 background:#eef4fb;
@@ -22,403 +18,224 @@ color:#1f2d3d;
 -webkit-text-size-adjust:100%;
 }
 
-.header{
-background:linear-gradient(135deg,#1565c0,#1976d2);
+header{
+background:#1565c0;
 color:#fff;
-padding:34px 20px 30px;
+padding:30px 18px;
 text-align:center;
-}
-
-.headerTitle{
-font-size:42px;
-font-weight:900;
-line-height:1.25;
-margin:0;
-}
-
-.headerSub{
-font-size:24px;
-font-weight:800;
-line-height:1.6;
-margin-top:12px;
-}
-
-.headerArea{
-display:inline-block;
-margin-top:16px;
-padding:10px 18px;
-background:rgba(255,255,255,.18);
-border-radius:999px;
-font-size:22px;
-font-weight:900;
-}
-
-.wrap{
-max-width:1000px;
-margin:0 auto;
-padding:20px 16px 44px;
-}
-
-.section{
-background:#fff;
-border-radius:26px;
-padding:24px 20px;
-margin-bottom:24px;
-box-shadow:0 8px 22px rgba(0,0,0,.12);
-}
-
-.sectionTitle{
-font-size:30px;
-font-weight:900;
-line-height:1.4;
-margin:0 0 12px;
-color:#102a43;
-}
-
-.sectionText{
-font-size:24px;
-line-height:1.8;
-font-weight:700;
-color:#334e68;
-margin:0 0 18px;
-}
-
-.menuGrid{
-display:grid;
-grid-template-columns:1fr;
-gap:18px;
-}
-
-.menuBtn{
-display:block;
-width:100%;
-border-radius:22px;
-padding:24px 20px;
-text-decoration:none;
-color:#fff;
-box-shadow:0 6px 16px rgba(0,0,0,.18);
-}
-
-.menuTitle{
-display:block;
-font-size:34px;
+font-size:40px;
 font-weight:900;
 line-height:1.35;
 }
 
-.menuDesc{
-display:block;
-font-size:22px;
+.headerSub{
+font-size:23px;
 font-weight:800;
-line-height:1.65;
-margin-top:8px;
-opacity:.95;
+line-height:1.6;
+margin-top:10px;
 }
 
-.radio{
-background:linear-gradient(135deg,#1565c0,#1976d2);
+.wrap{
+max-width:1100px;
+margin:0 auto;
+padding:18px 14px 44px;
 }
 
-.fun{
-background:linear-gradient(135deg,#c62828,#e53935);
+.topCard{
+background:#fff;
+border-radius:28px;
+padding:26px 22px;
+margin-bottom:26px;
+box-shadow:0 8px 22px rgba(0,0,0,.14);
 }
 
-.kawaraban{
-background:linear-gradient(135deg,#2e7d32,#43a047);
-}
-
-.support{
-background:linear-gradient(135deg,#6a1b9a,#8e24aa);
-}
-
-.gomap{
-background:linear-gradient(135deg,#ef6c00,#fb8c00);
-}
-
-.infoBox{
-background:#f7fbff;
-border:3px solid #d8eafd;
-border-radius:22px;
-padding:20px;
-margin-top:18px;
-}
-
-.infoTitle{
-font-size:26px;
+.topTitle{
+font-size:36px;
 font-weight:900;
-margin-bottom:10px;
-color:#0d47a1;
+line-height:1.45;
+margin-bottom:12px;
+color:#102a43;
 }
 
-.infoText{
-font-size:22px;
-line-height:1.75;
+.topText{
+font-size:26px;
+line-height:1.85;
+color:#243b53;
+white-space:pre-wrap;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
+.card{
+display:block;
+background:#fff;
+border-radius:26px;
+padding:26px 22px;
+text-decoration:none;
+color:#1f2d3d;
+box-shadow:0 8px 22px rgba(0,0,0,.14);
+min-height:210px;
+}
+
+.cardTitle{
+font-size:34px;
+font-weight:900;
+line-height:1.4;
+margin-bottom:12px;
+}
+
+.cardText{
+font-size:24px;
+line-height:1.8;
 font-weight:700;
 color:#334e68;
+white-space:pre-wrap;
 }
 
-.notice{
-background:#fff8e1;
-border:3px solid #ffe082;
-border-radius:22px;
-padding:20px;
-margin-top:20px;
-}
-
-.noticeTitle{
-font-size:26px;
-font-weight:900;
-color:#7a4b00;
-margin-bottom:10px;
-}
-
-.noticeText{
-font-size:22px;
-line-height:1.75;
-font-weight:700;
-color:#5d4037;
-}
+.radio{border-left:14px solid #1976d2;}
+.kawaraban{border-left:14px solid #43a047;}
+.fun{border-left:14px solid #d32f2f;}
+.support{border-left:14px solid #8e24aa;}
+.map{border-left:14px solid #fb8c00;}
+.watch{border-left:14px solid #009688;}
 
 .footer{
-text-align:center;
-padding:30px 16px 40px;
-font-size:20px;
-line-height:1.7;
-color:#627d98;
-font-weight:700;
+background:#fff;
+border-radius:28px;
+padding:26px 22px;
+margin-top:26px;
+box-shadow:0 8px 22px rgba(0,0,0,.14);
 }
 
-.topBtn{
-position:fixed;
-right:16px;
-bottom:16px;
-background:#1976d2;
-color:#fff;
-border:0;
-border-radius:999px;
-padding:14px 18px;
-font-size:18px;
+.footerTitle{
+font-size:32px;
 font-weight:900;
-box-shadow:0 6px 16px rgba(0,0,0,.25);
+line-height:1.45;
+margin-bottom:12px;
 }
 
-@media(min-width:760px){
-
-.menuGrid{
-grid-template-columns:1fr 1fr;
+.footerText{
+font-size:24px;
+line-height:1.85;
+color:#334e68;
+white-space:pre-wrap;
 }
 
-.menuBtn.full{
-grid-column:1 / -1;
-}
-
-}
-
-@media(max-width:600px){
-
-.header{
-padding:28px 14px 24px;
-}
-
-.headerTitle{
+@media(max-width:700px){
+header{
 font-size:34px;
+padding:26px 14px;
 }
 
 .headerSub{
 font-size:21px;
 }
 
-.headerArea{
-font-size:20px;
+.grid{
+grid-template-columns:1fr;
+gap:16px;
 }
 
-.wrap{
-padding:16px 12px 38px;
+.topTitle{
+font-size:32px;
 }
 
-.section{
-border-radius:24px;
-padding:22px 16px;
-}
-
-.sectionTitle{
-font-size:28px;
-}
-
-.sectionText{
-font-size:22px;
-}
-
-.menuBtn{
-padding:22px 16px;
-border-radius:20px;
-}
-
-.menuTitle{
-font-size:30px;
-}
-
-.menuDesc{
-font-size:21px;
-}
-
-.infoTitle,
-.noticeTitle{
+.topText{
 font-size:24px;
 }
 
-.infoText,
-.noticeText{
-font-size:21px;
+.card{
+min-height:auto;
+padding:24px 18px;
 }
 
+.cardTitle{
+font-size:31px;
+}
+
+.cardText{
+font-size:23px;
+}
+
+.footerTitle{
+font-size:30px;
+}
+
+.footerText{
+font-size:22px;
+}
 }
 </style>
 </head>
 
 <body>
 
-<header class="header">
-
-<h1 class="headerTitle">
+<header>
 NSAW 地域ポータル
-</h1>
 
 <div class="headerSub">
-志木市・新座市・朝霞市・和光市の<br>
-暮らしに役立つ情報をまとめて届けます
+地域ラジオ・4市瓦版・動画・支援マップ
 </div>
-
-<div class="headerArea">
-地域情報・動画・瓦版・地図
-</div>
-
 </header>
 
-<main class="wrap">
+<div class="wrap">
 
-<section class="section">
+<div class="topCard">
+<div class="topTitle">
+地域の入口をひとつに
+</div>
 
-<h2 class="sectionTitle">
-今日見るページを選んでください
-</h2>
+<div class="topText">
+志木市・新座市・朝霞市・和光市の暮らし情報を、スマホで見やすくまとめた地域ポータルです。
+</div>
+</div>
 
-<p class="sectionText">
-高齢者の方でも押しやすいように、ボタンを大きくしています。
-見たい情報を選ぶだけで、それぞれのページへ移動できます。
-</p>
+<div class="grid">
 
-<div class="menuGrid">
-
-<a class="menuBtn radio" href="radio.html">
-<span class="menuTitle">📻 地域ラジオ</span>
-<span class="menuDesc">
-4市のニュースを、朝のラジオ番組のように見られるページです。
-動画と説明文を大きく表示します。
-</span>
+<a class="card radio" href="radio.html">
+<div class="cardTitle">📻 地域ラジオ</div>
+<div class="cardText">毎朝の4市ニュースを動画と説明文で確認できます。</div>
 </a>
 
-<a class="menuBtn fun" href="fun.html">
-<span class="menuTitle">🎬 お楽しみ動画</span>
-<span class="menuDesc">
-YouTube動画を見やすく並べるページです。
-地域の息抜き・楽しみ用の動画を表示します。
-</span>
+<a class="card kawaraban" href="kawaraban.html">
+<div class="cardTitle">📰 4市瓦版</div>
+<div class="cardText">4市の最新情報をまとめて確認できます。</div>
 </a>
 
-<a class="menuBtn kawaraban" href="kawaraban.html">
-<span class="menuTitle">📰 4市瓦版</span>
-<span class="menuDesc">
-志木・新座・朝霞・和光の情報をまとめて確認できます。
-各市の詳しいページにも移動できます。
-</span>
+<a class="card fun" href="fun.html">
+<div class="cardTitle">🎬 お楽しみ動画</div>
+<div class="cardText">YouTube動画をページ内で再生できます。</div>
 </a>
 
-<a class="menuBtn support" href="support-map.html">
-<span class="menuTitle">🤝 支援マップ</span>
-<span class="menuDesc">
-地域の支援先、相談先、生活に役立つ場所を確認するページです。
-</span>
+<a class="card support" href="support-map.html">
+<div class="cardTitle">🗺 支援マップ</div>
+<div class="cardText">病院・薬局・避難所・相談窓口を探せます。</div>
 </a>
 
-<a class="menuBtn gomap full" href="https://ichirohns-jpg.github.io/shiki.gomap-001/">
-<span class="menuTitle">🗺 Go Map</span>
-<span class="menuDesc">
-キッチンカーや地域のお店・場所の情報を見るページです。
-地図で場所を確認できます。
-</span>
+<a class="card map" href="https://ichirohns-jpg.github.io/shiki.gomap-001/" target="_blank">
+<div class="cardTitle">🚚 Go Map</div>
+<div class="cardText">キッチンカーや地域の場所情報を地図で確認できます。</div>
+</a>
+
+<a class="card watch" href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/" target="_blank">
+<div class="cardTitle">❤️ 見守りDX</div>
+<div class="cardText">元気ですボタン、見守り確認、家族・支援者向けページへつなぎます。</div>
 </a>
 
 </div>
 
-</section>
-
-<section class="section">
-
-<h2 class="sectionTitle">
-このポータルでできること
-</h2>
-
-<div class="infoBox">
-<div class="infoTitle">地域ラジオ</div>
-<div class="infoText">
-毎日の4市ニュースを動画つきで確認できます。
-文字を大きくし、説明文も読みやすくしています。
+<div class="footer">
+<div class="footerTitle">NSAW 地域情報ポータル</div>
+<div class="footerText">
+地域ラジオ、4市瓦版、お楽しみ動画、支援マップ、Go Map、見守りDXをまとめる入口です。
 </div>
 </div>
 
-<div class="infoBox">
-<div class="infoTitle">お楽しみ動画</div>
-<div class="infoText">
-YouTube動画をそのままページ内で見られるようにします。
-リンクだけではなく、動画として表示することを基本にします。
 </div>
-</div>
-
-<div class="infoBox">
-<div class="infoTitle">4市瓦版</div>
-<div class="infoText">
-画像、タイトル、説明文、各市のリンクをまとめて表示します。
-地域情報を一目で見られるようにします。
-</div>
-</div>
-
-</section>
-
-<section class="section">
-
-<h2 class="sectionTitle">
-運用メモ
-</h2>
-
-<div class="notice">
-<div class="noticeTitle">表示が変な時</div>
-<div class="noticeText">
-GitHubに保存したあと、反映まで少し時間がかかることがあります。
-表示がおかしい時は、少し待ってから再読み込みしてください。
-</div>
-</div>
-
-<div class="notice">
-<div class="noticeTitle">このページの役割</div>
-<div class="noticeText">
-このページは入口です。
-データ表示は「地域ラジオ」「お楽しみ動画」「4市瓦版」の各ページで行います。
-</div>
-</div>
-
-</section>
-
-</main>
-
-<footer class="footer">
-NSAW 地域情報ポータル<br>
-志木市・新座市・朝霞市・和光市
-</footer>
-
-<button class="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-上へ
-</button>
 
 </body>
 </html>
