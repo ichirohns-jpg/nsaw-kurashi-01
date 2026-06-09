@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>元気ですボード</title>
+
+<style>
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#eef4fb;
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+color:#1f2d3d;
+}
+
+header{
+background:#43a047;
+color:#fff;
+padding:30px 18px;
+text-align:center;
+font-size:40px;
+font-weight:900;
+}
+
+.wrap{
+max-width:1000px;
+margin:auto;
+padding:18px;
+}
+
+.card{
+background:#fff;
+border-radius:28px;
+padding:26px;
+margin-bottom:24px;
+box-shadow:0 8px 22px rgba(0,0,0,.14);
+}
+
+.title{
+font-size:36px;
+font-weight:900;
+margin-bottom:12px;
+}
+
+.desc{
+font-size:26px;
+line-height:1.8;
+}
+
+.bigStatus{
+text-align:center;
+font-size:52px;
+font-weight:900;
+color:#43a047;
+padding:24px 0;
+}
+
+.time{
+text-align:center;
+font-size:24px;
+font-weight:900;
+color:#607d8b;
+}
+
+.btn{
+display:block;
+margin-top:18px;
+padding:22px;
+border-radius:18px;
+text-align:center;
+text-decoration:none;
+color:#fff;
+font-size:26px;
+font-weight:900;
+}
+
+.green{
+background:#43a047;
+}
+
+.blue{
+background:#1976d2;
+}
+
+.orange{
+background:#fb8c00;
+}
+
+@media(max-width:700px){
+
+header{
+font-size:34px;
+}
+
+.title{
+font-size:32px;
+}
+
+.desc{
+font-size:24px;
+}
+
+.bigStatus{
+font-size:42px;
+}
+
+.btn{
+font-size:23px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+元気ですボード
+</header>
+
+<div class="wrap">
+
+<div class="card">
+
+<div class="title">
+本日の確認
+</div>
+
+<div class="bigStatus">
+😊 元気です
+</div>
+
+<div class="time">
+確認時刻：2026年6月9日 08:30
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+確認内容
+</div>
+
+<div class="desc">
+本日の安否確認は正常です。
+見守りシステムに異常はありません。
+</div>
+
+<a class="btn green"
+href="dashboard.html">
+ダッシュボードへ
+</a>
+
+<a class="btn blue"
+href="family-dashboard.html">
+家族確認ページ
+</a>
+
+<a class="btn orange"
+href="status-board.html">
+状態一覧ボード
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>
