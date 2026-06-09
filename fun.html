@@ -1,302 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>お楽しみ動画</title>
-
-<style>
-*{
-box-sizing:border-box;
-}
-
-body{
-margin:0;
-background:#eef4fb;
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#1f2d3d;
--webkit-text-size-adjust:100%;
-}
-
-header{
-background:#e53935;
-color:#fff;
-padding:28px 18px;
-text-align:center;
-font-size:40px;
-font-weight:900;
-line-height:1.3;
-}
-
-.wrap{
-max-width:1000px;
-margin:0 auto;
-padding:18px 14px 44px;
-}
-
-.card{
-background:#fff;
-border-radius:28px;
-overflow:hidden;
-margin-bottom:30px;
-box-shadow:0 8px 22px rgba(0,0,0,.14);
-}
-
-.player{
-width:100%;
-background:#000;
-aspect-ratio:16/9;
-}
-
-.player iframe{
-width:100%;
-height:100%;
-border:0;
-display:block;
-}
-
-.date{
-display:inline-block;
-margin:20px 18px 8px;
-padding:12px 20px;
-background:#e3f2fd;
-color:#0d47a1;
-border-radius:999px;
-font-size:26px;
-font-weight:900;
-}
-
-.title{
-padding:8px 18px 14px;
-font-size:38px;
-font-weight:900;
-line-height:1.45;
-}
-
-.desc{
-padding:6px 18px 20px;
-font-size:28px;
-line-height:1.85;
-white-space:pre-wrap;
-}
-
-.watchBtn{
-display:block;
-margin:0 18px 20px;
-padding:22px;
-background:#e53935;
-color:#fff;
-text-align:center;
-text-decoration:none;
-font-size:28px;
-font-weight:900;
-border-radius:18px;
-}
-
-.share{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-padding:18px;
-}
-
-.share button{
-border:0;
-border-radius:16px;
-padding:20px;
-font-size:22px;
-font-weight:900;
-color:#fff;
-}
-
-.fb{
-background:#1877f2;
-}
-
-.line{
-background:#06c755;
-}
-
-.x{
-background:#000;
-}
-
-.copy{
-background:#ff9800;
-}
-
-.notice{
-background:#fff3cd;
-color:#7a4b00;
-padding:20px;
-margin:20px;
-border-radius:16px;
-font-size:24px;
-font-weight:900;
-line-height:1.6;
-}
-
-@media(max-width:700px){
-
-header{
-font-size:34px;
-padding:24px 14px;
-}
-
-.title{
-font-size:34px;
-}
-
-.desc{
-font-size:26px;
-}
-
-.watchBtn{
-font-size:24px;
-}
-
-.share button{
-font-size:20px;
-padding:18px 8px;
-}
-
-}
-</style>
-</head>
-
-<body>
-
-<header>
-お楽しみ動画
-</header>
-
-<div class="wrap">
-<div id="app">
-読み込み中...
-</div>
-</div>
-
-<script>
-
-const SHEET_ID="149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc";
-const SHEET_NAME="お楽しみ動画";
-
-const GVIZ_URL=
-"https://docs.google.com/spreadsheets/d/"
-+SHEET_ID+
-"/gviz/tq?sheet="
-+encodeURIComponent(SHEET_NAME)
-+"&tqx=out:json";
-
-function getCell(row,index){
-
-if(!row || !row.c || !row.c[index]){
-return "";
-}
-
-const c=row.c[index];
-
-if(c.v!==undefined && c.v!==null){
-return c.v;
-}
-
-if(c.f!==undefined && c.f!==null){
-return c.f;
-}
-
-return "";
-
-}
-
-function parseGViz(text){
-
-const match=text.match(/\{[\s\S]*\}/);
-
-if(!match){
-throw new Error("GVizデータを取得できません");
-}
-
-return JSON.parse(match[0]);
-
-}
-
-function formatDate(value){
-
-if(!value){
-return "";
-}
-
-const text=String(value).trim();
-
-let m=text.match(/Date\((\d+),(\d+),(\d+)\)/);
-
-if(m){
-
-return (
-m[1]+"年"+
-(Number(m[2])+1)+"月"+
-m[3]+"日"
-);
-
-}
-
-m=text.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
-
-if(m){
-
-return (
-m[1]+"年"+
-Number(m[2])+"月"+
-Number(m[3])+"日"
-);
-
-}
-
-return text;
-
-}
-
-function getYoutubeId(value){
-
-if(!value){
-return "";
-}
-
-const text=String(value).trim();
-
-let m=text.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/);
-if(m){
-return m[1];
-}
-
-m=text.match(/[?&]v=([a-zA-Z0-9_-]{6,})/);
-if(m){
-return m[1];
-}
-
-m=text.match(/shorts\/([a-zA-Z0-9_-]{6,})/);
-if(m){
-return m[1];
-}
-
-m=text.match(/embed\/([a-zA-Z0-9_-]{6,})/);
-if(m){
-return m[1];
-}
-
-if(/^[a-zA-Z0-9_-]{6,}$/.test(text)){
-return text;
-}
-
-return "";
-
-}
-
 function makeShareUrl(id){
 
 const base=location.href.split("?")[0];
 
-return base+"?fun="+encodeURIComponent(id);
+return base+"?radio="+encodeURIComponent(id);
 
 }
 
@@ -346,9 +52,14 @@ return response.text();
 .then(function(text){
 
 const json=parseGViz(text);
-const rows=json.table && json.table.rows
-? json.table.rows
-: [];
+
+const rows=
+json.table &&
+json.table.rows
+?
+json.table.rows
+:
+[];
 
 let items=[];
 
@@ -356,53 +67,51 @@ for(let i=0;i<rows.length;i++){
 
 const row=rows[i];
 
-const date=formatDate(
+const date=
+formatDate(
 getCell(row,0)
 );
 
-const title=getCell(row,2);
-
-const desc=getCell(row,4);
-
 const videoUrl=
-getCell(row,5) ||
-getCell(row,6) ||
-getCell(row,7) ||
-"";
+getCell(row,1);
+
+const title=
+getCell(row,2);
+
+const desc=
+getCell(row,3);
+
+const tags=
+getCell(row,4);
 
 const videoId=
 getYoutubeId(videoUrl);
 
-const watchUrl=
-videoUrl &&
-String(videoUrl).startsWith("http")
-?
-videoUrl
-:
-(
-videoId
-?
-"https://youtu.be/"+videoId
-:
-"#"
-);
-
 if(
 !title &&
 !videoUrl &&
-!desc
+!desc &&
+!tags
 ){
 continue;
 }
 
 items.push({
+
 id:i+1,
+
 date:date,
-title:title,
-desc:desc,
+
 videoUrl:videoUrl,
+
 videoId:videoId,
-watchUrl:watchUrl
+
+title:title,
+
+desc:desc,
+
+tags:tags
+
 });
 
 }
@@ -413,13 +122,15 @@ const params=
 new URLSearchParams(location.search);
 
 const targetId=
-params.get("fun");
+params.get("radio");
 
 if(targetId){
 
-items=items.filter(function(item){
+items=
+items.filter(function(item){
 
-return String(item.id)===String(targetId);
+return String(item.id)===
+String(targetId);
 
 });
 
@@ -433,7 +144,7 @@ const shareUrl=
 makeShareUrl(item.id);
 
 const shareText=
-item.title || "お楽しみ動画";
+item.title || "地域ラジオ";
 
 html+=`
 
@@ -473,12 +184,9 @@ ${item.title}
 ${item.desc}
 </div>
 
-<a
-class="watchBtn"
-href="${item.watchUrl}"
-target="_blank">
-YouTubeを見る
-</a>
+<div class="tags">
+${item.tags}
+</div>
 
 <div class="share">
 
