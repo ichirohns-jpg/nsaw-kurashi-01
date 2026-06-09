@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>NSAW 暮らし情報局</title>
 
 <style>
@@ -15,39 +14,42 @@ box-sizing:border-box;
 body{
 margin:0;
 background:#eef4fb;
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
 color:#1f2d3d;
 -webkit-text-size-adjust:100%;
 }
 
-.hero{
-width:100%;
-display:block;
+header{
+background:#1565c0;
+color:#fff;
+padding:26px;
+text-align:center;
+font-size:40px;
+font-weight:900;
 }
 
-.container{
+.wrap{
 max-width:1100px;
 margin:auto;
-padding:20px;
+padding:18px;
 }
 
-.topCard{
+.top{
 background:#fff;
 border-radius:28px;
-padding:28px;
-margin-bottom:24px;
+padding:26px;
+margin-bottom:22px;
 box-shadow:0 8px 22px rgba(0,0,0,.12);
 }
 
 .topTitle{
-font-size:42px;
+font-size:36px;
 font-weight:900;
-line-height:1.4;
-margin-bottom:16px;
+margin-bottom:10px;
 }
 
 .topText{
-font-size:28px;
+font-size:24px;
 line-height:1.8;
 }
 
@@ -55,6 +57,7 @@ line-height:1.8;
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:18px;
+margin-top:18px;
 }
 
 .card{
@@ -65,94 +68,59 @@ padding:26px;
 text-decoration:none;
 color:#1f2d3d;
 box-shadow:0 8px 22px rgba(0,0,0,.12);
-min-height:220px;
+transition:0.2s;
+}
+
+.card:hover{
+transform:translateY(-4px);
 }
 
 .cardTitle{
-font-size:36px;
-font-weight:900;
-margin-bottom:14px;
-}
-
-.cardText{
-font-size:24px;
-line-height:1.8;
-}
-
-.radio{
-border-left:12px solid #1976d2;
-}
-
-.fun{
-border-left:12px solid #d32f2f;
-}
-
-.kawaraban{
-border-left:12px solid #43a047;
-}
-
-.support{
-border-left:12px solid #8e24aa;
-}
-
-.gomap{
-border-left:12px solid #fb8c00;
-}
-
-.watch{
-border-left:12px solid #009688;
-}
-.card:hover{
-transform:translateY(-3px);
-transition:.2s;
-}
-
-.footer{
-margin-top:24px;
-background:#fff;
-border-radius:28px;
-padding:28px;
-box-shadow:0 8px 22px rgba(0,0,0,.12);
-}
-
-.footerTitle{
 font-size:34px;
 font-weight:900;
 margin-bottom:12px;
 }
 
-.footerText{
+.cardText{
 font-size:24px;
+line-height:1.7;
+}
+
+.radio{border-left:12px solid #1976d2;}
+.fun{border-left:12px solid #d32f2f;}
+.kawaraban{border-left:12px solid #43a047;}
+.support{border-left:12px solid #8e24aa;}
+.map{border-left:12px solid #fb8c00;}
+.news{border-left:12px solid #009688;}
+
+.footer{
+margin-top:28px;
+background:#fff;
+border-radius:28px;
+padding:24px;
+box-shadow:0 8px 22px rgba(0,0,0,.12);
+}
+
+.footerText{
+font-size:22px;
 line-height:1.8;
 }
 
-@media(max-width:700px){
+@media(max-width:800px){
 
 .grid{
 grid-template-columns:1fr;
 }
 
-.topTitle{
-font-size:36px;
-}
-
-.topText{
-font-size:24px;
+header{
+font-size:34px;
 }
 
 .cardTitle{
-font-size:32px;
-}
-
-.cardText{
-font-size:22px;
-}
-
-.footerTitle{
 font-size:30px;
 }
 
-.footerText{
+.cardText{
 font-size:22px;
 }
 
@@ -164,179 +132,51 @@ font-size:22px;
 
 <body>
 
-<img
-class="hero"
-src="top.jpg"
-onerror="this.style.display='none'">
+<header>
+NSAW 暮らし情報局
+</header>
 
-<div class="container">
+<div class="wrap">
 
-<div class="topCard">
+<div class="top">
 
 <div class="topTitle">
-NSAW 暮らし情報局
+地域情報をひとつにまとめる
 </div>
 
 <div class="topText">
-
-志木市・新座市・朝霞市・和光市の
-暮らし情報を見やすくまとめた
-地域情報ポータルです。
-
+志木・新座・朝霞・和光の情報を
+まとめて見やすく表示します。
 </div>
 
 </div>
 
 <div class="grid">
 
-<a
-class="card radio"
-href="radio.html">
-
-<div class="cardTitle">
-📻 地域ラジオ
-</div>
-
-<div class="cardText">
-
-毎朝の4市ニュースを
-ラジオ形式で配信します。
-
-</div>
-
+<a class="card radio" href="radio.html">
+<div class="cardTitle">地域ラジオ</div>
+<div class="cardText">毎朝のニュースを音声風で配信</div>
 </a>
 
-<a
-class="card kawaraban"
-href="kawaraban.html">
-
-<div class="cardTitle">
-📰 4市瓦版
-</div>
-
-<div class="cardText">
-
-4市の最新情報を
-一覧で確認できます。
-
-</div>
-
+<a class="card fun" href="fun.html">
+<div class="cardTitle">お楽しみ動画</div>
+<div class="cardText">YouTube動画をそのまま再生</div>
 </a>
 
-<a
-class="card fun"
-href="fun.html">
-
-<div class="cardTitle">
-🎬 お楽しみ動画
-</div>
-
-<div class="cardText">
-
-YouTube動画を
-ページ内でそのまま再生します。
-
-</div>
-
+<a class="card kawaraban" href="kawaraban.html">
+<div class="cardTitle">4市瓦版</div>
+<div class="cardText">最新の地域ニュース一覧</div>
 </a>
 
-<a
-class="card support"
-href="support-map.html">
-
-<div class="cardTitle">
-🤝 支援マップ
-</div>
-
-<div class="cardText">
-
-病院・薬局・避難所・
-地域包括支援センターなど。
-
-</div>
-
-</a>
-
-<a
-class="card gomap"
-href="https://ichirohns-jpg.github.io/shiki.gomap-001/">
-
-<div class="cardTitle">
-🗺 Go Map
-</div>
-
-<div class="cardText">
-
-キッチンカーや地域情報を
-地図で確認できます。
-
-</div>
-
-</a>
-
-<a
-class="card watch"
-href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/">
-
-<div class="cardTitle">
-❤️ 見守りDX
-</div>
-
-<div class="cardText">
-
-元気ですボタン、
-見守りページ、
-家族確認ページ。
-
-</div>
-
+<a class="card support" href="support-map.html">
+<div class="cardTitle">支援マップ</div>
+<div class="cardText">病院・薬局・避難所・相談窓口</div>
 </a>
 
 </div>
 
 <div class="footer">
 
-<div class="footerTitle">
-地域情報をひとまとめ
-</div>
-
 <div class="footerText">
-
-地域ラジオ、
-4市瓦版、
-お楽しみ動画、
-支援マップ、
-Go Map、
-見守りDXを
-1つの入口から利用できます。
-
-</div>
-
-</div>
-
-</div>
-
-<script>
-
-document.addEventListener("DOMContentLoaded",function(){
-
-const cards=document.querySelectorAll(".card");
-
-cards.forEach(function(card){
-
-card.addEventListener("touchstart",function(){
-card.style.transform="scale(0.98)";
-});
-
-card.addEventListener("touchend",function(){
-card.style.transform="scale(1)";
-});
-
-});
-
-});
-
-</script>
-
-</body>
-</html>
+このサイトは地域の情報を
+スマホで見やすくまとめ
