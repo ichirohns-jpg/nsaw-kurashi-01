@@ -18,27 +18,27 @@ color:#1f2d3d;
 header{
 background:#1976d2;
 color:#fff;
-padding:24px;
+padding:28px;
 text-align:center;
-font-size:34px;
+font-size:38px;
 font-weight:900;
 }
 
 .wrap{
 max-width:1000px;
 margin:auto;
-padding:16px;
+padding:18px;
 }
 
 .card{
 background:#fff;
 border-radius:24px;
 overflow:hidden;
-margin-bottom:24px;
-box-shadow:0 6px 18px rgba(0,0,0,.12);
+margin-bottom:28px;
+box-shadow:0 8px 22px rgba(0,0,0,.12);
 }
 
-iframe{
+.player iframe{
 width:100%;
 height:360px;
 border:0;
@@ -47,7 +47,7 @@ display:block;
 
 .date{
 display:inline-block;
-margin:16px;
+margin:18px;
 padding:10px 18px;
 background:#e3f2fd;
 border-radius:999px;
@@ -56,10 +56,10 @@ font-weight:900;
 }
 
 .title{
-padding:0 18px 12px;
+padding:0 18px 10px;
 font-size:34px;
 font-weight:900;
-line-height:1.4;
+line-height:1.5;
 }
 
 .desc{
@@ -70,10 +70,69 @@ white-space:pre-wrap;
 }
 
 .tags{
-padding:0 18px 20px;
+padding:0 18px 18px;
 font-size:22px;
+line-height:1.7;
 color:#666;
 white-space:pre-wrap;
+}
+
+.share{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+padding:18px;
+}
+
+.share button{
+border:0;
+border-radius:14px;
+padding:18px;
+font-size:22px;
+font-weight:900;
+color:#fff;
+}
+
+.fb{background:#1877f2}
+.line{background:#06c755}
+.x{background:#000}
+.copy{background:#ff9800}
+
+.notice{
+background:#fff3cd;
+padding:20px;
+margin:20px;
+border-radius:14px;
+font-size:24px;
+font-weight:900;
+}
+
+@media(max-width:600px){
+
+header{
+font-size:34px;
+}
+
+.player iframe{
+height:280px;
+}
+
+.title{
+font-size:30px;
+}
+
+.desc{
+font-size:24px;
+}
+
+.tags{
+font-size:20px;
+}
+
+.share button{
+font-size:20px;
+}
+
 }
 </style>
 </head>
@@ -101,27 +160,17 @@ const url=
 +"&tqx=out:json";
 
 function cell(row,index){
-return row.c && row.c[index] && row.c[index].v
+return row.c &&
+row.c[index] &&
+row.c[index].v!==undefined
 ? row.c[index].v
 : "";
 }
 
-function getYoutubeId(url){
-
-if(!url) return "";
-
-let m=String(url).match(
-/(?:youtu\.be\/|v=|embed\/|shorts\/)([a-zA-Z0-9_-]{6,})/
-);
-
-return m ? m[1] : "";
-
-}
-
 function parseGViz(text){
 
-let start=text.indexOf("{");
-let end=text.lastIndexOf("}");
+const start=text.indexOf("{");
+const end=text.lastIndexOf("}");
 
 return JSON.parse(
 text.substring(start,end+1)
@@ -129,53 +178,123 @@ text.substring(start,end+1)
 
 }
 
+function youtubeId(url){
+
+if(!url) return "";
+
+url=String(url);
+
+let m=url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+if(m) return m[1];
+
+m=url.match(/[?&]v=([a-zA-Z0-9_-]+)/);
+if(m) return m[1];
+
+m=url.match(/shorts\/([a-zA-Z0-9_-]+)/);
+if(m) return m[1];
+
+m=url.match(/embed\/([a-zA-Z0-9_-]+)/);
+if(m) return m[1];
+
+return "";
+
+}
+
+function shareFacebook(url){
+window.open(
+"https://www.facebook.com/sharer/sharer.php?u="
++encodeURIComponent(url),
+"_blank"
+);
+}
+
+function shareLine(url){
+window.open(
+"https://social-plugins.line.me/lineit/share?url="
++encodeURIComponent(url),
+"_blank"
+);
+}
+
+function shareX(url){
+window.open(
+"https://twitter.com/intent/tweet?url="
++encodeURIComponent(url),
+"_blank"
+);
+}
+
+function copyUrl(url){
+navigator.clipboard.writeText(url);
+alert("URLをコピーしました");
+}
+
 fetch(url)
 .then(r=>r.text())
 .then(text=>{
 
 const json=parseGViz(text);
-
-const rows=json.table.rows || [];
+const rows=json.table.rows||[];
 
 let html="";
 
 for(let i=rows.length-1;i>=0;i--){
 
-let row=rows[i];
+const row=rows[i];
 
-let date=cell(row,0);
-let youtube=cell(row,1);
-let title=cell(row,2);
-let desc=cell(row,3);
-let tags=cell(row,4);
+const date=cell(row,0);
+const youtube=cell(row,1);
+const title=cell(row,2);
+const desc=cell(row,3);
+const tags=cell(row,4);
 
 if(!title) continue;
 
-let id=getYoutubeId(youtube);
+const id=youtubeId(youtube);
 
 html+=`
 
 <div class="card">
 
-${id ? `
-<iframe
-src="https://www.youtube.com/embed/${id}"
-allowfullscreen>
-</iframe>
-` : ""}
+<div class="player">
+
+${id
+? `<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`
+: `<div class="notice">YouTube URL確認</div>`
+}
+
+</div>
 
 <div class="date">${date}</div>
 
-<div class="title">
-${title}
-</div>
+<div class="title">${title}</div>
 
-<div class="desc">
-${desc}
-</div>
+<div class="desc">${desc}</div>
 
-<div class="tags">
-${tags}
+<div class="tags">${tags}</div>
+
+<div class="share">
+
+<button class="fb"
+onclick="shareFacebook(location.href)">
+Facebook
+</button>
+
+<button class="line"
+onclick="shareLine(location.href)">
+LINE
+</button>
+
+<button class="x"
+onclick="shareX(location.href)">
+X
+</button>
+
+<button class="copy"
+onclick="copyUrl(location.href)">
+URLコピー
+</button>
+
 </div>
 
 </div>
@@ -185,13 +304,13 @@ ${tags}
 }
 
 document.getElementById("app").innerHTML=
-html || "記事がありません";
+html || "<div class='notice'>記事がありません</div>";
 
 })
 .catch(err=>{
 
 document.getElementById("app").innerHTML=
-"読み込み失敗";
+"<div class='notice'>読み込み失敗</div>";
 
 console.error(err);
 
