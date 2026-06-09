@@ -6,7 +6,6 @@
 <title>NSAW 暮らし情報局</title>
 
 <style>
-
 *{
 box-sizing:border-box;
 }
@@ -15,40 +14,47 @@ body{
 margin:0;
 background:#eef4fb;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+color:#1f2d3d;
 }
 
 header{
 background:#1976d2;
 color:#fff;
-padding:24px;
+padding:28px;
 text-align:center;
-font-size:30px;
+font-size:38px;
 font-weight:900;
 }
 
+.sub{
+font-size:20px;
+margin-top:10px;
+font-weight:700;
+}
+
 .wrap{
-max-width:900px;
+max-width:1000px;
 margin:auto;
 padding:20px;
 }
 
 .card{
 background:#fff;
-border-radius:20px;
-padding:20px;
-margin-bottom:20px;
-box-shadow:0 4px 14px rgba(0,0,0,.08);
+border-radius:24px;
+padding:24px;
+margin-bottom:24px;
+box-shadow:0 6px 18px rgba(0,0,0,.12);
 }
 
 .btn{
 display:block;
 width:100%;
-padding:20px;
-margin:14px 0;
-border-radius:14px;
+padding:26px;
+margin:18px 0;
+border-radius:18px;
 text-decoration:none;
 text-align:center;
-font-size:24px;
+font-size:32px;
 font-weight:900;
 color:#fff;
 }
@@ -67,11 +73,23 @@ background:#43a047;
 
 .footer{
 text-align:center;
-padding:20px;
+padding:30px;
+font-size:18px;
 color:#666;
-font-size:14px;
 }
 
+@media(max-width:600px){
+
+header{
+font-size:32px;
+}
+
+.btn{
+font-size:28px;
+padding:24px;
+}
+
+}
 </style>
 </head>
 
@@ -79,6 +97,11 @@ font-size:14px;
 
 <header>
 NSAW 暮らし情報局
+
+<div class="sub">
+志木・新座・朝霞・和光の地域情報
+</div>
+
 </header>
 
 <div class="wrap">
@@ -87,17 +110,17 @@ NSAW 暮らし情報局
 
 <a class="btn radio"
 href="radio.html">
-地域ラジオ
+📻 地域ラジオ
 </a>
 
 <a class="btn fun"
 href="fun.html">
-お楽しみ動画
+🎬 お楽しみ動画
 </a>
 
 <a class="btn kawaraban"
 href="kawaraban.html">
-4市瓦版
+📰 4市瓦版
 </a>
 
 </div>
