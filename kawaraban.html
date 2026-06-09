@@ -3,200 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NSAW</title>
+<title>4市瓦版</title>
 
 <style>
 body{
-margin:0;
-font-family:sans-serif;
-background:#f4f7fb;
-color:#1e2a3a;
+  margin:0;
+  font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+  background:#f4f7fb;
+  color:#1e2a3a;
 }
 
 header{
-background:#1976d2;
-color:#fff;
-padding:22px;
-text-align:center;
-font-size:26px;
-font-weight:900;
+  background:#1976d2;
+  color:#fff;
+  padding:22px;
+  text-align:center;
+  font-size:26px;
+  font-weight:900;
 }
 
 .wrap{
-max-width:900px;
-margin:auto;
-padding:16px;
+  max-width:900px;
+  margin:auto;
+  padding:16px;
 }
 
 .card{
-background:#fff;
-margin-bottom:16px;
-border-radius:14px;
-overflow:hidden;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
+  background:#fff;
+  margin-bottom:18px;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
 
-img{
-width:100%;
-display:block;
+.card img{
+  width:100%;
+  display:block;
 }
 
 .date{
-padding:6px 10px;
-margin:10px;
-background:#e3f2fd;
-border-radius:999px;
-display:inline-block;
-font-weight:900;
+  padding:6px 10px;
+  margin:10px;
+  background:#e3f2fd;
+  border-radius:999px;
+  display:inline-block;
+  font-weight:900;
 }
 
 .title{
-font-size:20px;
-font-weight:900;
-padding:10px;
+  font-size:20px;
+  font-weight:900;
+  padding:10px;
 }
 
 .desc{
-padding:10px;
-font-size:15px;
-line-height:1.6;
+  padding:10px;
+  font-size:15px;
+  line-height:1.7;
+  white-space:pre-wrap;
 }
 
-.sns{
-display:flex;
-gap:8px;
-padding:10px;
-flex-wrap:wrap;
+.city{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:10px;
 }
 
-.sns button{
-border:0;
-padding:10px 12px;
-border-radius:8px;
-color:#fff;
-font-weight:900;
-cursor:pointer;
+.city a{
+  display:block;
+  text-align:center;
+  padding:12px;
+  border-radius:10px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:900;
 }
 
-.fb{background:#1877f2}
-.line{background:#06c755}
-.x{background:#111}
-.copy{background:#ff9800}
+.shiki{background:#1976d2}
+.niiza{background:#43a047}
+.asaka{background:#fb8c00}
+.wako{background:#8e24aa}
 </style>
-
 </head>
 
 <body>
 
-<header>NSAW</header>
+<header>4市瓦版</header>
 
 <div class="wrap">
-<div id="app">読み込み中...</div>
+  <div id="app">読み込み中...</div>
 </div>
 
 <script>
-
 const SHEET_ID = "149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc";
-
-function cell(r,i){
-return r.c && r.c[i] ? (r.c[i].v || "") : "";
-}
-
-function getImage(r){
-if(!r.c) return "";
-for(let i=0;i<r.c.length;i++){
-let v = r.c[i] ? r.c[i].v : "";
-if(typeof v === "string" && v.includes("http")){
-return v;
-}
-}
-return "";
-}
-
-function load(sheet){
+const SHEET_NAME = "4市瓦版";
 
 const url =
-"https://docs.google.com/spreadsheets/d/" +
-SHEET_ID +
-"/gviz/tq?sheet=" +
-encodeURIComponent(sheet) +
-"&tqx=out:json";
+  "https://docs.google.com/spreadsheets/d/" +
+  SHEET_ID +
+  "/gviz/tq?sheet=" +
+  encodeURIComponent(SHEET_NAME) +
+  "&tqx=out:json";
+
+function cell(row,index){
+  return row.c?.[index]?.v ?? "";
+}
+
+function parseGviz(text){
+  const jsonText = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
+  return JSON.parse(jsonText);
+}
 
 fetch(url)
-.then(r=>r.text())
-.then(t=>{
+.then(res => res.text())
+.then(text => {
+  const json = parseGviz(text);
+  const rows = json.table.rows || [];
 
-const json = JSON.parse(
-t.substring(t.indexOf("{"), t.lastIndexOf("}") + 1)
-);
+  const items = rows.map((row,i)=>({
+    id:i+1,
+    date:cell(row,0),
+    image:cell(row,1),
+    title:cell(row,2),
+    desc:cell(row,3),
+    shikiTitle:cell(row,4),
+    shikiUrl:cell(row,5),
+    niizaTitle:cell(row,6),
+    niizaUrl:cell(row,7),
+    asakaTitle:cell(row,8),
+    asakaUrl:cell(row,9),
+    wakoTitle:cell(row,10),
+    wakoUrl:cell(row,11)
+  }))
+  .filter(item => item.title)
+  .reverse();
 
-let rows = json.table.rows || [];
+  let html = "";
 
-let items = rows.map((r,i)=>({
+  items.forEach(item=>{
+    html += `
+      <div class="card">
+        <img src="${item.image}" alt="" onerror="this.style.display='none'">
 
-id:i+1,
-date:cell(r,0),
-title:cell(r,2),
-image:getImage(r),
-desc:cell(r,4)
+        <div class="date">${item.date}</div>
+        <div class="title">${item.title}</div>
+        <div class="desc">${item.desc}</div>
 
-})).filter(x=>x.title).reverse();
+        <div class="city">
+          ${item.shikiUrl ? `<a class="shiki" href="${item.shikiUrl}" target="_blank">${item.shikiTitle || "志木市"}</a>` : ""}
+          ${item.niizaUrl ? `<a class="niiza" href="${item.niizaUrl}" target="_blank">${item.niizaTitle || "新座市"}</a>` : ""}
+          ${item.asakaUrl ? `<a class="asaka" href="${item.asakaUrl}" target="_blank">${item.asakaTitle || "朝霞市"}</a>` : ""}
+          ${item.wakoUrl ? `<a class="wako" href="${item.wakoUrl}" target="_blank">${item.wakoTitle || "和光市"}</a>` : ""}
+        </div>
+      </div>
+    `;
+  });
 
-let html = "";
-
-items.forEach(i=>{
-html += `
-<div class="card">
-
-<img src="${i.image}">
-
-<div class="date">${i.date}</div>
-<div class="title">${i.title}</div>
-<div class="desc">${i.desc}</div>
-
-<div class="sns">
-<button class="fb" onclick="share('fb','${i.id}')">FB</button>
-<button class="line" onclick="share('line','${i.id}')">LINE</button>
-<button class="x" onclick="share('x','${i.id}')">X</button>
-<button class="copy" onclick="copyUrl('${i.id}')">COPY</button>
-</div>
-
-</div>
-`;
+  document.getElementById("app").innerHTML = html || "表示する記事がありません。";
+})
+.catch(err=>{
+  document.getElementById("app").innerHTML = "読み込みに失敗しました。";
+  console.error(err);
 });
-
-document.getElementById("app").innerHTML = html;
-
-});
-
-}
-
-function share(type,id){
-const base = location.href.split("?")[0];
-const url = base + "?id=" + id;
-
-if(type==="fb"){
-window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(url));
-}
-if(type==="line"){
-window.open("https://social-plugins.line.me/lineit/share?url="+encodeURIComponent(url));
-}
-if(type==="x"){
-window.open("https://twitter.com/intent/tweet?url="+encodeURIComponent(url));
-}
-}
-
-function copyUrl(id){
-const base = location.href.split("?")[0];
-navigator.clipboard.writeText(base+"?id="+id);
-}
-
-let page = location.pathname;
-
-if(page.includes("radio")) load("地域ラジオ");
-if(page.includes("fun")) load("お楽しみ動画");
-if(page.includes("kawaraban")) load("4市瓦版");
-
 </script>
 
 </body>
