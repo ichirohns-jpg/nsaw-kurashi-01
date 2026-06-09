@@ -80,19 +80,6 @@ line-height:1.85;
 white-space:pre-wrap;
 }
 
-.watchBtn{
-display:block;
-margin:0 18px 20px;
-padding:22px;
-background:#e53935;
-color:#fff;
-text-align:center;
-text-decoration:none;
-font-size:28px;
-font-weight:900;
-border-radius:18px;
-}
-
 .share{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -138,10 +125,6 @@ font-size:34px;
 
 .desc{
 font-size:26px;
-}
-
-.watchBtn{
-font-size:24px;
 }
 
 .share button{
@@ -215,9 +198,7 @@ if(!value){
 return "";
 }
 
-const text=String(value).trim();
-
-return text;
+return String(value).trim();
 
 }
 
@@ -242,7 +223,6 @@ m=text.match(/embed\/([a-zA-Z0-9_-]+)/);
 if(m) return m[1];
 
 return "";
-
 }
 
 function makeShareUrl(id){
@@ -291,9 +271,11 @@ alert("URLをコピーしました");
 }
 
 fetch(GVIZ_URL)
+
 .then(function(response){
 return response.text();
 })
+
 .then(function(text){
 
 const json=parseGViz(text);
@@ -317,15 +299,6 @@ getCell(row,7) ||
 
 const videoId=getYoutubeId(videoUrl);
 
-const watchUrl=
-videoUrl && String(videoUrl).startsWith("http")
-? videoUrl
-: (
-videoId
-? "https://youtu.be/"+videoId
-: "#"
-);
-
 if(!title && !videoUrl && !desc){
 continue;
 }
@@ -336,8 +309,7 @@ date:date,
 title:title,
 desc:desc,
 videoUrl:videoUrl,
-videoId:videoId,
-watchUrl:watchUrl
+videoId:videoId
 });
 
 }
@@ -400,13 +372,6 @@ ${item.title}
 ${item.desc}
 </div>
 
-<a
-class="watchBtn"
-href="${item.watchUrl}"
-target="_blank">
-YouTubeを見る
-</a>
-
 <div class="share">
 
 <button
@@ -445,6 +410,7 @@ document.getElementById("app").innerHTML=
 html || "<div class='notice'>記事がありません</div>";
 
 })
+
 .catch(function(err){
 
 document.getElementById("app").innerHTML=
