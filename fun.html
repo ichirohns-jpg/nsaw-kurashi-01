@@ -14,40 +14,38 @@ box-sizing:border-box;
 body{
 margin:0;
 background:#eef4fb;
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+font-family:"Hiragino Sans","Yu Gothic",sans-serif;
 color:#1f2d3d;
 -webkit-text-size-adjust:100%;
 }
 
 header{
-background:#d32f2f;
+background:#e53935;
 color:#fff;
-padding:28px 18px;
+padding:28px;
 text-align:center;
 font-size:40px;
 font-weight:900;
-line-height:1.3;
 }
 
 .wrap{
 max-width:1000px;
 margin:auto;
-padding:18px 14px 40px;
+padding:18px;
 }
 
 .card{
 background:#fff;
-border-radius:28px;
+border-radius:24px;
 overflow:hidden;
-margin-bottom:30px;
-box-shadow:0 8px 22px rgba(0,0,0,.14);
+margin-bottom:28px;
+box-shadow:0 8px 22px rgba(0,0,0,.12);
 }
 
 .player{
 width:100%;
 background:#000;
 aspect-ratio:16 / 9;
-overflow:hidden;
 }
 
 .player iframe{
@@ -59,53 +57,51 @@ display:block;
 
 .date{
 display:inline-block;
-margin:20px 18px 8px;
-padding:12px 20px;
+margin:18px;
+padding:10px 18px;
 background:#e3f2fd;
-color:#0d47a1;
 border-radius:999px;
-font-size:26px;
+font-size:24px;
 font-weight:900;
 }
 
 .title{
-padding:8px 18px 14px;
-font-size:38px;
+padding:0 18px 10px;
+font-size:36px;
 font-weight:900;
-line-height:1.45;
 }
 
 .desc{
-padding:6px 18px 20px;
-font-size:28px;
-line-height:1.85;
+padding:0 18px 18px;
+font-size:26px;
+line-height:1.8;
 white-space:pre-wrap;
 }
 
 .watchBtn{
 display:block;
-margin:20px;
-padding:22px;
+margin:18px;
+padding:18px;
 background:#e53935;
 color:#fff;
 text-align:center;
+border-radius:14px;
 text-decoration:none;
-font-size:28px;
+font-size:26px;
 font-weight:900;
-border-radius:18px;
 }
 
 .share{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:14px;
+gap:12px;
 padding:18px;
 }
 
 .share button{
 border:0;
-border-radius:16px;
-padding:20px;
+border-radius:14px;
+padding:18px;
 font-size:22px;
 font-weight:900;
 color:#fff;
@@ -119,34 +115,10 @@ color:#fff;
 .notice{
 background:#fff3cd;
 padding:20px;
-margin:20px;
-border-radius:16px;
+margin:18px;
+border-radius:14px;
 font-size:24px;
 font-weight:900;
-}
-
-@media(max-width:600px){
-
-header{
-font-size:34px;
-}
-
-.title{
-font-size:34px;
-}
-
-.desc{
-font-size:26px;
-}
-
-.watchBtn{
-font-size:24px;
-}
-
-.share button{
-font-size:20px;
-}
-
 }
 
 </style>
@@ -159,16 +131,12 @@ font-size:20px;
 </header>
 
 <div class="wrap">
-
-<div id="app">
-読み込み中...
-</div>
-
+<div id="app">読み込み中...</div>
 </div>
 
 <script>
 
-const SHEET_ID="149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc";
+const SHEET_ID="149lAFx3oPGjB0UqDpPWZJqt-rfc6LXQgoc";
 const SHEET_NAME="お楽しみ動画";
 
 const url=
@@ -178,78 +146,30 @@ const url=
 +encodeURIComponent(SHEET_NAME)
 +"&tqx=out:json";
 
-function cell(row,index){
-
-if(!row || !row.c || !row.c[index]){
-return "";
-}
-
-const c=row.c[index];
-
-if(c.v!==undefined && c.v!==null){
-return c.v;
-}
-
-if(c.f!==undefined && c.f!==null){
-return c.f;
-}
-
-return "";
-
+function cell(row,i){
+return row?.c?.[i]?.v || row?.c?.[i]?.f || "";
 }
 
 function parseGViz(text){
 
-const start=text.indexOf("{");
-const end=text.lastIndexOf("}");
-
-return JSON.parse(
-text.substring(start,end+1)
-);
+const match=text.match(/\{[\s\S]*\}/);
+if(!match) return {table:{rows:[]}};
+return JSON.parse(match[0]);
 
 }
 
-function formatDate(value){
-
-if(!value){
-return "";
-}
-
-const text=String(value);
-
-let m=text.match(/Date\((\d+),(\d+),(\d+)\)/);
-
+function formatDate(v){
+if(!v) return "";
+let t=String(v);
+let m=t.match(/Date\((\d+),(\d+),(\d+)\)/);
 if(m){
-
-return (
-m[1]+"年"+
-(Number(m[2])+1)+"月"+
-m[3]+"日"
-);
-
+return `${m[1]}年${Number(m[2])+1}月${m[3]}日`;
+}
+return t;
 }
 
-m=text.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);
-
-if(m){
-
-return (
-m[1]+"年"+
-Number(m[2])+"月"+
-Number(m[3])+"日"
-);
-
-}
-
-return text;
-
-}
 function getYoutubeId(url){
-
-if(!url){
-return "";
-}
-
+if(!url) return "";
 url=String(url);
 
 let m=url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
@@ -261,59 +181,41 @@ if(m) return m[1];
 m=url.match(/shorts\/([a-zA-Z0-9_-]+)/);
 if(m) return m[1];
 
-m=url.match(/embed\/([a-zA-Z0-9_-]+)/);
-if(m) return m[1];
-
 return "";
-
 }
 
 function shareFacebook(url){
-
 window.open(
-"https://www.facebook.com/sharer/sharer.php?u="
-+encodeURIComponent(url),
+"https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(url),
 "_blank"
 );
-
 }
 
 function shareLine(url){
-
 window.open(
-"https://social-plugins.line.me/lineit/share?url="
-+encodeURIComponent(url),
+"https://social-plugins.line.me/lineit/share?url="+encodeURIComponent(url),
 "_blank"
 );
-
 }
 
-function shareX(url){
-
+function shareX(url,text){
 window.open(
-"https://twitter.com/intent/tweet?url="
-+encodeURIComponent(url),
+"https://twitter.com/intent/tweet?url="+encodeURIComponent(url)+"&text="+encodeURIComponent(text),
 "_blank"
 );
-
 }
 
 function copyUrl(url){
-
 navigator.clipboard.writeText(url);
 alert("URLをコピーしました");
-
 }
 
 fetch(url)
-
 .then(r=>r.text())
-
 .then(text=>{
 
 const json=parseGViz(text);
-
-const rows=json.table.rows || [];
+const rows=json?.table?.rows || [];
 
 let html="";
 
@@ -321,103 +223,58 @@ for(let i=rows.length-1;i>=0;i--){
 
 const row=rows[i];
 
-const date=formatDate(
-cell(row,0)
-);
-
+const date=formatDate(cell(row,0));
 const title=cell(row,2);
-
 const desc=cell(row,4);
-
 const videoUrl=cell(row,5);
 
-const videoId=
-getYoutubeId(videoUrl);
+const videoId=getYoutubeId(videoUrl);
 
-if(
-!date &&
-!title &&
-!desc &&
-!videoUrl
-){
-continue;
-}
+if(!title && !videoUrl) continue;
 
 html+=`
-
 <div class="card">
 
 <div class="player">
-
 ${
 videoId
-?
-`
-<iframe
-src="https://www.youtube.com/embed/${videoId}"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-allowfullscreen>
-</iframe>
-`
-:
-`
-<div class="notice">
-動画を埋め込めません
-</div>
-`
+? `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`
+: `<div class="notice">動画が読み込めません</div>`
 }
-
 </div>
 
-<div class="date">
-${date}
-</div>
+<div class="date">${date}</div>
+<div class="title">${title}</div>
+<div class="desc">${desc}</div>
 
-<div class="title">
-${title}
-</div>
-
-<div class="desc">
-${desc}
-</div>
-
-<a
-class="watchBtn"
-href="${videoUrl}"
-target="_blank">
+<a class="watchBtn" href="${videoUrl}" target="_blank">
 YouTubeを見る
 </a>
 
 <div class="share">
 
-<button
-class="fb"
-onclick="shareFacebook(location.href)">
-Facebook
-</button>
-
-<button
-class="line"
-onclick="shareLine(location.href)">
-LINE
-</button>
-
-<button
-class="x"
-onclick="shareX(location.href)">
-X
-</button>
-
-<button
-class="copy"
-onclick="copyUrl(location.href)">
-URLコピー
-</button>
+<button class="fb" onclick="shareFacebook(location.href)">Facebook</button>
+<button class="line" onclick="shareLine(location.href)">LINE</button>
+<button class="x" onclick="shareX(location.href,'${title}')">X</button>
+<button class="copy" onclick="copyUrl(location.href)">URLコピー</button>
 
 </div>
 
 </div>
-
 `;
-
 }
+
+document.getElementById("app").innerHTML =
+html || "<div class='notice'>記事がありません</div>";
+
+})
+.catch(err=>{
+document.getElementById("app").innerHTML =
+"<div class='notice'>読み込み失敗</div>";
+console.error(err);
+});
+
+</script>
+
+</body>
+</html>
