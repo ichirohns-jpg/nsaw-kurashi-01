@@ -6,34 +6,38 @@
 <title>4市瓦版</title>
 
 <style>
+*{
+box-sizing:border-box;
+}
+
 body{
 margin:0;
+background:#eef4fb;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
-background:#f4f7fb;
-color:#1e2a3a;
+color:#1f2d3d;
 }
 
 header{
-background:#1976d2;
+background:#43a047;
 color:#fff;
-padding:22px;
+padding:24px;
 text-align:center;
-font-size:26px;
+font-size:34px;
 font-weight:900;
 }
 
 .wrap{
-max-width:900px;
+max-width:1000px;
 margin:auto;
 padding:16px;
 }
 
 .card{
 background:#fff;
-margin-bottom:18px;
-border-radius:14px;
+border-radius:24px;
 overflow:hidden;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
+margin-bottom:24px;
+box-shadow:0 6px 18px rgba(0,0,0,.12);
 }
 
 .card img{
@@ -42,54 +46,93 @@ display:block;
 }
 
 .date{
-padding:6px 10px;
-margin:10px;
+display:inline-block;
+margin:16px;
+padding:10px 18px;
 background:#e3f2fd;
 border-radius:999px;
-display:inline-block;
+font-size:22px;
 font-weight:900;
 }
 
 .title{
-font-size:20px;
+padding:0 18px 12px;
+font-size:34px;
 font-weight:900;
-padding:10px;
+line-height:1.4;
 }
 
 .desc{
-padding:10px;
-font-size:15px;
-line-height:1.7;
+padding:0 18px 18px;
+font-size:26px;
+line-height:1.8;
 white-space:pre-wrap;
 }
 
-.cityBox{
+.cityGrid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:10px;
-padding:10px;
+gap:14px;
+padding:18px;
 }
 
-.cityBox a{
+.cityGrid a{
 display:block;
-padding:13px 10px;
-border-radius:10px;
+padding:18px 12px;
+border-radius:16px;
 color:#fff;
 text-decoration:none;
 text-align:center;
+font-size:24px;
 font-weight:900;
+line-height:1.4;
 }
 
-.shiki{background:#1976d2}
-.niiza{background:#43a047}
-.asaka{background:#fb8c00}
-.wako{background:#8e24aa}
+.shiki{
+background:#1976d2;
+}
+
+.niiza{
+background:#43a047;
+}
+
+.asaka{
+background:#fb8c00;
+}
+
+.wako{
+background:#8e24aa;
+}
+
+@media(max-width:600px){
+header{
+font-size:30px;
+}
+
+.title{
+font-size:30px;
+}
+
+.desc{
+font-size:24px;
+}
+
+.cityGrid{
+grid-template-columns:1fr;
+}
+
+.cityGrid a{
+font-size:24px;
+}
+}
 </style>
 </head>
 
 <body>
 
-<header>4市瓦版</header>
+<header>
+4市瓦版
+</header>
 
 <div class="wrap">
 <div id="app">読み込み中...</div>
@@ -103,92 +146,136 @@ const SHEET_NAME="4市瓦版";
 const url=
 "https://docs.google.com/spreadsheets/d/"
 +SHEET_ID+
-"/gviz/tq?sheet="+encodeURIComponent(SHEET_NAME)+
-"&tqx=out:json";
+"/gviz/tq?sheet="
++encodeURIComponent(SHEET_NAME)
++"&tqx=out:json";
 
 function cell(row,index){
-return row.c?.[index]?.v ?? "";
+return row.c && row.c[index] && row.c[index].v
+? row.c[index].v
+: "";
 }
 
 function parseGViz(text){
-const jsonText=text.substring(
-text.indexOf("{"),
-text.lastIndexOf("}")+1
+
+let start=text.indexOf("{");
+let end=text.lastIndexOf("}");
+
+return JSON.parse(
+text.substring(start,end+1)
 );
-return JSON.parse(jsonText);
+
 }
 
 fetch(url)
-.then(res=>res.text())
+.then(r=>r.text())
 .then(text=>{
 
 const json=parseGViz(text);
-const rows=json.table.rows||[];
 
-const items=rows.map(row=>({
-
-date:cell(row,0),
-image:cell(row,1),
-title:cell(row,2),
-desc:cell(row,3),
-
-shikiTitle:cell(row,4),
-shikiUrl:cell(row,5),
-
-niizaTitle:cell(row,6),
-niizaUrl:cell(row,7),
-
-asakaTitle:cell(row,8),
-asakaUrl:cell(row,9),
-
-wakoTitle:cell(row,10),
-wakoUrl:cell(row,11)
-
-}))
-.filter(x=>x.title)
-.reverse();
+const rows=json.table.rows || [];
 
 let html="";
 
-items.forEach(item=>{
+for(let i=rows.length-1;i>=0;i--){
+
+let row=rows[i];
+
+let date=cell(row,0);
+let image=cell(row,1);
+let title=cell(row,2);
+let desc=cell(row,3);
+
+let shikiTitle=cell(row,4);
+let shikiUrl=cell(row,5);
+
+let niizaTitle=cell(row,6);
+let niizaUrl=cell(row,7);
+
+let asakaTitle=cell(row,8);
+let asakaUrl=cell(row,9);
+
+let wakoTitle=cell(row,10);
+let wakoUrl=cell(row,11);
+
+if(!title) continue;
 
 html+=`
+
 <div class="card">
 
-<img src="${item.image}"
+${image ? `
+<img
+src="${image}"
+alt="${title}"
 onerror="this.style.display='none'">
+` : ""}
 
-<div class="date">${item.date}</div>
+<div class="date">
+${date}
+</div>
 
-<div class="title">${item.title}</div>
+<div class="title">
+${title}
+</div>
 
-<div class="desc">${item.desc}</div>
+<div class="desc">
+${desc}
+</div>
 
-<div class="cityBox">
+<div class="cityGrid">
 
-${item.shikiUrl ? `<a class="shiki" href="${item.shikiUrl}" target="_blank">${item.shikiTitle || "志木市"}</a>` : ""}
+${shikiUrl ? `
+<a class="shiki"
+href="${shikiUrl}"
+target="_blank">
+${shikiTitle || "志木市"}
+</a>
+` : ""}
 
-${item.niizaUrl ? `<a class="niiza" href="${item.niizaUrl}" target="_blank">${item.niizaTitle || "新座市"}</a>` : ""}
+${niizaUrl ? `
+<a class="niiza"
+href="${niizaUrl}"
+target="_blank">
+${niizaTitle || "新座市"}
+</a>
+` : ""}
 
-${item.asakaUrl ? `<a class="asaka" href="${item.asakaUrl}" target="_blank">${item.asakaTitle || "朝霞市"}</a>` : ""}
+${asakaUrl ? `
+<a class="asaka"
+href="${asakaUrl}"
+target="_blank">
+${asakaTitle || "朝霞市"}
+</a>
+` : ""}
 
-${item.wakoUrl ? `<a class="wako" href="${item.wakoUrl}" target="_blank">${item.wakoTitle || "和光市"}</a>` : ""}
+${wakoUrl ? `
+<a class="wako"
+href="${wakoUrl}"
+target="_blank">
+${wakoTitle || "和光市"}
+</a>
+` : ""}
 
 </div>
 
 </div>
+
 `;
 
-});
+}
 
 document.getElementById("app").innerHTML=
 html || "記事がありません";
 
 })
 .catch(err=>{
+
 document.getElementById("app").innerHTML=
-"読み込みに失敗しました";
+"読み込み失敗";
+
 console.error(err);
+
 });
 
 </script>
