@@ -107,10 +107,21 @@ font-weight:900;
 color:#fff;
 }
 
-.fb{background:#1877f2;}
-.line{background:#06c755;}
-.x{background:#000;}
-.copy{background:#ff9800;}
+.fb{
+background:#1877f2;
+}
+
+.line{
+background:#06c755;
+}
+
+.x{
+background:#000;
+}
+
+.copy{
+background:#ff9800;
+}
 
 .notice{
 background:#fff3cd;
@@ -191,14 +202,14 @@ if(!row || !row.c || !row.c[index]){
 return "";
 }
 
-const cell=row.c[index];
+const c=row.c[index];
 
-if(cell.v!==undefined && cell.v!==null){
-return cell.v;
+if(c.v!==undefined && c.v!==null){
+return c.v;
 }
 
-if(cell.f!==undefined && cell.f!==null){
-return cell.f;
+if(c.f!==undefined && c.f!==null){
+return c.f;
 }
 
 return "";
@@ -257,7 +268,6 @@ m=text.match(/embed\/([a-zA-Z0-9_-]{6,})/);
 if(m){
 return m[1];
 }
-
 if(/^[a-zA-Z0-9_-]{6,}$/.test(text)){
 return text;
 }
