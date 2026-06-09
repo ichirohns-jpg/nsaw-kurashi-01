@@ -6,7 +6,6 @@
 <title>お楽しみ動画</title>
 
 <style>
-
 *{
 box-sizing:border-box;
 }
@@ -110,20 +109,58 @@ font-weight:900;
 color:#fff;
 }
 
-.fb{background:#1877f2;}
-.line{background:#06c755;}
-.x{background:#000;}
-.copy{background:#ff9800;}
+.fb{
+background:#1877f2;
+}
+
+.line{
+background:#06c755;
+}
+
+.x{
+background:#000;
+}
+
+.copy{
+background:#ff9800;
+}
 
 .notice{
 background:#fff3cd;
+color:#7a4b00;
 padding:20px;
 margin:20px;
 border-radius:16px;
 font-size:24px;
 font-weight:900;
+line-height:1.6;
 }
 
+@media(max-width:700px){
+
+header{
+font-size:34px;
+padding:24px 14px;
+}
+
+.title{
+font-size:34px;
+}
+
+.desc{
+font-size:26px;
+}
+
+.watchBtn{
+font-size:24px;
+}
+
+.share button{
+font-size:20px;
+padding:18px 8px;
+}
+
+}
 </style>
 </head>
 
@@ -144,16 +181,16 @@ font-weight:900;
 const SHEET_ID="149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc";
 const SHEET_NAME="お楽しみ動画";
 
-const url=
+const GVIZ_URL=
 "https://docs.google.com/spreadsheets/d/"
 +SHEET_ID+
 "/gviz/tq?sheet="
 +encodeURIComponent(SHEET_NAME)
 +"&tqx=out:json";
 
-function cell(row,index){
+function getCell(row,index){
 
-if(!row.c || !row.c[index]){
+if(!row || !row.c || !row.c[index]){
 return "";
 }
 
@@ -173,12 +210,13 @@ return "";
 
 function parseGViz(text){
 
-const start=text.indexOf("{");
-const end=text.lastIndexOf("}");
+const match=text.match(/\{[\s\S]*\}/);
 
-return JSON.parse(
-text.substring(start,end+1)
-);
+if(!match){
+throw new Error("GVizデータを取得できません");
+}
+
+return JSON.parse(match[0]);
 
 }
 
@@ -188,7 +226,7 @@ if(!value){
 return "";
 }
 
-const text=String(value);
+const text=String(value).trim();
 
 let m=text.match(/Date\((\d+),(\d+),(\d+)\)/);
 
@@ -202,39 +240,70 @@ m[3]+"日"
 
 }
 
+m=text.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+
+if(m){
+
+return (
+m[1]+"年"+
+Number(m[2])+"月"+
+Number(m[3])+"日"
+);
+
+}
+
 return text;
 
 }
 
-function getYoutubeId(url){
+function getYoutubeId(value){
 
-if(!url){
+if(!value){
 return "";
 }
 
-url=String(url);
+const text=String(value).trim();
 
-let m=url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
-if(m) return m[1];
+let m=text.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/);
+if(m){
+return m[1];
+}
 
-m=url.match(/[?&]v=([a-zA-Z0-9_-]+)/);
-if(m) return m[1];
+m=text.match(/[?&]v=([a-zA-Z0-9_-]{6,})/);
+if(m){
+return m[1];
+}
 
-m=url.match(/shorts\/([a-zA-Z0-9_-]+)/);
-if(m) return m[1];
+m=text.match(/shorts\/([a-zA-Z0-9_-]{6,})/);
+if(m){
+return m[1];
+}
 
-m=url.match(/embed\/([a-zA-Z0-9_-]+)/);
-if(m) return m[1];
+m=text.match(/embed\/([a-zA-Z0-9_-]{6,})/);
+if(m){
+return m[1];
+}
+
+if(/^[a-zA-Z0-9_-]{6,}$/.test(text)){
+return text;
+}
 
 return "";
+
+}
+
+function makeShareUrl(id){
+
+const base=location.href.split("?")[0];
+
+return base+"?fun="+encodeURIComponent(id);
 
 }
 
 function shareFacebook(url){
 
 window.open(
-"https://www.facebook.com/sharer/sharer.php?u="
-+encodeURIComponent(url),
+"https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(url),
 "_blank"
 );
 
@@ -243,18 +312,19 @@ window.open(
 function shareLine(url){
 
 window.open(
-"https://social-plugins.line.me/lineit/share?url="
-+encodeURIComponent(url),
+"https://social-plugins.line.me/lineit/share?url="+encodeURIComponent(url),
 "_blank"
 );
 
 }
 
-function shareX(url){
+function shareX(url,text){
 
 window.open(
 "https://twitter.com/intent/tweet?url="
-+encodeURIComponent(url),
++encodeURIComponent(url)
++"&text="
++encodeURIComponent(text),
 "_blank"
 );
 
@@ -267,46 +337,54 @@ alert("URLをコピーしました");
 
 }
 
-fetch(url)
+fetch(GVIZ_URL)
 
-.then(r=>r.text())
+.then(function(response){
+return response.text();
+})
 
-.then(text=>{
+.then(function(text){
 
 const json=parseGViz(text);
+const rows=json.table && json.table.rows
+? json.table.rows
+: [];
 
-const rows=json.table.rows || [];
+let items=[];
 
-let html="";
-
-for(let i=rows.length-1;i>=0;i--){
+for(let i=0;i<rows.length;i++){
 
 const row=rows[i];
 
 const date=formatDate(
-cell(row,0)
+getCell(row,0)
 );
 
-const title=cell(row,2);
+const title=getCell(row,2);
 
-const desc=cell(row,4);
+const desc=getCell(row,4);
 
 const videoUrl=
-cell(row,5) ||
-cell(row,6) ||
-cell(row,7) ||
+getCell(row,5) ||
+getCell(row,6) ||
+getCell(row,7) ||
 "";
 
 const videoId=
 getYoutubeId(videoUrl);
 
 const watchUrl=
-videoUrl && String(videoUrl).startsWith("http")
-? videoUrl
-: (
+videoUrl &&
+String(videoUrl).startsWith("http")
+?
+videoUrl
+:
+(
 videoId
-? "https://youtu.be/"+videoId
-: "#"
+?
+"https://youtu.be/"+videoId
+:
+"#"
 );
 
 if(
@@ -317,6 +395,46 @@ if(
 continue;
 }
 
+items.push({
+id:i+1,
+date:date,
+title:title,
+desc:desc,
+videoUrl:videoUrl,
+videoId:videoId,
+watchUrl:watchUrl
+});
+
+}
+
+items.reverse();
+
+const params=
+new URLSearchParams(location.search);
+
+const targetId=
+params.get("fun");
+
+if(targetId){
+
+items=items.filter(function(item){
+
+return String(item.id)===String(targetId);
+
+});
+
+}
+
+let html="";
+
+items.forEach(function(item){
+
+const shareUrl=
+makeShareUrl(item.id);
+
+const shareText=
+item.title || "お楽しみ動画";
+
 html+=`
 
 <div class="card">
@@ -324,11 +442,11 @@ html+=`
 <div class="player">
 
 ${
-videoId
+item.videoId
 ?
 `
 <iframe
-src="https://www.youtube.com/embed/${videoId}"
+src="https://www.youtube.com/embed/${item.videoId}"
 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 allowfullscreen>
 </iframe>
@@ -344,20 +462,20 @@ allowfullscreen>
 </div>
 
 <div class="date">
-${date}
+${item.date}
 </div>
 
 <div class="title">
-${title}
+${item.title}
 </div>
 
 <div class="desc">
-${desc}
+${item.desc}
 </div>
 
 <a
 class="watchBtn"
-href="${watchUrl}"
+href="${item.watchUrl}"
 target="_blank">
 YouTubeを見る
 </a>
@@ -366,25 +484,25 @@ YouTubeを見る
 
 <button
 class="fb"
-onclick="shareFacebook(location.href)">
+onclick="shareFacebook('${shareUrl}')">
 Facebook
 </button>
 
 <button
 class="line"
-onclick="shareLine(location.href)">
+onclick="shareLine('${shareUrl}')">
 LINE
 </button>
 
 <button
 class="x"
-onclick="shareX(location.href)">
+onclick="shareX('${shareUrl}','${String(shareText).replace(/'/g,"\\'")}')">
 X
 </button>
 
 <button
 class="copy"
-onclick="copyUrl(location.href)">
+onclick="copyUrl('${shareUrl}')">
 URLコピー
 </button>
 
@@ -394,7 +512,7 @@ URLコピー
 
 `;
 
-}
+});
 
 document.getElementById("app").innerHTML=
 html ||
@@ -402,10 +520,10 @@ html ||
 
 })
 
-.catch(err=>{
+.catch(function(err){
 
 document.getElementById("app").innerHTML=
-"<div class='notice'>読み込み失敗</div>";
+"<div class='notice'>読み込み失敗<br>"+err+"</div>";
 
 console.error(err);
 
