@@ -6,9 +6,7 @@
 <title>4市瓦版</title>
 
 <style>
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
@@ -20,24 +18,24 @@ color:#1f2d3d;
 header{
 background:#43a047;
 color:#fff;
-padding:24px;
+padding:28px;
 text-align:center;
-font-size:34px;
+font-size:38px;
 font-weight:900;
 }
 
 .wrap{
 max-width:1000px;
 margin:auto;
-padding:16px;
+padding:18px;
 }
 
 .card{
 background:#fff;
 border-radius:24px;
 overflow:hidden;
-margin-bottom:24px;
-box-shadow:0 6px 18px rgba(0,0,0,.12);
+margin-bottom:28px;
+box-shadow:0 8px 22px rgba(0,0,0,.12);
 }
 
 .card img{
@@ -47,7 +45,7 @@ display:block;
 
 .date{
 display:inline-block;
-margin:16px;
+margin:18px;
 padding:10px 18px;
 background:#e3f2fd;
 border-radius:999px;
@@ -56,10 +54,10 @@ font-weight:900;
 }
 
 .title{
-padding:0 18px 12px;
+padding:0 18px 10px;
 font-size:34px;
 font-weight:900;
-line-height:1.4;
+line-height:1.5;
 }
 
 .desc{
@@ -78,35 +76,54 @@ padding:18px;
 
 .cityGrid a{
 display:block;
-padding:18px 12px;
+padding:18px;
 border-radius:16px;
 color:#fff;
 text-decoration:none;
 text-align:center;
 font-size:24px;
 font-weight:900;
-line-height:1.4;
 }
 
-.shiki{
-background:#1976d2;
+.shiki{background:#1976d2;}
+.niiza{background:#43a047;}
+.asaka{background:#fb8c00;}
+.wako{background:#8e24aa;}
+
+.share{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+padding:18px;
 }
 
-.niiza{
-background:#43a047;
+.share button{
+border:0;
+border-radius:14px;
+padding:18px;
+font-size:22px;
+font-weight:900;
+color:#fff;
 }
 
-.asaka{
-background:#fb8c00;
-}
+.fb{background:#1877f2}
+.line{background:#06c755}
+.x{background:#000}
+.copy{background:#ff9800}
 
-.wako{
-background:#8e24aa;
+.notice{
+background:#fff3cd;
+padding:20px;
+margin:20px;
+border-radius:14px;
+font-size:24px;
+font-weight:900;
 }
 
 @media(max-width:600px){
+
 header{
-font-size:30px;
+font-size:34px;
 }
 
 .title{
@@ -122,8 +139,13 @@ grid-template-columns:1fr;
 }
 
 .cityGrid a{
-font-size:24px;
+font-size:22px;
 }
+
+.share button{
+font-size:20px;
+}
+
 }
 </style>
 </head>
@@ -151,15 +173,17 @@ const url=
 +"&tqx=out:json";
 
 function cell(row,index){
-return row.c && row.c[index] && row.c[index].v
+return row.c &&
+row.c[index] &&
+row.c[index].v!==undefined
 ? row.c[index].v
 : "";
 }
 
 function parseGViz(text){
 
-let start=text.indexOf("{");
-let end=text.lastIndexOf("}");
+const start=text.indexOf("{");
+const end=text.lastIndexOf("}");
 
 return JSON.parse(
 text.substring(start,end+1)
@@ -167,36 +191,64 @@ text.substring(start,end+1)
 
 }
 
+function shareFacebook(url){
+window.open(
+"https://www.facebook.com/sharer/sharer.php?u="
++encodeURIComponent(url),
+"_blank"
+);
+}
+
+function shareLine(url){
+window.open(
+"https://social-plugins.line.me/lineit/share?url="
++encodeURIComponent(url),
+"_blank"
+);
+}
+
+function shareX(url){
+window.open(
+"https://twitter.com/intent/tweet?url="
++encodeURIComponent(url),
+"_blank"
+);
+}
+
+function copyUrl(url){
+navigator.clipboard.writeText(url);
+alert("URLをコピーしました");
+}
+
 fetch(url)
 .then(r=>r.text())
 .then(text=>{
 
 const json=parseGViz(text);
-
-const rows=json.table.rows || [];
+const rows=json.table.rows||[];
 
 let html="";
 
 for(let i=rows.length-1;i>=0;i--){
 
-let row=rows[i];
+const row=rows[i];
 
-let date=cell(row,0);
-let image=cell(row,1);
-let title=cell(row,2);
-let desc=cell(row,3);
+const date=cell(row,0);
+const image=cell(row,1);
+const title=cell(row,2);
+const desc=cell(row,3);
 
-let shikiTitle=cell(row,4);
-let shikiUrl=cell(row,5);
+const shikiTitle=cell(row,4);
+const shikiUrl=cell(row,5);
 
-let niizaTitle=cell(row,6);
-let niizaUrl=cell(row,7);
+const niizaTitle=cell(row,6);
+const niizaUrl=cell(row,7);
 
-let asakaTitle=cell(row,8);
-let asakaUrl=cell(row,9);
+const asakaTitle=cell(row,8);
+const asakaUrl=cell(row,9);
 
-let wakoTitle=cell(row,10);
-let wakoUrl=cell(row,11);
+const wakoTitle=cell(row,10);
+const wakoUrl=cell(row,11);
 
 if(!title) continue;
 
@@ -205,57 +257,46 @@ html+=`
 <div class="card">
 
 ${image ? `
-<img
-src="${image}"
-alt="${title}"
+<img src="${image}"
 onerror="this.style.display='none'">
 ` : ""}
 
-<div class="date">
-${date}
-</div>
+<div class="date">${date}</div>
 
-<div class="title">
-${title}
-</div>
+<div class="title">${title}</div>
 
-<div class="desc">
-${desc}
-</div>
+<div class="desc">${desc}</div>
 
 <div class="cityGrid">
 
-${shikiUrl ? `
-<a class="shiki"
-href="${shikiUrl}"
-target="_blank">
-${shikiTitle || "志木市"}
-</a>
-` : ""}
+${shikiUrl ? `<a class="shiki" href="${shikiUrl}" target="_blank">${shikiTitle}</a>` : ""}
+${niizaUrl ? `<a class="niiza" href="${niizaUrl}" target="_blank">${niizaTitle}</a>` : ""}
+${asakaUrl ? `<a class="asaka" href="${asakaUrl}" target="_blank">${asakaTitle}</a>` : ""}
+${wakoUrl ? `<a class="wako" href="${wakoUrl}" target="_blank">${wakoTitle}</a>` : ""}
 
-${niizaUrl ? `
-<a class="niiza"
-href="${niizaUrl}"
-target="_blank">
-${niizaTitle || "新座市"}
-</a>
-` : ""}
+</div>
 
-${asakaUrl ? `
-<a class="asaka"
-href="${asakaUrl}"
-target="_blank">
-${asakaTitle || "朝霞市"}
-</a>
-` : ""}
+<div class="share">
 
-${wakoUrl ? `
-<a class="wako"
-href="${wakoUrl}"
-target="_blank">
-${wakoTitle || "和光市"}
-</a>
-` : ""}
+<button class="fb"
+onclick="shareFacebook(location.href)">
+Facebook
+</button>
+
+<button class="line"
+onclick="shareLine(location.href)">
+LINE
+</button>
+
+<button class="x"
+onclick="shareX(location.href)">
+X
+</button>
+
+<button class="copy"
+onclick="copyUrl(location.href)">
+URLコピー
+</button>
 
 </div>
 
@@ -266,13 +307,13 @@ ${wakoTitle || "和光市"}
 }
 
 document.getElementById("app").innerHTML=
-html || "記事がありません";
+html || "<div class='notice'>記事がありません</div>";
 
 })
 .catch(err=>{
 
 document.getElementById("app").innerHTML=
-"読み込み失敗";
+"<div class='notice'>読み込み失敗</div>";
 
 console.error(err);
 
