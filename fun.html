@@ -46,11 +46,13 @@ box-shadow:0 8px 22px rgba(0,0,0,.14);
 .player{
 width:100%;
 background:#000;
+aspect-ratio:16 / 9;
+overflow:hidden;
 }
 
 .player iframe{
 width:100%;
-height:360px;
+height:100%;
 border:0;
 display:block;
 }
@@ -109,21 +111,10 @@ font-weight:900;
 color:#fff;
 }
 
-.fb{
-background:#1877f2;
-}
-
-.line{
-background:#06c755;
-}
-
-.x{
-background:#000;
-}
-
-.copy{
-background:#ff9800;
-}
+.fb{background:#1877f2;}
+.line{background:#06c755;}
+.x{background:#000;}
+.copy{background:#ff9800;}
 
 .notice{
 background:#fff3cd;
@@ -138,10 +129,6 @@ font-weight:900;
 
 header{
 font-size:34px;
-}
-
-.player iframe{
-height:280px;
 }
 
 .title{
@@ -257,7 +244,6 @@ Number(m[3])+"日"
 return text;
 
 }
-
 function getYoutubeId(url){
 
 if(!url){
@@ -320,7 +306,9 @@ alert("URLをコピーしました");
 }
 
 fetch(url)
+
 .then(r=>r.text())
+
 .then(text=>{
 
 const json=parseGViz(text);
@@ -333,11 +321,18 @@ for(let i=rows.length-1;i>=0;i--){
 
 const row=rows[i];
 
-const date=formatDate(cell(row,0));
+const date=formatDate(
+cell(row,0)
+);
+
 const title=cell(row,2);
+
 const desc=cell(row,4);
+
 const videoUrl=cell(row,5);
-const videoId=getYoutubeId(videoUrl);
+
+const videoId=
+getYoutubeId(videoUrl);
 
 if(
 !date &&
@@ -347,6 +342,7 @@ if(
 ){
 continue;
 }
+
 html+=`
 
 <div class="card">
@@ -425,22 +421,3 @@ URLコピー
 `;
 
 }
-
-document.getElementById("app").innerHTML=
-html || "<div class='notice'>記事がありません</div>";
-
-})
-
-.catch(err=>{
-
-document.getElementById("app").innerHTML=
-"<div class='notice'>読み込み失敗</div>";
-
-console.error(err);
-
-});
-
-</script>
-
-</body>
-</html>
