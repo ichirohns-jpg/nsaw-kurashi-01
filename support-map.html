@@ -6,7 +6,6 @@
 <title>支援マップ</title>
 
 <style>
-
 *{
 box-sizing:border-box;
 }
@@ -14,7 +13,7 @@ box-sizing:border-box;
 body{
 margin:0;
 background:#eef4fb;
-font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 color:#1f2d3d;
 -webkit-text-size-adjust:100%;
 }
@@ -22,192 +21,133 @@ color:#1f2d3d;
 header{
 background:#8e24aa;
 color:#fff;
-padding:28px;
+padding:28px 18px;
 text-align:center;
-font-size:38px;
+font-size:40px;
 font-weight:900;
+line-height:1.3;
 }
 
 .wrap{
 max-width:1000px;
-margin:auto;
-padding:18px;
-}
-
-.topInfo{
-background:#fff;
-border-radius:24px;
-padding:24px;
-margin-bottom:20px;
-box-shadow:0 8px 22px rgba(0,0,0,.12);
-}
-
-.topTitle{
-font-size:34px;
-font-weight:900;
-margin-bottom:10px;
-}
-
-.topText{
-font-size:24px;
-line-height:1.8;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr;
-gap:18px;
-margin-top:18px;
+margin:0 auto;
+padding:18px 14px 44px;
 }
 
 .card{
 background:#fff;
-border-radius:24px;
+border-radius:28px;
+overflow:hidden;
+margin-bottom:30px;
+box-shadow:0 8px 22px rgba(0,0,0,.14);
+}
+
+.cardInner{
 padding:22px;
-box-shadow:0 8px 22px rgba(0,0,0,.12);
 }
 
 .title{
-font-size:30px;
+font-size:34px;
 font-weight:900;
-margin-bottom:8px;
+line-height:1.45;
+margin-bottom:12px;
+color:#102a43;
 }
 
 .desc{
-font-size:24px;
-line-height:1.7;
-color:#455a64;
+font-size:26px;
+line-height:1.8;
+white-space:pre-wrap;
+color:#243b53;
 }
 
-.link{
-display:block;
-margin-top:14px;
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
 padding:18px;
-background:#1976d2;
+}
+
+.mapBtn{
+display:block;
+padding:22px 14px;
+border-radius:18px;
 color:#fff;
 text-decoration:none;
-border-radius:14px;
 text-align:center;
-font-weight:900;
 font-size:24px;
-}
-
-.badge{
-display:inline-block;
-padding:6px 14px;
-border-radius:999px;
-background:#e3f2fd;
-color:#0d47a1;
 font-weight:900;
-font-size:20px;
-margin-top:10px;
+line-height:1.45;
+box-shadow:0 5px 14px rgba(0,0,0,.16);
 }
 
-@media(max-width:700px){
+.hospital{background:#d32f2f;}
+.pharmacy{background:#2e7d32;}
+.shelter{background:#fb8c00;}
+.care{background:#1976d2;}
+.city{background:#455a64;}
+.police{background:#283593;}
+.toilet{background:#00897b;}
+.store{background:#6d4c41;}
+.gomap{background:#ef6c00;}
+
+.notice{
+background:#fff3cd;
+color:#7a4b00;
+border-radius:18px;
+padding:22px;
+margin:20px;
+font-size:26px;
+line-height:1.6;
+font-weight:900;
+}
+
+.share{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+padding:18px 18px 24px;
+}
+
+.share button{
+border:0;
+border-radius:16px;
+padding:20px 10px;
+font-size:23px;
+font-weight:900;
+color:#fff;
+}
+
+.fb{background:#1877f2;}
+.line{background:#06c755;}
+.x{background:#000;}
+.copy{background:#ff9800;}
+
+@media(max-width:600px){
 
 header{
+font-size:34px;
+padding:24px 14px;
+}
+
+.grid{
+grid-template-columns:1fr;
+gap:14px;
+}
+
+.title{
 font-size:32px;
 }
 
-.title{
-font-size:28px;
-}
-
 .desc{
-font-size:22px;
+font-size:24px;
 }
 
-.link{
-font-size:22px;
+.mapBtn{
+font-size:23px;
+padding:20px 12px;
 }
 
-}
-
-</style>
-
-</head>
-
-<body>
-
-<header>
-支援マップ
-</header>
-
-<div class="wrap">
-
-<div class="topInfo">
-
-<div class="topTitle">
-地域の支援場所まとめ
-</div>
-
-<div class="topText">
-病院・薬局・避難所・相談窓口を
-まとめて確認できます。
-</div>
-
-</div>
-
-<div class="grid">
-
-<div class="card">
-<div class="title">病院</div>
-<div class="desc">近くの医療機関を検索できます</div>
-<span class="badge">Googleマップ</span>
-
-<a class="link"
-href="https://www.google.com/maps/search/?api=1&query=病院">
-開く
-</a>
-</div>
-
-<div class="card">
-<div class="title">薬局</div>
-<div class="desc">近くの薬局を検索できます</div>
-<span class="badge">Googleマップ</span>
-
-<a class="link"
-href="https://www.google.com/maps/search/?api=1&query=薬局">
-開く
-</a>
-</div>
-
-<div class="card">
-<div class="title">避難所</div>
-<div class="desc">災害時に利用できる避難場所</div>
-<span class="badge">Googleマップ</span>
-
-<a class="link"
-href="https://www.google.com/maps/search/?api=1&query=避難所">
-開く
-</a>
-</div>
-
-<div class="card">
-<div class="title">地域包括支援センター</div>
-<div class="desc">高齢者の相談窓口</div>
-<span class="badge">相談窓口</span>
-
-<a class="link"
-href="https://www.google.com/maps/search/?api=1&query=地域包括支援センター">
-開く
-</a>
-</div>
-
-<div class="card">
-<div class="title">緊急時</div>
-<div class="desc">救急・警察・消防</div>
-<span class="badge">119 / 110</span>
-
-<a class="link"
-href="tel:119">
-119に電話する
-</a>
-</div>
-
-</div>
-
-</div>
-
-</body>
-</html>
+.share button{
+font-size:21px;
+padding:18
