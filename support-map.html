@@ -16,440 +16,198 @@ margin:0;
 background:#eef4fb;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
 color:#1f2d3d;
+-webkit-text-size-adjust:100%;
 }
 
 header{
 background:#8e24aa;
 color:#fff;
-padding:30px;
+padding:28px;
 text-align:center;
-font-size:42px;
+font-size:38px;
 font-weight:900;
 }
 
-.sub{
-font-size:22px;
-margin-top:10px;
-font-weight:700;
-}
-
 .wrap{
-max-width:1100px;
+max-width:1000px;
 margin:auto;
 padding:18px;
+}
+
+.topInfo{
+background:#fff;
+border-radius:24px;
+padding:24px;
+margin-bottom:20px;
+box-shadow:0 8px 22px rgba(0,0,0,.12);
+}
+
+.topTitle{
+font-size:34px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.topText{
+font-size:24px;
+line-height:1.8;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr;
+gap:18px;
+margin-top:18px;
 }
 
 .card{
 background:#fff;
 border-radius:24px;
-padding:24px;
-margin-bottom:24px;
+padding:22px;
 box-shadow:0 8px 22px rgba(0,0,0,.12);
 }
 
 .title{
-font-size:34px;
+font-size:30px;
 font-weight:900;
-margin-bottom:14px;
+margin-bottom:8px;
 }
 
-.text{
+.desc{
 font-size:24px;
-line-height:1.8;
-font-weight:700;
+line-height:1.7;
+color:#455a64;
 }
 
-.btn{
+.link{
 display:block;
-width:100%;
-padding:22px;
-border-radius:18px;
 margin-top:14px;
-text-decoration:none;
-text-align:center;
-font-size:28px;
-font-weight:900;
-color:#fff;
-}
-
-.current{
+padding:18px;
 background:#1976d2;
-}
-
-.gomap{
-background:#fb8c00;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px;
-margin-top:18px;
-}
-
-.item{
-background:#f7fbff;
-border:3px solid #d9e8ff;
-border-radius:18px;
-padding:18px;
-}
-
-.itemTitle{
-font-size:26px;
-font-weight:900;
-margin-bottom:10px;
-}
-
-.itemText{
-font-size:22px;
-line-height:1.7;
-}
-
-.map{
-margin-top:18px;
-border-radius:18px;
-overflow:hidden;
-}
-
-.map iframe{
-width:100%;
-height:500px;
-border:0;
-}
-
-.share{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:18px;
-}
-
-.share button{
-border:0;
-border-radius:14px;
-padding:18px;
-font-size:22px;
-font-weight:900;
 color:#fff;
+text-decoration:none;
+border-radius:14px;
+text-align:center;
+font-weight:900;
+font-size:24px;
 }
 
-.fb{background:#1877f2;}
-.line{background:#06c755;}
-.x{background:#000;}
-.copy{background:#ff9800;}
-
-.result{
-margin-top:18px;
-padding:18px;
-background:#fff8e1;
-border-radius:18px;
-font-size:22px;
+.badge{
+display:inline-block;
+padding:6px 14px;
+border-radius:999px;
+background:#e3f2fd;
+color:#0d47a1;
 font-weight:900;
-line-height:1.7;
+font-size:20px;
+margin-top:10px;
 }
 
 @media(max-width:700px){
 
 header{
-font-size:34px;
-}
-
-.grid{
-grid-template-columns:1fr;
+font-size:32px;
 }
 
 .title{
-font-size:30px;
+font-size:28px;
 }
 
-.text{
+.desc{
 font-size:22px;
 }
 
-.itemTitle{
-font-size:24px;
-}
-
-.itemText{
-font-size:20px;
-}
-
-.btn{
-font-size:24px;
-}
-
-.map iframe{
-height:350px;
+.link{
+font-size:22px;
 }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
 <header>
-
 支援マップ
-
-<div class="sub">
-病院・薬局・避難所・市役所・支援先
-</div>
-
 </header>
 
 <div class="wrap">
 
-<div class="card">
+<div class="topInfo">
 
-<div class="title">
-現在地から探す
+<div class="topTitle">
+地域の支援場所まとめ
 </div>
 
-<div class="text">
-近くの病院、薬局、コンビニ、避難所などを探します。
+<div class="topText">
+病院・薬局・避難所・相談窓口を
+まとめて確認できます。
 </div>
 
-<button class="btn current"
-onclick="getLocation()">
-📍 現在地を取得
-</button>
-
-<div id="result" class="result">
-現在地未取得
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="title">
-地域の支援先
 </div>
 
 <div class="grid">
 
-<div class="item">
-<div class="itemTitle">🏥 病院</div>
-<div class="itemText">
-近くの病院を探す
-</div>
-<a class="btn current"
-href="https://www.google.com/maps/search/病院"
-target="_blank">
+<div class="card">
+<div class="title">病院</div>
+<div class="desc">近くの医療機関を検索できます</div>
+<span class="badge">Googleマップ</span>
+
+<a class="link"
+href="https://www.google.com/maps/search/?api=1&query=病院">
 開く
 </a>
-</div>
-
-<div class="item">
-<div class="itemTitle">💊 薬局</div>
-<div class="itemText">
-近くの薬局を探す
-</div>
-<a class="btn current"
-href="https://www.google.com/maps/search/薬局"
-target="_blank">
-開く
-</a>
-</div>
-
-<div class="item">
-<div class="itemTitle">🏪 コンビニ</div>
-<div class="itemText">
-近くのコンビニを探す
-</div>
-<a class="btn current"
-href="https://www.google.com/maps/search/コンビニ"
-target="_blank">
-開く
-</a>
-</div>
-
-<div class="item">
-<div class="itemTitle">🚻 トイレ</div>
-<div class="itemText">
-近くのトイレを探す
-</div>
-<a class="btn current"
-href="https://www.google.com/maps/search/トイレ"
-target="_blank">
-開く
-</a>
-</div>
-
-<div class="item">
-<div class="itemTitle">🏢 市役所</div>
-<div class="itemText">
-志木市役所
-</div>
-<a class="btn current"
-href="https://www.city.shiki.lg.jp/"
-target="_blank">
-開く
-</a>
-</div>
-
-<div class="item">
-<div class="itemTitle">🤝 地域包括支援センター</div>
-<div class="itemText">
-高齢者相談窓口
-</div>
-<a class="btn current"
-href="https://www.city.shiki.lg.jp/"
-target="_blank">
-開く
-</a>
-</div>
-
-<div class="item">
-<div class="itemTitle">🚓 交番</div>
-<div class="itemText">
-近くの交番を探す
-</div>
-<a class="btn current"
-href="https://www.google.com/maps/search/交番"
-target="_blank">
-開く
-</a>
-</div>
-
-<div class="item">
-<div class="itemTitle">🏫 避難所</div>
-<div class="itemText">
-近くの避難所を探す
-</div>
-<a class="btn current"
-href="https://www.google.com/maps/search/避難所"
-target="_blank">
-開く
-</a>
-</div>
-
-</div>
-
 </div>
 
 <div class="card">
+<div class="title">薬局</div>
+<div class="desc">近くの薬局を検索できます</div>
+<span class="badge">Googleマップ</span>
 
-<div class="title">
-Googleマップ
-</div>
-
-<div class="map">
-
-<iframe
-src="https://www.google.com/maps?q=志木市役所&output=embed">
-</iframe>
-
-</div>
-
-<a class="btn gomap"
-href="https://ichirohns-jpg.github.io/shiki.gomap-001/"
-target="_blank">
-🗺 GoMapを開く
+<a class="link"
+href="https://www.google.com/maps/search/?api=1&query=薬局">
+開く
 </a>
+</div>
 
-<div class="share">
+<div class="card">
+<div class="title">避難所</div>
+<div class="desc">災害時に利用できる避難場所</div>
+<span class="badge">Googleマップ</span>
 
-<button class="fb"
-onclick="shareFacebook(location.href)">
-Facebook
-</button>
+<a class="link"
+href="https://www.google.com/maps/search/?api=1&query=避難所">
+開く
+</a>
+</div>
 
-<button class="line"
-onclick="shareLine(location.href)">
-LINE
-</button>
+<div class="card">
+<div class="title">地域包括支援センター</div>
+<div class="desc">高齢者の相談窓口</div>
+<span class="badge">相談窓口</span>
 
-<button class="x"
-onclick="shareX(location.href)">
-X
-</button>
+<a class="link"
+href="https://www.google.com/maps/search/?api=1&query=地域包括支援センター">
+開く
+</a>
+</div>
 
-<button class="copy"
-onclick="copyUrl(location.href)">
-URLコピー
-</button>
+<div class="card">
+<div class="title">緊急時</div>
+<div class="desc">救急・警察・消防</div>
+<span class="badge">119 / 110</span>
 
+<a class="link"
+href="tel:119">
+119に電話する
+</a>
 </div>
 
 </div>
 
 </div>
-
-<script>
-
-function getLocation(){
-
-if(!navigator.geolocation){
-
-document.getElementById("result").innerHTML=
-"位置情報が利用できません";
-
-return;
-
-}
-
-navigator.geolocation.getCurrentPosition(
-
-function(pos){
-
-document.getElementById("result").innerHTML=
-"緯度："+pos.coords.latitude+
-"<br>経度："+pos.coords.longitude;
-
-},
-
-function(){
-
-document.getElementById("result").innerHTML=
-"位置情報取得失敗";
-
-}
-
-);
-
-}
-
-function shareFacebook(url){
-
-window.open(
-"https://www.facebook.com/sharer/sharer.php?u="
-+encodeURIComponent(url),
-"_blank"
-);
-
-}
-
-function shareLine(url){
-
-window.open(
-"https://social-plugins.line.me/lineit/share?url="
-+encodeURIComponent(url),
-"_blank"
-);
-
-}
-
-function shareX(url){
-
-window.open(
-"https://twitter.com/intent/tweet?url="
-+encodeURIComponent(url),
-"_blank"
-);
-
-}
-
-function copyUrl(url){
-
-navigator.clipboard.writeText(url);
-alert("URLをコピーしました");
-
-}
-
-</script>
 
 </body>
 </html>
