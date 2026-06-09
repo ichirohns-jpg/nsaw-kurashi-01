@@ -193,7 +193,7 @@ const url=
 
 function cell(row,index){
 
-if(!row.c || !row.c[index]){
+if(!row || !row.c || !row.c[index]){
 return "";
 }
 
@@ -242,6 +242,18 @@ m[3]+"日"
 
 }
 
+m=text.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);
+
+if(m){
+
+return (
+m[1]+"年"+
+Number(m[2])+"月"+
+Number(m[3])+"日"
+);
+
+}
+
 return text;
 
 }
@@ -269,6 +281,7 @@ if(m) return m[1];
 return "";
 
 }
+
 function shareFacebook(url){
 
 window.open(
@@ -307,9 +320,7 @@ alert("URLをコピーしました");
 }
 
 fetch(url)
-
 .then(r=>r.text())
-
 .then(text=>{
 
 const json=parseGViz(text);
@@ -322,18 +333,11 @@ for(let i=rows.length-1;i>=0;i--){
 
 const row=rows[i];
 
-const date=formatDate(
-cell(row,0)
-);
-
+const date=formatDate(cell(row,0));
 const title=cell(row,2);
-
 const desc=cell(row,4);
-
 const videoUrl=cell(row,5);
-
-const videoId=
-getYoutubeId(videoUrl);
+const videoId=getYoutubeId(videoUrl);
 
 if(
 !date &&
@@ -343,7 +347,6 @@ if(
 ){
 continue;
 }
-
 html+=`
 
 <div class="card">
@@ -422,3 +425,22 @@ URLコピー
 `;
 
 }
+
+document.getElementById("app").innerHTML=
+html || "<div class='notice'>記事がありません</div>";
+
+})
+
+.catch(err=>{
+
+document.getElementById("app").innerHTML=
+"<div class='notice'>読み込み失敗</div>";
+
+console.error(err);
+
+});
+
+</script>
+
+</body>
+</html>
