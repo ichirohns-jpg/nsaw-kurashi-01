@@ -3,36 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>支援者ダッシュボード</title>
+<title>見守りDX ダッシュボード</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
-background:#eef3f8;
-font-family:"Hiragino Sans","Yu Gothic",sans-serif;
+background:#eef4fb;
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+color:#1f2d3d;
+}
+
+header{
+background:#009688;
+color:#fff;
+padding:30px 18px;
+text-align:center;
+font-size:40px;
+font-weight:900;
 }
 
 .wrap{
-max-width:960px;
+max-width:1000px;
 margin:auto;
-padding:16px;
+padding:18px;
 }
 
-.header{
-background:#1565c0;
-color:#fff;
-padding:30px;
-border-radius:30px;
-text-align:center;
+.card{
+background:#fff;
+border-radius:28px;
+padding:24px;
 margin-bottom:24px;
+box-shadow:0 8px 22px rgba(0,0,0,.14);
 }
 
-.header h1{
-margin:0;
-font-size:46px;
+.title{
+font-size:34px;
+font-weight:900;
+margin-bottom:12px;
+}
+
+.value{
+font-size:42px;
+font-weight:900;
+margin-bottom:10px;
+color:#009688;
+}
+
+.desc{
+font-size:26px;
+line-height:1.8;
 }
 
 .grid{
@@ -41,154 +64,130 @@ grid-template-columns:1fr 1fr;
 gap:18px;
 }
 
-.card{
-background:#fff;
-border-radius:24px;
-padding:24px;
+.btn{
+display:block;
+padding:22px;
+border-radius:18px;
 text-align:center;
-box-shadow:0 4px 12px rgba(0,0,0,.10);
+text-decoration:none;
+color:#fff;
+font-size:26px;
+font-weight:900;
 }
 
-.num{
-font-size:56px;
-font-weight:900;
+.green{
+background:#43a047;
+}
+
+.blue{
+background:#1976d2;
+}
+
+.orange{
+background:#fb8c00;
+}
+
+.purple{
+background:#8e24aa;
+}
+
+.red{
+background:#e53935;
+}
+
+.teal{
+background:#009688;
+}
+
+@media(max-width:700px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+header{
+font-size:34px;
 }
 
 .title{
-font-size:24px;
-font-weight:900;
-margin-top:10px;
+font-size:30px;
 }
 
-.green{color:#00897b;}
-.orange{color:#ef6c00;}
-.red{color:#d32f2f;}
-.blue{color:#1565c0;}
+.value{
+font-size:34px;
+}
+
+.desc{
+font-size:24px;
+}
 
 .btn{
-display:block;
-background:#1565c0;
-color:white;
-text-decoration:none;
-padding:18px;
-border-radius:18px;
-text-align:center;
-font-size:22px;
-font-weight:900;
-margin-top:24px;
+font-size:23px;
+}
+
 }
 </style>
-
 </head>
 
 <body>
 
+<header>
+見守りDX ダッシュボード
+</header>
+
 <div class="wrap">
 
-<div class="header">
-<h1>📊 支援者ダッシュボード</h1>
+<div class="card">
+
+<div class="title">
+今日の状態
+</div>
+
+<div class="value">
+正常
+</div>
+
+<div class="desc">
+最新の確認状況と地域情報をまとめて確認できます。
+</div>
+
 </div>
 
 <div class="grid">
 
-<div class="card">
-<div id="okCount" class="num green">0</div>
-<div class="title">😊 元気です</div>
-</div>
+<a class="btn green"
+href="family-dashboard.html">
+家族確認ページ
+</a>
 
-<div class="card">
-<div id="warnCount" class="num orange">0</div>
-<div class="title">😓 困っています</div>
-</div>
+<a class="btn blue"
+href="support-map.html">
+支援マップ
+</a>
 
-<div class="card">
-<div id="helpCount" class="num red">0</div>
-<div class="title">🚨 助けてください</div>
-</div>
+<a class="btn orange"
+href="kawaraban.html">
+4市瓦版
+</a>
 
-<div class="card">
-<div id="userCount" class="num blue">0</div>
-<div class="title">👥 登録利用者</div>
-</div>
+<a class="btn purple"
+href="radio.html">
+地域ラジオ
+</a>
 
-</div>
+<a class="btn red"
+href="fun.html">
+お楽しみ動画
+</a>
 
-<a class="btn" href="admin.html">
-⬅ 支援者ページへ戻る
+<a class="btn teal"
+href="index.html">
+トップへ戻る
 </a>
 
 </div>
 
-<script>
-
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-
-const url =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=見守り&tqx=out:json';
-
-function cell(row,index){
-return row.c[index]
-? (row.c[index].f || row.c[index].v || '')
-: '';
-}
-
-fetch(url)
-
-.then(r=>r.text())
-
-.then(t=>{
-
-const json =
-JSON.parse(
-t.substr(47).slice(0,-2)
-);
-
-const rows =
-json.table.rows;
-
-let latest = {};
-
-rows.forEach(row=>{
-
-const name = cell(row,2);
-const status = cell(row,3);
-
-if(!name)return;
-
-latest[name] = status;
-
-});
-
-let ok=0;
-let warn=0;
-let help=0;
-
-Object.values(latest).forEach(status=>{
-
-if(status.includes('助け')){
-help++;
-}
-else if(status.includes('困')){
-warn++;
-}
-else{
-ok++;
-}
-
-});
-
-document.getElementById('okCount').innerText = ok;
-document.getElementById('warnCount').innerText = warn;
-document.getElementById('helpCount').innerText = help;
-document.getElementById('userCount').innerText =
-Object.keys(latest).length;
-
-});
-
-</script>
+</div>
 
 </body>
 </html>
