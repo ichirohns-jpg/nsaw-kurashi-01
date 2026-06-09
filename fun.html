@@ -6,17 +6,13 @@
 <title>お楽しみ動画</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
 background:#eef4fb;
 font-family:"Hiragino Sans","Yu Gothic",sans-serif;
 color:#1f2d3d;
--webkit-text-size-adjust:100%;
 }
 
 header{
@@ -24,7 +20,7 @@ background:#e53935;
 color:#fff;
 padding:28px;
 text-align:center;
-font-size:40px;
+font-size:38px;
 font-weight:900;
 }
 
@@ -44,8 +40,8 @@ box-shadow:0 8px 22px rgba(0,0,0,.12);
 
 .player{
 width:100%;
+aspect-ratio:16/9;
 background:#000;
-aspect-ratio:16 / 9;
 }
 
 .player iframe{
@@ -107,10 +103,10 @@ font-weight:900;
 color:#fff;
 }
 
-.fb{background:#1877f2;}
-.line{background:#06c755;}
-.x{background:#000;}
-.copy{background:#ff9800;}
+.fb{background:#1877f2}
+.line{background:#06c755}
+.x{background:#000}
+.copy{background:#ff9800}
 
 .notice{
 background:#fff3cd;
@@ -126,9 +122,7 @@ font-weight:900;
 
 <body>
 
-<header>
-お楽しみ動画
-</header>
+<header>お楽しみ動画</header>
 
 <div class="wrap">
 <div id="app">読み込み中...</div>
@@ -136,10 +130,10 @@ font-weight:900;
 
 <script>
 
-const SHEET_ID="149lAFx3oPGjB0UqDpPWZJqt-rfc6LXQgoc";
+const SHEET_ID="149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc";
 const SHEET_NAME="お楽しみ動画";
 
-const url=
+const URL=
 "https://docs.google.com/spreadsheets/d/"
 +SHEET_ID+
 "/gviz/tq?sheet="
@@ -151,21 +145,12 @@ return row?.c?.[i]?.v || row?.c?.[i]?.f || "";
 }
 
 function parseGViz(text){
-
-const match=text.match(/\{[\s\S]*\}/);
-if(!match) return {table:{rows:[]}};
-return JSON.parse(match[0]);
-
+try{
+const json=text.match(/\{[\s\S]*\}/);
+return JSON.parse(json[0]);
+}catch(e){
+return {table:{rows:[]}};
 }
-
-function formatDate(v){
-if(!v) return "";
-let t=String(v);
-let m=t.match(/Date\((\d+),(\d+),(\d+)\)/);
-if(m){
-return `${m[1]}年${Number(m[2])+1}月${m[3]}日`;
-}
-return t;
 }
 
 function getYoutubeId(url){
@@ -185,37 +170,28 @@ return "";
 }
 
 function shareFacebook(url){
-window.open(
-"https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(url),
-"_blank"
-);
+window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(url));
 }
 
 function shareLine(url){
-window.open(
-"https://social-plugins.line.me/lineit/share?url="+encodeURIComponent(url),
-"_blank"
-);
+window.open("https://social-plugins.line.me/lineit/share?url="+encodeURIComponent(url));
 }
 
-function shareX(url,text){
-window.open(
-"https://twitter.com/intent/tweet?url="+encodeURIComponent(url)+"&text="+encodeURIComponent(text),
-"_blank"
-);
+function shareX(url){
+window.open("https://twitter.com/intent/tweet?url="+encodeURIComponent(url));
 }
 
 function copyUrl(url){
 navigator.clipboard.writeText(url);
-alert("URLをコピーしました");
+alert("コピーしました");
 }
 
-fetch(url)
+fetch(URL)
 .then(r=>r.text())
 .then(text=>{
 
 const json=parseGViz(text);
-const rows=json?.table?.rows || [];
+const rows=json.table?.rows || [];
 
 let html="";
 
@@ -223,7 +199,7 @@ for(let i=rows.length-1;i>=0;i--){
 
 const row=rows[i];
 
-const date=formatDate(cell(row,0));
+const date=cell(row,0);
 const title=cell(row,2);
 const desc=cell(row,4);
 const videoUrl=cell(row,5);
@@ -239,7 +215,7 @@ html+=`
 ${
 videoId
 ? `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`
-: `<div class="notice">動画が読み込めません</div>`
+: `<div class="notice">動画なし</div>`
 }
 </div>
 
@@ -255,7 +231,7 @@ YouTubeを見る
 
 <button class="fb" onclick="shareFacebook(location.href)">Facebook</button>
 <button class="line" onclick="shareLine(location.href)">LINE</button>
-<button class="x" onclick="shareX(location.href,'${title}')">X</button>
+<button class="x" onclick="shareX(location.href)">X</button>
 <button class="copy" onclick="copyUrl(location.href)">URLコピー</button>
 
 </div>
@@ -265,13 +241,13 @@ YouTubeを見る
 }
 
 document.getElementById("app").innerHTML =
-html || "<div class='notice'>記事がありません</div>";
+html || "<div class='notice'>記事なし</div>";
 
 })
 .catch(err=>{
 document.getElementById("app").innerHTML =
 "<div class='notice'>読み込み失敗</div>";
-console.error(err);
+console.log(err);
 });
 
 </script>
