@@ -7,6 +7,7 @@
 <title>4市瓦版</title>
 
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="NSAW 暮らし情報局">
 <meta property="og:title" content="4市瓦版">
 <meta property="og:description" content="志木市・新座市・朝霞市・和光市の地域情報をまとめた4市瓦版です。">
 <meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
@@ -17,16 +18,140 @@
 <meta name="twitter:description" content="志木市・新座市・朝霞市・和光市の地域情報をまとめた4市瓦版です。">
 <meta name="twitter:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 
-<meta http-equiv="refresh" content="0;url=kawaraban.html">
+<style>
+*{
+box-sizing:border-box;
+}
 
+body{
+margin:0;
+background:#eef4fb;
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+color:#1f2d3d;
+-webkit-text-size-adjust:100%;
+}
+
+.wrap{
+max-width:760px;
+margin:0 auto;
+padding:28px 18px;
+}
+
+.card{
+background:#fff;
+border-radius:28px;
+padding:28px 22px;
+box-shadow:0 8px 22px rgba(0,0,0,.14);
+text-align:center;
+}
+
+.title{
+font-size:36px;
+font-weight:900;
+line-height:1.4;
+margin-bottom:14px;
+}
+
+.desc{
+font-size:24px;
+line-height:1.8;
+margin-bottom:22px;
+}
+
+.btn{
+display:block;
+background:#43a047;
+color:#fff;
+text-decoration:none;
+font-size:24px;
+font-weight:900;
+padding:20px;
+border-radius:18px;
+}
+
+.note{
+font-size:18px;
+line-height:1.7;
+color:#607d8b;
+margin-top:18px;
+}
+
+@media(max-width:700px){
+
+.title{
+font-size:32px;
+}
+
+.desc{
+font-size:22px;
+}
+
+.btn{
+font-size:22px;
+}
+
+}
+</style>
 </head>
 
 <body>
 
-<p>4市瓦版へ移動します。</p>
+<div class="wrap">
+
+<div class="card">
+
+<div class="title">
+4市瓦版
+</div>
+
+<div class="desc">
+志木市・新座市・朝霞市・和光市の地域情報ページへ移動します。
+</div>
+
+<a
+id="goBtn"
+class="btn"
+href="kawaraban.html">
+4市瓦版を開く
+</a>
+
+<div class="note">
+自動で移動しない場合は、上のボタンを押してください。
+</div>
+
+</div>
+
+</div>
 
 <script>
-location.href="kawaraban.html";
+
+function getParam(name){
+
+const params=
+new URLSearchParams(location.search);
+
+return params.get(name);
+
+}
+
+const id=
+getParam("id") ||
+getParam("kawaraban") ||
+"1";
+
+const targetUrl=
+"kawaraban.html?kawaraban="+
+encodeURIComponent(id);
+
+document.getElementById("goBtn").href=
+targetUrl;
+
+setTimeout(function(){
+
+location.replace(targetUrl);
+
+},600);
+
 </script>
 
 </body>
