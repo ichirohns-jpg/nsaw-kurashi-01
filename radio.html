@@ -187,35 +187,43 @@ return c.f;
 }
 return "";
 }
-
 function formatDate(value){
 if(!value){
 return "";
 }
 const text=String(value).trim();
+
 let m=text.match(/Date\((\d+),(\d+),(\d+)\)/);
+
 if(m){
 return m[1]+"年"+(Number(m[2])+1)+"月"+m[3]+"日";
 }
+
 m=text.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+
 if(m){
 return m[1]+"年"+Number(m[2])+"月"+Number(m[3])+"日";
 }
+
 return text;
 }
 
 function parseGViz(text){
 const match=text.match(/\{[\s\S]*\}/);
+
 if(!match){
 throw new Error("GVizデータを取得できません");
 }
+
 return JSON.parse(match[0]);
 }
 
 function getYoutubeId(value){
+
 if(!value){
 return "";
 }
+
 const text=String(value).trim();
 
 let m=text.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/);
@@ -238,8 +246,10 @@ return "";
 }
 
 function makeShareUrl(id){
-const base=location.href.split("?")[0];
-return base+"?radio="+encodeURIComponent(id);
+
+return "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-radio.html?id="
++encodeURIComponent(id);
+
 }
 
 function shareFacebook(url){
@@ -269,9 +279,11 @@ alert("URLをコピーしました");
 }
 
 fetch(GVIZ_URL)
+
 .then(function(response){
 return response.text();
 })
+
 .then(function(text){
 
 const json=parseGViz(text);
@@ -329,6 +341,7 @@ html+=`
 <div class="card">
 
 <div class="player">
+
 ${
 item.videoId
 ?
@@ -346,6 +359,7 @@ allowfullscreen>
 </div>
 `
 }
+
 </div>
 
 <div class="date">${item.date}</div>
@@ -396,3 +410,4 @@ console.error(err);
 
 </body>
 </html>
+  
