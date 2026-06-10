@@ -7,6 +7,7 @@
 <title>お楽しみ動画</title>
 
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="NSAW 暮らし情報局">
 <meta property="og:title" content="お楽しみ動画">
 <meta property="og:description" content="NSAW暮らし情報局のお楽しみ動画です。">
 <meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
@@ -17,16 +18,99 @@
 <meta name="twitter:description" content="NSAW暮らし情報局のお楽しみ動画です。">
 <meta name="twitter:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 
-<meta http-equiv="refresh" content="0;url=fun.html">
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:#eef4fb;
+font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+color:#1f2d3d;
+}
+
+.wrap{
+max-width:760px;
+margin:0 auto;
+padding:28px 18px;
+}
+
+.card{
+background:#fff;
+border-radius:28px;
+padding:28px 22px;
+box-shadow:0 8px 22px rgba(0,0,0,.14);
+text-align:center;
+}
+
+.title{
+font-size:36px;
+font-weight:900;
+margin-bottom:14px;
+}
+
+.desc{
+font-size:24px;
+line-height:1.8;
+margin-bottom:22px;
+}
+
+.btn{
+display:block;
+background:#e53935;
+color:#fff;
+text-decoration:none;
+font-size:24px;
+font-weight:900;
+padding:20px;
+border-radius:18px;
+}
+</style>
 
 </head>
 
 <body>
 
-<p>お楽しみ動画へ移動します。</p>
+<div class="wrap">
+
+<div class="card">
+
+<div class="title">
+お楽しみ動画
+</div>
+
+<div class="desc">
+お楽しみ動画ページへ移動します。
+</div>
+
+<a
+id="goBtn"
+class="btn"
+href="fun.html">
+お楽しみ動画を開く
+</a>
+
+</div>
+
+</div>
 
 <script>
-location.href="fun.html";
+
+const id=
+new URLSearchParams(location.search).get("id") ||
+new URLSearchParams(location.search).get("fun") ||
+"1";
+
+const targetUrl=
+"fun.html?fun="+
+encodeURIComponent(id);
+
+document.getElementById("goBtn").href=
+targetUrl;
+
+setTimeout(function(){
+location.replace(targetUrl);
+},600);
+
 </script>
 
 </body>
