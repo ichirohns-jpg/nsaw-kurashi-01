@@ -2,244 +2,54 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NSAW 暮らし情報局</title>
-
-<style>
-*{box-sizing:border-box}
-
-body{
-margin:0;
-background:#eef4fb;
-font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#1f2d3d;
--webkit-text-size-adjust:100%;
-}
-
-header{
-background:#1565c0;
-color:#fff;
-padding:30px 18px;
-text-align:center;
-font-size:40px;
-font-weight:900;
-line-height:1.35;
-}
-
-.headerSub{
-font-size:23px;
-font-weight:800;
-line-height:1.6;
-margin-top:10px;
-}
-
-.wrap{
-max-width:1100px;
-margin:0 auto;
-padding:18px 14px 44px;
-}
-
-.topCard{
-background:#fff;
-border-radius:28px;
-padding:26px 22px;
-margin-bottom:26px;
-box-shadow:0 8px 22px rgba(0,0,0,.14);
-}
-
-.topTitle{
-font-size:36px;
-font-weight:900;
-line-height:1.45;
-margin-bottom:12px;
-color:#102a43;
-}
-
-.topText{
-font-size:26px;
-line-height:1.85;
-color:#243b53;
-white-space:pre-wrap;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
-}
-
-.card{
-display:block;
-background:#fff;
-border-radius:26px;
-padding:26px 22px;
-text-decoration:none;
-color:#1f2d3d;
-box-shadow:0 8px 22px rgba(0,0,0,.14);
-min-height:210px;
-}
-
-.cardTitle{
-font-size:34px;
-font-weight:900;
-line-height:1.4;
-margin-bottom:12px;
-}
-
-.cardText{
-font-size:24px;
-line-height:1.8;
-font-weight:700;
-color:#334e68;
-white-space:pre-wrap;
-}
-
-.watch{border-left:14px solid #009688}
-.person{border-left:14px solid #e91e63}
-.family{border-left:14px solid #5e35b1}
-.support{border-left:14px solid #8e24aa}
-.kawaraban{border-left:14px solid #43a047}
-.radio{border-left:14px solid #1976d2}
-.fun{border-left:14px solid #d32f2f}
-.map{border-left:14px solid #fb8c00}
-
-.footer{
-background:#fff;
-border-radius:28px;
-padding:26px 22px;
-margin-top:26px;
-box-shadow:0 8px 22px rgba(0,0,0,.14);
-}
-
-.footerTitle{
-font-size:32px;
-font-weight:900;
-line-height:1.45;
-margin-bottom:12px;
-}
-
-.footerText{
-font-size:24px;
-line-height:1.85;
-color:#334e68;
-white-space:pre-wrap;
-}
-
-@media(max-width:700px){
-header{font-size:34px;padding:26px 14px}
-.headerSub{font-size:21px}
-.grid{grid-template-columns:1fr;gap:16px}
-.topTitle{font-size:32px}
-.topText{font-size:24px}
-.card{min-height:auto;padding:24px 18px}
-.cardTitle{font-size:31px}
-.cardText{font-size:23px}
-.footerTitle{font-size:30px}
-.footerText{font-size:22px}
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>見守りDX</title>
 </head>
 
-<body>
+<body style="font-family: sans-serif; text-align:center; padding:20px;">
 
-<header>
-NSAW 暮らし情報局
-<div class="headerSub">
-高齢者が迷わない、押すだけ・話すだけ・聞くだけの地域生活操作盤
-</div>
-</header>
+<h1>見守りDX</h1>
 
-<div class="wrap">
+<button onclick="send('元気です')" style="font-size:20px;padding:15px;margin:10px;">
+😊 元気です
+</button>
 
-<div class="topCard">
-<div class="topTitle">
-必要なものを、すぐ押せる入口に。
-</div>
-<div class="topText">
-本人、家族、支援者、地域情報、地図を分けて、迷わず使えるように整理しています。
-高齢者の方が使いやすいように、大きな文字と大きなボタンで作っています。
-</div>
-</div>
+<button onclick="send('少し不安')" style="font-size:20px;padding:15px;margin:10px;">
+⚠ 少し不安
+</button>
 
-<div class="grid">
+<button onclick="send('助けて')" style="font-size:20px;padding:15px;margin:10px;background:red;color:white;">
+🚨 助けて
+</button>
 
-<a class="card watch" href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/" target="_blank">
-<div class="cardTitle">❤️ 見守りDX</div>
-<div class="cardText">
-元気ですボタン、見守り確認、家族・支援者向けの確認ページです。
-最初にここから入ります。
-</div>
-</a>
+<p id="result"></p>
 
-<a class="card person" href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/" target="_blank">
-<div class="cardTitle">🙋 本人ページ</div>
-<div class="cardText">
-本人が使う入口です。
-元気です、薬、予定、困った時の確認につなげます。
-</div>
-</a>
+<script type="module">
 
-<a class="card family" href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/" target="_blank">
-<div class="cardTitle">👪 家族・支援者</div>
-<div class="cardText">
-家族や支援者が見る入口です。
-安否確認、最終確認、支援情報につなげます。
-</div>
-</a>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-<a class="card support" href="support-map.html">
-<div class="cardTitle">🗺 支援マップ</div>
-<div class="cardText">
-病院、薬局、避難所、地域包括支援センターなどを探せます。
-困った時に使うページです。
-</div>
-</a>
+/* ★ここだけ自分のFirebaseに合わせる */
+const firebaseConfig = {
+  databaseURL: "https://mimamori-4a627-default-rtdb.firebaseio.com/"
+};
 
-<a class="card kawaraban" href="kawaraban.html">
-<div class="cardTitle">📰 4市瓦版</div>
-<div class="cardText">
-志木・新座・朝霞・和光の地域情報をまとめて確認できます。
-各市の詳しいページにも移動できます。
-</div>
-</a>
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-<a class="card radio" href="radio.html">
-<div class="cardTitle">📻 地域ラジオ</div>
-<div class="cardText">
-毎朝の4市ニュースをラジオ形式で確認できます。
-動画と説明文を大きく表示します。
-</div>
-</a>
+window.send = function(status){
 
-<a class="card fun" href="fun.html">
-<div class="cardTitle">🎬 お楽しみ動画</div>
-<div class="cardText">
-YouTube動画をページ内で再生できます。
-地域の息抜きや楽しみ用の動画ページです。
-</div>
-</a>
+  push(ref(db, "mimamori"), {
+    id: "A001",
+    status: status,
+    time: new Date().toISOString()
+  });
 
-<a class="card map" href="https://ichirohns-jpg.github.io/shiki.gomap-001/" target="_blank">
-<div class="cardTitle">🚚 Go Map</div>
-<div class="cardText">
-キッチンカーや地域の場所情報を地図で確認できます。
-地域の動きが見えるマップです。
-</div>
-</a>
+  document.getElementById("result").innerText = "送信しました";
 
-</div>
+}
 
-<div class="footer">
-<div class="footerTitle">
-NSAW 地域生活操作盤
-</div>
-<div class="footerText">
-このページは、本人、家族・支援者、地域情報、支援マップ、Go Map、見守りDXをまとめる入口です。
-今後は、予定、薬、ゴミ、音声AIにつなげて、高齢者が迷わない地域OSとして育てていきます。
-</div>
-</div>
-
-</div>
+</script>
 
 </body>
 </html>
