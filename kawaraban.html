@@ -17,8 +17,6 @@
 <meta name="twitter:description" content="志木市・新座市・朝霞市・和光市の地域情報をまとめた4市瓦版です。">
 <meta name="twitter:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 
-<meta http-equiv="refresh" content="0;url=kawaraban.html">
-
 </head>
 
 <body>
@@ -26,7 +24,14 @@
 <p>4市瓦版へ移動します。</p>
 
 <script>
-location.href="kawaraban.html";
+
+const id =
+new URLSearchParams(location.search).get("id") || "1";
+
+location.replace(
+"kawaraban.html?kawaraban=" + encodeURIComponent(id)
+);
+
 </script>
 
 </body>
