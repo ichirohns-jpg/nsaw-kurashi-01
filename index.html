@@ -6,9 +6,7 @@
 <title>NSAW 暮らし情報局</title>
 
 <style>
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
@@ -96,29 +94,14 @@ color:#334e68;
 white-space:pre-wrap;
 }
 
-.radio{
-border-left:14px solid #1976d2;
-}
-
-.kawaraban{
-border-left:14px solid #43a047;
-}
-
-.fun{
-border-left:14px solid #d32f2f;
-}
-
-.support{
-border-left:14px solid #8e24aa;
-}
-
-.map{
-border-left:14px solid #fb8c00;
-}
-
-.watch{
-border-left:14px solid #009688;
-}
+.watch{border-left:14px solid #009688}
+.person{border-left:14px solid #e91e63}
+.family{border-left:14px solid #5e35b1}
+.support{border-left:14px solid #8e24aa}
+.kawaraban{border-left:14px solid #43a047}
+.radio{border-left:14px solid #1976d2}
+.fun{border-left:14px solid #d32f2f}
+.map{border-left:14px solid #fb8c00}
 
 .footer{
 background:#fff;
@@ -143,50 +126,16 @@ white-space:pre-wrap;
 }
 
 @media(max-width:700px){
-
-header{
-font-size:34px;
-padding:26px 14px;
-}
-
-.headerSub{
-font-size:21px;
-}
-
-.grid{
-grid-template-columns:1fr;
-gap:16px;
-}
-
-.topTitle{
-font-size:32px;
-}
-
-.topText{
-font-size:24px;
-}
-
-.card{
-min-height:auto;
-padding:24px 18px;
-}
-
-.cardTitle{
-font-size:31px;
-}
-
-.cardText{
-font-size:23px;
-}
-
-.footerTitle{
-font-size:30px;
-}
-
-.footerText{
-font-size:22px;
-}
-
+header{font-size:34px;padding:26px 14px}
+.headerSub{font-size:21px}
+.grid{grid-template-columns:1fr;gap:16px}
+.topTitle{font-size:32px}
+.topText{font-size:24px}
+.card{min-height:auto;padding:24px 18px}
+.cardTitle{font-size:31px}
+.cardText{font-size:23px}
+.footerTitle{font-size:30px}
+.footerText{font-size:22px}
 }
 </style>
 </head>
@@ -195,121 +144,99 @@ font-size:22px;
 
 <header>
 NSAW 暮らし情報局
-
 <div class="headerSub">
-志木市・新座市・朝霞市・和光市の地域情報ポータル
+高齢者が迷わない、押すだけ・話すだけ・聞くだけの地域生活操作盤
 </div>
-
 </header>
 
 <div class="wrap">
 
 <div class="topCard">
-
 <div class="topTitle">
-地域の情報を、見やすく、押しやすく。
+必要なものを、すぐ押せる入口に。
 </div>
-
 <div class="topText">
-4市のニュース、動画、瓦版、支援マップ、Go Map、見守りDXをまとめた入口ページです。
-高齢者の方でも使いやすいように、大きな文字と大きなボタンで作っています。
+本人、家族、支援者、地域情報、地図を分けて、迷わず使えるように整理しています。
+高齢者の方が使いやすいように、大きな文字と大きなボタンで作っています。
 </div>
-
 </div>
 
 <div class="grid">
 
-<a class="card radio" href="radio.html">
-
-<div class="cardTitle">
-📻 地域ラジオ
-</div>
-
+<a class="card watch" href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/" target="_blank">
+<div class="cardTitle">❤️ 見守りDX</div>
 <div class="cardText">
-毎朝の4市ニュースをラジオ形式で確認できます。
-動画と説明文を大きく表示します。
+元気ですボタン、見守り確認、家族・支援者向けの確認ページです。
+最初にここから入ります。
 </div>
+</a>
 
+<a class="card person" href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/" target="_blank">
+<div class="cardTitle">🙋 本人ページ</div>
+<div class="cardText">
+本人が使う入口です。
+元気です、薬、予定、困った時の確認につなげます。
+</div>
+</a>
+
+<a class="card family" href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/" target="_blank">
+<div class="cardTitle">👪 家族・支援者</div>
+<div class="cardText">
+家族や支援者が見る入口です。
+安否確認、最終確認、支援情報につなげます。
+</div>
+</a>
+
+<a class="card support" href="support-map.html">
+<div class="cardTitle">🗺 支援マップ</div>
+<div class="cardText">
+病院、薬局、避難所、地域包括支援センターなどを探せます。
+困った時に使うページです。
+</div>
 </a>
 
 <a class="card kawaraban" href="kawaraban.html">
-
-<div class="cardTitle">
-📰 4市瓦版
-</div>
-
+<div class="cardTitle">📰 4市瓦版</div>
 <div class="cardText">
 志木・新座・朝霞・和光の地域情報をまとめて確認できます。
 各市の詳しいページにも移動できます。
 </div>
+</a>
 
+<a class="card radio" href="radio.html">
+<div class="cardTitle">📻 地域ラジオ</div>
+<div class="cardText">
+毎朝の4市ニュースをラジオ形式で確認できます。
+動画と説明文を大きく表示します。
+</div>
 </a>
 
 <a class="card fun" href="fun.html">
-
-<div class="cardTitle">
-🎬 お楽しみ動画
-</div>
-
+<div class="cardTitle">🎬 お楽しみ動画</div>
 <div class="cardText">
 YouTube動画をページ内で再生できます。
 地域の息抜きや楽しみ用の動画ページです。
 </div>
-
-</a>
-
-<a class="card support" href="support-map.html">
-
-<div class="cardTitle">
-🗺 支援マップ
-</div>
-
-<div class="cardText">
-病院、薬局、避難所、地域包括支援センターなどを探せます。
-暮らしの困りごとに備えるページです。
-</div>
-
 </a>
 
 <a class="card map" href="https://ichirohns-jpg.github.io/shiki.gomap-001/" target="_blank">
-
-<div class="cardTitle">
-🚚 Go Map
-</div>
-
+<div class="cardTitle">🚚 Go Map</div>
 <div class="cardText">
 キッチンカーや地域の場所情報を地図で確認できます。
 地域の動きが見えるマップです。
 </div>
-
-</a>
-
-<a class="card watch" href="https://ichirohns-jpg.github.io/nsaw-anshin-dx-1/" target="_blank">
-
-<div class="cardTitle">
-❤️ 見守りDX
-</div>
-
-<div class="cardText">
-元気ですボタン、見守り確認、家族・支援者向けの確認ページへつなげます。
-高齢者の安心を支える入口です。
-</div>
-
 </a>
 
 </div>
 
 <div class="footer">
-
 <div class="footerTitle">
-NSAW 地域情報ポータル
+NSAW 地域生活操作盤
 </div>
-
 <div class="footerText">
-このページは、地域ラジオ、4市瓦版、お楽しみ動画、支援マップ、Go Map、見守りDXをまとめる入口です。
-今後も地域の情報を追加して、使いやすい地域OSとして育てていきます。
+このページは、本人、家族・支援者、地域情報、支援マップ、Go Map、見守りDXをまとめる入口です。
+今後は、予定、薬、ゴミ、音声AIにつなげて、高齢者が迷わない地域OSとして育てていきます。
 </div>
-
 </div>
 
 </div>
