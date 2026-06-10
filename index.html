@@ -6,21 +6,13 @@
 <title>見守りDX</title>
 </head>
 
-<body style="font-family: sans-serif; text-align:center; padding:20px;">
+<body style="text-align:center;font-family:sans-serif;padding:20px;">
 
 <h1>見守りDX</h1>
 
-<button onclick="send('元気です')" style="font-size:20px;padding:15px;margin:10px;">
-😊 元気です
-</button>
-
-<button onclick="send('少し不安')" style="font-size:20px;padding:15px;margin:10px;">
-⚠ 少し不安
-</button>
-
-<button onclick="send('助けて')" style="font-size:20px;padding:15px;margin:10px;background:red;color:white;">
-🚨 助けて
-</button>
+<button onclick="send('元気です')">😊 元気です</button>
+<button onclick="send('少し不安')">⚠ 少し不安</button>
+<button onclick="send('助けて')">🚨 助けて</button>
 
 <p id="result"></p>
 
@@ -29,7 +21,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-/* ★ここだけ自分のFirebaseに合わせる */
 const firebaseConfig = {
   databaseURL: "https://mimamori-4a627-default-rtdb.firebaseio.com/"
 };
