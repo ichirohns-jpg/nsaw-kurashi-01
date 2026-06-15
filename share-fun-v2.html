@@ -341,3 +341,101 @@ class="line"
 onclick="shareLine()">
 LINE
 </button>
+
+<button
+class="x"
+onclick="shareX()">
+X
+</button>
+
+<button
+class="copy"
+onclick="copyUrl()">
+URLコピー
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const params=
+new URLSearchParams(location.search);
+
+const articleId=
+params.get("id") || "";
+
+const targetUrl=
+articleId
+?
+"https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html?id="
++ articleId
+:
+"https://ichirohns-jpg.github.io/nsaw-kurashi-01/kawaraban.html";
+
+document
+.getElementById("openBtn")
+.href=
+targetUrl;
+
+function shareFacebook(){
+
+window.open(
+"https://www.facebook.com/sharer/sharer.php?u="
++
+encodeURIComponent(location.href),
+"_blank"
+);
+
+}
+
+function shareLine(){
+
+window.open(
+"https://social-plugins.line.me/lineit/share?url="
++
+encodeURIComponent(location.href),
+"_blank"
+);
+
+}
+
+function shareX(){
+
+window.open(
+"https://twitter.com/intent/tweet?url="
++
+encodeURIComponent(location.href),
+"_blank"
+);
+
+}
+
+function copyUrl(){
+
+navigator.clipboard.writeText(
+location.href
+);
+
+alert(
+"URLをコピーしました"
+);
+
+}
+
+setTimeout(function(){
+
+location.href=
+targetUrl;
+
+},3000);
+
+</script>
+
+</body>
+</html>
