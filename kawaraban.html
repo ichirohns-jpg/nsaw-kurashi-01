@@ -17,7 +17,10 @@
 <meta name="twitter:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
@@ -40,7 +43,23 @@ line-height:1.3;
 .wrap{
 max-width:1000px;
 margin:0 auto;
-padding:18px 14px 44px;
+padding:18px 14px 60px;
+}
+
+.featured{
+font-size:34px;
+font-weight:900;
+color:#43a047;
+margin:10px 0 24px;
+}
+
+.archiveTitle{
+font-size:34px;
+font-weight:900;
+margin-top:70px;
+margin-bottom:24px;
+padding-top:24px;
+border-top:4px solid #dfe5ec;
 }
 
 .card{
@@ -51,9 +70,12 @@ margin-bottom:30px;
 box-shadow:0 8px 22px rgba(0,0,0,.14);
 }
 
-.card img{
+.thumb{
 width:100%;
 display:block;
+aspect-ratio:16/9;
+object-fit:cover;
+background:#ddd;
 }
 
 .date{
@@ -105,25 +127,38 @@ font-weight:900;
 .wako{background:#8e24aa;}
 
 .share{
-display:grid;
-grid-template-columns:1fr 1fr;
+display:flex;
+flex-direction:column;
 gap:14px;
-padding:18px 18px 24px;
+padding:18px;
 }
 
 .share button{
-border:0;
-border-radius:16px;
-padding:20px 10px;
-font-size:22px;
+width:100%;
+background:#ffffff;
+color:#1f2d3d;
+border:1px solid #d9dde3;
+border-radius:24px;
+padding:22px;
+font-size:24px;
 font-weight:900;
-color:#fff;
+text-align:left;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+cursor:pointer;
 }
 
-.fb{background:#1877f2;}
-.line{background:#06c755;}
-.x{background:#000;}
-.copy{background:#ff9800;}
+.share button:active{
+transform:scale(.98);
+}
+
+.fb::after,
+.line::after,
+.x::after,
+.copy::after{
+content:" ＞";
+float:right;
+color:#9aa4af;
+}
 
 .notice{
 background:#fff3cd;
@@ -135,12 +170,31 @@ font-weight:900;
 }
 
 @media(max-width:700px){
-header{font-size:34px;padding:24px 14px;}
-.title{font-size:34px;}
-.desc{font-size:26px;}
-.cityGrid{grid-template-columns:1fr;}
-.share button{font-size:20px;padding:18px 8px;}
+
+header{
+font-size:34px;
+padding:24px 14px;
 }
+
+.title{
+font-size:34px;
+}
+
+.desc{
+font-size:26px;
+}
+
+.cityGrid{
+grid-template-columns:1fr;
+}
+
+.share button{
+font-size:20px;
+padding:18px;
+}
+
+}
+
 </style>
 </head>
 
@@ -165,68 +219,120 @@ const GVIZ_URL=
 +"&tqx=out:json";
 
 function getCell(row,index){
-if(!row || !row.c || !row.c[index]) return "";
-const c=row.c[index];
-if(c.v!==undefined && c.v!==null) return c.v;
-if(c.f!==undefined && c.f!==null) return c.f;
+
+if(!row || !row.c || !row.c[index]){
 return "";
 }
 
+const c=row.c[index];
+
+if(c.v!==undefined && c.v!==null){
+return c.v;
+}
+
+if(c.f!==undefined && c.f!==null){
+return c.f;
+}
+
+return "";
+
+}
+
 function formatDate(value){
-if(!value) return "";
+
+if(!value){
+return "";
+}
+
 const text=String(value).trim();
+
 let m=text.match(/Date\((\d+),(\d+),(\d+)\)/);
-if(m) return m[1]+"年"+(Number(m[2])+1)+"月"+m[3]+"日";
+
+if(m){
+return m[1]+"年"+(Number(m[2])+1)+"月"+m[3]+"日";
+}
+
 m=text.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
-if(m) return m[1]+"年"+Number(m[2])+"月"+Number(m[3])+"日";
+
+if(m){
+return m[1]+"年"+Number(m[2])+"月"+Number(m[3])+"日";
+}
+
 return text;
+
 }
 
 function parseGViz(text){
+
 const match=text.match(/\{[\s\S]*\}/);
-if(!match) throw new Error("GVizデータを取得できません");
+
+if(!match){
+throw new Error("GVizデータを取得できません");
+}
+
 return JSON.parse(match[0]);
+
 }
 
 function makeShareUrl(id){
-return "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-kawaraban.html?id="
+
+return "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-kawaraban-v2.html?id="
 +encodeURIComponent(id);
+
 }
 
 function shareFacebook(url){
+
 window.open(
 "https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(url),
 "_blank"
 );
+
 }
 
 function shareLine(url){
+
 window.open(
 "https://social-plugins.line.me/lineit/share?url="+encodeURIComponent(url),
 "_blank"
 );
+
 }
 
 function shareX(url,text){
+
 window.open(
-"https://twitter.com/intent/tweet?url="+encodeURIComponent(url)+"&text="+encodeURIComponent(text),
+"https://twitter.com/intent/tweet?url="+encodeURIComponent(url)+
+"&text="+encodeURIComponent(text),
 "_blank"
 );
+
 }
 
 function copyUrl(url){
+
 navigator.clipboard.writeText(url);
+
 alert("URLをコピーしました");
+
 }
 
 fetch(GVIZ_URL)
+
 .then(function(response){
+
 return response.text();
+
 })
+
 .then(function(text){
 
 const json=parseGViz(text);
-const rows=json.table && json.table.rows ? json.table.rows : [];
+
+const rows=
+json.table && json.table.rows
+? json.table.rows
+: [];
 
 let items=[];
 
@@ -262,117 +368,166 @@ continue;
 }
 
 items.push({
+
 id:i+1,
+
 date:formatDate(date),
+
 image:image,
+
 title:title,
+
 desc:desc,
+
 shikiTitle:shikiTitle,
 shikiUrl:shikiUrl,
+
 niizaTitle:niizaTitle,
 niizaUrl:niizaUrl,
+
 asakaTitle:asakaTitle,
 asakaUrl:asakaUrl,
+
 wakoTitle:wakoTitle,
 wakoUrl:wakoUrl
+
 });
 
 }
 
 items.reverse();
 
-const params=new URLSearchParams(location.search);
-const singleId=params.get("kawaraban");
+const latest=
+items.length
+? items[0]
+: null;
 
-if(singleId){
-items=items.filter(function(item){
-return String(item.id)===String(singleId);
-});
-}
+const archives=
+items.slice(1);
 
 let html="";
 
-items.forEach(function(item){
+if(latest){
 
-const shareUrl=makeShareUrl(item.id);
-const shareText=item.title || "4市瓦版";
+const shareUrl=
+makeShareUrl(latest.id);
+
+const shareText=
+latest.title || "4市瓦版";
 
 html+=`
+
+<div class="featured">
+📰 本日の4市瓦版
+</div>
 
 <div class="card">
 
 ${
-item.image
+latest.image
 ?
-`<img src="${item.image}" alt="${item.title}" onerror="this.style.display='none'">`
+`
+<img
+src="${latest.image}"
+class="thumb"
+loading="lazy">
+`
 :
-""
+''
 }
 
-<div class="date">${item.date}</div>
-<div class="title">${item.title}</div>
-<div class="desc">${item.desc}</div>
+<div class="date">
+${latest.date}
+</div>
+
+<div class="title">
+${latest.title}
+</div>
+
+<div class="desc">
+${latest.desc}
+</div>
 
 <div class="cityGrid">
 
 ${
-item.shikiUrl
+latest.shikiUrl
 ?
-`<a class="shiki" href="${item.shikiUrl}" target="_blank">
-${item.shikiTitle || "志木市"}
-</a>`
+`
+<a class="shiki"
+href="${latest.shikiUrl}"
+target="_blank">
+${latest.shikiTitle || "志木市"}
+</a>
+`
 :
-""
+''
 }
 
 ${
-item.niizaUrl
+latest.niizaUrl
 ?
-`<a class="niiza" href="${item.niizaUrl}" target="_blank">
-${item.niizaTitle || "新座市"}
-</a>`
+`
+<a class="niiza"
+href="${latest.niizaUrl}"
+target="_blank">
+${latest.niizaTitle || "新座市"}
+</a>
+`
 :
-""
+''
 }
 
 ${
-item.asakaUrl
+latest.asakaUrl
 ?
-`<a class="asaka" href="${item.asakaUrl}" target="_blank">
-${item.asakaTitle || "朝霞市"}
-</a>`
+`
+<a class="asaka"
+href="${latest.asakaUrl}"
+target="_blank">
+${latest.asakaTitle || "朝霞市"}
+</a>
+`
 :
-""
+''
 }
 
 ${
-item.wakoUrl
+latest.wakoUrl
 ?
-`<a class="wako" href="${item.wakoUrl}" target="_blank">
-${item.wakoTitle || "和光市"}
-</a>`
+`
+<a class="wako"
+href="${latest.wakoUrl}"
+target="_blank">
+${latest.wakoTitle || "和光市"}
+</a>
+`
 :
-""
+''
 }
 
 </div>
 
 <div class="share">
 
-<button class="fb" onclick="shareFacebook('${shareUrl}')">
-Facebook
+<button class="fb"
+onclick="shareFacebook('${shareUrl}')">
+Facebookで共有
 </button>
 
-<button class="line" onclick="shareLine('${shareUrl}')">
-LINE
+<button class="line"
+onclick="shareLine('${shareUrl}')">
+LINEで共有
 </button>
 
-<button class="x" onclick="shareX('${shareUrl}','${String(shareText).replace(/'/g,"\\'")}')">
-X
+<button class="x"
+onclick="shareX('${shareUrl}','${String(shareText).replace(/'/g,"\\'")}')">
+Xで共有
 </button>
 
-<button class="copy" onclick="copyUrl('${shareUrl}')">
-URLコピー
+<button class="copy"
+onclick="copyUrl('${shareUrl}')">
+URLをコピー
 </button>
 
 </div>
@@ -381,20 +536,4 @@ URLコピー
 
 `;
 
-});
-
-document.getElementById("app").innerHTML=
-html || "<div class='notice'>記事がありません</div>";
-
-})
-.catch(function(err){
-document.getElementById("app").innerHTML=
-"<div class='notice'>読み込み失敗<br>"+err+"</div>";
-console.error(err);
-});
-
-</script>
-
-</body>
-</html>
-
+}
