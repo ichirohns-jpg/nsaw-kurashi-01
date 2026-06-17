@@ -3,305 +3,224 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>お楽しみ動画</title>
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="お楽しみ動画">
-<meta property="og:description" content="NSAW暮らし情報局のお楽しみ動画です。">
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
-<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun-v2.html">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="お楽しみ動画">
-<meta name="twitter:description" content="NSAW暮らし情報局のお楽しみ動画です。">
-<meta name="twitter:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
-
 <style>
+
 *{
+margin:0;
+padding:0;
 box-sizing:border-box;
 }
 
 body{
-margin:0;
-background:#eef4fb;
+background:#eef3f8;
 font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#1f2d3d;
--webkit-text-size-adjust:100%;
+color:#111827;
+padding:12px;
+}
+
+.container{
+max-width:720px;
+margin:auto;
 }
 
 header{
-background:linear-gradient(135deg,#111827,#7f1d1d,#dc2626);
+background:linear-gradient(
+135deg,
+#0f172a,
+#1d4ed8,
+#2563eb
+);
 color:#fff;
-padding:28px 18px;
 text-align:center;
-font-size:40px;
+padding:28px;
+border-radius:28px;
+font-size:38px;
 font-weight:900;
-line-height:1.3;
-box-shadow:0 10px 30px rgba(0,0,0,.25);
+margin-bottom:20px;
 }
 
-.wrap{
-max-width:1000px;
-margin:0 auto;
-padding:18px 14px 60px;
-}
-
-.featured{
-font-size:34px;
+.home{
+width:100%;
+border:none;
+border-radius:24px;
+padding:24px;
+margin-bottom:18px;
+background:#111827;
+color:#fff;
+font-size:24px;
 font-weight:900;
-color:#dc2626;
-margin:10px 0 24px;
-}
-
-.archiveTitle{
-font-size:34px;
-font-weight:900;
-margin-top:70px;
-margin-bottom:24px;
-padding-top:24px;
-border-top:4px solid #dfe5ec;
+cursor:pointer;
 }
 
 .card{
 background:#fff;
 border-radius:28px;
 overflow:hidden;
-margin-bottom:30px;
-box-shadow:0 8px 22px rgba(0,0,0,.14);
+box-shadow:0 10px 35px rgba(0,0,0,.12);
+margin-bottom:24px;
 }
 
-.player{
+.thumb{
 width:100%;
-background:#000;
-aspect-ratio:16/9;
-}
-
-.player iframe{
-width:100%;
-height:100%;
-border:0;
 display:block;
 }
 
-.date{
-display:inline-block;
-margin:20px 18px 8px;
-padding:12px 20px;
-background:#e3f2fd;
-color:#0d47a1;
-border-radius:999px;
-font-size:26px;
-font-weight:900;
+.content{
+padding:20px;
 }
 
-.genre{
-display:inline-block;
-margin:0 18px 12px;
-padding:10px 18px;
-background:#fce4ec;
-color:#c2185b;
-border-radius:999px;
-font-size:22px;
+.date{
+font-size:18px;
 font-weight:900;
+color:#64748b;
+margin-bottom:10px;
 }
 
 .title{
-padding:8px 18px 14px;
-font-size:38px;
+font-size:30px;
 font-weight:900;
-line-height:1.45;
+line-height:1.5;
+margin-bottom:14px;
 }
 
 .desc{
-padding:6px 18px 20px;
-font-size:28px;
-line-height:1.85;
+font-size:22px;
+line-height:1.8;
 white-space:pre-wrap;
 }
 
 .share{
 display:flex;
 flex-direction:column;
-gap:14px;
-padding:20px;
+gap:12px;
+margin-top:20px;
 }
 
-.shareBtn{
+.share button{
 width:100%;
-background:linear-gradient(180deg,#374151,#111827);
-color:#fff;
 border:none;
-border-radius:24px;
-padding:24px;
-font-size:24px;
+border-radius:18px;
+padding:18px;
+font-size:20px;
 font-weight:900;
-text-align:left;
+background:#111827;
+color:#fff;
 cursor:pointer;
-box-shadow:
-0 8px 20px rgba(0,0,0,.25),
-inset 0 1px 0 rgba(255,255,255,.15);
 }
 
-.shareBtn:after{
-content:" ＞";
-float:right;
-opacity:.8;
-}
-
-.notice{
-background:#fff3cd;
-color:#7a4b00;
-padding:20px;
-margin:20px;
-border-radius:16px;
+.loading{
+background:#fff;
+padding:30px;
+border-radius:24px;
+text-align:center;
 font-size:24px;
 font-weight:900;
-line-height:1.6;
 }
 
-@media(max-width:700px){
-
-header{
-font-size:34px;
-padding:24px 14px;
+iframe{
+width:100%;
+aspect-ratio:16/9;
+border:none;
+display:block;
 }
 
-.title{
-font-size:34px;
-}
-
-.desc{
-font-size:26px;
-}
-
-.shareBtn{
-font-size:22px;
-padding:22px;
-}
-
-}
 </style>
+
 </head>
 
 <body>
 
-<header>お楽しみ動画</header>
+<div class="container">
 
-<div class="wrap">
-<div id="app">読み込み中...</div>
+<header>
+🎬 お楽しみ動画
+</header>
+
+<button
+class="home"
+onclick="location.href='index.html'">
+🏠 トップへ戻る
+</button>
+
+<div id="videos">
+
+<div class="loading">
+読込中...
+</div>
+
 </div>
 
 <script>
 
-const SHEET_ID="149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc";
-const SHEET_NAME="お楽しみ動画";
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-const GVIZ_URL=
-"https://docs.google.com/spreadsheets/d/"
-+ SHEET_ID +
-"/gviz/tq?sheet="
-+ encodeURIComponent(SHEET_NAME)
-+ "&tqx=out:json";
+const SHEET_NAME =
+'お楽しみ動画';
 
-function getCell(row,index){
+function getVal(cell){
 
-if(!row || !row.c || !row.c[index]){
-return "";
-}
+if(!cell)return '';
 
-const c=row.c[index];
-
-if(c.v!==undefined && c.v!==null){
-return c.v;
-}
-
-if(c.f!==undefined && c.f!==null){
-return c.f;
-}
-
-return "";
+return cell.f || cell.v || '';
 
 }
 
-function parseGViz(text){
+function youtubeEmbed(url){
 
-const match=text.match(/\{[\s\S]*\}/);
+if(!url)return '';
 
-if(!match){
-throw new Error("GViz取得失敗");
+let id='';
+
+if(url.includes('watch?v=')){
+id=url.split('watch?v=')[1].split('&')[0];
 }
 
-return JSON.parse(match[0]);
-
+else if(url.includes('youtu.be/')){
+id=url.split('youtu.be/')[1].split('?')[0];
 }
 
-function getYoutubeId(value){
-
-if(!value){
-return "";
+else if(url.includes('/shorts/')){
+id=url.split('/shorts/')[1].split('?')[0];
 }
 
-const text=String(value).trim();
-
-let m=text.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
-if(m){
-return m[1];
-}
-
-m=text.match(/[?&]v=([a-zA-Z0-9_-]+)/);
-if(m){
-return m[1];
-}
-
-m=text.match(/shorts\/([a-zA-Z0-9_-]+)/);
-if(m){
-return m[1];
-}
-
-m=text.match(/embed\/([a-zA-Z0-9_-]+)/);
-if(m){
-return m[1];
-}
-
-return "";
-
-}
-
-function makeShareUrl(id){
-
-return "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun-v2.html?fun="
-+ encodeURIComponent(id);
-
-}
-
-function shareFacebook(url){
-
-window.open(
-"https://www.facebook.com/sharer/sharer.php?u="
-+ encodeURIComponent(url),
-"_blank"
-);
+return id
+? 'https://www.youtube.com/embed/' + id
+: '';
 
 }
 
 function shareLine(url){
 
 window.open(
-"https://social-plugins.line.me/lineit/share?url="
-+ encodeURIComponent(url),
-"_blank"
+'https://social-plugins.line.me/lineit/share?url=' +
+encodeURIComponent(url),
+'_blank'
 );
 
 }
 
-function shareX(url,text){
+function shareFacebook(url){
 
 window.open(
-"https://twitter.com/intent/tweet?url="
-+ encodeURIComponent(url)
-+ "&text="
-+ encodeURIComponent(text),
-"_blank"
+'https://www.facebook.com/sharer/sharer.php?u=' +
+encodeURIComponent(url),
+'_blank'
+);
+
+}
+
+function shareX(url,title){
+
+window.open(
+'https://twitter.com/intent/tweet?url=' +
+encodeURIComponent(url) +
+'&text=' +
+encodeURIComponent(title),
+'_blank'
 );
 
 }
@@ -310,97 +229,121 @@ function copyUrl(url){
 
 navigator.clipboard.writeText(url);
 
-alert("URLをコピーしました");
+alert('URLをコピーしました');
 
 }
 
-fetch(GVIZ_URL)
+function loadSheet(){
 
-.then(function(response){
+const script =
+document.createElement('script');
 
-return response.text();
+script.src =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json;responseHandler:handleSheet';
 
-})
+document.body.appendChild(script);
 
-.then(function(text){
-
-const json=
-parseGViz(text);
-
-const rows=
-json.table.rows || [];
-
-let items=[];
-
-for(let i=0;i<rows.length;i++){
-
-const row=rows[i];
-
-const date=
-String(getCell(row,0)||"");
-
-const title=
-String(getCell(row,2)||"");
-
-const image=
-String(getCell(row,3)||"");
-
-const desc=
-String(getCell(row,4)||"");
-
-const videoUrl=
-getCell(row,5)
-||
-getCell(row,6)
-||
-getCell(row,7)
-||
-"";
-
-const genre=
-String(getCell(row,7)||"");
-
-const videoId=
-getYoutubeId(videoUrl);
-
-if(
-!title &&
-!videoUrl &&
-!desc
-){
-continue;
 }
 
-items.push({
+window.handleSheet = function(json){
 
-id:i+1,
+const box =
+document.getElementById('videos');
 
-date:date,
+const rows =
+json.table.rows.slice().reverse();
 
-title:title,
+box.innerHTML='';
 
-image:image,
+rows.forEach(function(row,index){
 
-desc:desc,
+if(!row.c)return;
 
-genre:genre,
+const date =
+getVal(row.c[0]);
 
-videoUrl:videoUrl,
+const title =
+getVal(row.c[1]);
 
-videoId:videoId
+const desc =
+getVal(row.c[2]);
+
+const youtube =
+getVal(row.c[3]);
+
+const embed =
+youtubeEmbed(youtube);
+
+const shareUrl =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun-v2.html?video=' +
+(index+1);
+
+const card =
+document.createElement('div');
+
+card.className='card';
+
+card.innerHTML =
+
+(embed
+? '<iframe src="' +
+embed +
+'" allowfullscreen></iframe>'
+: '')
+
++
+
+'<div class="content">' +
+
+'<div class="date">' +
+date +
+'</div>' +
+
+'<div class="title">' +
+title +
+'</div>' +
+
+'<div class="desc">' +
+desc +
+'</div>' +
+
+'<div class="share">' +
+
+'<button onclick="shareLine(\'' +
+shareUrl +
+'\')">LINEで共有</button>' +
+
+'<button onclick="shareFacebook(\'' +
+shareUrl +
+'\')">Facebookで共有</button>' +
+
+'<button onclick="shareX(\'' +
+shareUrl +
+'\',\'' +
+title +
+'\')">Xで共有</button>' +
+
+'<button onclick="copyUrl(\'' +
+shareUrl +
+'\')">URLコピー</button>' +
+
+'</div>' +
+
+'</div>';
+
+box.appendChild(card);
 
 });
 
-}
+};
 
-items.reverse();
+window.onload = loadSheet;
 
-const latest=
-items.length
-? items[0]
-: null;
+</script>
 
-const archives=
-items.slice(1);
-
-let html="";
+</body>
+</html>
