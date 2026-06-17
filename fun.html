@@ -171,20 +171,7 @@ if(!url)return '';
 let id='';
 
 if(url.includes('watch?v=')){
-id=url.split('watch?v=')[1].split('&')[0];
-}
-else if(url.includes('youtu.be/')){
-id=url.split('youtu.be/')[1].split('?')[0];
-}
-else if(url.includes('/shorts/')){
-id=url.split('/shorts/')[1].split('?')[0];
-}
-
-return id
-? 'https://www.youtube.com/embed/' + id
-: '';
-
-}
+id=url.split('
 
 function shareLine(url){
 
@@ -247,7 +234,11 @@ window.handleSheet = function(json){
 const box =
 document.getElementById('videos');
 
-if(!json || !json.table || !json.table.rows){
+if(
+!json ||
+!json.table ||
+!json.table.rows
+){
 
 box.innerHTML =
 '<div class="loading">データ取得失敗</div>';
