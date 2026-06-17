@@ -150,23 +150,14 @@ onclick="location.href='index.html'">
 
 <script>
 
-const SHEET_ID =
-'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
-
-const SHEET_NAME =
-'お楽しみ動画';
-
-function getVal(cell){
-
-if(!cell)return '';
-
-return cell.f || cell.v || '';
-
-}
+const API_URL =
+'https://script.google.com/macros/s/あなたのGAS/exec';
 
 function youtubeEmbed(url){
 
 if(!url)return '';
+
+url=String(url);
 
 let id='';
 
@@ -183,6 +174,19 @@ id=url.split('/shorts/')[1].split('?')[0];
 return id
 ? 'https://www.youtube.com/embed/' + id
 : '';
+
+}
+
+function escapeHtml(str){
+
+if(!str)return '';
+
+return String(str)
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/"/g,'&quot;')
+.replace(/'/g,'&#039;');
 
 }
 
@@ -226,84 +230,43 @@ alert('URLをコピーしました');
 
 }
 
-function loadSheet(){
+function loadVideos(){
 
-const script =
-document.createElement('script');
+fetch(API_URL)
 
-script.src =
-'https://docs.google.com/spreadsheets/d/' +
-SHEET_ID +
-'/gviz/tq?sheet=' +
-encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json;responseHandler:handleSheet';
+.then(function(response){
 
-document.body.appendChild(script);
+return response.json();
 
-}
+})
 
-function escapeHtml(str){
-
-if(!str)return '';
-
-return String(str)
-.replace(/&/g,'&amp;')
-.replace(/</g,'&lt;')
-.replace(/>/g,'&gt;')
-.replace(/"/g,'&quot;')
-.replace(/'/g,'&#039;');
-
-}
-
-function handleSheet(json){
+.then(function(data){
 
 const box =
 document.getElementById('videos');
 
-if(
-!json ||
-!json.table ||
-!json.table.rows
-){
+if(!data || !data.length){
 
 box.innerHTML =
-'<div class="loading">データ取得失敗</div>';
+'<div class="loading">動画データがありません</div>';
 
 return;
 
 }
 
-const rows =
-json.table.rows.slice().reverse();
-
 let html='';
 
-rows.forEach(function(row,index){
-
-if(!row || !row.c)return;
-
-const date =
-row.c[0] ? getVal(row.c[0]) : '';
-
-const title =
-row.c[1] ? getVal(row.c[1]) : '';
-
-const desc =
-row.c[2] ? getVal(row.c[2]) : '';
-
-const youtube =
-row.c[3] ? getVal(row.c[3]) : '';
-
-if(!title && !youtube)return;
+data.reverse().forEach(function(item,index){
 
 const embed =
-youtubeEmbed(youtube);
+youtubeEmbed(item.youtube);
 
 const shareUrl =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun-v2.html?video=' +
-(index + 1);
+(item.id || (index + 1));
 
-html += '<div class="card">';
+html +=
+'<div class="card">';
 
 if(embed){
 
@@ -315,18 +278,19 @@ embed +
 }
 
 html +=
+
 '<div class="content">' +
 
 '<div class="date">' +
-escapeHtml(date) +
+escapeHtml(item.date || '') +
 '</div>' +
 
 '<div class="title">' +
-escapeHtml(title) +
+escapeHtml(item.title || '') +
 '</div>' +
 
 '<div class="desc">' +
-escapeHtml(desc) +
+escapeHtml(item.desc || '') +
 '</div>' +
 
 '<div class="share">' +
@@ -342,7 +306,7 @@ shareUrl +
 '<button onclick="shareX(\'' +
 shareUrl +
 '\',\'' +
-String(title).replace(/'/g,"\\'") +
+String(item.title || '').replace(/'/g,"\\'") +
 '\')">Xで共有</button>' +
 
 '<button onclick="copyUrl(\'' +
@@ -351,26 +315,36 @@ shareUrl +
 
 '</div>' +
 
+'</div>';
+
+html +=
+
 '</div>' +
 
 '</div>';
 
 });
 
-if(html===''){
-
-html =
-'<div class="loading">動画データがありません</div>';
-
-}
-
 box.innerHTML = html;
 
+})
+
+.catch(function(error){
+
+document.getElementById('videos').innerHTML =
+
+'<div class="loading">' +
+'データ取得失敗<br>' +
+error +
+'</div>';
+
+console.error(error);
+
+});
+
 }
 
-window.handleSheet = handleSheet;
-
-window.onload = loadSheet;
+window.onload = loadVideos;
 
 </script>
 
