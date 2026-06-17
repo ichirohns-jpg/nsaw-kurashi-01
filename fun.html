@@ -6,123 +6,120 @@
 
 <title>お楽しみ動画</title>
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="お楽しみ動画">
-<meta property="og:description" content="NSAW暮らし情報局のお楽しみ動画です。">
-<meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
-<meta property="og:url" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun-v2.html">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="お楽しみ動画">
-<meta name="twitter:description" content="NSAW暮らし情報局のお楽しみ動画です。">
-<meta name="twitter:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
-
 <style>
 
 *{
+margin:0;
+padding:0;
 box-sizing:border-box;
 }
 
 body{
-margin:0;
-background:#eef4fb;
+background:#eef3f8;
 font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
-color:#1f2d3d;
+color:#111827;
+padding:12px;
 }
 
-.wrap{
-max-width:900px;
+.container{
+max-width:720px;
 margin:auto;
-padding:20px;
+}
+
+header{
+background:linear-gradient(
+135deg,
+#0f172a,
+#1d4ed8,
+#2563eb
+);
+color:#fff;
+text-align:center;
+padding:28px;
+border-radius:28px;
+font-size:38px;
+font-weight:900;
+margin-bottom:20px;
+}
+
+.home{
+width:100%;
+border:none;
+border-radius:24px;
+padding:24px;
+margin-bottom:18px;
+background:#111827;
+color:#fff;
+font-size:24px;
+font-weight:900;
+cursor:pointer;
 }
 
 .card{
 background:#fff;
-border-radius:24px;
+border-radius:28px;
 overflow:hidden;
-box-shadow:0 8px 20px rgba(0,0,0,.12);
+box-shadow:0 10px 35px rgba(0,0,0,.12);
+margin-bottom:24px;
 }
 
-.hero{
+iframe{
 width:100%;
+aspect-ratio:16/9;
+border:none;
 display:block;
 }
 
 .content{
-padding:24px;
+padding:20px;
+}
+
+.date{
+font-size:18px;
+font-weight:900;
+color:#64748b;
+margin-bottom:10px;
 }
 
 .title{
-font-size:38px;
+font-size:30px;
 font-weight:900;
-line-height:1.4;
-margin-bottom:20px;
+line-height:1.5;
+margin-bottom:14px;
 }
 
 .desc{
-font-size:28px;
+font-size:22px;
 line-height:1.8;
-margin-bottom:24px;
 white-space:pre-wrap;
 }
 
-.openBtn{
-display:block;
-width:100%;
-padding:22px;
-border:0;
-border-radius:18px;
-background:#e53935;
-color:#fff;
-font-size:28px;
-font-weight:900;
-text-align:center;
-text-decoration:none;
-margin-bottom:18px;
-}
-
 .share{
-display:grid;
-grid-template-columns:1fr 1fr;
+display:flex;
+flex-direction:column;
 gap:12px;
+margin-top:20px;
 }
 
 .share button{
-border:0;
-border-radius:14px;
+width:100%;
+border:none;
+border-radius:18px;
 padding:18px;
-font-size:22px;
+font-size:20px;
 font-weight:900;
+background:#111827;
 color:#fff;
 cursor:pointer;
 }
 
-.fb{
-background:#1877f2;
-}
-
-.line{
-background:#06c755;
-}
-
-.x{
-background:#000;
-}
-
-.copy{
-background:#ff9800;
-}
-
-@media(max-width:700px){
-
-.title{
-font-size:32px;
-}
-
-.desc{
+.loading{
+background:#fff;
+padding:30px;
+border-radius:24px;
+text-align:center;
 font-size:24px;
-}
-
+font-weight:900;
 }
 
 </style>
@@ -131,142 +128,251 @@ font-size:24px;
 
 <body>
 
-<div class="wrap">
+<div class="container">
 
-<div class="card">
-
-<img
-src="top.jpg"
-class="hero"
-alt="お楽しみ動画">
-
-<div class="content">
-
-<div class="title">
-お楽しみ動画
-</div>
-
-<div class="desc">
-NSAW暮らし情報局のお楽しみ動画です。
-懐かしい映像、時代劇、音楽、暮らしに役立つ動画などをお届けします。
-</div>
-
-<a
-id="openBtn"
-class="openBtn"
-href="#">
-動画を見る
-</a>
-
-<div class="share">
+<header>
+🎬 お楽しみ動画
+</header>
 
 <button
-class="fb"
-onclick="shareFacebook()">
-Facebook
+class="home"
+onclick="location.href='index.html'">
+🏠 トップへ戻る
 </button>
 
-<button
-class="line"
-onclick="shareLine()">
-LINE
-</button>
+<div id="videos">
 
-<button
-class="x"
-onclick="shareX()">
-X
-</button>
-
-<button
-class="copy"
-onclick="copyUrl()">
-URLコピー
-</button>
-
-</div>
-
-</div>
-
+<div class="loading">
+読込中...
 </div>
 
 </div>
 
 <script>
 
-const params=
-new URLSearchParams(location.search);
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-const videoId=
-params.get("video") || "";
+const SHEET_NAME =
+'お楽しみ動画';
 
-const targetUrl=
-videoId
-?
-"https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html?video="
-+ videoId
-:
-"https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html";
+function getVal(cell){
 
-document
-.getElementById("openBtn")
-.href=
-targetUrl;
+if(!cell)return '';
 
-function shareFacebook(){
+return cell.f || cell.v || '';
+
+}
+
+function youtubeEmbed(url){
+
+if(!url)return '';
+
+let id='';
+
+if(url.includes('watch?v=')){
+id=url.split('watch?v=')[1].split('&')[0];
+}
+else if(url.includes('youtu.be/')){
+id=url.split('youtu.be/')[1].split('?')[0];
+}
+else if(url.includes('/shorts/')){
+id=url.split('/shorts/')[1].split('?')[0];
+}
+
+return id
+? 'https://www.youtube.com/embed/' + id
+: '';
+
+}
+
+function shareLine(url){
 
 window.open(
-"https://www.facebook.com/sharer/sharer.php?u="
-+
-encodeURIComponent(location.href),
-"_blank"
+'https://social-plugins.line.me/lineit/share?url=' +
+encodeURIComponent(url),
+'_blank'
 );
 
 }
 
-function shareLine(){
+function shareFacebook(url){
 
 window.open(
-"https://social-plugins.line.me/lineit/share?url="
-+
-encodeURIComponent(location.href),
-"_blank"
+'https://www.facebook.com/sharer/sharer.php?u=' +
+encodeURIComponent(url),
+'_blank'
 );
 
 }
 
-function shareX(){
+function shareX(url,title){
 
 window.open(
-"https://twitter.com/intent/tweet?url="
-+
-encodeURIComponent(location.href),
-"_blank"
+'https://x.com/intent/tweet?url=' +
+encodeURIComponent(url) +
+'&text=' +
+encodeURIComponent(title),
+'_blank'
 );
 
 }
 
-function copyUrl(){
+function copyUrl(url){
 
-navigator.clipboard.writeText(
-location.href
-);
+navigator.clipboard.writeText(url);
 
-alert(
-"URLをコピーしました"
-);
+alert('URLをコピーしました');
 
 }
 
-setTimeout(function(){
+function loadSheet(){
 
-location.href=
-targetUrl;
+const script =
+document.createElement('script');
 
-},3000);
+script.src =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=out:json;responseHandler:handleSheet';
+
+document.body.appendChild(script);
+
+}
+
+function escapeHtml(str){
+
+if(!str)return '';
+
+return String(str)
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/"/g,'&quot;')
+.replace(/'/g,'&#039;');
+
+}
+
+function handleSheet(json){
+
+const box =
+document.getElementById('videos');
+
+if(
+!json ||
+!json.table ||
+!json.table.rows
+){
+
+box.innerHTML =
+'<div class="loading">データ取得失敗</div>';
+
+return;
+
+}
+
+const rows =
+json.table.rows.slice().reverse();
+
+let html='';
+
+rows.forEach(function(row,index){
+
+if(!row || !row.c)return;
+
+const date =
+row.c[0] ? getVal(row.c[0]) : '';
+
+const title =
+row.c[1] ? getVal(row.c[1]) : '';
+
+const desc =
+row.c[2] ? getVal(row.c[2]) : '';
+
+const youtube =
+row.c[3] ? getVal(row.c[3]) : '';
+
+if(!title && !youtube)return;
+
+const embed =
+youtubeEmbed(youtube);
+
+const shareUrl =
+'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun-v2.html?video=' +
+(index + 1);
+
+html += '<div class="card">';
+
+if(embed){
+
+html +=
+'<iframe src="' +
+embed +
+'" allowfullscreen></iframe>';
+
+}
+
+html +=
+'<div class="content">' +
+
+'<div class="date">' +
+escapeHtml(date) +
+'</div>' +
+
+'<div class="title">' +
+escapeHtml(title) +
+'</div>' +
+
+'<div class="desc">' +
+escapeHtml(desc) +
+'</div>' +
+
+'<div class="share">' +
+
+'<button onclick="shareLine(\'' +
+shareUrl +
+'\')">LINEで共有</button>' +
+
+'<button onclick="shareFacebook(\'' +
+shareUrl +
+'\')">Facebookで共有</button>' +
+
+'<button onclick="shareX(\'' +
+shareUrl +
+'\',\'' +
+String(title).replace(/'/g,"\\'") +
+'\')">Xで共有</button>' +
+
+'<button onclick="copyUrl(\'' +
+shareUrl +
+'\')">URLコピー</button>' +
+
+'</div>' +
+
+'</div>' +
+
+'</div>';
+
+});
+
+if(html===''){
+
+html =
+'<div class="loading">動画データがありません</div>';
+
+}
+
+box.innerHTML = html;
+
+}
+
+window.handleSheet = handleSheet;
+
+window.onload = loadSheet;
 
 </script>
 
 </body>
-
 </html>
