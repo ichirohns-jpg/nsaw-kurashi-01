@@ -228,36 +228,17 @@ alert('URLをコピーしました');
 
 function loadSheet(){
 
-const url =
+const script =
+document.createElement('script');
+
+script.src =
 'https://docs.google.com/spreadsheets/d/' +
 SHEET_ID +
 '/gviz/tq?sheet=' +
 encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json';
+'&tqx=out:json;responseHandler:handleSheet';
 
-fetch(url)
-.then(function(response){
-return response.text();
-})
-.then(function(data){
-
-let start = data.indexOf('{');
-let end = data.lastIndexOf('}') + 1;
-
-if(start === -1 || end === 0){
-throw new Error('JSON data not found');
-}
-
-let jsonStr = data.substring(start, end);
-let json = JSON.parse(jsonStr);
-
-handleSheet(json);
-
-})
-.catch(function(error){
-document.getElementById('videos').innerHTML =
-'<div class="loading">データ取得失敗（スプレッドシートの共有を確認してください）</div>';
-});
+document.body.appendChild(script);
 
 }
 
@@ -282,9 +263,7 @@ return;
 const rows =
 json.table.rows.slice().reverse();
 
-box.innerHTML='';
-
-let validCount = 0;
+let html='';
 
 rows.forEach(function(row,index){
 
@@ -302,79 +281,91 @@ getVal(row.c[2]);
 const youtube =
 getVal(row.c[3]);
 
-if(!title && !youtube) return;
-
-validCount++;
-
 const embed =
 youtubeEmbed(youtube);
 
 const shareUrl =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun-v2.html?video=' +
-(index + 1);
+(index+1);
 
-const card =
-document.createElement('div');
+html +=
+'<div class="card">';
 
-card.className='card';
+if(embed){
 
-card.innerHTML =
-
-(embed
-? '<iframe src="' +
+html +=
+'<iframe src="' +
 embed +
-'" allowfullscreen></iframe>'
-: '')
+'" allowfullscreen></iframe>';
 
-+
+}
 
-'<div class="content">' +
+html +=
+'<div class="content">';
 
+html +=
 '<div class="date">' +
 date +
-'</div>' +
+'</div>';
 
+html +=
 '<div class="title">' +
 title +
-'</div>' +
+'</div>';
 
+html +=
 '<div class="desc">' +
 desc +
-'</div>' +
+'</div>';
 
-'<div class="share">' +
+html +=
+'<div class="share">';
 
+html +=
 '<button onclick="shareLine(\'' +
 shareUrl +
-'\')">LINEで共有</button>' +
+'\')">LINEで共有</button>';
 
+html +=
 '<button onclick="shareFacebook(\'' +
 shareUrl +
-'\')">Facebookで共有</button>' +
+'\')">Facebookで共有</button>';
 
+html +=
 '<button onclick="shareX(\'' +
 shareUrl +
 '\',\'' +
 title +
-'\')">Xで共有</button>' +
+'\')">Xで共有</button>';
 
+html +=
 '<button onclick="copyUrl(\'' +
 shareUrl +
-'\')">URLコピー</button>' +
+'\')">URLコピー</button>';
 
-'</div>' +
-
+html +=
 '</div>';
 
-box.appendChild(card);
+html +=
+'</div>';
+
+html +=
+'</div>';
 
 });
 
-if(validCount === 0){
-box.innerHTML = '<div class="loading">動画データがありません</div>';
-}
+if(html===''){
+
+html =
+'<div class="loading">動画データがありません</div>';
 
 }
+
+box.innerHTML = html;
+
+}
+
+window.handleSheet = handleSheet;
 
 window.onload = loadSheet;
 
