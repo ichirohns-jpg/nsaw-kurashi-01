@@ -63,8 +63,10 @@ box-shadow:0 10px 35px rgba(0,0,0,.12);
 margin-bottom:24px;
 }
 
-.thumb{
+iframe{
 width:100%;
+aspect-ratio:16/9;
+border:none;
 display:block;
 }
 
@@ -120,13 +122,6 @@ font-size:24px;
 font-weight:900;
 }
 
-iframe{
-width:100%;
-aspect-ratio:16/9;
-border:none;
-display:block;
-}
-
 </style>
 
 </head>
@@ -178,11 +173,9 @@ let id='';
 if(url.includes('watch?v=')){
 id=url.split('watch?v=')[1].split('&')[0];
 }
-
 else if(url.includes('youtu.be/')){
 id=url.split('youtu.be/')[1].split('?')[0];
 }
-
 else if(url.includes('/shorts/')){
 id=url.split('/shorts/')[1].split('?')[0];
 }
@@ -254,6 +247,15 @@ window.handleSheet = function(json){
 const box =
 document.getElementById('videos');
 
+if(!json || !json.table || !json.table.rows){
+
+box.innerHTML =
+'<div class="loading">データ取得失敗</div>';
+
+return;
+
+}
+
 const rows =
 json.table.rows.slice().reverse();
 
@@ -280,7 +282,7 @@ youtubeEmbed(youtube);
 
 const shareUrl =
 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-fun-v2.html?video=' +
-(index+1);
+(index + 1);
 
 const card =
 document.createElement('div');
