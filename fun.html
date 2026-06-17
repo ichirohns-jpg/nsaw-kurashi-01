@@ -160,18 +160,13 @@ function getVal(cell){
 
 if(!cell)return '';
 
-if(cell.f)return cell.f;
-if(cell.v)return cell.v;
-
-return '';
+return cell.f || cell.v || '';
 
 }
 
 function youtubeEmbed(url){
 
 if(!url)return '';
-
-url=String(url);
 
 let id='';
 
@@ -242,13 +237,6 @@ SHEET_ID +
 '/gviz/tq?sheet=' +
 encodeURIComponent(SHEET_NAME) +
 '&tqx=out:json;responseHandler:handleSheet';
-
-script.onerror=function(){
-
-document.getElementById('videos').innerHTML=
-'<div class="loading">シート接続失敗</div>';
-
-};
 
 document.body.appendChild(script);
 
@@ -382,22 +370,7 @@ box.innerHTML = html;
 
 window.handleSheet = handleSheet;
 
-window.onload = function(){
-
-try{
-
-loadSheet();
-
-}catch(e){
-
-document.getElementById('videos').innerHTML=
-'<div class="loading">エラー：'+e+'</div>';
-
-console.error(e);
-
-}
-
-};
+window.onload = loadSheet;
 
 </script>
 
