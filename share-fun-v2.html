@@ -193,30 +193,27 @@ URLコピー
 
 <script>
 
-const params=
+const params =
 new URLSearchParams(location.search);
 
-const videoId=
+const videoId =
 params.get("video") || "";
 
-const targetUrl=
+const targetUrl =
 videoId
 ?
-"https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html?video="
-+ videoId
+"https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html?video=" +
+videoId
 :
 "https://ichirohns-jpg.github.io/nsaw-kurashi-01/fun.html";
 
-document
-.getElementById("openBtn")
-.href=
+document.getElementById("openBtn").href =
 targetUrl;
 
 function shareFacebook(){
 
 window.open(
-"https://www.facebook.com/sharer/sharer.php?u="
-+
+"https://www.facebook.com/sharer/sharer.php?u=" +
 encodeURIComponent(location.href),
 "_blank"
 );
@@ -226,8 +223,7 @@ encodeURIComponent(location.href),
 function shareLine(){
 
 window.open(
-"https://social-plugins.line.me/lineit/share?url="
-+
+"https://social-plugins.line.me/lineit/share?url=" +
 encodeURIComponent(location.href),
 "_blank"
 );
@@ -237,8 +233,59 @@ encodeURIComponent(location.href),
 function shareX(){
 
 window.open(
-"https://twitter.com/intent/tweet?url="
-+
+"https://twitter.com/intent/tweet?url=" +
+encodeURIComponent(location.href),
+"_blank"
+);
+
+}
+
+function copyUrl(){
+
+navigator.clipboard.writeText(
+location.href
+);
+
+alert("URLをコピーしました");
+
+}
+
+setTimeout(function(){
+
+location.href =
+targetUrl;
+
+},3000);
+
+</script>
+
+</body>
+</html>
+
+function shareFacebook(){
+
+window.open(
+"https://www.facebook.com/sharer/sharer.php?u=" +
+encodeURIComponent(location.href),
+"_blank"
+);
+
+}
+
+function shareLine(){
+
+window.open(
+"https://social-plugins.line.me/lineit/share?url=" +
+encodeURIComponent(location.href),
+"_blank"
+);
+
+}
+
+function shareX(){
+
+window.open(
+"https://twitter.com/intent/tweet?url=" +
 encodeURIComponent(location.href),
 "_blank"
 );
@@ -259,7 +306,7 @@ alert(
 
 setTimeout(function(){
 
-location.href=
+location.href =
 targetUrl;
 
 },3000);
