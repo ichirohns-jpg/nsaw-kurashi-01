@@ -228,21 +228,40 @@ alert('URLをコピーしました');
 
 function loadSheet(){
 
-const script =
-document.createElement('script');
-
-script.src =
+const url =
 'https://docs.google.com/spreadsheets/d/' +
 SHEET_ID +
 '/gviz/tq?sheet=' +
 encodeURIComponent(SHEET_NAME) +
-'&tqx=out:json;responseHandler:handleSheet';
+'&tqx=out:json';
 
-document.body.appendChild(script);
+fetch(url)
+.then(function(response){
+return response.text();
+})
+.then(function(data){
+
+let start = data.indexOf('{');
+let end = data.lastIndexOf('}') + 1;
+
+if(start === -1 || end === 0){
+throw new Error('JSON data not found');
+}
+
+let jsonStr = data.substring(start, end);
+let json = JSON.parse(jsonStr);
+
+handleSheet(json);
+
+})
+.catch(function(error){
+document.getElementById('videos').innerHTML =
+'<div class="loading">データ取得失敗（スプレッドシートの共有を確認してください）</div>';
+});
 
 }
 
-window.handleSheet = function(json){
+function handleSheet(json){
 
 const box =
 document.getElementById('videos');
@@ -265,6 +284,8 @@ json.table.rows.slice().reverse();
 
 box.innerHTML='';
 
+let validCount = 0;
+
 rows.forEach(function(row,index){
 
 if(!row.c)return;
@@ -280,6 +301,10 @@ getVal(row.c[2]);
 
 const youtube =
 getVal(row.c[3]);
+
+if(!title && !youtube) return;
+
+validCount++;
 
 const embed =
 youtubeEmbed(youtube);
@@ -345,7 +370,11 @@ box.appendChild(card);
 
 });
 
-};
+if(validCount === 0){
+box.innerHTML = '<div class="loading">動画データがありません</div>';
+}
+
+}
 
 window.onload = loadSheet;
 
