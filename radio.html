@@ -3,47 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>地域ラジオ</title>
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="地域ラジオ">
-<meta property="og:description" content="志木市・新座市・朝霞市・和光市の地域ラジオです。">
+<meta property="og:description" content="志木市・新座市・朝霞市・和光市の地域ラジオ">
 <meta property="og:image" content="https://ichirohns-jpg.github.io/nsaw-kurashi-01/top.jpg">
 
 <style>
 
 *{
+margin:0;
+padding:0;
 box-sizing:border-box;
 }
 
 body{
-margin:0;
 background:#eef4fb;
 font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 color:#1f2d3d;
+padding:12px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
 }
 
 header{
-background:#1976d2;
+background:linear-gradient(
+135deg,
+#0f172a,
+#1e3a8a,
+#334155
+);
 color:#fff;
-padding:28px 18px;
 text-align:center;
-font-size:40px;
+padding:28px;
+border-radius:28px;
+font-size:42px;
 font-weight:900;
-}
-
-.wrap{
-max-width:1000px;
-margin:auto;
-padding:18px 14px 60px;
+margin-bottom:20px;
 }
 
 .home{
 width:100%;
 border:none;
 border-radius:24px;
-padding:22px;
-margin-bottom:18px;
+padding:24px;
+margin-bottom:20px;
 background:#111827;
 color:#fff;
 font-size:24px;
@@ -54,111 +63,94 @@ cursor:pointer;
 .featured{
 font-size:34px;
 font-weight:900;
-color:#1976d2;
-margin:10px 0 24px;
-}
-
-.archiveTitle{
-font-size:34px;
-font-weight:900;
-margin-top:70px;
-margin-bottom:24px;
-padding-top:24px;
-border-top:4px solid #dfe5ec;
+margin:20px 0;
+color:#1e40af;
 }
 
 .card{
 background:#fff;
 border-radius:28px;
 overflow:hidden;
-margin-bottom:30px;
-box-shadow:0 8px 22px rgba(0,0,0,.14);
-}
-
-.thumb{
-width:100%;
-display:block;
-aspect-ratio:16/9;
-object-fit:cover;
-background:#ddd;
+box-shadow:0 10px 35px rgba(0,0,0,.12);
+margin-bottom:24px;
 }
 
 .player{
 width:100%;
-background:#000;
 aspect-ratio:16/9;
+background:#000;
 }
 
 .player iframe{
 width:100%;
 height:100%;
-border:0;
+border:none;
+display:block;
+}
+
+.thumb{
+width:100%;
 display:block;
 }
 
 .date{
 display:inline-block;
-margin:20px 18px 8px;
-padding:12px 20px;
-background:#e3f2fd;
-color:#0d47a1;
+margin:20px;
+padding:10px 18px;
+background:#dbeafe;
 border-radius:999px;
-font-size:26px;
+font-size:24px;
 font-weight:900;
+color:#1e40af;
 }
 
 .title{
-padding:8px 18px 14px;
-font-size:38px;
+padding:0 20px 12px;
+font-size:34px;
 font-weight:900;
-line-height:1.45;
+line-height:1.5;
 }
 
 .desc{
-padding:6px 18px 20px;
-font-size:28px;
-line-height:1.85;
+padding:0 20px 20px;
+font-size:24px;
+line-height:1.8;
 white-space:pre-wrap;
 }
 
 .tags{
-padding:0 18px 20px;
-font-size:24px;
-line-height:1.7;
-color:#607d8b;
-font-weight:800;
-white-space:pre-wrap;
+padding:0 20px 20px;
+font-size:22px;
+font-weight:900;
+color:#64748b;
+}
+
+.loading{
+background:#fff;
+padding:30px;
+border-radius:24px;
+font-size:26px;
+font-weight:900;
+text-align:center;
 }
 
 .share{
+padding:20px;
 display:flex;
 flex-direction:column;
-gap:14px;
-padding:18px;
+gap:12px;
 }
 
 .share button{
 width:100%;
-background:#ffffff;
-color:#1f2d3d;
-border:1px solid #d9dde3;
-border-radius:24px;
-padding:22px;
-font-size:24px;
+padding:18px;
+border:none;
+border-radius:18px;
+background:#111827;
+color:#fff;
+font-size:22px;
 font-weight:900;
-text-align:left;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
 cursor:pointer;
-}
-
-.notice{
-background:#fff3cd;
-color:#7a4b00;
-padding:20px;
-margin:20px;
-border-radius:16px;
-font-size:24px;
-font-weight:900;
 }
 
 </style>
@@ -167,11 +159,11 @@ font-weight:900;
 
 <body>
 
-<header>
-地域ラジオ
-</header>
+<div class="container">
 
-<div class="wrap">
+<header>
+📻 地域ラジオ
+</header>
 
 <button
 class="home"
@@ -180,40 +172,73 @@ onclick="location.href='index.html'">
 </button>
 
 <div id="app">
-読み込み中...
+
+<div class="loading">
+読込中...
 </div>
 
 </div>
 
 <script>
 
-const SHEET_ID="149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc";
-const SHEET_NAME="地域ラジオ";
+const SHEET_ID =
+'149lAFx3oPGjB0UqDpPWZJqt_bBeDWMPd-Rfc6LXQgoc';
 
-const GVIZ_URL=
-"https://docs.google.com/spreadsheets/d/"
-+SHEET_ID+
-"/gviz/tq?sheet="
-+encodeURIComponent(SHEET_NAME)
-+"&tqx=out:json";
+const SHEET_NAME =
+'地域ラジオ';
+
+const GVIZ_URL =
+'https://docs.google.com/spreadsheets/d/' +
+SHEET_ID +
+'/gviz/tq?sheet=' +
+encodeURIComponent(SHEET_NAME) +
+'&tqx=responseHandler:handleSheet';
 
 function getCell(row,index){
 
-if(!row || !row.c || !row.c[index]){
-return "";
-}
+if(!row) return '';
+if(!row.c) return '';
+if(!row.c[index]) return '';
 
 const c=row.c[index];
-
-if(c.v!==undefined && c.v!==null){
-return c.v;
-}
 
 if(c.f!==undefined && c.f!==null){
 return c.f;
 }
 
-return "";
+if(c.v!==undefined && c.v!==null){
+return c.v;
+}
+
+return '';
+
+}
+
+function formatDate(rawDate){
+
+if(rawDate instanceof Date){
+
+return rawDate.getFullYear() + '年' +
+(rawDate.getMonth()+1) + '月' +
+rawDate.getDate() + '日';
+
+}
+
+const txt =
+String(rawDate || '');
+
+const m =
+txt.match(/Date\((\d+),(\d+),(\d+)\)/);
+
+if(m){
+
+return m[1] + '年' +
+(Number(m[2])+1) + '月' +
+m[3] + '日';
+
+}
+
+return txt;
 
 }
 
@@ -224,56 +249,33 @@ if(!value)return "";
 const text=String(value);
 
 let m=text.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+
 if(m)return m[1];
 
 m=text.match(/[?&]v=([a-zA-Z0-9_-]+)/);
+
 if(m)return m[1];
 
 m=text.match(/shorts\/([a-zA-Z0-9_-]+)/);
+
 if(m)return m[1];
 
 return "";
 
 }
 
-function formatDate(rawDate){
-
-if(rawDate instanceof Date){
-
-return rawDate.getFullYear()+"年"+
-(rawDate.getMonth()+1)+"月"+
-rawDate.getDate()+"日";
-
-}
-
-const text=String(rawDate||"");
-
-const m=text.match(/Date\((\d+),(\d+),(\d+)\)/);
-
-if(m){
-
-return m[1]+"年"+
-(Number(m[2])+1)+"月"+
-m[3]+"日";
-
-}
-
-return text;
-
-}
-
 function makeShareUrl(id){
 
-return "https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-radio-v2.html?radio=" + id;
+return 'https://ichirohns-jpg.github.io/nsaw-kurashi-01/share-radio-v2.html?radio=' + id;
 
 }
 
 function shareFacebook(url){
 
 window.open(
-"https://www.facebook.com/sharer/sharer.php?u="
-+ encodeURIComponent(url),
-"_blank"
+'https://www.facebook.com/sharer/sharer.php?u=' +
+encodeURIComponent(url),
+'_blank'
 );
 
 }
@@ -281,9 +283,9 @@ window.open(
 function shareLine(url){
 
 window.open(
-"https://social-plugins.line.me/lineit/share?url="
-+ encodeURIComponent(url),
-"_blank"
+'https://social-plugins.line.me/lineit/share?url=' +
+encodeURIComponent(url),
+'_blank'
 );
 
 }
@@ -291,11 +293,11 @@ window.open(
 function shareX(url,text){
 
 window.open(
-"https://twitter.com/intent/tweet?url="
-+ encodeURIComponent(url)
-+ "&text="
-+ encodeURIComponent(text),
-"_blank"
+'https://twitter.com/intent/tweet?url=' +
+encodeURIComponent(url) +
+'&text=' +
+encodeURIComponent(text),
+'_blank'
 );
 
 }
@@ -304,25 +306,13 @@ function copyUrl(url){
 
 navigator.clipboard.writeText(url);
 
-alert("URLをコピーしました");
+alert('URLをコピーしました');
 
 }
 
-fetch(GVIZ_URL)
+window.handleSheet = function(json){
 
-.then(function(response){
-
-return response.text();
-
-})
-
-.then(function(text){
-
-const match=text.match(/\{[\s\S]*\}/);
-
-const json=JSON.parse(match[0]);
-
-const rows=
+const rows =
 json.table && json.table.rows
 ? json.table.rows
 : [];
@@ -333,26 +323,27 @@ for(let i=0;i<rows.length;i++){
 
 const row=rows[i];
 
-const rawDate=getCell(row,0);
+const date =
+formatDate(
+getCell(row,0)
+);
 
-const date=formatDate(rawDate);
+const videoUrl =
+String(getCell(row,1)||'');
 
-const videoUrl=
-String(getCell(row,1)||"");
+const title =
+String(getCell(row,2)||'');
 
-const title=
-String(getCell(row,2)||"");
+const desc =
+String(getCell(row,3)||'');
 
-const desc=
-String(getCell(row,3)||"");
+const tags =
+String(getCell(row,4)||'');
 
-const tags=
-String(getCell(row,4)||"");
+const image =
+String(getCell(row,5)||'');
 
-const image=
-String(getCell(row,5)||"");
-
-const videoId=
+const videoId =
 getYoutubeId(videoUrl);
 
 if(
@@ -388,25 +379,25 @@ videoId:videoId
 
 items.reverse();
 
-const latest=
+const latest =
 items.length
 ? items[0]
 : null;
 
-const archives=
+const archives =
 items.slice(1);
 
-let html="";
+let html = '';
 
 if(latest){
 
-const shareUrl=
+const shareUrl =
 makeShareUrl(latest.id);
 
-const shareText=
-latest.title || "地域ラジオ";
+const shareText =
+latest.title || '地域ラジオ';
 
-html+=`
+html += `
 
 <div class="featured">
 🎙 本日の地域ラジオ
@@ -414,37 +405,25 @@ html+=`
 
 <div class="card">
 
-${
-latest.image
-?
-`
+${latest.image ? `
 <img
 src="${latest.image}"
 class="thumb"
 loading="lazy">
-`
-:
-''
-}
+` : ''}
 
 <div class="player">
 
-${
-latest.videoId
-?
-`
+${latest.videoId ? `
 <iframe
 src="https://www.youtube.com/embed/${latest.videoId}"
 allowfullscreen>
 </iframe>
-`
-:
-`
+` : `
 <div class="notice">
 動画を埋め込めません
 </div>
-`
-}
+`}
 
 </div>
 
@@ -467,27 +446,23 @@ ${latest.tags}
 <div class="share">
 
 <button
-class="fb"
 onclick="shareFacebook('${shareUrl}')">
 Facebookで共有
 </button>
 
 <button
-class="line"
 onclick="shareLine('${shareUrl}')">
 LINEで共有
 </button>
 
 <button
-class="x"
 onclick="shareX('${shareUrl}','${String(shareText).replace(/'/g,"\\'")}')">
 Xで共有
 </button>
 
 <button
-class="copy"
 onclick="copyUrl('${shareUrl}')">
-URLをコピー
+URLコピー
 </button>
 
 </div>
@@ -498,26 +473,18 @@ URLをコピー
 
 }
 
-if(archives.length){
-
-html+=`<div class="archiveTitle">📚 アーカイブ</div>`;
-
-}
-
-document.getElementById("app").innerHTML=
+document.getElementById('app').innerHTML =
 html ||
-"<div class='notice'>記事がありません</div>";
+'<div class="loading">記事がありません</div>';
 
-})
+};
 
-.catch(function(err){
+const script =
+document.createElement('script');
 
-document.getElementById("app").innerHTML=
-"<div class='notice'>読み込み失敗<br>"+err+"</div>";
+script.src = GVIZ_URL;
 
-console.error(err);
-
-});
+document.body.appendChild(script);
 
 </script>
 
